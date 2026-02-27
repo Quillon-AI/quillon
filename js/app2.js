@@ -19,7 +19,12 @@ let cur=0, ans=[], scr={py:0,fl:0,qa:0}, dragItems=[], autoTimer=null;
 
 /* ===== QUIZ ENGINE ===== */
 function go(){
+  // Reset quiz state
+  cur=0; ans=[]; scr={py:0,fl:0,qa:0};
+  // Hide all screens, show quiz
   document.getElementById('hero').style.display='none';
+  document.getElementById('res').classList.remove('on');
+  document.getElementById('anl').classList.remove('on');
   document.getElementById('quiz').classList.add('on');
   document.getElementById('pT').textContent=TQ;
   renderQ();
