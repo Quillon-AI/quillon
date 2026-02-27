@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quillon — Узнай свой трек в IT</title>
+<style>
+/* ============================================
+   QUILLON DESIGN TOKENS
+   Единый источник правды для дизайн-системы.
+   Подключай ПЕРВЫМ во всех страницах.
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+[data-theme="dark"] {
+  /* ── Brand ── */
+  --qb: #1F4ED8;           /* Primary blue */
+  --qbd: #1E40AF;          /* Blue dark (hover) */
+  --qbl: #3B82F6;          /* Blue light */
+  --qbg: rgba(31,78,216,0.35);   /* Blue glow */
+  --qbs: rgba(31,78,216,0.12);   /* Blue subtle bg */
+  --qbb: rgba(31,78,216,0.35);   /* Blue border */
+  --qp: #7C3AED;           /* Purple accent */
+
+  /* ── Backgrounds ── */
+  --bg0: #080B14;           /* Page background */
+  --bg1: #0F1629;           /* Surface / inputs */
+  --bg2: #141D35;           /* Cards */
+  --bgh: #1E2B4A;          /* Hover state */
+
+  /* ── Borders ── */
+  --brd: rgba(255,255,255,0.06);    /* Subtle */
+  --brdb: rgba(31,78,216,0.4);      /* Blue border */
+  --brdl: rgba(255,255,255,0.12);   /* Light border */
+
+  /* ── Text ── */
+  --t1: #F0F4FF;            /* Primary text */
+  --t2: #94A3B8;            /* Secondary text */
+  --t3: #4A5568;            /* Muted text */
+  --tb: #60A5FA;            /* Blue text */
+
+  /* ── Semantic ── */
+  --ok: #10B981;            /* Success */
+  --err: #EF4444;           /* Error */
+  --warn: #F59E0B;          /* Warning / orange */
+
+  /* ── Shadows ── */
+  --shd: 0 1px 0 rgba(255,255,255,0.04) inset, 0 8px 32px rgba(0,0,0,0.5);
+  --glow: rgba(31,78,216,0.18);
+}
+
+:root {
+  /* ── Fonts ── */
+  --fd: 'Syne', sans-serif;            /* Display / headers */
+  --fb: 'DM Sans', sans-serif;         /* Body text */
+  --fm: 'JetBrains Mono', monospace;   /* Code / mono */
+
+  /* ── Easing ── */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Animations ── */
+@keyframes fu {
+  from { opacity: 0; transform: translateY(16px) }
+  to { opacity: 1; transform: translateY(0) }
+}
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 16px rgba(31,78,216,.25) }
+  50% { box-shadow: 0 0 40px rgba(31,78,216,.6), 0 0 64px rgba(31,78,216,.2) }
+}
+@keyframes blink {
+  0%, 100% { opacity: 1 }
+  50% { opacity: .3 }
+}
+@keyframes qba {
+  0%, 100% { transform: scale(1) }
+  50% { transform: scale(1.025) }
+}
+@keyframes pr {
+  0% { transform: scale(1); opacity: .6 }
+  100% { transform: scale(2.5); opacity: 0 }
+}
+@keyframes pd {
+  0%, 100% { transform: scale(1) }
+  50% { transform: scale(.8) }
+}
+/* ============================================
+   QUILLON BASE STYLES
+   Сброс, body, типографика, утилиты.
+   Подключай ПОСЛЕ tokens.css
+   ============================================ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
+html { scroll-behavior: smooth }
+
+body {
+  font-family: var(--fb);
+  background: var(--bg0);
+  color: var(--t1);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── Links ── */
+a { color: var(--tb); text-decoration: none }
+a:hover { text-decoration: underline }
+
+/* ── Typography helpers ── */
+.font-display { font-family: var(--fd) }
+.font-mono { font-family: var(--fm) }
+.text-secondary { color: var(--t2) }
+.text-muted { color: var(--t3) }
+.text-blue { color: var(--tb) }
+.text-center { text-align: center }
+
+/* ── Section container ── */
+.section {
+  padding: clamp(60px, 10vw, 100px) clamp(16px, 4vw, 48px);
+}
+.section-inner {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* ── Section heading ── */
+.sh {
+  text-align: center;
+  margin-bottom: 56px;
+}
+.sh h2 {
+  font-family: var(--fd);
+  font-weight: 800;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  margin-bottom: 12px;
+}
+
+/* ── Gradient text ── */
+.grad {
+  background: linear-gradient(135deg, var(--qbl), var(--qp));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Blur-lock system ── */
+.bv { transition: filter .5s var(--ease) }
+.lk .bv { filter: blur(8px); pointer-events: none; user-select: none }
+
+/* ── Section title (always visible above blur) ── */
+.stl {
+  font-family: var(--fd);
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+}
+.stl.blue { color: var(--tb) }
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .hide-mobile { display: none !important }
+}
+/* ============================================
+   QUILLON SHARED COMPONENTS
+   Переиспользуемые компоненты для всех страниц.
+   Подключай ПОСЛЕ base.css
+   ============================================ */
+
+/* ══════════════════════════════════════
+   NAVBAR
+   <nav class="nav">
+     <a href="/" class="nav-logo">Quillon</a>
+     <button class="nav-btn" onclick="...">CTA</button>
+   </nav>
+   ══════════════════════════════════════ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 60px; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 clamp(16px, 4vw, 48px);
+  background: rgba(8,11,20,.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--brd);
+}
+.nav-logo {
+  font-family: var(--fd); font-weight: 800;
+  font-size: 1.4rem; color: var(--qb);
+  letter-spacing: -.5px; text-decoration: none;
+}
+.nav-btn {
+  padding: 10px 24px; border-radius: 10px; border: none;
+  background: var(--qb); color: #fff;
+  font-family: var(--fb); font-weight: 600; font-size: .875rem;
+  cursor: pointer;
+}
+
+/* ══════════════════════════════════════
+   BUTTONS
+   .btn-big  — Hero CTA (64px height, glow)
+   .btn-sub  — Form submit (full-width, glow)
+   .btn-sm   — Small inline button
+   ══════════════════════════════════════ */
+.btn-big {
+  display: inline-flex; align-items: center; gap: 10px;
+  height: 64px; padding: 0 44px; border-radius: 16px; border: none;
+  background: var(--qb); color: #fff;
+  font-family: var(--fb); font-weight: 600; font-size: 1.15rem;
+  cursor: pointer; transition: all .25s var(--ease);
+  animation: glow 3s ease-in-out infinite;
+}
+.btn-big:hover {
+  background: var(--qbd); transform: translateY(-3px);
+  animation: none; box-shadow: 0 0 64px var(--qbg);
+}
+.btn-sub {
+  width: 100%; height: 60px; border-radius: 14px; border: none;
+  background: var(--qb); color: #fff;
+  font-family: var(--fb); font-weight: 700; font-size: 1.1rem;
+  cursor: pointer; transition: all .25s var(--ease);
+  animation: glow 3s ease-in-out infinite; margin-top: 8px;
+}
+.btn-sub:hover {
+  background: var(--qbd); transform: translateY(-2px);
+  animation: none; box-shadow: 0 0 48px var(--qbg);
+}
+
+/* ══════════════════════════════════════
+   FORM CARD
+   <div class="fc">
+     <h2>...</h2>
+     <div class="fr"><input class="fi" ...></div>
+     <button class="btn-sub">...</button>
+   </div>
+   ══════════════════════════════════════ */
+.fc {
+  background: linear-gradient(135deg, rgba(31,78,216,.12), rgba(124,58,237,.06));
+  border: 2px solid var(--qbb); border-radius: 24px;
+  padding: clamp(28px, 5vw, 44px);
+  box-shadow: 0 0 60px rgba(31,78,216,.12);
+  margin-bottom: 24px;
+  opacity: 0; animation: fu .7s var(--ease) forwards;
+}
+.fc h2 {
+  font-family: var(--fd); font-weight: 800;
+  font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+  text-align: center; margin-bottom: 20px; line-height: 1.4;
+}
+.fr { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px }
+.fi {
+  width: 100%; height: 52px; padding: 0 16px;
+  background: var(--bg1); border: 1px solid var(--brdl);
+  border-radius: 10px; color: var(--t1);
+  font-family: var(--fb); font-size: 1rem; outline: none;
+  transition: border-color .15s, box-shadow .15s;
+}
+.fi::placeholder { color: var(--t3) }
+.fi:focus { border-color: var(--qb); box-shadow: 0 0 0 3px var(--qbs) }
+.fi.err { border-color: var(--err) }
+.fcon {
+  display: flex; align-items: flex-start; gap: 8px;
+  margin-top: 12px; font-size: .75rem; color: var(--t3);
+}
+.fcon input { margin-top: 2px; accent-color: var(--qb) }
+
+/* ══════════════════════════════════════
+   RESULT CARD
+   <div class="rc lk">
+     <div class="stl">Title</div>
+     <div class="bv">...blurred content...</div>
+   </div>
+   ══════════════════════════════════════ */
+.rc {
+  background: var(--bg2); border: 1px solid var(--brd);
+  border-radius: 24px; padding: clamp(24px, 5vw, 40px);
+  box-shadow: var(--shd); margin-bottom: 24px;
+  opacity: 0; animation: fu .7s var(--ease) forwards;
+  overflow: visible;
+}
+.rc.d1{animation-delay:.1s} .rc.d2{animation-delay:.2s}
+.rc.d3{animation-delay:.3s} .rc.d4{animation-delay:.4s}
+.rc.d5{animation-delay:.5s}
+
+/* ── Track row (% always visible) ── */
+.tr-label { font-size: .95rem; color: var(--t2); margin-bottom: 10px }
+.tr-row { display: flex; align-items: center; justify-content: space-between; gap: 16px }
+.tr-name { font-family: var(--fd); font-weight: 700; font-size: 1.15rem; flex: 1; min-width: 0; overflow: visible }
+.tr-pct { display: flex; flex-direction: column; align-items: center; padding: 14px 20px; border-radius: 16px; background: linear-gradient(135deg, var(--qb), var(--qp)); flex-shrink: 0 }
+.tr-pct-lbl { font-size: .55rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: rgba(255,255,255,.7) }
+.tr-pct-val { font-family: var(--fd); font-weight: 800; font-size: 2rem; color: #a3f97e; line-height: 1 }
+
+/* ── Salary ── */
+.sal-row { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; background: linear-gradient(135deg, rgba(31,78,216,.08), rgba(124,58,237,.08)); border: 1px solid var(--brd); border-radius: 16px }
+.sal-lbl { font-size: .875rem; color: var(--t2) }
+.sal-num { font-family: var(--fd); font-weight: 800; font-size: clamp(1.5rem, 4vw, 2rem); background: linear-gradient(135deg, var(--qbl), var(--qp)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text }
+
+/* ── Talent ── */
+.tl-name { font-family: var(--fd); font-weight: 800; font-size: 1.2rem; margin-bottom: 10px }
+.tl-desc { font-size: .9rem; color: var(--t2); line-height: 1.8 }
+.jb h3 { font-family: var(--fd); font-weight: 700; font-size: 1rem; margin-bottom: 10px; margin-top: 20px }
+.jb p { font-size: .9rem; color: var(--t2); line-height: 1.8 }
+
+/* ── Why item ── */
+.wi { display: flex; gap: 10px; align-items: flex-start; font-size: .875rem; color: var(--t2); line-height: 1.7; margin-bottom: 10px }
+.wi .ck { color: var(--ok); flex-shrink: 0; font-weight: 700 }
+
+/* ── Compat bars ── */
+.cb { margin-bottom: 16px }
+.cb-name { font-size: .9rem; font-weight: 500; margin-bottom: 4px; overflow: visible }
+.cb-badge { display: inline-block; padding: 3px 10px; border-radius: 6px; background: var(--ok); color: #fff; font-size: .6rem; font-weight: 700; text-transform: uppercase; margin-left: 8px }
+.cb-track { height: 34px; background: var(--bg1); border-radius: 10px; overflow: hidden }
+.cb-fill { height: 100%; border-radius: 10px; display: flex; align-items: center; justify-content: flex-end; padding-right: 14px; font-family: var(--fm); font-size: .85rem; font-weight: 600; color: #fff; transition: width 1s var(--ease) }
+.cb-fill.top { background: linear-gradient(90deg, var(--qb), var(--qbl)) }
+.cb-fill.oth { background: rgba(148,163,184,.2); color: var(--t2) }
+
+/* ══════════════════════════════════════
+   ROADMAP PHASES
+   <div class="rm-ph">
+     <div class="rm-hd"><span class="rm-wk">Нед. 1-8</span><span class="rm-ti">Title</span></div>
+     <div class="rm-desc">...</div>
+     <div class="rm-tags"><span class="rm-tag bl">Tag</span></div>
+   </div>
+   ══════════════════════════════════════ */
+.rm-ph { padding: 20px; background: var(--bg1); border-radius: 14px; border: 1px solid var(--brd); margin-bottom: 10px }
+.rm-hd { display: flex; align-items: baseline; gap: 14px; margin-bottom: 8px; flex-wrap: wrap }
+.rm-wk { font-family: var(--fm); font-size: .75rem; font-weight: 700; color: var(--tb); white-space: nowrap }
+.rm-ti { font-size: .95rem; font-weight: 700 }
+.rm-desc { font-size: .85rem; color: var(--t3); line-height: 1.7; margin-bottom: 8px }
+.rm-tags { display: flex; flex-wrap: wrap; gap: 6px }
+.rm-tag { padding: 3px 10px; border-radius: 6px; font-size: .7rem; font-weight: 600 }
+.rm-tag.bl { background: var(--qbs); color: var(--tb); border: 1px solid var(--qbb) }
+.rm-tag.gr { background: rgba(16,185,129,.1); color: #10B981; border: 1px solid rgba(16,185,129,.3) }
+.rm-tag.pr { background: rgba(124,58,237,.1); color: #A78BFA; border: 1px solid rgba(124,58,237,.3) }
+.rm-tag.or { background: rgba(245,158,11,.1); color: #F59E0B; border: 1px solid rgba(245,158,11,.3) }
+
+/* ══════════════════════════════════════
+   VIDEO BLOCK (post-form)
+   ══════════════════════════════════════ */
+.vbl { display: none; text-align: center; padding: 48px 24px; opacity: 0; animation: fu .7s var(--ease) forwards }
+.vbl.on { display: block }
+.vbl .vi { font-size: 56px; margin-bottom: 16px }
+.vbl h2 { font-family: var(--fd); font-weight: 800; font-size: 1.5rem; margin-bottom: 10px }
+.vbl p { font-size: 1rem; color: var(--t2); max-width: 480px; margin: 0 auto; line-height: 1.7 }
+
+/* ══════════════════════════════════════
+   STEP CARDS (What's next)
+   ══════════════════════════════════════ */
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 960px; margin: 0 auto }
+.scd { background: var(--bg2); border: 1px solid var(--brd); border-radius: 20px; padding: 28px }
+.scd-n { font-family: var(--fm); font-size: .7rem; font-weight: 700; color: var(--tb); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 12px }
+.scd-i { font-size: 32px; margin-bottom: 14px }
+.scd h3 { font-family: var(--fd); font-weight: 700; font-size: 1.1rem; margin-bottom: 10px }
+.scd p { font-size: .875rem; color: var(--t2); line-height: 1.8 }
+
+/* ══════════════════════════════════════
+   ACCORDION (FAQ)
+   <div class="acc">
+     <div class="ai">
+       <button class="at2" onclick="ta(this)">Question<span class="ax">+</span></button>
+       <div class="ab2">Answer</div>
+     </div>
+   </div>
+   ══════════════════════════════════════ */
+.acc { max-width: 640px; margin: 0 auto }
+.ai { border: 1px solid var(--brd); border-radius: 14px; margin-bottom: 8px; overflow: hidden }
+.ai.op { border-color: var(--brdb); background: var(--bg2) }
+.at2 { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 18px 20px; cursor: pointer; background: none; border: none; color: var(--t1); font-family: var(--fb); font-size: .95rem; font-weight: 600; text-align: left }
+.ax { width: 28px; height: 28px; border-radius: 50%; background: var(--bg1); display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--t3); flex-shrink: 0; transition: all .25s }
+.ai.op .ax { background: var(--qbs); color: var(--tb); transform: rotate(45deg) }
+.ab2 { max-height: 0; overflow: hidden; transition: max-height .4s; padding: 0 20px; color: var(--t2); font-size: .875rem; line-height: 1.8 }
+.ai.op .ab2 { max-height: 400px; padding-bottom: 18px }
+
+/* ══════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════ */
+.ftr { padding: 32px clamp(16px, 4vw, 48px); border-top: 1px solid var(--brd); display: flex; align-items: center; justify-content: space-between; font-size: .75rem; color: var(--t3) }
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════ */
+@media (max-width: 600px) {
+  .fr { grid-template-columns: 1fr }
+  .steps { grid-template-columns: 1fr }
+  .ftr { flex-direction: column; gap: 8px; text-align: center }
+}
+/* ============================================
+   QUIZ PAGE STYLES
+   Специфичные стили для квиз-воронки.
+   ============================================ */
+
+/* ── Hero ── */
+.hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 120px clamp(16px,4vw,48px) 80px; text-align: center; overflow: hidden }
+.hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0 }
+.hero-glow { position: absolute; top: -180px; left: 50%; transform: translateX(-50%); width: 900px; height: 600px; pointer-events: none; z-index: 0; background: radial-gradient(ellipse, var(--glow) 0%, transparent 60%) }
+.hero-inner { position: relative; z-index: 2; max-width: 780px }
+.hero-tag { display: inline-flex; align-items: center; gap: 8px; padding: 7px 18px; border-radius: 9999px; background: var(--qbs); border: 1px solid var(--qbb); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--tb); margin-bottom: 28px; opacity: 0; animation: fu .7s var(--ease) .2s forwards }
+.hero-tag .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ok); animation: blink 2s infinite }
+.hero h1 { font-family: var(--fd); font-weight: 800; font-size: clamp(32px,5vw,56px); line-height: 1.08; letter-spacing: -1.5px; margin-bottom: 24px; opacity: 0; animation: fu .7s var(--ease) .4s forwards }
+.hero-sub { font-size: clamp(1rem,1.8vw,1.15rem); color: var(--t2); line-height: 1.75; max-width: 580px; margin: 0 auto 36px; opacity: 0; animation: fu .7s var(--ease) .6s forwards }
+.hero-cta { opacity: 0; animation: fu .7s var(--ease) .8s forwards }
+.hero-hint { font-size: .75rem; color: var(--t3); margin-top: 14px; opacity: 0; animation: fu .7s var(--ease) 1s forwards }
+
+/* ── Quiz section ── */
+.quiz { min-height: 100vh; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 80px clamp(16px,4vw,48px) }
+.quiz.on { display: flex }
+.qbox { width: 100%; max-width: 640px }
+.qprog { margin-bottom: 40px }
+.qpm { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: .875rem; color: var(--t2); font-family: var(--fm) }
+.qpt { height: 4px; background: var(--brdl); border-radius: 9999px }
+.qpf { height: 100%; border-radius: 9999px; background: linear-gradient(90deg, var(--qb), var(--qbl)); transition: width .4s var(--ease); position: relative }
+.qpf::after { content: ''; position: absolute; right: -2px; top: 50%; transform: translateY(-50%); width: 8px; height: 8px; border-radius: 50%; background: var(--qbl); box-shadow: 0 0 8px var(--qbl) }
+.qq { text-align: center; margin-bottom: 32px; animation: fu .4s var(--ease) }
+.qq h2 { font-family: var(--fd); font-weight: 700; font-size: clamp(1.25rem,3vw,1.55rem); line-height: 1.3; margin-bottom: 8px }
+.qq p { font-size: .875rem; color: var(--t3) }
+
+/* ── Quiz grid ── */
+.qg { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; max-width: 540px; margin: 0 auto }
+.qg.c3 { grid-template-columns: repeat(3,1fr) }
+.qg.c1 { grid-template-columns: 1fr; max-width: 420px }
+.qc { background: var(--bg2); border: 1px solid var(--brd); border-radius: 14px; padding: 14px 16px; cursor: pointer; transition: border-color .25s, background .25s; user-select: none; text-align: center; overflow: visible }
+.qc:hover { border-color: var(--brdb); background: var(--bgh) }
+.qc.sel { border: 2px solid var(--qb); background: var(--qbs); animation: qba .2s var(--spring) }
+.qc .qi { font-size: 22px; margin-bottom: 4px; display: block }
+.qc .qt { font-size: .85rem; font-weight: 500; line-height: 1.4 }
+.qc .psvg { width: 100%; height: 70px; margin-bottom: 6px; border-radius: 8px; overflow: hidden }
+.qc .psvg svg { width: 100%; height: 100% }
+.qc .mscr { border-radius: 8px; overflow: hidden; aspect-ratio: 9/14; background: var(--bg1); margin-bottom: 6px }
+.qc .mscr svg { width: 100%; height: 100% }
+.qc .mlbl { font-family: var(--fm); font-size: 9px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--tb); margin-bottom: 4px }
+
+/* ── City input ── */
+.co-wrap { max-width: 420px; margin: 10px auto 0; display: none }
+.co-wrap.vis { display: block }
+.co-in { width: 100%; height: 48px; padding: 0 16px; background: var(--bg1); border: 1px solid var(--brdl); border-radius: 10px; color: var(--t1); font-family: var(--fb); font-size: 1rem; outline: none; text-align: center }
+.co-in:focus { border-color: var(--qb); box-shadow: 0 0 0 3px var(--qbs) }
+.co-in::placeholder { color: var(--t3) }
+
+/* ── Maze ── */
+.mzw { width: 100%; max-width: 540px; margin: 0 auto; position: relative; aspect-ratio: 16/9; background: var(--bg2); border: 1px solid var(--brdl); border-radius: 16px; overflow: hidden; cursor: crosshair; touch-action: none }
+.mzw canvas { position: absolute; inset: 0; width: 100%; height: 100% }
+.mzh { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); font-size: .75rem; color: var(--t3); pointer-events: none; background: rgba(8,11,20,.7); padding: 4px 14px; border-radius: 99px; transition: opacity .3s }
+.mzw.dr .mzh { opacity: 0 }
+
+/* ── Drag ── */
+.dl { max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px }
+.di { display: flex; align-items: center; gap: 12px; padding: 16px 20px; background: var(--bg2); border: 1px solid var(--brd); border-radius: 12px; cursor: grab; user-select: none }
+.di:hover { border-color: var(--brdb); background: var(--bgh) }
+.di.dg { opacity: .5 }
+.dh { color: var(--t3); font-size: 1.2rem }
+.dn { width: 28px; height: 28px; border-radius: 8px; background: var(--qbs); color: var(--tb); display: flex; align-items: center; justify-content: center; font-family: var(--fm); font-size: .75rem; font-weight: 600; flex-shrink: 0 }
+.dt { font-size: .875rem; font-weight: 500 }
+
+/* ── Quiz nav ── */
+.qnav { display: flex; gap: 12px; justify-content: center; margin-top: 32px }
+.qbtn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 52px; padding: 0 32px; border-radius: 12px; border: none; font-family: var(--fb); font-weight: 600; font-size: 1rem; cursor: pointer; transition: all .25s var(--ease) }
+.qbp { background: var(--qb); color: #fff }
+.qbp:hover { background: var(--qbd); transform: translateY(-2px); box-shadow: 0 0 40px var(--qbg) }
+.qbp:disabled { opacity: .4; cursor: not-allowed; transform: none; box-shadow: none }
+.qbs2 { background: transparent; color: var(--t2); border: 1px solid var(--brdl) }
+
+/* ── Analysis ── */
+.anl { display: none; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 80px 24px; text-align: center }
+.anl.on { display: flex }
+.anl-p { width: 80px; height: 80px; border-radius: 50%; position: relative; margin-bottom: 32px }
+.anl-p::before, .anl-p::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--qb) }
+.anl-p::before { animation: pr 1.5s ease-out infinite }
+.anl-p::after { animation: pr 1.5s ease-out .5s infinite }
+.anl-p .core { position: absolute; inset: 20px; border-radius: 50%; background: var(--qb); animation: pd 1.5s ease-in-out infinite }
+.anl h3 { font-family: var(--fd); font-size: 1.3rem; font-weight: 700 }
+.anl p { font-size: .875rem; color: var(--t3); margin-top: 8px; font-family: var(--fm) }
+
+/* ── Results wrapper ── */
+.res { display: none; flex-direction: column; align-items: center; padding: 100px clamp(16px,4vw,48px) 40px }
+.res.on { display: flex }
+.rcon { width: 100%; max-width: 720px }
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .qg { grid-template-columns: 1fr }
+  .qg.c3 { grid-template-columns: repeat(2,1fr) }
+}
+
+</style>
+</head>
+<body>
+
+
+<nav class="nav">
+  <a href="#" class="nav-logo">Quillon</a>
+  <button class="nav-btn" onclick="go()">Узнать свой трек →</button>
+</nav>
+
+<section class="hero" id="hero">
+  <canvas id="hC"></canvas>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-tag"><span class="dot"></span> Набор открыт</div>
+    <h1>Реальный опыт. Настоящая команда.<br><span class="grad">Твоя карьера в IT.</span></h1>
+    <p class="hero-sub">Quillon — IT&#8209;компания где ты с&nbsp;первого дня работаешь в&nbsp;команде, стажируешься на&nbsp;живых продуктах и&nbsp;выходишь с&nbsp;опытом, а&nbsp;не&nbsp;сертификатом.</p>
+    <div class="hero-cta"><button class="btn-big" onclick="go()">Узнать свой трек →</button></div>
+    <p class="hero-hint">Бесплатный тест · 2 минуты · Персональный разбор в подарок</p>
+  </div>
+</section>
+
+<section class="quiz" id="quiz">
+  <div class="qbox">
+    <div class="qprog">
+      <div class="qpm"><span>Вопрос <span id="pC">1</span> из <span id="pT">12</span></span><span id="pP">0%</span></div>
+      <div class="qpt"><div class="qpf" id="pF" style="width:0%"></div></div>
+    </div>
+    <div id="qC"></div>
+    <div class="qnav">
+      <button class="qbtn qbs2" id="bB" onclick="qBack()" style="display:none">← Назад</button>
+      <button class="qbtn qbp" id="bN" onclick="qNext()" style="display:none">Далее →</button>
+    </div>
+  </div>
+</section>
+
+<section class="anl" id="anl">
+  <div class="anl-p"><div class="core"></div></div>
+  <h3>Анализируем ответы...</h3>
+  <p>neural_network.process()</p>
+</section>
+
+<section class="res" id="res">
+  <div class="rcon">
+
+    <!-- FORM TOP — first block -->
+    <div class="fc" id="fT">
+      <h2>Заполните форму, чтобы узнать результаты теста и&nbsp;получить бесплатный персональный видеоразбор от&nbsp;эксперта и&nbsp;консультацию</h2>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="fr">
+          <input type="text" class="fi" id="fN" placeholder="Имя" autocomplete="given-name">
+          <input type="tel" class="fi" id="fP" placeholder="Телефон" autocomplete="tel">
+          <input type="email" class="fi" id="fE" placeholder="Email" autocomplete="email">
+        </div>
+        <button class="btn-sub" onclick="sub('t')">Хочу узнать результат →</button>
+        <div class="fcon"><input type="checkbox" checked><label>Даю согласие на обработку персональных данных</label></div>
+      </div>
+    </div>
+
+    <!-- Track: label visible, name blurred, % NOT blurred -->
+    <div class="rc lk" id="rc0">
+      <div class="tr-label">Вам подходит профессия:</div>
+      <div class="tr-row">
+        <span class="tr-name bv" id="rT"></span>
+        <div class="tr-pct">
+          <span class="tr-pct-lbl">совместимость</span>
+          <span class="tr-pct-val" id="rM">93%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Salary: title visible, value blurred -->
+    <div class="rc d1 lk" id="rc1">
+      <div class="stl">💰 Средняя зарплата Junior+ специалиста</div>
+      <div class="sal-row bv">
+        <span class="sal-lbl">В первый год работы:</span>
+        <span class="sal-num" id="rS"></span>
+      </div>
+    </div>
+
+    <!-- Talent: title visible, content blurred -->
+    <div class="rc d2 lk" id="rc2">
+      <div class="stl blue">🔮 Твой скрытый талант</div>
+      <div class="bv">
+        <div class="tl-name" id="rTN"></div>
+        <p class="tl-desc" id="rTD"></p>
+      </div>
+      <div class="bv jb">
+        <h3>Чем занимается специалист</h3>
+        <p id="rJD"></p>
+      </div>
+    </div>
+
+    <!-- Why this track: title visible, reasons blurred -->
+    <div class="rc d3 lk" id="rc3">
+      <div class="stl">✅ Почему мы рекомендуем тебе этот трек</div>
+      <div class="bv" id="rW"></div>
+    </div>
+
+    <!-- Compat: title visible, bars blurred -->
+    <div class="rc d4 lk" id="rc4">
+      <div class="stl">📊 Совместимость с профессиями</div>
+      <div class="bv" id="rCo"></div>
+    </div>
+
+    <!-- Roadmap: title visible, phases blurred -->
+    <div class="rc d5 lk" id="rc5">
+      <div class="stl">📋 Персональный roadmap: 12 месяцев</div>
+      <div class="bv" id="rRM"></div>
+    </div>
+
+    <!-- FORM BOTTOM -->
+    <div class="fc" id="fB" style="animation-delay:.6s">
+      <h2>Заполните форму, чтобы узнать результаты теста и&nbsp;получить бесплатный персональный видеоразбор от&nbsp;эксперта</h2>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="fr">
+          <input type="text" class="fi" id="fN2" placeholder="Имя">
+          <input type="tel" class="fi" id="fP2" placeholder="Телефон">
+          <input type="email" class="fi" id="fE2" placeholder="Email">
+        </div>
+        <button class="btn-sub" onclick="sub('b')">Хочу узнать результат →</button>
+        <div class="fcon"><input type="checkbox" checked><label>Даю согласие на обработку персональных данных</label></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Video block — shown after form submit -->
+<div class="vbl" id="vb">
+  <div class="vi">🎬</div>
+  <h2 id="vbT">Видеоразбор уже летит!</h2>
+  <p>Персональный видеоразбор от IT-эксперта уже в пути. Проверь телефон — мы подготовили разбор специально для тебя с учётом всех твоих ответов.</p>
+</div>
+
+<section class="aft" id="aft">
+  <div class="sh"><h2>Что будет дальше?</h2></div>
+  <div class="steps">
+    <div class="scd"><div class="scd-n">Шаг 1 · через 2 мин</div><div class="scd-i">🎬</div><h3>Персональный видеоразбор</h3><p>Какая профессия подходит, сколько зарабатывают, и почему именно ты впишешься.</p></div>
+    <div class="scd"><div class="scd-n">Шаг 2 · в течение дня</div><div class="scd-i">👨‍💻</div><h3>Разбор с IT-экспертом</h3><p>Практикующий разработчик за 40 минут выстроит личный roadmap.</p></div>
+    <div class="scd"><div class="scd-n">Шаг 3 · после разбора</div><div class="scd-i">🚀</div><h3>7 дней внутри Quillon</h3><p>Ты уже в команде. Если не твоё — скажи, разберёмся вместе.</p></div>
+  </div>
+</section>
+
+<section class="fqs" id="fqs">
+  <div class="sh"><h2>Частые вопросы</h2></div>
+  <div class="acc">
+    <div class="ai"><button class="at2" onclick="ta(this)">У меня нет опыта. Я точно потяну?<span class="ax">+</span></button><div class="ab2">100% наших учеников начинали с нуля. Программа построена так, что ты не можешь застрять: куратор разбирает каждый вопрос, команда поддерживает, а первые 8 недель специально созданы для тех, кто никогда не писал код. Если бы нужен был опыт — мы бы не смогли выпускать Junior+ за 12 месяцев.</div></div>
+    <div class="ai"><button class="at2" onclick="ta(this)">Чем вы отличаетесь от обычных онлайн-школ?<span class="ax">+</span></button><div class="ab2">Мы не онлайн-школа — мы IT-компания, которая учит через работу. С 21-й недели ты берёшь реальные коммерческие заказы через наше агентство и зарабатываешь первые деньги в IT. У нас нет «видеоуроков на диване» — есть распределённые команды, Scrum-спринты, код-ревью от senior-разработчиков и стажировка на живых продуктах. Выпускники уходят не с сертификатом, а с GitHub полным коммитов, стартапом в портфолио и рекомендациями от менторов.</div></div>
+    <div class="ai"><button class="at2" onclick="ta(this)">Я работаю полный день. Реально совмещать?<span class="ax">+</span></button><div class="ab2">Да, 70% наших учеников совмещают с основной работой. Нужно 2-3 часа в день, в основном вечером. Гибкий график: у каждого спринта есть дедлайн, но ты сам выбираешь, когда работать. Единственное, что мы просим — стабильные 12 часов в неделю. Этого достаточно.</div></div>
+    <div class="ai"><button class="at2" onclick="ta(this)">Что если мне не понравится или не подойдёт?<span class="ax">+</span></button><div class="ab2">Первые 7 дней — полный возврат, без вопросов. Дальше — пропорциональный. Но честно: у нас процент возвратов меньше 4%. Большинство понимают ценность, когда видят, как команда собирается и начинается реальная работа.</div></div>
+    <div class="ai"><button class="at2" onclick="ta(this)">А я точно найду работу после?<span class="ax">+</span></button><div class="ab2">90% наших выпускников получают оффер в первые 3 месяца после выпуска. Почему? Потому что у тебя будет то, чего нет у 95% кандидатов: 3-5 командных проектов на GitHub, стартап MVP, опыт коммерческой разработки, рекомендации от менторов и подготовка через LaunchPad — наш карьерный центр, который помогает без ограничения по времени. Мы не бросаем после выпуска.</div></div>
+    <div class="ai"><button class="at2" onclick="ta(this)">Сколько реально зарабатывают джуниоры?<span class="ax">+</span></button><div class="ab2">Наши выпускники выходят на уровень Junior+, а не «голого» Junior. Python Backend + ML: от 120 000 ₽. Flutter: от 100 000 ₽. QA Automation: от 90 000 ₽. Это стартовые цифры — через 6-12 месяцев работы большинство выходят на 150-200 000 ₽. ML-специалисты растут ещё быстрее.</div></div>
+    <div class="ai"><button class="at2" onclick="ta(this)">Что я получу бесплатно?<span class="ax">+</span></button><div class="ab2">Два полноценных бонусных курса: «Промпт-инженеринг и AI для разработчиков» (24 часа) и «Dev English — английский для IT» (20 часов). Они доступны с первого дня и проходятся параллельно основной программе. Это не маркетинговая нарезка — это навыки, которые используют каждый день: от написания промптов до прохождения собеседований на английском.</div></div>
+    <div class="ai"><button class="at2" onclick="ta(this)">Как устроена оплата?<span class="ax">+</span></button><div class="ab2">4 модуля, 2 платежа. Каждый модуль — самостоятельная ценность. Ты платишь за конкретный результат, а не за «доступ к платформе». Если на каком-то этапе решишь, что это не твоё — ты уже получил навыки за оплаченный модуль.</div></div>
+  </div>
+</section>
+
+<footer class="ftr">
+  <span style="font-family:var(--fd);font-weight:800">Quillon</span>
+  <span>© 2026 ООО «Academy»</span>
+</footer>
+<script>
+/* ============================================
+   QUILLON HERO PARTICLES
+   Canvas-анимация с частицами для hero-секции.
+   Требует: <canvas id="hC"> внутри .hero
+   ============================================ */
+
+(function() {
+  var c = document.getElementById('hC');
+  if (!c) return;
+  var x = c.getContext('2d');
+  var w, h, P = [], m = { x: -1e3, y: -1e3 };
+
+  function rs() {
+    var r = c.parentElement.getBoundingClientRect();
+    var d = Math.min(devicePixelRatio || 1, 2);
+    w = r.width; h = r.height;
+    c.width = w * d; c.height = h * d;
+    c.style.width = w + 'px'; c.style.height = h + 'px';
+    x.setTransform(d, 0, 0, d, 0, 0);
+  }
+
+  function init() {
+    rs(); P = [];
+    for (var i = 0; i < 55; i++) {
+      P.push({
+        x: Math.random() * w, y: Math.random() * h,
+        vx: (Math.random() - .5) * .4, vy: (Math.random() - .5) * .4,
+        r: Math.random() * 2 + 1
+      });
+    }
+  }
+
+  function draw() {
+    x.clearRect(0, 0, w, h);
+    for (var i = 0; i < P.length; i++) {
+      for (var j = i + 1; j < P.length; j++) {
+        var dx = P[i].x - P[j].x, dy = P[i].y - P[j].y;
+        var d = Math.sqrt(dx * dx + dy * dy);
+        if (d < 140) {
+          x.strokeStyle = 'rgba(31,78,216,' + (.18 * (1 - d / 140)) + ')';
+          x.lineWidth = 1;
+          x.beginPath(); x.moveTo(P[i].x, P[i].y); x.lineTo(P[j].x, P[j].y); x.stroke();
+        }
+      }
+    }
+    P.forEach(function(p) {
+      var dx = p.x - m.x, dy = p.y - m.y;
+      var d = Math.sqrt(dx * dx + dy * dy);
+      if (d < 150) { p.vx += dx / d * .03; p.vy += dy / d * .03 }
+      p.x += p.vx; p.y += p.vy;
+      p.vx *= .999; p.vy *= .999;
+      if (p.x < 0 || p.x > w) p.vx *= -1;
+      if (p.y < 0 || p.y > h) p.vy *= -1;
+      x.beginPath(); x.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      x.fillStyle = 'rgba(96,165,250,0.5)'; x.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+
+  c.parentElement.addEventListener('mousemove', function(e) {
+    var r = c.parentElement.getBoundingClientRect();
+    m.x = e.clientX - r.left; m.y = e.clientY - r.top;
+  });
+  window.addEventListener('resize', rs);
+  init(); draw();
+})();
+/* ============================================
+   QUILLON SHARED COMPONENTS JS
+   Аккордеон, маска телефона, валидация форм.
+   Подключай на всех страницах.
+   ============================================ */
+
+/* ── Accordion ── */
+function ta(btn) {
+  var it = btn.parentElement;
+  var was = it.classList.contains('op');
+  document.querySelectorAll('.ai').forEach(function(i) { i.classList.remove('op') });
+  if (!was) it.classList.add('op');
+}
+
+/* ── Phone mask (+7 format) ── */
+function initPhoneMasks() {
+  document.querySelectorAll('input[type="tel"]').forEach(function(ph) {
+    ph.addEventListener('input', function() {
+      var v = this.value.replace(/\D/g, '');
+      if (v.startsWith('7') || v.startsWith('8')) v = v.substring(1);
+      var f = '+7';
+      if (v.length > 0) f += ' (' + v.substring(0, 3);
+      if (v.length >= 3) f += ') ' + v.substring(3, 6);
+      if (v.length >= 6) f += '-' + v.substring(6, 8);
+      if (v.length >= 8) f += '-' + v.substring(8, 10);
+      this.value = f;
+    });
+  });
+}
+
+/* ── Form validation ── */
+function validateForm(nameEl, phoneEl, emailEl) {
+  var ok = true;
+  [nameEl, phoneEl, emailEl].forEach(function(f) { f.classList.remove('err') });
+  if (!nameEl.value.trim()) { nameEl.classList.add('err'); ok = false }
+  if (!phoneEl.value.trim() || phoneEl.value.replace(/\D/g, '').length < 11) { phoneEl.classList.add('err'); ok = false }
+  if (!emailEl.value.trim() || !emailEl.value.includes('@')) { emailEl.classList.add('err'); ok = false }
+  return ok;
+}
+
+/* ── Unlock blur ── */
+function unlockBlur() {
+  document.querySelectorAll('.lk').forEach(function(b) { b.classList.remove('lk') });
+}
+
+/* ── Init on DOM ready ── */
+document.addEventListener('DOMContentLoaded', function() {
+  initPhoneMasks();
+});
+/* ===== HERO PARTICLES ===== */
+(function(){
+  const c=document.getElementById('hC');if(!c)return;
+  const x=c.getContext('2d');let w,h,P=[],m={x:-1e3,y:-1e3};
+  function rs(){const r=c.parentElement.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);w=r.width;h=r.height;c.width=w*d;c.height=h*d;c.style.width=w+'px';c.style.height=h+'px';x.setTransform(d,0,0,d,0,0)}
+  function init(){rs();P=[];for(let i=0;i<55;i++)P.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,r:Math.random()*2+1})}
+  function draw(){x.clearRect(0,0,w,h);for(let i=0;i<P.length;i++)for(let j=i+1;j<P.length;j++){const dx=P[i].x-P[j].x,dy=P[i].y-P[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<140){x.strokeStyle=`rgba(31,78,216,${.18*(1-d/140)})`;x.lineWidth=1;x.beginPath();x.moveTo(P[i].x,P[i].y);x.lineTo(P[j].x,P[j].y);x.stroke()}}
+  P.forEach(p=>{const dx=p.x-m.x,dy=p.y-m.y,d=Math.sqrt(dx*dx+dy*dy);if(d<150){p.vx+=dx/d*.03;p.vy+=dy/d*.03}p.x+=p.vx;p.y+=p.vy;p.vx*=.999;p.vy*=.999;if(p.x<0||p.x>w)p.vx*=-1;if(p.y<0||p.y>h)p.vy*=-1;x.beginPath();x.arc(p.x,p.y,p.r,0,Math.PI*2);x.fillStyle='rgba(96,165,250,0.5)';x.fill()});requestAnimationFrame(draw)}
+  c.parentElement.addEventListener('mousemove',e=>{const r=c.parentElement.getBoundingClientRect();m.x=e.clientX-r.left;m.y=e.clientY-r.top});
+  window.addEventListener('resize',rs);init();draw();
+})();
+
+/* ===== SVG HELPERS ===== */
+function svgPat(t){
+  if(t==='grid')return '<svg viewBox="0 0 200 80"><defs><pattern id="g" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0V20H0" fill="none" stroke="rgba(59,130,246,.35)"/></pattern></defs><rect width="200" height="80" fill="rgba(31,78,216,.08)"/><rect width="200" height="80" fill="url(#g)"/></svg>';
+  if(t==='wave')return '<svg viewBox="0 0 200 80"><rect width="200" height="80" fill="rgba(124,58,237,.06)"/><path d="M0 50Q25 20 50 40T100 35T150 45T200 30" fill="none" stroke="rgba(124,58,237,.4)" stroke-width="2"/></svg>';
+  if(t==='zigzag')return '<svg viewBox="0 0 200 80"><rect width="200" height="80" fill="rgba(245,158,11,.05)"/><polyline points="10,60 30,20 50,55 70,15 90,50 110,10 130,45 150,20 170,55 190,25" fill="none" stroke="rgba(245,158,11,.45)" stroke-width="2" stroke-linejoin="round"/></svg>';
+  return '<svg viewBox="0 0 200 80"><rect width="200" height="80" fill="rgba(16,185,129,.05)"/><path d="M100 40A5 5 0 0 1 105 45A10 10 0 0 1 90 45A15 15 0 0 1 115 40A20 20 0 0 1 80 40A25 25 0 0 1 125 40" fill="none" stroke="rgba(16,185,129,.4)" stroke-width="1.5"/></svg>';
+}
+
+function svgMock(v){
+  if(v==='good')return '<svg viewBox="0 0 180 280"><rect width="180" height="280" rx="16" fill="#0F1629"/><rect x="12" y="12" width="156" height="24" rx="6" fill="rgba(31,78,216,.15)"/><rect x="16" y="17" width="50" height="4" rx="2" fill="rgba(96,165,250,.6)"/><rect x="12" y="46" width="156" height="80" rx="10" fill="rgba(31,78,216,.1)" stroke="rgba(59,130,246,.2)"/><rect x="22" y="56" width="80" height="6" rx="3" fill="rgba(240,244,255,.5)"/><rect x="22" y="68" width="120" height="4" rx="2" fill="rgba(148,163,184,.3)"/><rect x="22" y="96" width="60" height="22" rx="6" fill="rgba(31,78,216,.8)"/><rect x="30" y="103" width="44" height="4" rx="2" fill="rgba(255,255,255,.7)"/></svg>';
+  return '<svg viewBox="0 0 180 280"><rect width="180" height="280" rx="16" fill="#0F1629"/><rect x="12" y="46" width="156" height="80" rx="10" fill="rgba(239,68,68,.08)" stroke="rgba(239,68,68,.25)" stroke-dasharray="4 3"/><line x1="12" y1="46" x2="168" y2="126" stroke="rgba(239,68,68,.2)"/><text x="90" y="92" text-anchor="middle" font-size="10" fill="rgba(239,68,68,.5)" font-family="monospace">404</text><rect x="60" y="158" width="110" height="22" rx="6" fill="rgba(239,68,68,.15)" stroke="rgba(239,68,68,.3)"/></svg>';
+}
+
+/* ===== MAZE ===== */
+const MC=12, MR=7;
+let mazeGrid;
+
+function genMaze(){
+  mazeGrid=[];
+  for(let y=0;y<MR;y++){mazeGrid[y]=[];for(let x=0;x<MC;x++)mazeGrid[y][x]={x,y,w:{t:1,r:1,b:1,l:1},v:0}}
+  const s=[];mazeGrid[0][0].v=1;s.push(mazeGrid[0][0]);
+  while(s.length){
+    const c=s[s.length-1],n=[];const{x,y}=c;
+    if(y>0&&!mazeGrid[y-1][x].v)n.push(mazeGrid[y-1][x]);
+    if(x<MC-1&&!mazeGrid[y][x+1].v)n.push(mazeGrid[y][x+1]);
+    if(y<MR-1&&!mazeGrid[y+1][x].v)n.push(mazeGrid[y+1][x]);
+    if(x>0&&!mazeGrid[y][x-1].v)n.push(mazeGrid[y][x-1]);
+    if(n.length){
+      const nx=n[Math.floor(Math.random()*n.length)];
+      if(nx.y<c.y){c.w.t=0;nx.w.b=0}else if(nx.x>c.x){c.w.r=0;nx.w.l=0}else if(nx.y>c.y){c.w.b=0;nx.w.t=0}else{c.w.l=0;nx.w.r=0}
+      nx.v=1;s.push(nx);
+    }else s.pop();
+  }
+  mazeGrid[0][0].w.l=0;mazeGrid[MR-1][MC-1].w.r=0;
+}
+
+function drawMazeGrid(ctx,w,h){
+  const cw=w/MC,ch=h/MR;ctx.strokeStyle='rgba(59,130,246,.5)';ctx.lineWidth=2;ctx.lineCap='round';
+  for(let y=0;y<MR;y++)for(let x=0;x<MC;x++){
+    const c=mazeGrid[y][x],px=x*cw,py=y*ch;
+    if(c.w.t){ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(px+cw,py);ctx.stroke()}
+    if(c.w.r){ctx.beginPath();ctx.moveTo(px+cw,py);ctx.lineTo(px+cw,py+ch);ctx.stroke()}
+    if(c.w.b){ctx.beginPath();ctx.moveTo(px,py+ch);ctx.lineTo(px+cw,py+ch);ctx.stroke()}
+    if(c.w.l){ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(px,py+ch);ctx.stroke()}
+  }
+  ctx.font='bold 12px Syne';ctx.fillStyle='#10B981';ctx.fillText('ВХОД',4,ch/2+4);
+  ctx.fillStyle='#F59E0B';ctx.fillText('ВЫХОД',w-52,h-ch/2+4);
+}
+/* ===== QUIZ DATA ===== */
+const QZ=[
+  {type:'pat',q:'Какой паттерн тебе ближе?',sub:'Выбери интуитивно',opts:[{p:'grid',t:'Чёткая структура',s:{py:2,fl:0,qa:1}},{p:'wave',t:'Плавные формы',s:{py:0,fl:2,qa:0}},{p:'zigzag',t:'Резкие ритмы',s:{py:1,fl:1,qa:1}},{p:'spiral',t:'Свободная абстракция',s:{py:1,fl:2,qa:0}}],aa:1},
+  {type:'iface',q:'Какой интерфейс сделан правильно?',sub:'Сравни два экрана',opts:[{v:'good',t:'Вариант A',s:{py:0,fl:1,qa:2}},{v:'bad',t:'Вариант B',s:{py:0,fl:0,qa:0}}],aa:1},
+  {type:'cards',q:'Ты строишь дом. С чего начинаешь?',opts:[{i:'🧱',t:'Фундамент',s:{py:2,fl:0,qa:1}},{i:'📋',t:'Планировка',s:{py:2,fl:0,qa:1}},{i:'🏛️',t:'Фасад',s:{py:0,fl:2,qa:0}},{i:'👥',t:'Собираю команду',s:{py:1,fl:1,qa:1}}],aa:1},
+  {type:'maze',q:'Найди выход из лабиринта',sub:'Проведи линию от входа до выхода'},
+  {type:'drag',q:'Расставь приоритеты запуска продукта',sub:'Перетащи в порядке важности',items:[{id:'d',t:'🎨 Красивый дизайн',s:{py:0,fl:2,qa:0}},{id:'c',t:'⚙️ Работающий код',s:{py:2,fl:0,qa:1}},{id:'b',t:'🛡️ Нет багов',s:{py:0,fl:0,qa:2}},{id:'s',t:'🚀 Быстрая загрузка',s:{py:1,fl:1,qa:1}}]},
+  {type:'cards',q:'Задача без инструкций. Твой подход:',opts:[{i:'📝',t:'Разбиваю на шаги',s:{py:1,fl:0,qa:2}},{i:'🔍',t:'Гуглю решение',s:{py:1,fl:1,qa:1}},{i:'🗣️',t:'Спрашиваю коллег',s:{py:0,fl:1,qa:1}},{i:'🧪',t:'Пробую всё подряд',s:{py:2,fl:1,qa:0}}],aa:1},
+  {type:'cards',q:'Цель через 1 год?',opts:[{i:'💼',t:'Получить оффер',s:{py:1,fl:1,qa:1}},{i:'🌍',t:'Фриланс на удалёнке',s:{py:1,fl:2,qa:0}},{i:'🚀',t:'Свой продукт',s:{py:2,fl:1,qa:0}},{i:'🔥',t:'Всё и сразу',s:{py:1,fl:1,qa:1}}],aa:1},
+  {type:'cards',q:'Сколько тебе лет?',opts:[{i:'🎓',t:'18 — 24'},{i:'💼',t:'25 — 34'},{i:'🔄',t:'35 — 44'},{i:'🌟',t:'45+'}],aa:1},
+  {type:'cards',q:'Что сейчас не так?',sub:'Выбери самое важное',opts:[{i:'😔',t:'Работа не по душе'},{i:'💰',t:'Мало зарабатываю'},{i:'🏠',t:'Хочу удалёнку'},{i:'🚀',t:'Хочу своё дело'}],aa:1},
+  {type:'cards',q:'Кем ты сейчас работаешь?',opts:[{i:'🏢',t:'Офис'},{i:'🛠️',t:'Производство'},{i:'🎨',t:'Творчество'},{i:'🛒',t:'Продажи'},{i:'📚',t:'Студент'},{i:'🔍',t:'Ищу работу'}],aa:1,cols:'c3'},
+  {type:'city',q:'В каком городе ты живёшь?',sub:'Это влияет на зарплатные рекомендации',cities:['Москва','Санкт-Петербург','Новосибирск','Екатеринбург','Казань','Краснодар','Нижний Новгород','Самара','Ростов-на-Дону','Челябинск']},
+  {type:'cards',q:'Есть ли семья и дети?',sub:'От этого зависит доступное время',opts:[{i:'👤',t:'Нет семьи'},{i:'👫',t:'Есть партнёр'},{i:'👨‍👩‍👦',t:'Семья, 1 ребёнок'},{i:'👨‍👩‍👧‍👦',t:'2+ детей'}],aa:1}
+];
+
+const TQ=QZ.length;
+let cur=0, ans=[], scr={py:0,fl:0,qa:0}, dragItems=[], autoTimer=null;
+
+/* ===== QUIZ ENGINE ===== */
+function go(){
+  document.getElementById('hero').style.display='none';
+  document.getElementById('quiz').classList.add('on');
+  document.getElementById('pT').textContent=TQ;
+  renderQ();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function renderQ(){
+  const s=QZ[cur], el=document.getElementById('qC');
+  const pct=Math.round(cur/TQ*100);
+  document.getElementById('pC').textContent=cur+1;
+  document.getElementById('pP').textContent=pct+'%';
+  document.getElementById('pF').style.width=pct+'%';
+  document.getElementById('bB').style.display=cur>0?'inline-flex':'none';
+  const bn=document.getElementById('bN');
+  const showNext = s.type==='drag' || s.type==='maze' || s.type==='city';
+  bn.style.display = showNext ? 'inline-flex' : 'none';
+  bn.disabled = s.type==='city' && !ans[cur];
+
+  let h='<div class="qq"><h2>'+s.q+'</h2>'+(s.sub?'<p>'+s.sub+'</p>':'')+'</div>';
+
+  if(s.type==='cards'){
+    h+='<div class="qg'+(s.cols?' '+s.cols:'')+'">';
+    s.opts.forEach(function(o,i){h+='<div class="qc'+(ans[cur]===i?' sel':'')+'" onclick="sel('+i+')"><span class="qi">'+o.i+'</span><span class="qt">'+o.t+'</span></div>'});
+    h+='</div>';
+  } else if(s.type==='pat'){
+    h+='<div class="qg">';
+    s.opts.forEach(function(o,i){h+='<div class="qc'+(ans[cur]===i?' sel':'')+'" onclick="sel('+i+')"><div class="psvg">'+svgPat(o.p)+'</div><span class="qt">'+o.t+'</span></div>'});
+    h+='</div>';
+  } else if(s.type==='iface'){
+    h+='<div class="qg">';
+    s.opts.forEach(function(o,i){h+='<div class="qc'+(ans[cur]===i?' sel':'')+'" onclick="sel('+i+')" style="padding:12px"><div class="mlbl">'+o.t+'</div><div class="mscr">'+svgMock(o.v)+'</div></div>'});
+    h+='</div>';
+  } else if(s.type==='city'){
+    h+='<div class="qg c1">';
+    s.cities.forEach(function(c){h+='<div class="qc'+(ans[cur]===c?' sel':'')+'" onclick="selCity(\''+c+'\')"><span class="qt">'+c+'</span></div>'});
+    h+='<div class="qc'+(ans[cur]==='__o'?' sel':'')+'" onclick="selCityOther()"><span class="qi">✏️</span><span class="qt">Другой город</span></div></div>';
+    h+='<div class="co-wrap'+(ans[cur]==='__o'?' vis':'')+'" id="cow"><input class="co-in" id="coI" placeholder="Введи свой город" oninput="onCityInput(this.value)"></div>';
+  } else if(s.type==='maze'){
+    h+='<div class="mzw" id="mW"><canvas id="mC"></canvas><span class="mzh">Проведи линию пальцем или мышью</span></div>';
+  } else if(s.type==='drag'){
+    var items = ans[cur] || s.items.map(function(x,i){return Object.assign({},x,{order:i})});
+    h+='<div class="dl" id="dL">';
+    items.forEach(function(x,i){h+='<div class="di" draggable="true" data-idx="'+i+'"><span class="dh">⠿</span><span class="dn">'+(i+1)+'</span><span class="dt">'+x.t+'</span></div>'});
+    h+='</div>';
+    dragItems=items;
+  }
+  el.innerHTML=h;
+  if(s.type==='maze') setupMaze();
+  if(s.type==='drag') setupDrag();
+  if(s.type==='city'&&ans[cur]==='__o') setTimeout(function(){var i=document.getElementById('coI');if(i)i.focus()},50);
+}
+
+function sel(i){
+  if(autoTimer)clearTimeout(autoTimer);
+  ans[cur]=i;
+  document.querySelectorAll('.qc').forEach(function(c,j){c.classList.toggle('sel',j===i)});
+  if(QZ[cur].aa) autoTimer=setTimeout(function(){qNext()},350);
+}
+
+function selCity(c){
+  if(autoTimer)clearTimeout(autoTimer);
+  ans[cur]=c; renderQ();
+  autoTimer=setTimeout(function(){qNext()},350);
+}
+
+function selCityOther(){
+  if(autoTimer)clearTimeout(autoTimer);
+  ans[cur]='__o'; renderQ();
+  document.getElementById('bN').style.display='inline-flex';
+  document.getElementById('bN').disabled=true;
+  setTimeout(function(){var i=document.getElementById('coI');if(i)i.focus()},50);
+}
+
+function onCityInput(v){
+  if(v.trim()){ans[cur]=v;document.getElementById('bN').disabled=false}
+  else{document.getElementById('bN').disabled=true}
+}
+
+function qBack(){
+  if(autoTimer){clearTimeout(autoTimer);autoTimer=null}
+  if(cur>0){cur--;renderQ()}
+}
+
+function qNext(){
+  if(autoTimer){clearTimeout(autoTimer);autoTimer=null}
+  var s=QZ[cur];
+  if((s.type==='cards'||s.type==='pat'||s.type==='iface')&&s.opts){
+    var o=s.opts[ans[cur]];
+    if(o&&o.s){scr.py+=(o.s.py||0);scr.fl+=(o.s.fl||0);scr.qa+=(o.s.qa||0)}
+  }
+  if(s.type==='drag'&&dragItems.length){
+    dragItems.forEach(function(x,i){var m=i===0?2:1;if(x.s){scr.py+=(x.s.py||0)*m;scr.fl+=(x.s.fl||0)*m;scr.qa+=(x.s.qa||0)*m}});
+  }
+  cur++;
+  if(cur<QZ.length) renderQ(); else showAnalysis();
+}
+
+/* ===== MAZE SETUP ===== */
+function setupMaze(){
+  genMaze();
+  var wr=document.getElementById('mW'), c=document.getElementById('mC');
+  if(!c)return;
+  var r=wr.getBoundingClientRect();c.width=r.width;c.height=r.height;
+  drawMazeGrid(c.getContext('2d'),c.width,c.height);
+  var dl=document.createElement('canvas');dl.width=c.width;dl.height=c.height;
+  dl.style.cssText='width:100%;height:100%;position:absolute;top:0;left:0;z-index:2';
+  wr.appendChild(dl);
+  var dx=dl.getContext('2d');dx.strokeStyle='#10B981';dx.lineWidth=3;dx.lineCap='round';
+  var drawing=false;
+  function gp(e){var r=dl.getBoundingClientRect(),t=e.touches?e.touches[0]:e;return{x:(t.clientX-r.left)*(dl.width/r.width),y:(t.clientY-r.top)*(dl.height/r.height)}}
+  function st(e){e.preventDefault();drawing=true;wr.classList.add('dr');var p=gp(e);dx.beginPath();dx.moveTo(p.x,p.y)}
+  function mv(e){if(!drawing)return;e.preventDefault();var p=gp(e);dx.lineTo(p.x,p.y);dx.stroke()}
+  function en(){drawing=false;ans[cur]='drawn'}
+  dl.addEventListener('mousedown',st);dl.addEventListener('mousemove',mv);dl.addEventListener('mouseup',en);dl.addEventListener('mouseleave',en);
+  dl.addEventListener('touchstart',st,{passive:false});dl.addEventListener('touchmove',mv,{passive:false});dl.addEventListener('touchend',en);
+}
+
+/* ===== DRAG SETUP ===== */
+function setupDrag(){
+  var l=document.getElementById('dL');if(!l)return;
+  var dIdx=null;
+  l.querySelectorAll('.di').forEach(function(it){
+    it.addEventListener('dragstart',function(e){dIdx=+it.dataset.idx;it.classList.add('dg')});
+    it.addEventListener('dragend',function(){it.classList.remove('dg')});
+    it.addEventListener('dragover',function(e){e.preventDefault()});
+    it.addEventListener('drop',function(e){e.preventDefault();var d2=+it.dataset.idx;if(dIdx!==null&&dIdx!==d2){var t=dragItems[dIdx];dragItems.splice(dIdx,1);dragItems.splice(d2,0,t);ans[cur]=dragItems.slice();renderQ()}});
+  });
+  // Touch drag
+  var touchItem=null,touchClone=null,touchIdx=null;
+  l.querySelectorAll('.di').forEach(function(it){
+    it.addEventListener('touchstart',function(e){
+      touchIdx=+it.dataset.idx;touchItem=it;
+      touchClone=it.cloneNode(true);
+      touchClone.style.cssText='position:fixed;z-index:999;opacity:.8;pointer-events:none;width:'+it.offsetWidth+'px';
+      document.body.appendChild(touchClone);
+      var t=e.touches[0];touchClone.style.left=(t.clientX-it.offsetWidth/2)+'px';touchClone.style.top=(t.clientY-24)+'px';
+      it.style.opacity='.3';
+    },{passive:true});
+    it.addEventListener('touchmove',function(e){if(!touchClone)return;e.preventDefault();var t=e.touches[0];touchClone.style.left=(t.clientX-touchClone.offsetWidth/2)+'px';touchClone.style.top=(t.clientY-24)+'px'},{passive:false});
+    it.addEventListener('touchend',function(e){
+      if(!touchClone)return;if(touchItem)touchItem.style.opacity='1';
+      var t=e.changedTouches[0];touchClone.remove();touchClone=null;
+      var els=l.querySelectorAll('.di');var d2=touchIdx;
+      els.forEach(function(el,i){var r=el.getBoundingClientRect();if(t.clientY>r.top&&t.clientY<r.bottom)d2=i});
+      if(touchIdx!==null&&touchIdx!==d2){var tmp=dragItems[touchIdx];dragItems.splice(touchIdx,1);dragItems.splice(d2,0,tmp);ans[cur]=dragItems.slice();renderQ()}
+      touchItem=null;touchIdx=null;
+    });
+  });
+}
+/* ===== ANALYSIS ===== */
+function showAnalysis(){
+  document.getElementById('quiz').classList.remove('on');
+  document.getElementById('anl').classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(function(){document.getElementById('anl').classList.remove('on');showResults()},3000);
+}
+
+function pick(a){return a[Math.floor(Math.random()*a.length)]}
+function rnd(min,max){return Math.floor(Math.random()*(max-min+1))+min}
+
+/* ===== RESULTS ===== */
+function showResults(){
+  var tot=scr.py+scr.fl+scr.qa||1;
+  var trk, tn, sal, taN, taD, jD, reasons;
+
+  if(scr.py>=scr.fl && scr.py>=scr.qa) trk='py';
+  else if(scr.fl>=scr.qa) trk='fl';
+  else trk='qa';
+
+  var topPct=rnd(87,93), secondPct=rnd(64,74), thirdPct=rnd(48,58);
+  var pyP, flP, qaP;
+  if(trk==='py'){
+    pyP=topPct; flP=scr.fl>=scr.qa?secondPct:thirdPct; qaP=scr.fl>=scr.qa?thirdPct:secondPct;
+  } else if(trk==='fl'){
+    flP=topPct; pyP=scr.py>=scr.qa?secondPct:thirdPct; qaP=scr.py>=scr.qa?thirdPct:secondPct;
+  } else {
+    qaP=topPct; pyP=scr.py>=scr.fl?secondPct:thirdPct; flP=scr.py>=scr.fl?thirdPct:secondPct;
+  }
+
+  if(trk==='py'){
+    tn='Python Backend + ML'; sal='от 120 000 ₽';
+    taN='Системное мышление';
+    taD='Ты видишь структуру там, где другие видят хаос. Твой мозг разбирает сложные системы на компоненты и выстраивает логику. Это «архитектурное мышление» — редкий талант, за который компании готовы платить с первого дня.';
+    jD='Backend-разработчик проектирует серверную логику — от API до баз данных. С Python + ML ты работаешь с нейросетями, Data Science и автоматизацией. Самая высокооплачиваемая ветка в IT. Стек выпускника: FastAPI, PostgreSQL, SQLAlchemy, Docker, Git, pytest, NumPy, Pandas, Scikit-learn.';
+    reasons=['Выбрал структуру — основа серверной архитектуры','Ставишь код выше дизайна — мышление backend-разработчика','Разбиваешь задачи на шаги — так проектируют серверную логику','Твои приоритеты совпадают с профилем Python-разработчика'];
+  } else if(trk==='fl'){
+    tn='Flutter Developer'; sal='от 100 000 ₽';
+    taN='Визуальная интуиция';
+    taD='Ты замечаешь детали, которые другие пропускают. Чувствуешь, когда «что-то не так» в интерфейсе ещё до объяснения. Из таких людей вырастают лучшие мобильные разработчики на рынке.';
+    jD='Flutter-разработчик создаёт кроссплатформенные приложения — один код для iOS и Android. Экраны, анимации, взаимодействия. Спрос на Flutter растёт на 40% в год. Стек выпускника: Dart, Flutter, Riverpod, REST API, SQLite, Firebase, Git.';
+    reasons=['Первым замечаешь визуальные несоответствия','Дизайн для тебя — часть продукта, а не обёртка','Чувствуешь UX на интуитивном уровне','Творческий подход к решению технических задач'];
+  } else {
+    tn='QA Automation'; sal='от 90 000 ₽';
+    taN='Аналитическое внимание';
+    taD='Ты видишь ошибки до того, как они станут проблемой. Замечаешь неконсистентности и не успокаиваешься, пока всё не работает идеально. За этот навык компании платят премию.';
+    jD='QA-инженер — автотесты, CI/CD, нагрузочное тестирование. Одна из самых стабильных и востребованных профессий в IT с порогом входа ниже, чем у разработки. Стек выпускника: Python, Selenium, Pytest, Postman, Appium, Docker, CI/CD, Allure, SQL.';
+    reasons=['Разбиваешь задачи на шаги — основа тест-планов','Приоритет «нет багов» — мышление QA-инженера','Внимание к деталям выше среднего','Системный подход к проверке качества'];
+  }
+
+  var mp = trk==='py'?pyP : trk==='fl'?flP : qaP;
+  document.getElementById('rT').textContent = tn;
+  document.getElementById('rM').textContent = mp+'%';
+  document.getElementById('rS').textContent = sal;
+  document.getElementById('rTN').textContent = taN;
+  document.getElementById('rTD').textContent = taD;
+  document.getElementById('rJD').textContent = jD;
+
+  var wy = document.getElementById('rW'); wy.innerHTML = '';
+  reasons.forEach(function(r){wy.innerHTML += '<div class="wi"><span class="ck">✓</span><span>'+r+'</span></div>'});
+
+  var bars = [
+    {n:'Python Backend + ML', p:pyP, top:trk==='py'},
+    {n:'Flutter Developer', p:flP, top:trk==='fl'},
+    {n:'QA Automation', p:qaP, top:trk==='qa'}
+  ].sort(function(a,b){return b.p-a.p});
+
+  var ce = document.getElementById('rCo'); ce.innerHTML = '';
+  bars.forEach(function(b,i){
+    ce.innerHTML += '<div class="cb"><div class="cb-name">'+b.n+(i===0?'<span class="cb-badge">рекомендуем</span>':'')+'</div><div class="cb-track"><div class="cb-fill '+(i===0?'top':'oth')+'" data-w="'+b.p+'">'+b.p+'%</div></div></div>';
+  });
+
+  // ===== ROADMAP — sales-packed copy =====
+  var fAI = '🎁 Промпт-инженеринг и AI';
+  var fEn = '🎁 Dev English — английский для IT';
+  var rW1 = pick(['Командный воркшоп: Git + терминал','Воркшоп: инструменты разработчика','Интенсив: рабочее окружение с нуля']);
+  var rW2 = pick(['Воркшоп по декомпозиции задач','Командный хакатон: первый MVP','Воркшоп: как читать чужой код']);
+  var rW3 = pick(['Карьерный воркшоп: elevator pitch','Воркшоп: подготовка к скринингу','Менторская сессия: сильные стороны']);
+
+  var phases;
+  if(trk==='py'){
+    phases = [
+      {w:'Нед. 1 — 8', t:'Погружение: от нуля до первого кода в команде',
+       d:'Ты не смотришь видео в одиночку — с первого дня ты в команде из 4-6 человек с куратором. Осваиваешь Python, Git, Linux и пишешь первый рабочий код. 70% времени — практика. Параллельно открывается доступ к двум бонусным курсам.',
+       tags:[{t:rW1,c:'bl'},{t:fAI,c:'gr'},{t:fEn,c:'gr'},{t:'Команда + куратор',c:'pr'}]},
+      {w:'Нед. 9 — 20', t:'Backend-разработка на реальном продукте',
+       d:'Django, FastAPI, PostgreSQL, REST API — не на учебных примерах, а на живом продукте Quillon. Ты коммитишь в настоящий репозиторий, проходишь код-ревью и участвуешь в планировании спринтов. Вебинары от практикующих разработчиков раз в 2 недели.',
+       tags:[{t:'🔥 Реальный продукт Quillon',c:'or'},{t:rW2,c:'bl'},{t:'Вебинары от практиков',c:'pr'}]},
+      {w:'Нед. 21 — 36', t:'Коммерческие проекты — первые деньги в IT',
+       d:'Распределённые команды по 10 человек — точно как в настоящей IT-компании: бэкенд, фронтенд, тестировщики. Scrum, спринты, code review, daily-созвоны. Через IT-агентство Quillon ты получаешь доступ к реальным заказам от клиентов и зарабатываешь первые деньги в IT уже на 6-м месяце.',
+       tags:[{t:'💰 Оплачиваемые заказы',c:'or'},{t:'Код-ревью от senior',c:'bl'},{t:'Scrum как в продакшене',c:'pr'},{t:'Docker, CI/CD, pytest',c:'bl'}]},
+      {w:'Нед. 37 — 42', t:'Стартап: воплощаем твою идею в MVP',
+       d:'У тебя есть идея? Мы поможем превратить её в работающий продукт. Команда разрабатывает стартап от концепции до MVP: product discovery, архитектура, бизнес-модель, разработка и презентация. Если идеи пока нет — предложим из пула проверенных гипотез.',
+       tags:[{t:'🚀 Твой стартап MVP',c:'or'},{t:'NumPy, Pandas, Scikit-learn',c:'bl'},{t:rW2,c:'bl'}]},
+      {w:'Нед. 43 — 48', t:'LaunchPad: от портфолио до оффера',
+       d:'Двухэтапная система трудоустройства. Сначала — упаковка: индивидуальное резюме под твой стек, сопроводительные письма, рекомендации от менторов и Team Lead. Затем — подготовка: mock-интервью 1-на-1 с разбором видеозаписи, проработка слабых мест. Помощь в трудоустройстве без ограничения по времени после выпуска.',
+       tags:[{t:rW3,c:'bl'},{t:'📝 Рекомендации от менторов',c:'gr'},{t:'🤝 Прямая связь с HR',c:'or'},{t:'Mock-интервью + видеоразбор',c:'pr'}]}
+    ];
+  } else if(trk==='fl'){
+    phases = [
+      {w:'Нед. 1 — 8', t:'Погружение: от нуля до первого приложения',
+       d:'С первого дня ты в команде из 4-6 человек с куратором. Осваиваешь Dart, Flutter, создаёшь первое рабочее приложение. 70% времени — практика. Параллельно открывается доступ к двум бонусным курсам.',
+       tags:[{t:rW1,c:'bl'},{t:fAI,c:'gr'},{t:fEn,c:'gr'},{t:'Команда + куратор',c:'pr'}]},
+      {w:'Нед. 9 — 20', t:'UI/UX и API на реальном продукте',
+       d:'Дизайн-системы, анимации, Firebase, Riverpod — на живом проекте Quillon. Работаешь в паре с дизайнером, коммитишь в настоящий репозиторий, проходишь код-ревью. Вебинары от практиков раз в 2 недели.',
+       tags:[{t:'🔥 Реальный продукт Quillon',c:'or'},{t:rW2,c:'bl'},{t:'Вебинары от практиков',c:'pr'}]},
+      {w:'Нед. 21 — 36', t:'Коммерческие проекты — первые деньги в IT',
+       d:'Распределённые команды по 10 человек — точно как в настоящей IT-компании: бэкенд, фронтенд, тестировщики. Scrum, спринты, code review, daily-созвоны. Через IT-агентство Quillon ты получаешь реальные заказы от клиентов и зарабатываешь первые деньги в IT уже на 6-м месяце.',
+       tags:[{t:'💰 Оплачиваемые заказы',c:'or'},{t:'Код-ревью от senior',c:'bl'},{t:'Scrum как в продакшене',c:'pr'},{t:'REST API, SQLite, Firebase',c:'bl'}]},
+      {w:'Нед. 37 — 42', t:'Стартап: воплощаем твою идею в приложение',
+       d:'У тебя есть идея для приложения? Мы поможем довести её до публикации в сторы. Команда разрабатывает стартап от концепции до MVP: дизайн, разработка, тестирование, релиз. Если идеи пока нет — предложим из пула проверенных гипотез.',
+       tags:[{t:'🚀 Твой стартап MVP',c:'or'},{t:'📱 Публикация в App Store / Google Play',c:'bl'},{t:rW2,c:'bl'}]},
+      {w:'Нед. 43 — 48', t:'LaunchPad: от портфолио до оффера',
+       d:'Двухэтапная система трудоустройства. Сначала — упаковка: индивидуальное резюме под твой стек, сопроводительные письма, рекомендации от менторов и Team Lead. Затем — подготовка: mock-интервью 1-на-1 с разбором видеозаписи, проработка слабых мест. Помощь в трудоустройстве без ограничения по времени после выпуска.',
+       tags:[{t:rW3,c:'bl'},{t:'📝 Рекомендации от менторов',c:'gr'},{t:'🤝 Прямая связь с HR',c:'or'},{t:'Mock-интервью + видеоразбор',c:'pr'}]}
+    ];
+  } else {
+    phases = [
+      {w:'Нед. 1 — 8', t:'Погружение: от нуля до первого тест-кейса',
+       d:'С первого дня ты в команде из 4-6 человек с куратором. Осваиваешь теорию QA, тест-дизайн, SQL и пишешь первые тест-кейсы. 70% времени — практика. Параллельно открывается доступ к двум бонусным курсам.',
+       tags:[{t:rW1,c:'bl'},{t:fAI,c:'gr'},{t:fEn,c:'gr'},{t:'Команда + куратор',c:'pr'}]},
+      {w:'Нед. 9 — 20', t:'Автоматизация на реальном продукте',
+       d:'Python, Selenium, Pytest, Postman, Appium — на живом проекте Quillon. Ты пишешь автотесты, которые реально запускаются в CI/CD. Вебинары от практикующих QA-инженеров раз в 2 недели.',
+       tags:[{t:'🔥 Реальный продукт Quillon',c:'or'},{t:rW2,c:'bl'},{t:'Вебинары от практиков',c:'pr'}]},
+      {w:'Нед. 21 — 36', t:'Коммерческие проекты — первые деньги в IT',
+       d:'Распределённые команды по 10 человек — точно как в настоящей IT-компании: бэкенд, фронтенд, тестировщики. Scrum, спринты, code review, daily-созвоны. Через IT-агентство Quillon ты получаешь реальные заказы от клиентов и зарабатываешь первые деньги в IT уже на 6-м месяце.',
+       tags:[{t:'💰 Оплачиваемые заказы',c:'or'},{t:'Код-ревью от senior',c:'bl'},{t:'Scrum как в продакшене',c:'pr'},{t:'Docker, CI/CD, Allure',c:'bl'}]},
+      {w:'Нед. 37 — 42', t:'Стартап: воплощаем твою идею в MVP',
+       d:'У тебя есть идея? Мы поможем превратить её в работающий продукт. Ты строишь полную систему тестирования стартапа с нуля — от тест-плана до нагрузочных тестов. Если идеи пока нет — предложим из пула проверенных гипотез.',
+       tags:[{t:'🚀 Твой стартап MVP',c:'or'},{t:'Нагрузочное тестирование',c:'bl'},{t:rW2,c:'bl'}]},
+      {w:'Нед. 43 — 48', t:'LaunchPad: от портфолио до оффера',
+       d:'Двухэтапная система трудоустройства. Сначала — упаковка: индивидуальное резюме под твой стек, сопроводительные письма, рекомендации от менторов и Team Lead. Затем — подготовка: mock-интервью 1-на-1 с разбором видеозаписи, проработка слабых мест. Помощь в трудоустройстве без ограничения по времени после выпуска.',
+       tags:[{t:rW3,c:'bl'},{t:'📝 Рекомендации от менторов',c:'gr'},{t:'🤝 Прямая связь с HR',c:'or'},{t:'Mock-интервью + видеоразбор',c:'pr'}]}
+    ];
+  }
+
+  var rm = document.getElementById('rRM'); rm.innerHTML = '';
+  phases.forEach(function(p){
+    var tg = '';
+    p.tags.forEach(function(x){tg += '<span class="rm-tag '+x.c+'">'+x.t+'</span>'});
+    rm.innerHTML += '<div class="rm-ph"><div class="rm-hd"><span class="rm-wk">'+p.w+'</span><span class="rm-ti">'+p.t+'</span></div><div class="rm-desc">'+p.d+'</div><div class="rm-tags">'+tg+'</div></div>';
+  });
+
+  document.getElementById('res').classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(function(){document.querySelectorAll('.cb-fill').forEach(function(el){el.style.width=el.dataset.w+'%'})},200);
+}
+
+/* ===== FORM SUBMIT ===== */
+function sub(src){
+  var s = src==='t' ? '' : '2';
+  var n=document.getElementById('fN'+s), p=document.getElementById('fP'+s), e=document.getElementById('fE'+s);
+  var ok=true;
+  [n,p,e].forEach(function(f){f.classList.remove('err')});
+  if(!n.value.trim()){n.classList.add('err');ok=false}
+  if(!p.value.trim()||p.value.replace(/\D/g,'').length<11){p.classList.add('err');ok=false}
+  if(!e.value.trim()||!e.value.includes('@')){e.classList.add('err');ok=false}
+  if(!ok) return;
+
+  document.querySelectorAll('.lk').forEach(function(b){b.classList.remove('lk')});
+  document.getElementById('fT').style.display='none';
+  document.getElementById('fB').style.display='none';
+  var vb = document.getElementById('vb');
+  vb.classList.add('on');
+  document.getElementById('vbT').textContent = n.value.trim()+', видеоразбор уже летит!';
+  setTimeout(function(){
+    document.getElementById('aft').classList.add('on');
+    document.getElementById('fqs').classList.add('on');
+  },300);
+  // NO auto-scroll — user stays where they are
+}
+
+/* ===== ACCORDION ===== */
+function ta(btn){
+  var it=btn.parentElement;
+  var was=it.classList.contains('op');
+  document.querySelectorAll('.ai').forEach(function(i){i.classList.remove('op')});
+  if(!was)it.classList.add('op');
+}
+
+/* ===== PHONE FORMAT ===== */
+document.addEventListener('DOMContentLoaded',function(){
+  ['fP','fP2'].forEach(function(id){
+    var ph=document.getElementById(id);
+    if(ph) ph.addEventListener('input',function(){
+      var v=this.value.replace(/\D/g,'');
+      if(v.startsWith('7')||v.startsWith('8'))v=v.substring(1);
+      var f='+7';
+      if(v.length>0)f+=' ('+v.substring(0,3);
+      if(v.length>=3)f+=') '+v.substring(3,6);
+      if(v.length>=6)f+='-'+v.substring(6,8);
+      if(v.length>=8)f+='-'+v.substring(8,10);
+      this.value=f;
+    });
+  });
+});
+
+</script>
+</body>
+</html>
