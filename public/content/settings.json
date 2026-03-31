@@ -1,0 +1,16 @@
+{
+  "meta": {
+    "title": "Обучение Python, Flutter, QA — стажировка в IT | Quillon",
+    "description": "Войдите в IT за 12 месяцев: стажировка на реальных продуктах, коммерческие заказы со 2-го месяца, помощь до оффера. 8 250 руб/мес в рассрочку.",
+    "og_image": "https://quillon.ru/assets/images/og-image.png",
+    "favicon": "/assets/icons/favicon.ico"
+  },
+  "spots_remaining": 15,
+  "cohort_start_date": "2026-04-15",
+  "price_monthly": 8250,
+  "price_hourly": 319,
+  "analytics": {
+    "yandex_metrika_id": null,
+    "google_analytics_id": null
+  }
+}

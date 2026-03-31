@@ -1,0 +1,21 @@
+[
+  { "id": "hero", "visible": true },
+  { "id": "how_money", "visible": true },
+  { "id": "market", "visible": true },
+  { "id": "solution", "visible": true },
+  { "id": "products", "visible": true },
+  { "id": "tracks", "visible": true },
+  { "id": "format", "visible": true },
+  { "id": "quillon_jobs", "visible": true },
+  { "id": "quilly_ai", "visible": true },
+  { "id": "path", "visible": true },
+  { "id": "startup", "visible": true },
+  { "id": "launchpad", "visible": true },
+  { "id": "ai_answer", "visible": true },
+  { "id": "advantages", "visible": true },
+  { "id": "audience", "visible": true },
+  { "id": "pricing", "visible": true },
+  { "id": "faq", "visible": true },
+  { "id": "contact_form", "visible": true },
+  { "id": "final_cta", "visible": true }
+]

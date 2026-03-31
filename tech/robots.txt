@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://tech.quillon.ru/sitemap.xml
+Host: https://tech.quillon.ru

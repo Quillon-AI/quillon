@@ -1,0 +1,583 @@
+/* ==========================================================================
+   Quillon — Components
+   Reusable UI components: navbar, buttons, cards, tags, accordion, badges,
+   grids, form inputs.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   NAVBAR
+   ========================================================================== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  z-index: 1000;
+  background: transparent;
+  transition: background var(--transition),
+              box-shadow var(--transition),
+              border-color var(--transition);
+  border-bottom: 1px solid transparent;
+}
+
+.nav.scrolled {
+  background: rgba(8, 11, 20, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom-color: var(--border);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+/* Logo */
+.nav-logo {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+/* Desktop links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.nav-links a {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  transition: color var(--transition);
+}
+
+.nav-links a:hover {
+  color: var(--text-primary);
+}
+
+/* CTA in navbar */
+.nav-cta {
+  margin-left: var(--space-sm);
+}
+
+/* Right group: theme toggle + burger */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-left: auto;
+}
+
+/* Burger button — hidden on desktop */
+.nav-burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  gap: 6px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.nav-burger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  transition: transform var(--transition), opacity var(--transition);
+}
+
+/* Burger → X animation */
+.nav-burger.open span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.nav-burger.open span:nth-child(2) {
+  opacity: 0;
+}
+.nav-burger.open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Mobile menu overlay */
+.nav-mobile {
+  display: none;
+  position: fixed;
+  top: 72px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(8, 11, 20, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: var(--space-xl) var(--container-pad);
+  flex-direction: column;
+  gap: var(--space-md);
+  z-index: 999;
+}
+
+.nav-mobile.open {
+  display: flex;
+}
+
+.nav-mobile a {
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--border);
+  transition: color var(--transition);
+}
+
+.nav-mobile a:hover {
+  color: var(--text-primary);
+}
+
+
+/* ==========================================================================
+   LUCIDE ICONS
+   ========================================================================== */
+[data-lucide] {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+/* Larger icons for section cards */
+.solution-icon [data-lucide],
+.product-icon-row [data-lucide] {
+  width: 32px;
+  height: 32px;
+  color: var(--accent-light);
+}
+
+.audience-emoji [data-lucide] {
+  width: 28px;
+  height: 28px;
+  color: var(--accent-light);
+}
+
+.quilly-feature-icon [data-lucide],
+.lp-adv-icon [data-lucide] {
+  width: 24px;
+  height: 24px;
+  color: var(--accent-light);
+}
+
+
+/* ==========================================================================
+   THEME TOGGLE
+   ========================================================================== */
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--transition), border-color var(--transition);
+}
+.theme-toggle:hover {
+  color: var(--text-primary);
+  border-color: var(--border-light);
+}
+/* Show/hide icons based on theme */
+.theme-icon-dark { display: block; }
+.theme-icon-light { display: none; }
+[data-theme="light"] .theme-icon-dark { display: none; }
+[data-theme="light"] .theme-icon-light { display: block; }
+
+
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
+
+/* Base */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: 16px 32px;
+  border-radius: var(--btn-radius);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  border: none;
+  transition: all var(--transition);
+  text-decoration: none;
+}
+
+/* Primary — gradient blue */
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  color: #fff;
+}
+
+.btn-primary:hover {
+  transform: scale(1.02);
+  box-shadow: 0 12px 32px rgba(31, 78, 216, 0.4);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+/* Secondary — outlined */
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+}
+
+/* Big CTA — hero / final CTA */
+.btn-big {
+  height: 64px;
+  padding: 0 44px;
+  border-radius: 16px;
+  font-size: 1.125rem;
+  animation: glow 3s ease-in-out infinite;
+}
+
+/* Small — inline, compact */
+.btn-sm {
+  padding: 10px 24px;
+  font-size: 0.875rem;
+}
+
+
+/* ==========================================================================
+   CARDS
+   ========================================================================== */
+.card {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border);
+  border-radius: var(--card-radius);
+  padding: clamp(24px, 5vw, 40px);
+  box-shadow: var(--shadow-card);
+  transition: all var(--transition);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-blue);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Highlighted card — gradient accent border */
+.card-highlight {
+  background: linear-gradient(
+    160deg,
+    rgba(31, 78, 216, 0.12),
+    rgba(124, 58, 237, 0.08)
+  );
+  border: 2px solid var(--border-blue);
+}
+
+
+/* ==========================================================================
+   TAGS
+   ========================================================================== */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+}
+
+/* Color variants */
+.tag-blue {
+  background: rgba(31, 78, 216, 0.15);
+  color: var(--accent-light);
+}
+
+.tag-green {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--success);
+}
+
+.tag-purple {
+  background: rgba(124, 58, 237, 0.15);
+  color: var(--purple);
+}
+
+.tag-orange {
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--warning);
+}
+
+
+/* ==========================================================================
+   ACCORDION / FAQ
+   ========================================================================== */
+.faq-item {
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: border-color var(--transition),
+              background var(--transition);
+}
+
+.faq-item.open {
+  border-color: var(--border-blue);
+  background: var(--bg-card);
+}
+
+/* Question row */
+.faq-q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-primary);
+  gap: var(--space-sm);
+}
+
+/* Arrow icon */
+.faq-q svg,
+.faq-q .faq-arrow {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  transition: transform var(--transition);
+  color: var(--text-secondary);
+}
+
+.faq-item.open .faq-q svg,
+.faq-item.open .faq-q .faq-arrow {
+  transform: rotate(180deg);
+}
+
+/* Answer area */
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0 20px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.faq-item.open .faq-a {
+  max-height: 500px;
+  padding: 0 20px 20px;
+}
+
+
+/* ==========================================================================
+   LIVE BADGE
+   ========================================================================== */
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 6px 16px;
+  border-radius: 9999px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--success);
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.live-dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--success);
+  animation: blink 2s ease-in-out infinite;
+}
+
+.live-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--success);
+  animation: pulse 2s ease-out infinite;
+}
+
+
+/* ==========================================================================
+   GRID UTILITIES
+   ========================================================================== */
+.grid-2,
+.grid-3,
+.grid-4 {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+
+/* ==========================================================================
+   FORM INPUTS
+   ========================================================================== */
+.form-input {
+  display: block;
+  width: 100%;
+  height: 52px;
+  padding: 0 var(--space-sm);
+  background: var(--bg);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  transition: border-color var(--transition),
+              box-shadow var(--transition);
+}
+
+.form-input::placeholder {
+  color: var(--text-muted);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-subtle);
+}
+
+/* Textarea variant */
+textarea.form-input {
+  height: auto;
+  min-height: 120px;
+  padding: var(--space-sm);
+  resize: vertical;
+}
+
+
+/* ==========================================================================
+   Tooltips — hover explanations for English terms
+   ========================================================================== */
+.tip {
+  position: relative;
+  cursor: help;
+  border-bottom: 1px dashed var(--accent-light);
+  color: inherit;
+}
+
+.tip::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-card, #141D35);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 10px 14px;
+  border-radius: 8px;
+  width: max-content;
+  max-width: 280px;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 100;
+  border: 1px solid var(--border);
+  white-space: normal;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.tip:hover::after,
+.tip.active::after {
+  opacity: 1;
+}
+
+/* Ensure tooltip doesn't overflow viewport */
+.tip::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--border);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.tip:hover::before,
+.tip.active::before {
+  opacity: 1;
+}
+
+[data-theme="light"] .tip::after {
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .tip::before {
+  border-top-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Hero CTA with title + subtitle */
+.btn-hero-cta {
+  flex-direction: column;
+  padding: 16px 32px;
+  height: auto;
+  text-align: center;
+  gap: 2px;
+}
+
+.btn-hero-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.btn-hero-sub {
+  font-size: 0.75rem;
+  font-weight: 400;
+  opacity: 0.8;
+}

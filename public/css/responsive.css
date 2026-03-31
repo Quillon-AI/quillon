@@ -1,0 +1,336 @@
+/* ==========================================================================
+   Quillon — Responsive Breakpoints
+   Desktop-first: styles narrow down as viewport shrinks.
+   ========================================================================== */
+
+
+/* ── 1200px — Tablet landscape / small laptops ─────────────────────────── */
+@media (max-width: 1200px) {
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Footer: collapse 5-col into 2-col + full-width brand */
+  .footer-top {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+}
+
+
+/* ── 900px — Tablet: major layout shift ────────────────────────────────── */
+@media (max-width: 900px) {
+
+  /* Navbar → hamburger */
+  .nav-links {
+    display: none;
+  }
+
+  .nav-cta {
+    display: none;
+  }
+
+  .nav-burger {
+    display: flex;
+  }
+
+  /* Grids collapse */
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Format: 2 col → 1 col */
+  .format-layout {
+    grid-template-columns: 1fr;
+  }
+
+  /* AI answer: 2 col → 1 col */
+  .ai-answer-layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  /* Pricing: 2 col → 1 col */
+  .pricing-layout {
+    grid-template-columns: 1fr;
+  }
+
+  /* Footer: 1 col on tablet */
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+
+  /* Section padding decrease */
+  section {
+    padding-top: var(--space-2xl);
+    padding-bottom: var(--space-2xl);
+  }
+
+  /* Hero adjustments */
+  #hero {
+    padding-top: calc(72px + var(--space-2xl));
+    min-height: auto;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  /* Audience: 3 columns on mid-tablet */
+  .audience-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Jobs mockup: narrower sidebar on tablet */
+  .jobs-sidebar {
+    width: 140px;
+    min-width: 140px;
+  }
+  .jobs-sidebar-logo-text { font-size: 0.85rem; }
+  .jobs-sidebar-link { font-size: 0.75rem; padding: 7px 14px; }
+  .jobs-taskcard-title { font-size: 0.85rem; }
+  .jobs-search-input { max-width: 240px; }
+}
+
+
+/* ── 640px — Phone: single column ──────────────────────────────────────── */
+@media (max-width: 640px) {
+
+  /* Prevent horizontal scroll */
+  .hero-supertag,
+  .hero-tagline {
+    font-size: 0.65rem;
+    word-break: break-word;
+  }
+
+  .hero-tagline {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  /* Container safety */
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+    max-width: 100%;
+  }
+
+  /* All grids → single column */
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  /* Format → 1 col (already handled, but be explicit) */
+  .format-layout {
+    grid-template-columns: 1fr;
+  }
+
+  /* Pricing → 1 col */
+  .pricing-layout {
+    grid-template-columns: 1fr;
+  }
+
+  /* Footer → 1 col */
+  .footer-top {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-brand {
+    grid-column: auto;
+  }
+
+  /* Footer bottom → stack */
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer-legal-links {
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  /* Hero CTAs stack vertically */
+  .hero-ctas {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-ctas .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Typography scale down */
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  /* Cards reduce padding */
+  .card {
+    padding: var(--space-md);
+  }
+
+  /* Section padding */
+  section {
+    padding-top: var(--space-xl);
+    padding-bottom: var(--space-xl);
+  }
+
+  /* Buttons: ensure minimum touch target */
+  .btn {
+    min-height: 44px;
+  }
+
+  /* Stepper tighter */
+  .stepper {
+    padding-left: 32px;
+  }
+
+  .step-num {
+    left: -32px;
+    width: 26px;
+    height: 26px;
+    font-size: 0.7rem;
+  }
+
+  .step-line {
+    left: 12px;
+  }
+
+  /* Advantages / audience grids */
+  .advantages-grid,
+  .audience-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* How money cards stack */
+  .how-money-cards {
+    grid-template-columns: 1fr;
+  }
+
+  /* Jobs features stack */
+  .jobs-features {
+    grid-template-columns: 1fr;
+  }
+
+  /* Jobs stats stack */
+  .jobs-stats {
+    grid-template-columns: 1fr;
+  }
+
+  /* Jobs mockup: hide sidebar on phone, stack layout */
+  .jobs-sidebar { display: none; }
+  .jobs-mockup-body { min-height: 300px; }
+  .jobs-main { padding: var(--space-sm); }
+  .jobs-searchbar { flex-direction: column; align-items: stretch; gap: 8px; }
+  .jobs-search-input { max-width: none; }
+  .jobs-taskcard { padding: 12px 14px; }
+  .jobs-taskcard-top { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .jobs-taskcard-price { font-size: 0.95rem; }
+  .jobs-taskcard-title { white-space: normal; font-size: 0.85rem; }
+
+  /* Launchpad counters */
+  .lp-counters {
+    gap: var(--space-sm);
+  }
+
+  /* Startup */
+  .startup-highlight {
+    padding: var(--space-lg);
+  }
+
+  .startup-why {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  /* Quilly AI */
+  .quilly-benefit {
+    padding: var(--space-lg);
+  }
+
+  /* Contact form */
+  .contact-form-wrapper {
+    padding: var(--space-lg);
+  }
+
+  /* Chat demo */
+  .chat-demo-bubble {
+    max-width: 90%;
+  }
+
+  /* Payment options stack nicely */
+  .payment-option {
+    flex-direction: column;
+    gap: 2px;
+  }
+}
+
+
+/* ── 480px — Small phone: minimal adjustments ──────────────────────────── */
+@media (max-width: 480px) {
+
+  /* Further reduce card padding */
+  .card {
+    padding: var(--space-sm);
+    border-radius: 16px;
+  }
+
+  /* FAQ tighter */
+  .faq-q {
+    padding: var(--space-sm);
+    font-size: 0.9375rem;
+  }
+
+  /* Big button adapts */
+  .btn-big {
+    height: 56px;
+    padding: 0 var(--space-lg);
+    font-size: 1rem;
+  }
+
+  /* Detail blocks reduce padding */
+  .detail-block {
+    padding-left: var(--space-sm);
+  }
+
+  /* Track cards */
+  .track-junior {
+    font-size: 0.85rem;
+  }
+}
+
+
+/* ── Reduced Motion ────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-on-scroll {
+    opacity: 1;
+    transform: none;
+  }
+}

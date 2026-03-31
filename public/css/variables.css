@@ -1,0 +1,81 @@
+/* ==========================================================================
+   Quillon Design System — CSS Custom Properties
+   All design tokens live here. Never hardcode values in component CSS.
+   ========================================================================== */
+
+:root {
+  /* ── Colors: Backgrounds ─────────────────────────────────────────────── */
+  --bg-deep:          #080B14;           /* Deepest background (body)        */
+  --bg:               #0F172A;           /* Section alternate background     */
+  --bg-card:          #141D35;           /* Card background (slightly light) */
+
+  /* ── Colors: Accent ──────────────────────────────────────────────────── */
+  --accent:           #1F4ED8;           /* Primary accent (CTA, links)      */
+  --accent-light:     #3B6FFF;           /* Hover states, gradients          */
+  --accent-glow:      rgba(31, 78, 216, 0.35);  /* Background glow spots   */
+  --accent-subtle:    rgba(31, 78, 216, 0.12);  /* Focus rings, tints      */
+
+  /* ── Colors: Text ────────────────────────────────────────────────────── */
+  --text-primary:     #F0F4FF;           /* Headings, primary copy           */
+  --text-secondary:   #94A3B8;           /* Descriptions, secondary copy     */
+  --text-muted:       #4A5568;           /* Disabled, placeholder            */
+  --text-blue:        #60A5FA;           /* Inline accent text               */
+
+  /* ── Colors: Borders ─────────────────────────────────────────────────── */
+  --border:           rgba(255, 255, 255, 0.06);  /* Default card borders   */
+  --border-blue:      rgba(31, 78, 216, 0.4);     /* Hover / active borders */
+  --border-light:     rgba(255, 255, 255, 0.12);  /* Stronger subtle border */
+
+  /* ── Colors: Semantic ────────────────────────────────────────────────── */
+  --success:          #10B981;
+  --error:            #EF4444;
+  --warning:          #F59E0B;
+  --purple:           #7C3AED;
+
+  /* ── Typography ──────────────────────────────────────────────────────── */
+  --font-display:     'Syne', sans-serif;
+  --font-body:        'DM Sans', sans-serif;
+  --font-mono:        'JetBrains Mono', monospace;
+
+  /* ── Spacing (8px grid) ──────────────────────────────────────────────── */
+  --space-xs:         8px;
+  --space-sm:         16px;
+  --space-md:         24px;
+  --space-lg:         32px;
+  --space-xl:         48px;
+  --space-2xl:        64px;
+  --space-3xl:        96px;
+
+  /* ── Layout ──────────────────────────────────────────────────────────── */
+  --container-max:    1200px;
+  --container-pad:    clamp(16px, 4vw, 48px);
+  --section-pad:      clamp(64px, 10vw, 96px);
+  --card-radius:      24px;
+  --btn-radius:       12px;
+
+  /* ── Effects ─────────────────────────────────────────────────────────── */
+  --glass-bg:         rgba(15, 23, 42, 0.6);
+  --glass-blur:       blur(16px);
+  --shadow-card:      0 1px 0 rgba(255, 255, 255, 0.04) inset,
+                      0 8px 32px rgba(0, 0, 0, 0.5);
+  --transition:       0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --spring:           cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ==========================================================================
+   Light Theme
+   ========================================================================== */
+[data-theme="light"] {
+  --bg-deep: #F8FAFC;
+  --bg: #FFFFFF;
+  --bg-card: #F1F5F9;
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #94A3B8;
+  --border: rgba(0, 0, 0, 0.08);
+  --border-light: rgba(0, 0, 0, 0.12);
+  --border-blue: rgba(31, 78, 216, 0.3);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  /* Accent colors stay the same */
+}
