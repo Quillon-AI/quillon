@@ -1,17 +1,8 @@
 /* ========================================
        INITIALIZATION
+       Called by renderer.js after DOM is populated
        ======================================== */
-    document.addEventListener('DOMContentLoaded', () => {
-      // Initialize Lucide icons
-      if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-      } else {
-        // Lucide loaded with defer, wait for it
-        document.querySelector('script[src*="lucide"]').addEventListener('load', () => {
-          lucide.createIcons();
-        });
-      }
-
+    window.initApp = function () {
       initTheme();
       initNavbar();
       initTabs();
@@ -29,7 +20,7 @@
       initFloatingTags();
       initHeroMorphText();
       initDataFlow();
-    });
+    };
 
     /* ========================================
        THEME — light/dark toggle + persistence

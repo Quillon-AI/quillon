@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Согласие на получение рекламных материалов — Quillon</title>
+  <meta name="robots" content="noindex, follow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <style>
+    .legal-page { max-width: 900px; margin: 0 auto; padding: 32px 24px 80px; min-height: 100vh; }
+    .legal-page__back { display: inline-flex; align-items: center; gap: 6px; font-size: 0.875rem; color: var(--accent); text-decoration: none; margin-bottom: 24px; }
+    .legal-page__back:hover { opacity: 0.8; }
+    .legal-page__title { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: var(--text); margin-bottom: 32px; }
+    .legal-page__pdf { width: 100%; height: 80vh; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-card); }
+    .legal-page__fallback { margin-top: 16px; font-size: 0.875rem; color: var(--text-muted); }
+    .legal-page__fallback a { color: var(--accent); text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="legal-page">
+    <a href="/" class="legal-page__back">&larr; На главную</a>
+    <h1 class="legal-page__title">Согласие на получение рекламных материалов</h1>
+    <iframe class="legal-page__pdf" src="/docs/ad-consent.pdf" title="Согласие на получение рекламных материалов"></iframe>
+    <p class="legal-page__fallback">Если документ не отображается, <a href="/docs/ad-consent.pdf" target="_blank" rel="noopener">скачайте PDF</a>.</p>
+  </div>
+</body>
+</html>

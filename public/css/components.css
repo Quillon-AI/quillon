@@ -43,6 +43,7 @@
   font-size: 1.4rem;
   color: var(--text-primary);
   white-space: nowrap;
+  margin-right: var(--space-lg, 24px);
 }
 
 /* Desktop links */

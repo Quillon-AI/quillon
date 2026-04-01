@@ -115,6 +115,7 @@ section {
   color: var(--text-secondary);
   max-width: 640px;
   line-height: 1.7;
+  margin-top: var(--space-sm, 12px);
 }
 
 /* Gradient text utility */

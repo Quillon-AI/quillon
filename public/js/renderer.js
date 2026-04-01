@@ -255,6 +255,7 @@
               </div>
             `).join('')}
           </div>
+          <p class="solution-tech-link">Подробнее о продуктах, стеке и команде — <a href="https://tech.quillon.ru" target="_blank" rel="noopener">tech.quillon.ru</a></p>
         </div>
       </section>`,
 
@@ -676,31 +677,75 @@
     contact_form: (data) => `
       <section id="contact_form" class="animate-on-scroll ${sectionBgClass()}">
         <div class="container">
-          <div class="contact-form-wrapper">
-            ${sectionHeader(data)}
-            <form data-form="contact" class="contact-form" novalidate>
-              <div class="contact-form-fields">
-                <div class="form-group">
-                  <label for="contact-name">Имя</label>
-                  <input type="text" id="contact-name" name="name" placeholder="Как тебя зовут?" required>
+          <div class="contact-form-layout">
+            <div class="contact-form-info">
+              <span class="section-label">${data.label}</span>
+              <h2>${data.title}</h2>
+              <p class="contact-form-desc">${data.subtitle}</p>
+              <div class="contact-form-points">
+                <div class="contact-form-point">
+                  <span class="contact-form-point-icon"></span>
+                  <div>
+                    <div class="contact-form-point-title">Персональный разбор</div>
+                    <div class="contact-form-point-desc">Подберём направление под ваш опыт, цели и график</div>
+                  </div>
                 </div>
-                <div class="form-group">
-                  <label for="contact-phone">Телефон</label>
-                  <input type="tel" id="contact-phone" name="phone" placeholder="+7 (___) ___-__-__" required>
+                <div class="contact-form-point">
+                  <span class="contact-form-point-icon"></span>
+                  <div>
+                    <div class="contact-form-point-title">Прогноз заработка</div>
+                    <div class="contact-form-point-desc">Покажем, сколько зарабатывают участники на вашем треке</div>
+                  </div>
                 </div>
-                <div class="form-group">
-                  <label for="contact-email">Email</label>
-                  <input type="email" id="contact-email" name="email" placeholder="your@email.com">
+                <div class="contact-form-point">
+                  <span class="contact-form-point-icon"></span>
+                  <div>
+                    <div class="contact-form-point-title">Мини-курс в подарок</div>
+                    <div class="contact-form-point-desc">Vibe Coding &amp; Prompt Engineering — сразу после записи</div>
+                  </div>
+                </div>
+                <div class="contact-form-point">
+                  <span class="contact-form-point-icon"></span>
+                  <div>
+                    <div class="contact-form-point-title">Без обязательств</div>
+                    <div class="contact-form-point-desc">Консультация ни к чему не обязывает — решение всегда за вами</div>
+                  </div>
                 </div>
               </div>
-              <div class="contact-form-consent">
-                <label class="checkbox-label">
-                  <input type="checkbox" name="consent" required>
-                  <span>${data.consent}</span>
-                </label>
+            </div>
+            <div class="contact-form-card">
+              <div class="contact-form-bonus">
+                <span class="contact-form-bonus-badge">Бонус</span>
+                <span class="contact-form-bonus-text">Бесплатный мини-курс «Vibe Coding & Prompt Engineering» — сразу после записи</span>
               </div>
-              <button type="submit" class="btn btn-primary btn-big contact-form-submit">${data.cta.text}</button>
-            </form>
+              <form data-form="contact" class="contact-form" novalidate>
+                <div class="contact-form-fields">
+                  <div class="form-group">
+                    <label for="contact-name">Имя</label>
+                    <input type="text" id="contact-name" name="name" placeholder="Как тебя зовут?" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="contact-phone">Телефон</label>
+                    <input type="tel" id="contact-phone" name="phone" placeholder="+7 (___) ___-__-__" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="contact-email">Email</label>
+                    <input type="email" id="contact-email" name="email" placeholder="Ваша почта">
+                  </div>
+                </div>
+                <div class="contact-form-consent">
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="consent" required>
+                    <span>Даю согласие на обработку <a href="/docs/consent.pdf" target="_blank" rel="noopener">персональных данных</a></span>
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="ad_consent">
+                    <span>Даю согласие на получение <a href="/docs/ad-consent.pdf" target="_blank" rel="noopener">рекламных материалов</a></span>
+                  </label>
+                </div>
+                <button type="submit" class="btn btn-primary btn-big contact-form-submit">${data.cta.text}</button>
+              </form>
+            </div>
           </div>
         </div>
       </section>`,
@@ -797,7 +842,7 @@
         <div class="footer-divider"></div>
         <div class="footer-bottom">
           <div class="footer-legal">
-            <span>${data.legal.company}</span> · <span>ИНН ${data.legal.inn}</span><br>
+            <span>${data.legal.company}</span>${data.legal.inn ? ' · <span>ИНН ' + data.legal.inn + '</span>' : ''}<br>
             <span>${data.legal.address}</span>
           </div>
           <div class="footer-legal-links">

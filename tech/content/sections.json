@@ -1,0 +1,11 @@
+[
+  { "id": "hero", "visible": true },
+  { "id": "studio", "visible": true },
+  { "id": "products", "visible": true },
+  { "id": "tech_stack", "visible": true },
+  { "id": "ai_capabilities", "visible": true },
+  { "id": "principles", "visible": true },
+  { "id": "contact", "visible": true },
+  { "id": "faq", "visible": true },
+  { "id": "careers", "visible": true }
+]

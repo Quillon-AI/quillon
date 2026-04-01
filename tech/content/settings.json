@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "title": "IT-студия разработки сайтов и приложений на заказ — Quillon Tech",
+    "description": "Закажите разработку сайта, мобильного приложения, Telegram-бота или AI-интеграции. Бесплатная оценка и ТЗ за 24 часа. IT-студия полного цикла. Проекты от 5 000 руб.",
+    "keywords": "заказать разработку сайта, IT студия, разработка приложений на заказ, веб студия, разработка мобильных приложений, AI интеграции для бизнеса, Telegram бот на заказ, создание сайта под ключ",
+    "og_title": "IT-студия разработки на заказ — Quillon Tech",
+    "og_description": "Разработка сайтов, приложений, Telegram-ботов и AI-решений для бизнеса. Бесплатная оценка за 24 часа.",
+    "og_image": "https://tech.quillon.ru/og-image.png",
+    "canonical": "https://tech.quillon.ru/",
+    "locale": "ru_RU",
+    "site_name": "Quillon Tech"
+  },
+  "analytics": {
+    "yandex_metrika_id": 108311343
+  },
+  "contact": {
+    "email": "hello@quillon.ru",
+    "studio_email": "studio@quillon.ru",
+    "telegram": "https://t.me/quillon_tech_bot",
+    "github": "https://github.com/Quillon-AI"
+  }
+}

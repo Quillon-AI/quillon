@@ -424,8 +424,8 @@
     "company": {
       "name": "Quillon",
       "tagline": "IT-компания. Продукты. Технологии. Команда.",
-      "legal": "ООО \"Digital\" / ООО \"Academy\"",
-      "city": "Казань, Россия"
+      "legal": "Quillon",
+      "city": "Россия, Россия"
     },
     "navigation": [
       {
@@ -511,6 +511,6 @@
         "url": "https://lms.quillon.ru"
       }
     ],
-    "copyright": "Quillon, 2026. Казань."
+    "copyright": "Quillon, 2026. Россия."
   }
 }
