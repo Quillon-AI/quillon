@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quillon Admin</title>
+  <style>
+    :root {
+      --bg: #0a0e1a;
+      --surface: #111827;
+      --surface2: #1f2937;
+      --border: #374151;
+      --text: #f3f4f6;
+      --text2: #9ca3af;
+      --blue: #1F4ED8;
+      --blue-hover: #2563EB;
+      --green: #10B981;
+      --red: #EF4444;
+      --radius: 8px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    /* Login */
+    .login-wrap { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+    .login-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 40px; width: 380px; }
+    .login-box h1 { font-size: 24px; margin-bottom: 8px; }
+    .login-box p { color: var(--text2); margin-bottom: 24px; font-size: 14px; }
+    .login-box .error { color: var(--red); font-size: 13px; margin-bottom: 12px; display: none; }
+
+    /* Form elements */
+    input, textarea, select {
+      width: 100%; padding: 10px 14px; background: var(--surface2); border: 1px solid var(--border);
+      border-radius: var(--radius); color: var(--text); font-size: 14px; outline: none; font-family: inherit;
+    }
+    input:focus, textarea:focus, select:focus { border-color: var(--blue); }
+    textarea { resize: vertical; min-height: 80px; }
+    label { display: block; font-size: 13px; color: var(--text2); margin-bottom: 6px; margin-top: 16px; }
+    .field-group { margin-bottom: 4px; }
+
+    button {
+      padding: 10px 20px; border: none; border-radius: var(--radius); cursor: pointer;
+      font-size: 14px; font-weight: 500; transition: all 0.2s;
+    }
+    .btn-primary { background: var(--blue); color: #fff; width: 100%; margin-top: 20px; }
+    .btn-primary:hover { background: var(--blue-hover); }
+    .btn-sm { padding: 6px 14px; font-size: 13px; }
+    .btn-save { background: var(--green); color: #fff; }
+    .btn-save:hover { background: #059669; }
+    .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text2); }
+    .btn-outline:hover { border-color: var(--text2); color: var(--text); }
+    .btn-danger { background: var(--red); color: #fff; }
+
+    /* Layout */
+    .app { display: none; }
+    .header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 24px; background: var(--surface); border-bottom: 1px solid var(--border);
+    }
+    .header h1 { font-size: 18px; }
+    .header-right { display: flex; align-items: center; gap: 12px; }
+
+    .tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); background: var(--surface); padding: 0 24px; }
+    .tab {
+      padding: 12px 20px; cursor: pointer; font-size: 14px; color: var(--text2);
+      border-bottom: 2px solid transparent; transition: all 0.2s;
+    }
+    .tab:hover { color: var(--text); }
+    .tab.active { color: var(--blue); border-bottom-color: var(--blue); }
+
+    .content { padding: 24px; max-width: 1000px; margin: 0 auto; }
+
+    /* Section nav */
+    .section-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .section-btn {
+      padding: 8px 16px; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 20px; color: var(--text2); cursor: pointer; font-size: 13px; transition: all 0.2s;
+    }
+    .section-btn:hover { border-color: var(--text2); color: var(--text); }
+    .section-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+
+    /* Editor */
+    .editor-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .editor-header h2 { font-size: 20px; }
+    .editor-actions { display: flex; gap: 8px; }
+
+    .section-editor { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .field-full { grid-column: 1 / -1; }
+
+    .array-item {
+      background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 16px; margin-bottom: 12px; position: relative;
+    }
+    .array-item .remove-btn {
+      position: absolute; top: 8px; right: 8px; background: none; border: none;
+      color: var(--red); cursor: pointer; font-size: 18px; padding: 4px 8px; opacity: 0.6;
+    }
+    .array-item .remove-btn:hover { opacity: 1; }
+    .array-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .array-header h4 { font-size: 14px; color: var(--text2); }
+    .add-btn {
+      background: transparent; border: 1px dashed var(--border); color: var(--text2);
+      padding: 12px; border-radius: var(--radius); cursor: pointer; width: 100%;
+      font-size: 13px; margin-top: 8px; transition: all 0.2s;
+    }
+    .add-btn:hover { border-color: var(--blue); color: var(--blue); }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 24px; right: 24px; padding: 12px 20px;
+      border-radius: var(--radius); color: #fff; font-size: 14px;
+      transform: translateY(100px); opacity: 0; transition: all 0.3s; z-index: 100;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.success { background: var(--green); }
+    .toast.error { background: var(--red); }
+
+    /* JSON mode */
+    .json-editor {
+      width: 100%; min-height: 400px; font-family: 'JetBrains Mono', monospace;
+      font-size: 13px; line-height: 1.5; tab-size: 2;
+    }
+
+    .mode-toggle { display: flex; gap: 4px; background: var(--surface2); border-radius: 6px; padding: 2px; }
+    .mode-toggle button {
+      padding: 6px 12px; border-radius: 4px; font-size: 12px;
+      background: transparent; color: var(--text2); border: none; cursor: pointer;
+    }
+    .mode-toggle button.active { background: var(--blue); color: #fff; }
+
+    /* File tabs */
+    .file-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+    .file-tab {
+      padding: 6px 14px; background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 6px; color: var(--text2); cursor: pointer; font-size: 13px;
+    }
+    .file-tab.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+
+    .unsaved { color: var(--red); font-size: 12px; margin-left: 8px; }
+  </style>
+</head>
+<body>
+  <!-- Login -->
+  <div class="login-wrap" id="loginScreen">
+    <div class="login-box">
+      <h1>Quillon Admin</h1>
+      <p>Управление контентом сайтов</p>
+      <div class="error" id="loginError">Неверный логин или пароль</div>
+      <div class="field-group">
+        <label>Логин</label>
+        <input type="text" id="loginUser" value="admin" autocomplete="username">
+      </div>
+      <div class="field-group">
+        <label>Пароль</label>
+        <input type="password" id="loginPass" autocomplete="current-password">
+      </div>
+      <button class="btn-primary" onclick="login()">Войти</button>
+    </div>
+  </div>
+
+  <!-- App -->
+  <div class="app" id="app">
+    <div class="header">
+      <h1>Quillon Admin</h1>
+      <div class="header-right">
+        <span id="unsavedBadge" class="unsaved" style="display:none">Есть несохранённые изменения</span>
+        <button class="btn-sm btn-outline" onclick="logout()">Выйти</button>
+      </div>
+    </div>
+
+    <div class="tabs" id="siteTabs"></div>
+
+    <div class="content">
+      <div class="file-tabs" id="fileTabs"></div>
+
+      <div class="editor-header">
+        <div style="display:flex;align-items:center;gap:12px">
+          <h2 id="editorTitle">Выберите секцию</h2>
+        </div>
+        <div class="editor-actions">
+          <div class="mode-toggle">
+            <button class="active" onclick="setMode('visual')" id="modeVisual">Визуальный</button>
+            <button onclick="setMode('json')" id="modeJson">JSON</button>
+          </div>
+          <button class="btn-sm btn-save" onclick="save()">Сохранить</button>
+        </div>
+      </div>
+
+      <div class="section-nav" id="sectionNav"></div>
+
+      <div id="editorArea">
+        <div class="section-editor" id="visualEditor"></div>
+        <textarea class="json-editor" id="jsonEditor" style="display:none"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    let token = localStorage.getItem('quillon_token');
+    let sites = [];
+    let currentSite = null;
+    let currentFile = null;
+    let contentData = null;
+    let currentSection = null;
+    let editMode = 'visual';
+    let hasUnsaved = false;
+
+    // Init
+    if (token) loadApp();
+
+    async function login() {
+      const user = document.getElementById('loginUser').value;
+      const pass = document.getElementById('loginPass').value;
+      try {
+        const res = await api('POST', '/api/login', { username: user, password: pass });
+        token = res.token;
+        localStorage.setItem('quillon_token', token);
+        loadApp();
+      } catch {
+        document.getElementById('loginError').style.display = 'block';
+      }
+    }
+
+    function logout() {
+      token = null;
+      localStorage.removeItem('quillon_token');
+      document.getElementById('loginScreen').style.display = 'flex';
+      document.getElementById('app').style.display = 'none';
+    }
+
+    async function loadApp() {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      try {
+        sites = await api('GET', '/api/sites');
+        renderSiteTabs();
+        if (sites.length) selectSite(sites[0].id);
+      } catch {
+        logout();
+      }
+    }
+
+    function renderSiteTabs() {
+      const el = document.getElementById('siteTabs');
+      el.innerHTML = sites.map(s =>
+        `<div class="tab ${currentSite === s.id ? 'active' : ''}" onclick="selectSite('${s.id}')">${s.name}</div>`
+      ).join('');
+    }
+
+    async function selectSite(siteId) {
+      currentSite = siteId;
+      const site = sites.find(s => s.id === siteId);
+      renderSiteTabs();
+      renderFileTabs(site.files);
+      await selectFile(site.files[0]);
+    }
+
+    function renderFileTabs(files) {
+      const el = document.getElementById('fileTabs');
+      if (files.length <= 1) { el.innerHTML = ''; return; }
+      el.innerHTML = files.map(f =>
+        `<div class="file-tab ${currentFile === f ? 'active' : ''}" onclick="selectFile('${f}')">${f}</div>`
+      ).join('');
+    }
+
+    async function selectFile(file) {
+      currentFile = file;
+      const site = sites.find(s => s.id === currentSite);
+      renderFileTabs(site.files);
+      contentData = await api('GET', `/api/sites/${currentSite}/${file}`);
+      currentSection = null;
+      renderSections();
+      // Auto-select first section
+      const sections = getSections();
+      if (sections.length) selectSection(sections[0]);
+    }
+
+    function getSections() {
+      if (!contentData) return [];
+      if (Array.isArray(contentData)) return ['(array)'];
+      return Object.keys(contentData);
+    }
+
+    function renderSections() {
+      const nav = document.getElementById('sectionNav');
+      const sections = getSections();
+      nav.innerHTML = sections.map(s =>
+        `<div class="section-btn ${currentSection === s ? 'active' : ''}" onclick="selectSection('${s}')">${s}</div>`
+      ).join('');
+    }
+
+    function selectSection(section) {
+      currentSection = section;
+      renderSections();
+      renderEditor();
+    }
+
+    function setMode(mode) {
+      editMode = mode;
+      document.getElementById('modeVisual').classList.toggle('active', mode === 'visual');
+      document.getElementById('modeJson').classList.toggle('active', mode === 'json');
+
+      if (mode === 'json') {
+        document.getElementById('visualEditor').style.display = 'none';
+        const je = document.getElementById('jsonEditor');
+        je.style.display = 'block';
+        const data = currentSection === '(array)' ? contentData : contentData[currentSection];
+        je.value = JSON.stringify(data, null, 2);
+      } else {
+        document.getElementById('visualEditor').style.display = 'block';
+        document.getElementById('jsonEditor').style.display = 'none';
+        // Apply JSON changes back
+        try {
+          const je = document.getElementById('jsonEditor');
+          const parsed = JSON.parse(je.value);
+          if (currentSection === '(array)') {
+            contentData = parsed;
+          } else {
+            contentData[currentSection] = parsed;
+          }
+        } catch {}
+        renderEditor();
+      }
+    }
+
+    function renderEditor() {
+      const title = document.getElementById('editorTitle');
+      const editor = document.getElementById('visualEditor');
+
+      if (!currentSection) {
+        title.textContent = 'Выберите секцию';
+        editor.innerHTML = '<p style="color:var(--text2)">Выберите секцию для редактирования</p>';
+        return;
+      }
+
+      title.textContent = currentSection;
+      const data = currentSection === '(array)' ? contentData : contentData[currentSection];
+      editor.innerHTML = renderFields(data, '');
+    }
+
+    function renderFields(obj, path) {
+      if (obj === null || obj === undefined) return '';
+      if (typeof obj !== 'object') return renderScalarField(path, obj);
+
+      if (Array.isArray(obj)) {
+        return renderArray(obj, path);
+      }
+
+      let html = '';
+      const keys = Object.keys(obj);
+      for (const key of keys) {
+        const val = obj[key];
+        const fullPath = path ? `${path}.${key}` : key;
+
+        if (val === null || val === undefined) {
+          html += renderScalarField(fullPath, '', key);
+        } else if (Array.isArray(val)) {
+          html += `<div style="margin-top:16px"><h4 style="color:var(--text2);font-size:13px;margin-bottom:8px">${key}</h4>`;
+          html += renderArray(val, fullPath);
+          html += `</div>`;
+        } else if (typeof val === 'object') {
+          html += `<div style="margin-top:16px;padding:16px;background:var(--surface2);border-radius:var(--radius)">`;
+          html += `<h4 style="color:var(--text2);font-size:13px;margin-bottom:8px">${key}</h4>`;
+          html += renderFields(val, fullPath);
+          html += `</div>`;
+        } else {
+          html += renderScalarField(fullPath, val, key);
+        }
+      }
+      return html;
+    }
+
+    function renderScalarField(path, value, displayName) {
+      const name = displayName || path.split('.').pop();
+      const strVal = String(value ?? '').replace(/"/g, '&quot;');
+      const isLong = strVal.length > 100;
+      const isBool = typeof value === 'boolean';
+
+      if (isBool) {
+        return `<div class="field-group">
+          <label>${name}</label>
+          <select data-path="${path}" onchange="updateField('${path}', this.value === 'true')">
+            <option value="true" ${value ? 'selected' : ''}>true</option>
+            <option value="false" ${!value ? 'selected' : ''}>false</option>
+          </select>
+        </div>`;
+      }
+
+      if (isLong) {
+        return `<div class="field-group">
+          <label>${name}</label>
+          <textarea data-path="${path}" oninput="updateField('${path}', this.value)" rows="3">${strVal}</textarea>
+        </div>`;
+      }
+
+      return `<div class="field-group">
+        <label>${name}</label>
+        <input type="text" data-path="${path}" value="${strVal}" oninput="updateField('${path}', this.value)">
+      </div>`;
+    }
+
+    function renderArray(arr, path) {
+      let html = '';
+      for (let i = 0; i < arr.length; i++) {
+        const item = arr[i];
+        const itemPath = `${path}[${i}]`;
+        if (typeof item === 'object' && item !== null) {
+          const itemTitle = item.title || item.name || item.question || item.text || `#${i + 1}`;
+          html += `<div class="array-item">
+            <button class="remove-btn" onclick="removeArrayItem('${path}', ${i})" title="Удалить">&times;</button>
+            <div style="font-size:13px;color:var(--blue);margin-bottom:8px;font-weight:500">${itemTitle}</div>
+            ${renderFields(item, itemPath)}
+          </div>`;
+        } else {
+          html += `<div class="array-item">
+            <button class="remove-btn" onclick="removeArrayItem('${path}', ${i})">&times;</button>
+            <input type="text" value="${String(item).replace(/"/g, '&quot;')}" oninput="updateField('${itemPath}', this.value)">
+          </div>`;
+        }
+      }
+      html += `<button class="add-btn" onclick="addArrayItem('${path}')">+ Добавить элемент</button>`;
+      return html;
+    }
+
+    function getByPath(obj, path) {
+      return path.replace(/\[(\d+)\]/g, '.$1').split('.').filter(Boolean).reduce((o, k) => o?.[k], obj);
+    }
+
+    function setByPath(obj, path, value) {
+      const parts = path.replace(/\[(\d+)\]/g, '.$1').split('.').filter(Boolean);
+      let current = obj;
+      for (let i = 0; i < parts.length - 1; i++) {
+        current = current[parts[i]];
+      }
+      const lastKey = parts[parts.length - 1];
+      // Preserve number type
+      if (typeof current[lastKey] === 'number' && !isNaN(Number(value))) {
+        current[lastKey] = Number(value);
+      } else {
+        current[lastKey] = value;
+      }
+    }
+
+    function updateField(path, value) {
+      const root = currentSection === '(array)' ? contentData : contentData[currentSection];
+      setByPath(root, path, value);
+      markUnsaved();
+    }
+
+    function removeArrayItem(path, index) {
+      const root = currentSection === '(array)' ? contentData : contentData[currentSection];
+      const arr = getByPath(root, path);
+      if (arr && Array.isArray(arr)) {
+        arr.splice(index, 1);
+        markUnsaved();
+        renderEditor();
+      }
+    }
+
+    function addArrayItem(path) {
+      const root = currentSection === '(array)' ? contentData : contentData[currentSection];
+      const arr = getByPath(root, path);
+      if (!arr || !Array.isArray(arr)) return;
+
+      if (arr.length > 0) {
+        const template = arr[arr.length - 1];
+        if (typeof template === 'object' && template !== null) {
+          const newItem = JSON.parse(JSON.stringify(template));
+          clearObject(newItem);
+          arr.push(newItem);
+        } else {
+          arr.push('');
+        }
+      } else {
+        arr.push('');
+      }
+      markUnsaved();
+      renderEditor();
+    }
+
+    function clearObject(obj) {
+      for (const key of Object.keys(obj)) {
+        if (typeof obj[key] === 'string') obj[key] = '';
+        else if (typeof obj[key] === 'number') obj[key] = 0;
+        else if (typeof obj[key] === 'boolean') obj[key] = false;
+        else if (Array.isArray(obj[key])) obj[key] = [];
+        else if (typeof obj[key] === 'object' && obj[key] !== null) clearObject(obj[key]);
+      }
+    }
+
+    function markUnsaved() {
+      hasUnsaved = true;
+      document.getElementById('unsavedBadge').style.display = 'inline';
+    }
+
+    async function save() {
+      if (editMode === 'json') {
+        try {
+          const parsed = JSON.parse(document.getElementById('jsonEditor').value);
+          if (currentSection === '(array)') {
+            contentData = parsed;
+          } else {
+            contentData[currentSection] = parsed;
+          }
+        } catch (e) {
+          toast('Ошибка в JSON: ' + e.message, 'error');
+          return;
+        }
+      }
+
+      try {
+        await api('PUT', `/api/sites/${currentSite}/${currentFile}`, contentData);
+        hasUnsaved = false;
+        document.getElementById('unsavedBadge').style.display = 'none';
+        toast('Сохранено', 'success');
+      } catch (e) {
+        toast('Ошибка сохранения: ' + e.message, 'error');
+      }
+    }
+
+    function toast(msg, type = 'success') {
+      const el = document.getElementById('toast');
+      el.textContent = msg;
+      el.className = `toast ${type} show`;
+      setTimeout(() => el.classList.remove('show'), 3000);
+    }
+
+    async function api(method, url, body) {
+      const opts = {
+        method,
+        headers: { 'Content-Type': 'application/json' }
+      };
+      if (token) opts.headers.Authorization = `Bearer ${token}`;
+      if (body) opts.body = JSON.stringify(body);
+
+      const res = await fetch(url, opts);
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ error: res.statusText }));
+        throw new Error(err.error || 'Request failed');
+      }
+      return res.json();
+    }
+
+    // Prevent accidental navigation with unsaved changes
+    window.addEventListener('beforeunload', (e) => {
+      if (hasUnsaved) { e.preventDefault(); e.returnValue = ''; }
+    });
+
+    // Enter to login
+    document.getElementById('loginPass').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') login();
+    });
+  </script>
+</body>
+</html>
