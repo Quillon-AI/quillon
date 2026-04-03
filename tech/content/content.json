@@ -3,11 +3,26 @@
     "brand": "Quillon",
     "suffix": ".tech",
     "links": [
-      { "text": "Продукты", "href": "#products" },
-      { "text": "Стек", "href": "#tech-stack" },
-      { "text": "AI/ML", "href": "#ai-capabilities" },
-      { "text": "Студия", "href": "#studio" },
-      { "text": "Карьера", "href": "#careers" }
+      {
+        "text": "Продукты",
+        "href": "#products"
+      },
+      {
+        "text": "Стек",
+        "href": "#tech-stack"
+      },
+      {
+        "text": "AI/ML",
+        "href": "#ai-capabilities"
+      },
+      {
+        "text": "Студия",
+        "href": "#studio"
+      },
+      {
+        "text": "Карьера",
+        "href": "#careers"
+      }
     ]
   },
   "hero": {
@@ -19,9 +34,18 @@
     },
     "cta_note": "Бесплатная оценка и ТЗ за 24 часа",
     "stats": [
-      { "value": "14+", "label": "реализованных проектов" },
-      { "value": "Full-cycle", "label": "разработка полного цикла" },
-      { "value": "Full-stack", "label": "контроль над каждым слоем стека" }
+      {
+        "value": "14+",
+        "label": "реализованных проектов"
+      },
+      {
+        "value": "Full-cycle",
+        "label": "разработка полного цикла"
+      },
+      {
+        "value": "Full-stack",
+        "label": "контроль над каждым слоем стека"
+      }
     ]
   },
   "studio": {
@@ -54,42 +78,72 @@
         "name": "Telegram-боты и мини-приложения",
         "description": "Боты для бизнеса: автоматизация продаж, поддержки, приёма заявок. Mini Apps с оплатой, каталогами, бронированием.",
         "price": "от 5 000 ₽",
-        "stack": ["Python", "aiogram", "FastAPI", "PostgreSQL"]
+        "stack": [
+          "Python",
+          "aiogram",
+          "FastAPI",
+          "PostgreSQL"
+        ]
       },
       {
         "icon": "brain",
         "name": "AI-интеграции",
         "description": "Внедрение ИИ в бизнес-процессы: чат-боты с RAG, автоматическая обработка документов, AI-агенты.",
         "price": "от 15 000 ₽",
-        "stack": ["Python", "FastAPI", "RAG", "LLM API"]
+        "stack": [
+          "Python",
+          "FastAPI",
+          "RAG",
+          "LLM API"
+        ]
       },
       {
         "icon": "smartphone",
         "name": "Мобильные приложения",
         "description": "Кросс-платформенные приложения на Flutter: один код — iOS и Android. От MVP до production.",
         "price": "от 30 000 ₽",
-        "stack": ["Flutter", "Dart", "Firebase", "REST API"]
+        "stack": [
+          "Flutter",
+          "Dart",
+          "Firebase",
+          "REST API"
+        ]
       },
       {
         "icon": "layout-dashboard",
         "name": "Веб-платформы",
         "description": "SPA и full-stack платформы: админки, дашборды, CRM, LMS. Архитектура под масштабирование.",
         "price": "от 50 000 ₽",
-        "stack": ["Django", "Vue", "Next.js", "PostgreSQL"]
+        "stack": [
+          "Django",
+          "Vue",
+          "Next.js",
+          "PostgreSQL"
+        ]
       },
       {
         "icon": "globe",
         "name": "Лендинги и веб-сайты",
         "description": "Быстрые, адаптивные, SEO-оптимизированные лендинги и корпоративные сайты. Без шаблонов — индивидуальный дизайн и код.",
         "price": "от 10 000 ₽",
-        "stack": ["HTML/CSS/JS", "Next.js", "Nginx", "SEO"]
+        "stack": [
+          "HTML/CSS/JS",
+          "Next.js",
+          "Nginx",
+          "SEO"
+        ]
       },
       {
         "icon": "repeat",
         "name": "Автоматизации и парсинг",
         "description": "Сбор данных, автоматизация публикаций, интеграция сервисов через API. N8N, cron-задачи, пайплайны обработки данных.",
         "price": "от 5 000 ₽",
-        "stack": ["Python", "n8n", "Selenium", "API"]
+        "stack": [
+          "Python",
+          "n8n",
+          "Selenium",
+          "API"
+        ]
       }
     ],
     "steps_title": "Как мы работаем",
@@ -128,7 +182,14 @@
         "icon": "video",
         "name": "Quillon Meet",
         "tagline": "Платформа видеоконференций с адаптивным стримингом, записью и кросс-платформенными клиентами.",
-        "stack": ["WebRTC", "Next.js", "Nginx", "Docker", "S3", "FFmpeg"],
+        "stack": [
+          "WebRTC",
+          "Next.js",
+          "Nginx",
+          "Docker",
+          "S3",
+          "FFmpeg"
+        ],
         "highlight": "Полная замена Zoom для российских команд. Три клиента — web, desktop, mobile — из одной кодовой базы.",
         "link": "https://meet.quillon.ru",
         "link_text": "meet.quillon.ru"
@@ -137,7 +198,14 @@
         "icon": "graduation-cap",
         "name": "Quillon LMS",
         "tagline": "Платформа управления обучением с видео-лекциями, заданиями, аналитикой прогресса и ролевой системой.",
-        "stack": ["Django 5", "DRF", "Vue 3", "TypeScript", "Vite", "PostgreSQL"],
+        "stack": [
+          "Django 5",
+          "DRF",
+          "Vue 3",
+          "TypeScript",
+          "Vite",
+          "PostgreSQL"
+        ],
         "highlight": "Разрабатывается командой Quillon изнутри: используем, улучшаем, деплоим.",
         "link": "https://lms.quillon.ru",
         "link_text": "lms.quillon.ru"
@@ -146,7 +214,14 @@
         "icon": "brain",
         "name": "Quilly AI",
         "tagline": "Корпоративный AI-ассистент с контекстным поиском по внутренней базе знаний и персонализацией под роль пользователя.",
-        "stack": ["Python", "FastAPI", "RAG", "LLM API", "Vector DB", "Redis"],
+        "stack": [
+          "Python",
+          "FastAPI",
+          "RAG",
+          "LLM API",
+          "Vector DB",
+          "Redis"
+        ],
         "highlight": "Собственный RAG-пайплайн с векторным индексированием, кастомные цепочки промптов, интеграция с LMS через API.",
         "link": null,
         "link_text": null
@@ -155,13 +230,21 @@
         "icon": "briefcase",
         "name": "Quillon Jobs",
         "tagline": "Фриланс-платформа, которая агрегирует заказы с бирж и подбирает проекты под стек и уровень разработчика.",
-        "stack": ["Python", "FastAPI", "Парсинг", "PostgreSQL"],
+        "stack": [
+          "Python",
+          "FastAPI",
+          "Парсинг",
+          "PostgreSQL"
+        ],
         "highlight": "Автоматический подбор задач под стек и уровень, code review senior-инженером, безопасная сделка. Открытая экосистема для заказчиков и разработчиков.",
         "link": null,
         "link_text": null
       }
     ],
-    "cta": { "text": "Обсудить проект →", "href": "#contact" }
+    "cta": {
+      "text": "Обсудить проект →",
+      "href": "#contact"
+    }
   },
   "tech_stack": {
     "label": "Стек",
@@ -171,35 +254,67 @@
       {
         "id": "backend",
         "name": "Backend",
-        "technologies": ["Python 3.11+", "FastAPI", "Django 5", "DRF", "PostgreSQL", "Redis", "Docker"],
+        "technologies": [
+          "Python 3.11+",
+          "FastAPI",
+          "Django 5",
+          "DRF",
+          "PostgreSQL",
+          "Redis",
+          "Docker"
+        ],
         "rationale": "Python — единый язык для backend, AI/ML и автоматизации. FastAPI для высоконагруженных асинхронных API с автодокументацией. Django для сложных CRUD-систем: LMS, CRM, административные панели. PostgreSQL — ACID-транзакции, JSON-поля, масштабируемость без компромиссов.",
         "proof": "Quillon Meet API обрабатывает сигнализацию WebRTC и управление комнатами. LMS API обслуживает 4 роли пользователей с разными уровнями доступа. Всё на Python."
       },
       {
         "id": "mobile",
         "name": "Mobile",
-        "technologies": ["Flutter", "Dart", "React Native", "Firebase", "REST API"],
+        "technologies": [
+          "Flutter",
+          "Dart",
+          "React Native",
+          "Firebase",
+          "REST API"
+        ],
         "rationale": "Flutter — один код на iOS и Android с нативной производительностью. Рынок Flutter-разработчиков в России в 4 раза меньше, чем React-разработчиков, при сопоставимом количестве вакансий. React Native используем в Meet для интеграции с LiveKit SDK.",
         "proof": "LMS доступен как PWA на мобильных устройствах. Meet — полноценное нативное приложение для iOS и Android с камерой, микрофоном и push-уведомлениями."
       },
       {
         "id": "ai_ml",
         "name": "AI / ML",
-        "technologies": ["RAG-системы", "Fine-Tuning LLM", "ИИ-агенты", "Prompt Engineering", "Vector DB"],
+        "technologies": [
+          "RAG-системы",
+          "Fine-Tuning LLM",
+          "ИИ-агенты",
+          "Prompt Engineering",
+          "Vector DB"
+        ],
         "rationale": "AI — инфраструктурный компонент, не маркетинговая надстройка. RAG-архитектура для работы с корпоративными данными без переобучения моделей. ИИ-агенты для автоматизации инженерных и бизнес-процессов. Собственные пайплайны промптов с версионированием и A/B-тестированием.",
         "proof": "Quilly AI — корпоративный ассистент с RAG-пайплайном и векторным поиском. AI-персонализация в воронке продаж: автоматическая генерация видео-разборов для каждого лида."
       },
       {
         "id": "qa",
         "name": "QA",
-        "technologies": ["Pytest", "Selenium", "Playwright", "Allure", "Appium"],
+        "technologies": [
+          "Pytest",
+          "Selenium",
+          "Playwright",
+          "Allure",
+          "Appium"
+        ],
         "rationale": "Автотесты — не опция, а часть CI/CD. Pytest для unit и integration тестов бэкенда. Playwright для E2E-тестов веб-интерфейсов: быстрее Selenium, кросс-браузерный. Appium для мобильных приложений. Allure — единый дашборд отчётов для всей команды.",
         "proof": "Каждый PR в репозиторий проходит автоматическую проверку. Тесты запускаются до merge, а не после. Инженеры QA-трека пишут реальные тест-кейсы для Meet и LMS с первого дня."
       },
       {
         "id": "infrastructure",
         "name": "Infrastructure",
-        "technologies": ["Nginx", "Let's Encrypt SSL", "Docker Compose", "GitHub Actions", "S3"],
+        "technologies": [
+          "Nginx",
+          "Let's Encrypt SSL",
+          "Docker Compose",
+          "GitHub Actions",
+          "S3"
+        ],
         "rationale": "Своя инфраструктура — контроль над данными, предсказуемые расходы, независимость от облачных провайдеров. Nginx как reverse-proxy для всех сервисов. Docker для изоляции и воспроизводимости окружений. GitHub Actions для CI/CD без vendor lock-in.",
         "proof": "Один сервер (Selectel, Россия) хостит Meet, LMS, Git, Cloud, Mail. Деплой Meet: git pull, docker compose build, docker compose up — 3 минуты от коммита до production."
       }
@@ -214,22 +329,41 @@
         "icon": "cpu",
         "title": "Fine-Tuning & Model Adaptation",
         "description": "Дообучаем языковые модели на доменных данных. LoRA/QLoRA для адаптации без full retraining — модель получает экспертизу в конкретной предметной области.",
-        "stack": ["PyTorch", "Hugging Face", "LoRA", "W&B", "vLLM"]
+        "stack": [
+          "PyTorch",
+          "Hugging Face",
+          "LoRA",
+          "W&B",
+          "vLLM"
+        ]
       },
       {
         "icon": "workflow",
         "title": "ML Pipelines & Data Engineering",
         "description": "Полный цикл: сбор, очистка, векторизация, индексирование. Автоматизированные пайплайны от сырых данных до готового эмбеддинг-индекса за один запуск.",
-        "stack": ["Airflow", "LangChain", "ChromaDB", "DVC"]
+        "stack": [
+          "Airflow",
+          "LangChain",
+          "ChromaDB",
+          "DVC"
+        ]
       },
       {
         "icon": "bot",
         "title": "AI Agents & Autonomous Workflows",
         "description": "Автономные агенты для многошаговых задач: анализ данных, вызов API, генерация отчётов. Агент декомпозирует задачу и контролирует качество на каждом шаге.",
-        "stack": ["LangGraph", "CrewAI", "Tool-use", "n8n"]
+        "stack": [
+          "LangGraph",
+          "CrewAI",
+          "Tool-use",
+          "n8n"
+        ]
       }
     ],
-    "cta": { "text": "Обсудить проект →", "href": "#contact" }
+    "cta": {
+      "text": "Обсудить проект →",
+      "href": "#contact"
+    }
   },
   "principles": {
     "label": "Принципы",
@@ -277,9 +411,25 @@
       "title": "Бесплатная оценка проекта",
       "subtitle": "3 поля — и через 24 часа у вас план с ценой",
       "fields": [
-        { "name": "name", "type": "text", "placeholder": "Ваше имя", "required": true },
-        { "name": "contact", "type": "text", "placeholder": "Телефон или Telegram", "required": true },
-        { "name": "description", "type": "textarea", "placeholder": "Опишите задачу: что нужно сделать, для кого, примерные сроки", "rows": 4, "required": true }
+        {
+          "name": "name",
+          "type": "text",
+          "placeholder": "Ваше имя",
+          "required": true
+        },
+        {
+          "name": "contact",
+          "type": "text",
+          "placeholder": "Телефон или Telegram",
+          "required": true
+        },
+        {
+          "name": "description",
+          "type": "textarea",
+          "placeholder": "Опишите задачу: что нужно сделать, для кого, примерные сроки",
+          "rows": 4,
+          "required": true
+        }
       ],
       "submit_text": "Узнать стоимость и сроки →",
       "note": ""
@@ -317,10 +467,26 @@
     "subtitle": "Мы ищем разработчиков, которым интересно строить продукты с нуля, а не поддерживать legacy.",
     "positions_title": "Открытые направления",
     "positions": [
-      { "icon": "terminal", "name": "Python Backend", "description": "FastAPI, Django, PostgreSQL, Docker" },
-      { "icon": "smartphone", "name": "Flutter Mobile", "description": "Dart, iOS, Android, кросс-платформа" },
-      { "icon": "test-tube-2", "name": "QA Engineer", "description": "Pytest, Playwright, Allure, Appium" },
-      { "icon": "brain", "name": "AI / ML Engineer", "description": "RAG, LLM, ИИ-агенты, Vector DB" }
+      {
+        "icon": "terminal",
+        "name": "Python Backend",
+        "description": "FastAPI, Django, PostgreSQL, Docker"
+      },
+      {
+        "icon": "smartphone",
+        "name": "Flutter Mobile",
+        "description": "Dart, iOS, Android, кросс-платформа"
+      },
+      {
+        "icon": "test-tube-2",
+        "name": "QA Engineer",
+        "description": "Pytest, Playwright, Allure, Appium"
+      },
+      {
+        "icon": "brain",
+        "name": "AI / ML Engineer",
+        "description": "RAG, LLM, ИИ-агенты, Vector DB"
+      }
     ],
     "why_title": "Почему Quillon",
     "why": [
@@ -345,7 +511,10 @@
         "description": "Мы используем AI как инструмент каждый день: код-ревью, генерация тестов, документация."
       }
     ],
-    "cta": { "text": "Написать в Telegram", "href": "https://t.me/quillon_tech_bot" }
+    "cta": {
+      "text": "Написать в Telegram",
+      "href": "https://t.me/quillon_tech_bot"
+    }
   },
   "footer": {
     "tagline": "IT-компания. Продукты. Технологии. Команда.",
@@ -353,39 +522,85 @@
       {
         "title": "Продукты",
         "links": [
-          { "text": "Quillon Meet", "href": "https://meet.quillon.ru", "external": true },
-          { "text": "Quillon LMS", "href": "https://lms.quillon.ru", "external": true },
-          { "text": "Quilly AI", "href": "#products" },
-          { "text": "Quillon Jobs", "href": "#products" }
+          {
+            "text": "Quillon Meet",
+            "href": "https://meet.quillon.ru",
+            "external": true
+          },
+          {
+            "text": "Quillon LMS",
+            "href": "https://lms.quillon.ru",
+            "external": true
+          },
+          {
+            "text": "Quilly AI",
+            "href": "#products"
+          },
+          {
+            "text": "Quillon Jobs",
+            "href": "#products"
+          }
         ]
       },
       {
         "title": "Компания",
         "links": [
-          { "text": "Обучение и стажировка", "href": "https://quillon.ru", "external": true },
-          { "text": "Стек", "href": "#tech-stack" },
-          { "text": "Карьера", "href": "#careers" }
+          {
+            "text": "Обучение и стажировка",
+            "href": "https://quillon.ru",
+            "external": true
+          },
+          {
+            "text": "Стек",
+            "href": "#tech-stack"
+          },
+          {
+            "text": "Карьера",
+            "href": "#careers"
+          }
         ]
       },
       {
         "title": "Контакты",
         "links": [
-          { "text": "Telegram", "href": "https://t.me/quillon_tech_bot", "external": true },
-          { "text": "studio@quillon.ru", "href": "mailto:studio@quillon.ru" }
+          {
+            "text": "Telegram",
+            "href": "https://t.me/quillon_tech_bot",
+            "external": true
+          },
+          {
+            "text": "studio@quillon.ru",
+            "href": "mailto:studio@quillon.ru"
+          }
         ]
       },
       {
         "title": "Документы",
         "links": [
-          { "text": "Политика конфиденциальности", "href": "/privacy.html" },
-          { "text": "Согласие на обработку ПД", "href": "/consent.html" }
+          {
+            "text": "Политика конфиденциальности",
+            "href": "/privacy.html"
+          },
+          {
+            "text": "Согласие на обработку ПД",
+            "href": "/consent.html"
+          }
         ]
       }
     ],
     "services": [
-      { "name": "Cloud", "url": "https://i.quillon.ru" },
-      { "name": "Meet", "url": "https://meet.quillon.ru" },
-      { "name": "LMS", "url": "https://lms.quillon.ru" }
+      {
+        "name": "Cloud",
+        "url": "https://i.quillon.ru"
+      },
+      {
+        "name": "Meet",
+        "url": "https://meet.quillon.ru"
+      },
+      {
+        "name": "LMS",
+        "url": "https://lms.quillon.ru"
+      }
     ],
     "copyright": "Quillon, 2026."
   }
