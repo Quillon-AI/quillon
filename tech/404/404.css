@@ -108,10 +108,10 @@ canvas[data-particles] {
 .e404-code {
   font-family: var(--fd);
   font-weight: 800;
-  font-size: clamp(120px, 24vw, 260px);
+  font-size: clamp(120px, 22vw, 240px);
   line-height: .9;
   letter-spacing: -6px;
-  margin-bottom: 8px;
+  margin-bottom: clamp(32px, 6vw, 64px);
   opacity: 0;
   animation: fadeUp .9s var(--ease) .2s forwards, codeFloat 6s ease-in-out 1s infinite;
   text-shadow: 0 0 80px rgba(31,78,216,.3);
