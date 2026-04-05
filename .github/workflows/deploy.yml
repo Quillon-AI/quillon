@@ -3,10 +3,6 @@ name: Deploy Quillon Sites
 on:
   push:
     branches: [main]
-    paths:
-      - 'public/**'
-      - 'tech/**'
-      - '.github/workflows/deploy.yml'
   workflow_dispatch:
 
 concurrency:
