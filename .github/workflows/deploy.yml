@@ -1,0 +1,60 @@
+name: Deploy Quillon Sites
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'public/**'
+      - 'tech/**'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-quillon
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.QUILLON_DEPLOY_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.QUILLON_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy quillon.ru (public/ → /var/www/quillon.ru/)
+        run: |
+          rsync -avz --delete \
+            --exclude='.backups' \
+            --exclude='robots.txt.bak' \
+            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
+            ./public/ \
+            ${{ secrets.QUILLON_USER }}@${{ secrets.QUILLON_HOST }}:/var/www/quillon.ru/
+
+      - name: Deploy tech.quillon.ru (tech/ → /var/www/tech.quillon.ru/)
+        run: |
+          rsync -avz --delete \
+            --exclude='.backups' \
+            --exclude='robots.txt.bak' \
+            --exclude='content/.backups' \
+            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
+            ./tech/ \
+            ${{ secrets.QUILLON_USER }}@${{ secrets.QUILLON_HOST }}:/var/www/tech.quillon.ru/
+
+      - name: Fix ownership
+        run: |
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
+            ${{ secrets.QUILLON_USER }}@${{ secrets.QUILLON_HOST }} \
+            "chown -R www-data:www-data /var/www/quillon.ru /var/www/tech.quillon.ru"
+
+      - name: Smoke test
+        run: |
+          echo "--- quillon.ru ---"
+          curl -sI https://quillon.ru/ | head -3
+          echo "--- tech.quillon.ru ---"
+          curl -sI https://tech.quillon.ru/ | head -3

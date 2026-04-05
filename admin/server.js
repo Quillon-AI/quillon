@@ -14,7 +14,7 @@ const SITES = {
   quillon: {
     name: 'quillon.ru',
     contentPath: process.env.QUILLON_PUBLIC_PATH || path.join(__dirname, '..', 'public', 'content'),
-    files: ['content.json']
+    files: ['content.json', 'neurostart.json']
   },
   tech: {
     name: 'tech.quillon.ru',

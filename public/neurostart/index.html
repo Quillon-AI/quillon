@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>НЕЙРОСТАРТ — Бесплатный курс от Quillon</title>
+  <meta name="description" content="Бесплатный курс от IT-компании Quillon. 20+ AI-инструментов. Персональная AI-Система под твою профессию.">
+  <meta name="theme-color" content="#080B14">
+
+  <link rel="icon" href="/assets/favicon.ico" sizes="any">
+  <link rel="icon" href="/assets/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/assets/favicon-192.png">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Quillon">
+  <meta property="og:title" content="НЕЙРОСТАРТ — бесплатный AI-курс от Quillon">
+  <meta property="og:description" content="10 дней. 12 видео. 20+ AI-инструментов. Персональная AI-Система под твою профессию.">
+  <meta property="og:image" content="https://quillon.ru/assets/og-image.png">
+  <meta property="og:url" content="https://quillon.ru/neurostart/">
+  <meta property="og:locale" content="ru_RU">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="НЕЙРОСТАРТ — бесплатный AI-курс от Quillon">
+  <meta name="twitter:description" content="10 дней. 20+ AI-инструментов. Твоя персональная AI-Система.">
+  <meta name="twitter:image" content="https://quillon.ru/assets/og-image.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/neurostart/css/neurostart.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="/" class="nav-logo">Quillon</a>
+  <a href="#final"><button class="ns-nav-cta">Записаться</button></a>
+</nav>
+
+<!-- HERO -->
+<section class="ns-hero">
+  <canvas data-particles></canvas>
+  <div class="ns-hero-glow"></div>
+  <div class="ns-hero-inner">
+    <div class="ns-tag">
+      <span class="dot"></span><span data-cms="hero.tag">Бесплатный курс</span>
+    </div>
+    <h1>
+      <span data-cms="hero.title_start">Через 10 дней ты будешь делать за</span>
+      <span class="text-gradient" data-cms="hero.title_accent">15 минут</span>
+      <span data-cms="hero.title_end">то, на что сейчас тратишь полдня</span>
+    </h1>
+    <p class="ns-hero-sub" data-cms="hero.subtitle">Бесплатный курс от IT-компании Quillon.</p>
+    <div class="ns-hero-cta">
+      <a href="#final"><button class="btn-big" data-cms="hero.cta_button">Начать бесплатно →</button></a>
+    </div>
+    <p class="ns-hero-hint" data-cms="hero.hint">60–80 мин/день · В своём темпе · Следующий поток: скоро</p>
+  </div>
+</section>
+
+<!-- BLOCK 2: PROBLEM -->
+<section class="ns-section">
+  <div class="ns-section-inner">
+    <div class="ns-sh ns-reveal"><h2 data-cms="problem.title">Знакомо?</h2></div>
+    <div class="ns-grid-3" data-cms-each="problem.cards">
+      <template>
+        <div class="ns-card ns-reveal">
+          <div class="ns-card-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          </div>
+          <p>{{value}}</p>
+        </div>
+      </template>
+    </div>
+    <p class="ns-after ns-reveal" data-cms-html="problem.after">Проблема не в тебе.</p>
+  </div>
+</section>
+
+<!-- BLOCK 3: WHAT YOU GET -->
+<section class="ns-section ns-section--tint-blue">
+  <div class="ns-section-inner">
+    <div class="ns-sh ns-reveal">
+      <h2>
+        <span data-cms="results.title_start">Не «знания об AI».</span>
+        <span class="text-gradient" data-cms="results.title_accent">Конкретные результаты.</span>
+      </h2>
+    </div>
+    <div class="ns-grid-3" data-cms-each="results.cards">
+      <template>
+        <div class="ns-big-card ns-reveal">
+          <div class="ns-card-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h3>{{title}}</h3>
+          <p>{{text}}</p>
+        </div>
+      </template>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 4: PROGRAM TIMELINE -->
+<section class="ns-section">
+  <div class="ns-section-inner">
+    <div class="ns-sh ns-reveal">
+      <h2>
+        <span data-cms="program.title_start">10 дней. 12 видео.</span>
+        <span class="text-gradient" data-cms="program.title_accent">1 результат, который работает.</span>
+      </h2>
+      <p data-cms="program.subtitle">Каждое видео — скринкаст «делай как я».</p>
+    </div>
+    <div class="ns-timeline" data-cms-each="program.days">
+      <template>
+        <div class="ns-tl-item ns-reveal">
+          <div class="ns-tl-day">{{day}}</div>
+          <div class="ns-tl-title">{{title}}</div>
+        </div>
+      </template>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 5: TOOLS -->
+<section class="ns-section ns-section--tint-purple">
+  <div class="ns-section-inner">
+    <div class="ns-sh ns-reveal">
+      <h2>
+        <span data-cms="tools.title_start">20+ инструментов за 10 дней.</span>
+        <span class="text-gradient" data-cms="tools.title_accent">Все бесплатные.</span>
+      </h2>
+      <p data-cms="tools.subtitle">Ты попробуешь больше AI-инструментов, чем 95% людей попробуют за год.</p>
+    </div>
+    <div class="ns-tools ns-reveal" data-cms-each="tools.items">
+      <template>
+        <div class="ns-tool">{{value}}</div>
+      </template>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 6: AI SYSTEM HIGHLIGHT -->
+<section class="ns-section">
+  <div class="ns-section-inner">
+    <div class="ns-ai-wrap ns-reveal">
+      <div class="ns-ai-card">
+        <h2>
+          <span data-cms="ai_system.title_start">То, что ты</span>
+          <span class="text-gradient" data-cms="ai_system.title_accent">заберёшь с собой</span>
+        </h2>
+        <p data-cms="ai_system.subtitle">На 10-й день ты получаешь персональную страницу.</p>
+        <div class="ns-mockup">
+          <div class="ns-mockup-head">
+            <div class="ns-mockup-dot r"></div>
+            <div class="ns-mockup-dot y"></div>
+            <div class="ns-mockup-dot g"></div>
+            <div class="ns-mockup-url" data-cms="ai_system.mockup_url">quillon.ru/my-ai-system</div>
+          </div>
+          <div class="ns-mockup-list" data-cms-each="ai_system.mockup_items">
+            <template>
+              <div class="ns-mockup-row">
+                <div class="ns-mockup-ico">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+                </div>
+                <div class="ns-mockup-txt">
+                  <div class="ns-mockup-ttl">{{title}}</div>
+                  <div class="ns-mockup-dsc">{{desc}}</div>
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 7: FOR WHOM -->
+<section class="ns-section">
+  <div class="ns-section-inner">
+    <div class="ns-sh ns-reveal"><h2 data-cms="for_whom.title">Курс для тебя, если...</h2></div>
+    <div class="ns-checklist" data-cms-each="for_whom.items">
+      <template>
+        <div class="ns-check-item ns-reveal">
+          <div class="ns-check-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="ns-check-txt">{{value}}</div>
+        </div>
+      </template>
+    </div>
+    <p class="ns-after ns-reveal" data-cms-html="for_whom.after">Наши ученики — маркетологи, менеджеры...</p>
+  </div>
+</section>
+
+<!-- BLOCK 8: FORMAT -->
+<section class="ns-section ns-section--tint-blue">
+  <div class="ns-section-inner">
+    <div class="ns-sh ns-reveal">
+      <h2>
+        <span data-cms="format.title_start">Формат:</span>
+        <span class="text-gradient" data-cms="format.title_accent">максимум практики, ноль воды</span>
+      </h2>
+    </div>
+    <div class="ns-grid-3" data-cms-each="format.cards">
+      <template>
+        <div class="ns-card ns-reveal">
+          <div class="ns-card-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+          </div>
+          <h3>{{title}}</h3>
+          <p>{{text}}</p>
+        </div>
+      </template>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 9: ABOUT QUILLON -->
+<section class="ns-section">
+  <div class="ns-section-inner">
+    <div class="ns-about ns-reveal">
+      <h2 data-cms="about.title">Кто мы</h2>
+      <p data-cms-html="about.text">Quillon — IT-компания, а не онлайн-школа.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 10: FAQ -->
+<section class="ns-section">
+  <div class="ns-section-inner">
+    <div class="ns-sh ns-reveal"><h2 data-cms="faq.title">Частые вопросы</h2></div>
+    <div class="ns-faq" data-cms-each="faq.items">
+      <template>
+        <div class="ns-faq-item ns-reveal">
+          <button class="ns-faq-trig" type="button">{{q}}<span class="ns-faq-ico">+</span></button>
+          <div class="ns-faq-body"><p>{{a}}</p></div>
+        </div>
+      </template>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 11: FINAL CTA -->
+<section class="ns-section" id="final">
+  <div class="ns-section-inner">
+    <div class="ns-final ns-reveal">
+      <h2>
+        <span data-cms-html="final.title_start">10 дней. 20+ инструментов.</span>
+        <span class="text-gradient" data-cms="final.title_accent">Бесплатно.</span>
+      </h2>
+      <p class="ns-final-sub" data-cms="final.subtitle">Следующий поток — скоро.</p>
+      <form class="ns-final-form" id="nsForm" novalidate>
+        <input type="email" name="email" data-cms-attr="placeholder:final.placeholder" placeholder="твой@email.ru" required autocomplete="email">
+        <button type="submit" data-cms="final.button">Хочу участвовать</button>
+      </form>
+      <div class="ns-final-ok" id="nsOk" data-cms="final.success">Готово.</div>
+      <p class="ns-final-note" data-cms="final.note">Без спама.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="ns-footer">
+  <div class="ns-footer-logo">Quillon</div>
+  <div>
+    <span data-cms="footer.tagline">IT-компания</span> ·
+    <a href="mailto:support@quillon.ru" data-cms="footer.email">support@quillon.ru</a> ·
+    <a href="/" data-cms="footer.main_site_label">Основной сайт</a> ·
+    <a href="/privacy.html" data-cms="footer.privacy_label">Политика конфиденциальности</a>
+  </div>
+  <div style="margin-top:12px;" data-cms="footer.copyright">© 2026 Quillon. Все права защищены.</div>
+</footer>
+
+<!-- Scripts: renderer first (populates DOM), then particles + interactions -->
+<script src="/neurostart/js/renderer.js"></script>
+<script src="/neurostart/js/particles.js"></script>
+<script src="/neurostart/js/interactions.js"></script>
+
+</body>
+</html>
