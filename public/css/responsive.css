@@ -273,6 +273,7 @@
     flex-direction: column;
     gap: 2px;
     padding: 14px 32px;
+    width: 100%;
   }
 
   .cta-title {
