@@ -37,11 +37,18 @@ function initInteractions() {
   var burger = document.querySelector('.nav-burger');
   var mobileMenu = document.querySelector('.nav-mobile');
 
+  var scrollY = 0;
+
   function openMobileMenu() {
     if (!burger || !mobileMenu) return;
     burger.classList.add('open');
     mobileMenu.classList.add('open');
     burger.setAttribute('aria-expanded', 'true');
+    scrollY = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.top = '-' + scrollY + 'px';
+    document.body.style.left = '0';
+    document.body.style.right = '0';
     document.body.style.overflow = 'hidden';
   }
 
@@ -50,7 +57,12 @@ function initInteractions() {
     burger.classList.remove('open');
     mobileMenu.classList.remove('open');
     burger.setAttribute('aria-expanded', 'false');
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
     document.body.style.overflow = '';
+    window.scrollTo(0, scrollY);
   }
 
   function isMobileMenuOpen() {

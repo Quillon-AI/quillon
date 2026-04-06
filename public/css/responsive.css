@@ -266,6 +266,12 @@
     padding: var(--space-lg);
   }
 
+  /* Long CTA buttons: allow text wrapping */
+  .section-cta .btn {
+    white-space: normal;
+    line-height: 1.4;
+  }
+
   /* Contact form */
   .contact-form-wrapper {
     padding: var(--space-lg);
