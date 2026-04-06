@@ -56,9 +56,12 @@
   /** Inline CTA block (appears after sections that have a .cta field) */
   function inlineCta(cta) {
     if (!cta) return '';
+    var inner = cta.title && cta.subtitle
+      ? `<span class="cta-title">${cta.title}</span><span class="cta-sub">${cta.subtitle}</span>`
+      : cta.text;
     return `
       <div class="section-cta">
-        <a href="${cta.href}" class="btn btn-primary">${cta.text}</a>
+        <a href="${cta.href}" class="btn btn-primary">${inner}</a>
       </div>`;
   }
 

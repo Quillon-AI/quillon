@@ -266,10 +266,27 @@
     padding: var(--space-lg);
   }
 
-  /* Long CTA buttons: allow text wrapping */
+  /* CTA button: title + subtitle layout on mobile */
   .section-cta .btn {
     white-space: normal;
     line-height: 1.4;
+    flex-direction: column;
+    gap: 2px;
+    padding: 14px 32px;
+  }
+
+  .cta-title {
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .cta-sub {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 400;
+    margin-left: 0;
+    opacity: 0.9;
   }
 
   /* Contact form */

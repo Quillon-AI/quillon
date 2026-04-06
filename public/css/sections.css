@@ -21,6 +21,16 @@
   margin-top: var(--space-xl);
 }
 
+/* CTA title/subtitle spans — inline on desktop */
+.cta-title,
+.cta-sub {
+  display: inline;
+}
+
+.cta-sub {
+  margin-left: 0.3em;
+}
+
 
 /* ==========================================================================
    #hero — Full-screen intro
