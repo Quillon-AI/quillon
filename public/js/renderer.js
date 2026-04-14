@@ -511,21 +511,45 @@
     /* ------------------------------------------------------------------ */
     /*  AUDIENCE                                                           */
     /* ------------------------------------------------------------------ */
-    audience: (data) => `
+    audience: (data) => {
+      const audienceCard = (p, accentIdx) => `
+        <article class="card audience-card" style="--audience-accent: var(--audience-accent-${accentIdx % 6});">
+          <div class="audience-card-head">
+            <span class="audience-emoji">${icon(p.emoji, p.emoji)}</span>
+            ${p.tag ? `<span class="audience-tag">${p.tag}</span>` : ''}
+          </div>
+          <h3 class="audience-title">${p.title}</h3>
+          ${p.pain ? `<p class="audience-pain">${p.pain}</p>` : ''}
+          ${p.solution ? `
+            <div class="audience-solution">
+              <span class="audience-solution-mark" aria-hidden="true">→</span>
+              <p>${p.solution}</p>
+            </div>
+          ` : (p.text ? `<p class="audience-pain">${p.text}</p>` : '')}
+        </article>`;
+      const groupsHtml = data.groups ? data.groups.map((g, gi) => `
+        <div class="audience-group">
+          <div class="audience-group-header">
+            <span class="audience-group-index">${String(gi + 1).padStart(2, '0')} / ${String(data.groups.length).padStart(2, '0')}</span>
+            <h3 class="audience-group-title">${g.title}</h3>
+            ${g.subtitle ? `<p class="audience-group-subtitle">${g.subtitle}</p>` : ''}
+          </div>
+          <div class="audience-grid" data-stagger="true">
+            ${g.personas.map((p, i) => audienceCard(p, gi * g.personas.length + i)).join('')}
+          </div>
+        </div>
+      `).join('') : `
+        <div class="audience-grid" data-stagger="true">
+          ${data.personas.map((p, i) => audienceCard(p, i)).join('')}
+        </div>`;
+      return `
       <section id="audience" class="animate-on-scroll ${sectionBgClass()}">
         <div class="container">
           ${sectionHeader(data)}
-          <div class="grid-4 audience-grid" data-stagger="true">
-            ${data.personas.map(p => `
-              <div class="card audience-card">
-                <div class="audience-emoji">${icon(p.emoji, p.emoji)}</div>
-                <h3 class="audience-title">${p.title}</h3>
-                <p class="audience-text">${p.text}</p>
-              </div>
-            `).join('')}
-          </div>
+          ${groupsHtml}
         </div>
-      </section>`,
+      </section>`;
+    },
 
     /* ------------------------------------------------------------------ */
     /*  PRICING                                                            */
