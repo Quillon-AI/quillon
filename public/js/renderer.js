@@ -6,15 +6,43 @@
 (async function () {
   'use strict';
 
-  /* ── 1. Load JSON data ───────────────────────────────────────────────── */
-  const [content, sections, settings] = await Promise.all([
-    fetch('/content/content.json').then(r => r.json()),
-    fetch('/content/sections.json').then(r => r.json()),
-    fetch('/content/settings.json').then(r => r.json())
-  ]);
+  /* ── 0. Resolve page type from #app data attributes ─────────────────── */
+  const appEl = document.getElementById('app');
+  const pageType = (appEl && appEl.dataset.page) || 'main';
+  const trackSlug = appEl && appEl.dataset.trackSlug;
 
-  /* ── 2. Apply meta tags from settings ────────────────────────────────── */
-  document.title = settings.meta.title;
+  /* ── 1. Load JSON data ───────────────────────────────────────────────── */
+  const sharedFetches = [
+    fetch('/content/content.json').then(r => r.json()),
+    fetch('/content/settings.json').then(r => r.json())
+  ];
+
+  let content, settings, sections, trackContent;
+
+  if (pageType === 'track' && trackSlug) {
+    const [mainContent, mainSettings, track] = await Promise.all([
+      ...sharedFetches,
+      fetch(`/content/tracks/${trackSlug}.json`).then(r => r.json())
+    ]);
+    content = mainContent;
+    settings = mainSettings;
+    trackContent = track;
+  } else {
+    const [mainContent, mainSettings, mainSections] = await Promise.all([
+      ...sharedFetches,
+      fetch('/content/sections.json').then(r => r.json())
+    ]);
+    content = mainContent;
+    settings = mainSettings;
+    sections = mainSections;
+  }
+
+  /* ── 2. Apply meta tags (track page may override) ────────────────────── */
+  if (pageType === 'track' && trackContent && trackContent.meta) {
+    if (trackContent.meta.title) document.title = trackContent.meta.title;
+  } else {
+    document.title = settings.meta.title;
+  }
 
   const setMeta = (prop, content) => {
     let el = document.querySelector(`meta[property="${prop}"]`);
@@ -26,9 +54,12 @@
     el.setAttribute('content', content);
   };
 
-  setMeta('og:title', settings.meta.title);
-  setMeta('og:description', settings.meta.description);
-  setMeta('og:image', settings.meta.og_image);
+  const metaTitle = (pageType === 'track' && trackContent?.meta?.title) || settings.meta.title;
+  const metaDesc = (pageType === 'track' && trackContent?.meta?.description) || settings.meta.description;
+  const metaOg = (pageType === 'track' && trackContent?.meta?.og_image) || settings.meta.og_image;
+  setMeta('og:title', metaTitle);
+  setMeta('og:description', metaDesc);
+  setMeta('og:image', metaOg);
 
   /* ── 3. Helpers ──────────────────────────────────────────────────────── */
 
@@ -793,6 +824,329 @@
             ${data.badge.text}
           </div>` : ''}
         </div>
+      </section>`,
+
+    /* =================================================================== */
+    /*  TRACK PAGE SECTIONS                                                 */
+    /*  Used only on /tracks/{slug}/ pages. Each section has its own id    */
+    /*  and renders from per-track JSON (not the main content.json).       */
+    /* =================================================================== */
+
+    /* ------------------------------------------------------------------ */
+    /*  TRACK_HERO                                                         */
+    /* ------------------------------------------------------------------ */
+    trackHero: (data) => `
+      <section id="hero" class="track-hero">
+        <div class="hero-bg"></div>
+        <div class="hero-grid"></div>
+        <div class="container">
+          <div class="track-hero-layout">
+            <span class="hero-supertag">${data.supertag}</span>
+            <h1 class="track-hero-title">${data.title}</h1>
+            <p class="track-hero-sub">${data.subtitle}</p>
+            <div class="track-hero-stats">
+              ${(data.stats || []).map(s => `
+                <div class="track-hero-stat">
+                  <span class="track-hero-stat-value">${s.value}</span>
+                  <span class="track-hero-stat-label">${s.label}</span>
+                </div>
+              `).join('')}
+            </div>
+            <div class="hero-ctas track-hero-ctas">
+              <a href="${data.cta_primary.href}" class="btn btn-primary btn-big btn-hero-cta">
+                <span class="btn-hero-title">${data.cta_primary.title} →</span>
+                <span class="btn-hero-sub">${data.cta_primary.subtitle}</span>
+              </a>
+              <a href="${data.cta_secondary.href}" class="btn btn-secondary">${data.cta_secondary.text}</a>
+            </div>
+          </div>
+        </div>
+      </section>`,
+
+    /* ------------------------------------------------------------------ */
+    /*  TRACK_DEMAND — market demand & why this stack                     */
+    /* ------------------------------------------------------------------ */
+    trackDemand: (data) => `
+      <section id="demand" class="animate-on-scroll ${sectionBgClass()}">
+        <div class="container">
+          ${sectionHeader(data)}
+          <div class="grid-4 demand-grid" data-stagger="true">
+            ${data.points.map(p => `
+              <div class="card demand-card">
+                <div class="demand-icon">${icon(p.icon, '')}</div>
+                <h3 class="demand-title">${p.title}</h3>
+                <p class="demand-text">${p.text}</p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </section>`,
+
+    /* ------------------------------------------------------------------ */
+    /*  TRACK_FIT — who this is for / not for                              */
+    /* ------------------------------------------------------------------ */
+    trackFit: (data) => `
+      <section id="fit" class="animate-on-scroll ${sectionBgClass()}">
+        <div class="container">
+          ${sectionHeader(data)}
+          <div class="fit-layout">
+            <div class="fit-col fit-col-yes">
+              <div class="fit-col-head">
+                <span class="fit-col-icon fit-col-icon-yes">${icon('check-circle-2', '')}</span>
+                <h3>${data.title}</h3>
+              </div>
+              <ul class="fit-list">
+                ${data.fit.map(item => `<li>${item}</li>`).join('')}
+              </ul>
+            </div>
+            <div class="fit-col fit-col-no">
+              <div class="fit-col-head">
+                <span class="fit-col-icon fit-col-icon-no">${icon('x-circle', '')}</span>
+                <h3>${data.not_fit_title}</h3>
+              </div>
+              <ul class="fit-list fit-list-no">
+                ${data.not_fit.map(item => `<li>${item}</li>`).join('')}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>`,
+
+    /* ------------------------------------------------------------------ */
+    /*  TRACK_PROGRAM — weekly module breakdown                            */
+    /* ------------------------------------------------------------------ */
+    trackProgram: (data) => `
+      <section id="program" class="animate-on-scroll ${sectionBgClass()}">
+        <div class="container">
+          ${sectionHeader(data)}
+          <div class="program-timeline">
+            ${data.modules.map((m, i) => `
+              <article class="program-module">
+                <div class="program-module-period">
+                  <span class="program-module-num">${String(i + 1).padStart(2, '0')}</span>
+                  <span class="program-module-weeks">${m.period}</span>
+                </div>
+                <div class="program-module-body">
+                  <h3 class="program-module-title">${m.title}</h3>
+                  <ul class="program-module-topics">
+                    ${m.topics.map(t => `<li>${t}</li>`).join('')}
+                  </ul>
+                  <div class="program-module-outcome">
+                    <span class="program-module-outcome-label">Итог</span>
+                    <p>${m.outcome}</p>
+                  </div>
+                </div>
+              </article>
+            `).join('')}
+          </div>
+        </div>
+      </section>`,
+
+    /* ------------------------------------------------------------------ */
+    /*  TRACK_STACK — grouped stack with rationale                         */
+    /* ------------------------------------------------------------------ */
+    trackStack: (data) => `
+      <section id="stack" class="animate-on-scroll ${sectionBgClass()}">
+        <div class="container">
+          ${sectionHeader(data)}
+          <div class="stack-groups">
+            ${data.groups.map(g => `
+              <div class="stack-group">
+                <h3 class="stack-group-title">${g.title}</h3>
+                <div class="stack-group-items">
+                  ${g.items.map(it => `
+                    <div class="stack-item">
+                      <span class="stack-item-name">${it.name}</span>
+                      <span class="stack-item-why">${it.why}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </section>`,
+
+    /* ------------------------------------------------------------------ */
+    /*  TRACK_PROJECTS — portfolio projects                                */
+    /* ------------------------------------------------------------------ */
+    trackProjects: (data) => `
+      <section id="projects" class="animate-on-scroll ${sectionBgClass()}">
+        <div class="container">
+          ${sectionHeader(data)}
+          <div class="grid-3 projects-grid" data-stagger="true">
+            ${data.items.map(p => `
+              <article class="card project-card">
+                <span class="project-emoji">${icon(p.emoji, '')}</span>
+                <h3 class="project-title">${p.title}</h3>
+                <p class="project-text">${p.text}</p>
+                <div class="project-tech">
+                  ${p.tech.map(t => `<span class="project-tech-chip">${t}</span>`).join('')}
+                </div>
+              </article>
+            `).join('')}
+          </div>
+        </div>
+      </section>`,
+
+    /* ------------------------------------------------------------------ */
+    /*  TRACK_LESSON_DEMO — embedded lesson player (lazy iframe)           */
+    /* ------------------------------------------------------------------ */
+    trackLessonDemo: (data) => `
+      <section id="lesson-demo" class="animate-on-scroll ${sectionBgClass()}">
+        <div class="container">
+          ${sectionHeader(data)}
+          <div class="lesson-demo-layout">
+            <div class="lesson-demo-player"
+                 data-embed-src="${data.embed.src}"
+                 data-fallback="${data.embed.fallback_href}">
+              <div class="lesson-demo-poster" role="button" tabindex="0" aria-label="Запустить интерактивный урок">
+                <div class="lesson-demo-poster-bg"></div>
+                <div class="lesson-demo-poster-content">
+                  <button class="lesson-demo-play" aria-hidden="true">${icon('play', '')}</button>
+                  <h3 class="lesson-demo-poster-title">${data.embed.poster_title}</h3>
+                  <p class="lesson-demo-poster-sub">${data.embed.poster_subtitle}</p>
+                  <div class="lesson-demo-chips">
+                    ${(data.embed.poster_chips || []).map(c => `<span class="lesson-demo-chip">${c}</span>`).join('')}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="lesson-demo-features">
+              ${data.features.map(f => `
+                <div class="lesson-demo-feature">
+                  <span class="lesson-demo-feature-icon">${icon(f.icon, '')}</span>
+                  <div>
+                    <h4>${f.title}</h4>
+                    <p>${f.text}</p>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+          <p class="lesson-demo-note">
+            Не загружается? <a href="${data.embed.fallback_href}" target="_blank" rel="noopener">Открой полный урок в новой вкладке →</a>
+          </p>
+        </div>
+      </section>`,
+
+    /* ------------------------------------------------------------------ */
+    /*  TRACK_QUILLY_AI — track-specific tutor usage                       */
+    /* ------------------------------------------------------------------ */
+    trackQuillyAi: (data) => `
+      <section id="quilly-ai" class="animate-on-scroll ${sectionBgClass()} track-quilly">
+        <div class="container">
+          ${sectionHeader(data)}
+          <div class="grid-4 track-quilly-grid" data-stagger="true">
+            ${data.use_cases.map(u => `
+              <div class="card track-quilly-card">
+                <span class="track-quilly-icon">${icon(u.icon, '')}</span>
+                <h3>${u.title}</h3>
+                <p>${u.text}</p>
+              </div>
+            `).join('')}
+          </div>
+          ${inlineCta(data.cta)}
+        </div>
+      </section>`,
+
+    /* ------------------------------------------------------------------ */
+    /*  TRACK_MENTORS                                                      */
+    /* ------------------------------------------------------------------ */
+    trackMentors: (data) => `
+      <section id="mentors" class="animate-on-scroll ${sectionBgClass()}">
+        <div class="container">
+          ${sectionHeader(data)}
+          <div class="grid-2 mentors-grid" data-stagger="true">
+            ${data.items.map(m => `
+              <article class="card mentor-card">
+                <div class="mentor-avatar" aria-hidden="true">
+                  <span>${m.name.split(' ').map(w => w[0]).join('').slice(0, 2)}</span>
+                </div>
+                <div class="mentor-body">
+                  <h3 class="mentor-name">${m.name}</h3>
+                  <div class="mentor-role">${m.role} · <span class="mentor-company">${m.company}</span></div>
+                  <div class="mentor-meta">
+                    <span class="mentor-years">${m.years}</span>
+                    <span class="mentor-expertise">${m.expertise}</span>
+                  </div>
+                  <p class="mentor-bio">${m.bio}</p>
+                </div>
+              </article>
+            `).join('')}
+          </div>
+          <p class="mentors-disclaimer">* Данные менторов — для примера. Полный список преподавателей мы показываем после прохождения теста.</p>
+        </div>
+      </section>`,
+
+    /* ------------------------------------------------------------------ */
+    /*  TRACK_CAREER — career growth path                                  */
+    /* ------------------------------------------------------------------ */
+    trackCareer: (data) => `
+      <section id="career" class="animate-on-scroll ${sectionBgClass()}">
+        <div class="container">
+          ${sectionHeader(data)}
+          <div class="career-path">
+            ${data.path.map((p, i) => `
+              <div class="career-step">
+                <div class="career-step-marker">
+                  <span class="career-step-num">${i + 1}</span>
+                </div>
+                <div class="career-step-body">
+                  <div class="career-step-head">
+                    <span class="career-step-level">${p.level}</span>
+                    <h3 class="career-step-role">${p.role}</h3>
+                    <span class="career-step-salary">${p.salary}</span>
+                  </div>
+                  <p class="career-step-text">${p.text}</p>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+          ${data.adjacent_title ? `
+            <div class="career-adjacent">
+              <h3 class="career-adjacent-title">${data.adjacent_title}</h3>
+              <div class="career-adjacent-chips">
+                ${data.adjacent.map(a => `<span class="career-adjacent-chip">${a}</span>`).join('')}
+              </div>
+            </div>
+          ` : ''}
+        </div>
+      </section>`,
+
+    /* ------------------------------------------------------------------ */
+    /*  TRACK_FAQ — same markup as main faq, just id scope                */
+    /* ------------------------------------------------------------------ */
+    trackFaq: (data) => `
+      <section id="faq" class="animate-on-scroll ${sectionBgClass()}">
+        <div class="container">
+          ${sectionHeader(data)}
+          <div class="faq-list">
+            ${data.items.map((q, i) => `
+              <details class="faq-item" ${i === 0 ? 'open' : ''}>
+                <summary class="faq-q">${q.q}</summary>
+                <div class="faq-a">${q.a}</div>
+              </details>
+            `).join('')}
+          </div>
+        </div>
+      </section>`,
+
+    /* ------------------------------------------------------------------ */
+    /*  TRACK_FINAL_CTA                                                    */
+    /* ------------------------------------------------------------------ */
+    trackFinalCta: (data) => `
+      <section id="final_cta" class="animate-on-scroll final-cta-section">
+        <div class="container final-cta-container">
+          ${data.label ? `<span class="section-label">${data.label}</span>` : ''}
+          <h2>${data.title}</h2>
+          <p class="final-cta-sub">${data.subtitle}</p>
+          <a href="${data.cta.href}" class="btn btn-primary btn-big btn-hero-cta">
+            <span class="btn-hero-title">${data.cta.title} →</span>
+            <span class="btn-hero-sub">${data.cta.subtitle}</span>
+          </a>
+          <p class="final-cta-micro">${data.micro}</p>
+        </div>
       </section>`
   };
 
@@ -800,20 +1154,63 @@
   const app = document.getElementById('app');
   let html = '';
 
-  sections.forEach(section => {
-    if (!section.visible) return;
-    const data = content[section.id];
-    if (!data) return;
+  /**
+   * Render a single section.
+   *  `id`  — DOM id / key, used for bg alternation skipping.
+   *  `data` — data object passed to renderer.
+   *  `renderer` — template function to invoke.
+   */
+  function renderSection(id, data, renderer) {
+    if (!renderer || !data) return;
+    if (id !== 'hero') sectionIndex++;
+    html += addTooltips(renderer(data, settings));
+  }
 
-    const renderer = sectionRenderers[section.id];
-    if (renderer) {
-      /* hero is index 0, skip bg alternation for it */
-      if (section.id !== 'hero') {
-        sectionIndex++;
+  if (pageType === 'track' && trackContent) {
+    /* ── Track page: fixed order, mixes per-track + shared data ── */
+    const t = trackContent;
+
+    // Track-specific sections first
+    renderSection('hero', t.hero, sectionRenderers.trackHero);
+    renderSection('demand', t.demand, sectionRenderers.trackDemand);
+    renderSection('fit', t.fit, sectionRenderers.trackFit);
+    renderSection('program', t.program, sectionRenderers.trackProgram);
+    renderSection('stack', t.stack, sectionRenderers.trackStack);
+    renderSection('projects', t.projects, sectionRenderers.trackProjects);
+    renderSection('lesson-demo', t.lesson_demo, sectionRenderers.trackLessonDemo);
+    renderSection('quilly-ai', t.quilly_ai, sectionRenderers.trackQuillyAi);
+    renderSection('mentors', t.mentors, sectionRenderers.trackMentors);
+
+    // Shared sections from main content.json — reuse main templates
+    renderSection('startup', content.startup, sectionRenderers.startup);
+    renderSection('format', content.format, sectionRenderers.format);
+    renderSection('launchpad', content.launchpad, sectionRenderers.launchpad);
+    renderSection('quillon_jobs', content.quillon_jobs, sectionRenderers.quillon_jobs);
+    renderSection('how_money', content.how_money, sectionRenderers.how_money);
+
+    // Pricing — shared markup but override CTA with track-specific link
+    if (content.pricing) {
+      const pricingData = Object.assign({}, content.pricing);
+      if (t.pricing_override?.cta) {
+        pricingData.cta = Object.assign({}, pricingData.cta, t.pricing_override.cta);
       }
-      html += addTooltips(renderer(data, settings));
+      renderSection('pricing', pricingData, sectionRenderers.pricing);
     }
-  });
+
+    // Track-specific close
+    renderSection('career', t.career, sectionRenderers.trackCareer);
+    renderSection('faq', t.faq, sectionRenderers.trackFaq);
+    renderSection('final_cta', t.final_cta, sectionRenderers.trackFinalCta);
+
+  } else {
+    /* ── Main page: driven by sections.json ordering ── */
+    sections.forEach(section => {
+      if (!section.visible) return;
+      const data = content[section.id];
+      if (!data) return;
+      renderSection(section.id, data, sectionRenderers[section.id]);
+    });
+  }
 
   app.innerHTML = html;
 
