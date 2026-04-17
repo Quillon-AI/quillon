@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /jobs-mockup.html
+Sitemap: https://quillon.ru/sitemap.xml
+Host: https://quillon.ru

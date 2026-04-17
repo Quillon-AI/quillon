@@ -777,7 +777,9 @@
 .lesson-demo-player {
   position: relative;
   overflow: hidden;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 4 / 3;
+  min-height: 680px;
+  max-height: 88vh;
   background: transparent;
 }
 
@@ -1443,7 +1445,9 @@
   }
 
   .lesson-demo-player {
-    aspect-ratio: 16 / 10;
+    aspect-ratio: 3 / 4;
+    min-height: 720px;
+    max-height: none;
   }
 
   .program-timeline {
@@ -1563,7 +1567,10 @@
   }
 
   .lesson-demo-player {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: auto;
+    min-height: 640px;
+    height: 75vh;
+    max-height: none;
   }
 
   .lesson-demo-bar {
