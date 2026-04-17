@@ -50,8 +50,8 @@
   --space-3xl:        96px;
 
   /* ── Layout ──────────────────────────────────────────────────────────── */
-  --container-max:    1040px;
-  --container-pad:    clamp(24px, 6vw, 96px);
+  --container-max:    1200px;
+  --container-pad:    clamp(16px, 4vw, 48px);
   --section-pad:      clamp(64px, 10vw, 96px);
   --card-radius:      24px;
   --btn-radius:       12px;
