@@ -58,6 +58,11 @@
   display: block;
 }
 
+.nav-logo-img .nav-logo-light { display: none; }
+[data-theme="light"] .nav-logo-img .nav-logo-dark { display: none; }
+[data-theme="light"] .nav-logo-img .nav-logo-light { display: block; }
+
+
 /* Desktop links */
 .nav-links {
   display: flex;
