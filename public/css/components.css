@@ -46,6 +46,18 @@
   margin-right: var(--space-lg, 24px);
 }
 
+.nav-logo-img {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+}
+
+.nav-logo-img img {
+  height: 40px;
+  width: auto;
+  display: block;
+}
+
 /* Desktop links */
 .nav-links {
   display: flex;
