@@ -91,17 +91,6 @@ p {
   padding-right: var(--container-pad);
 }
 
-/* Premium wide-screen breathing room: cap content width below viewport.
-   Activated when there's genuine extra horizontal space that would
-   otherwise look empty on the sides. */
-@media (min-width: 1400px) {
-  .container {
-    max-width: 1040px;
-    padding-left: 48px;
-    padding-right: 48px;
-  }
-}
-
 section {
   padding-top: var(--section-pad);
   padding-bottom: var(--section-pad);
