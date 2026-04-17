@@ -7,6 +7,9 @@
 function initInteractions() {
   'use strict';
 
+  /* ── Lesson-demo iframe (mount early, before anything can break) ───── */
+  initLessonDemoEmbed();
+
   /* ── 0. Theme toggle ────────────────────────────────────────────────── */
   initThemeToggle();
 
@@ -694,8 +697,7 @@ function initInteractions() {
     visObserver.observe(showcase);
   }
 
-  /* ── N. Lesson-demo lazy iframe (track pages) ───────────────────────── */
-  initLessonDemoEmbed();
+  /* ── N. Lesson-demo iframe (definition — called at top of init) ────── */
 
   function initLessonDemoEmbed() {
     var player = document.querySelector('.lesson-demo-player');
