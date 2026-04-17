@@ -1306,6 +1306,47 @@ client = Anthropic()
 
   app.innerHTML = html;
 
+  /* ── Auto-mount lesson-demo iframe (inline, guarantees DOM is ready) ── */
+  (function() {
+    var player = document.querySelector('.lesson-demo-player');
+    if (!player) return;
+    var embedSrc = player.getAttribute('data-embed-src');
+    if (!embedSrc || player.querySelector('iframe')) return;
+
+    var frame = document.createElement('iframe');
+    frame.src = embedSrc;
+    frame.className = 'lesson-demo-frame';
+    frame.setAttribute('allow', 'autoplay; clipboard-write');
+    frame.setAttribute('title', 'Интерактивный урок Quillon');
+
+    var loading = player.querySelector('.lesson-demo-loading');
+    var failTimer = setTimeout(function() {
+      if (!frame.dataset.loaded) {
+        player.classList.add('lesson-demo-failed');
+        if (loading) loading.innerHTML = '<span>Не удалось загрузить урок</span>';
+      }
+    }, 12000);
+
+    frame.addEventListener('load', function() {
+      frame.dataset.loaded = '1';
+      clearTimeout(failTimer);
+      player.classList.add('lesson-demo-active');
+      if (loading) loading.style.display = 'none';
+    });
+
+    player.appendChild(frame);
+
+    if (window.ym) window.ym(108311343, 'reachGoal', 'lesson_demo_view');
+
+    // PostMessage analytics from embed
+    window.addEventListener('message', function(ev) {
+      if (!ev.origin || ev.origin.indexOf('quillon.ru') === -1) return;
+      var msg = ev.data || {};
+      if (!msg.type || msg.type.indexOf('lesson:') !== 0) return;
+      if (window.ym) window.ym(108311343, 'reachGoal', msg.type.replace(':', '_'));
+    });
+  })();
+
   // Initialize Lucide icons
   if (window.lucide) {
     window.lucide.createIcons();

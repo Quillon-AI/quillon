@@ -7,8 +7,7 @@
 function initInteractions() {
   'use strict';
 
-  /* ── Lesson-demo iframe (mount early, before anything can break) ───── */
-  initLessonDemoEmbed();
+  /* ── Lesson-demo iframe — now mounted directly in renderer.js ──────── */
 
   /* ── 0. Theme toggle ────────────────────────────────────────────────── */
   initThemeToggle();
@@ -697,62 +696,7 @@ function initInteractions() {
     visObserver.observe(showcase);
   }
 
-  /* ── N. Lesson-demo iframe (definition — called at top of init) ────── */
-
-  function initLessonDemoEmbed() {
-    var player = document.querySelector('.lesson-demo-player');
-    if (!player) return;
-
-    var embedSrc = player.getAttribute('data-embed-src');
-    if (!embedSrc) return;
-
-    function mountFrame() {
-      if (player.querySelector('iframe')) return;
-
-      var frame = document.createElement('iframe');
-      frame.src = embedSrc;
-      frame.className = 'lesson-demo-frame';
-      frame.setAttribute('allow', 'autoplay; clipboard-write');
-      frame.setAttribute('title', 'Интерактивный урок Quillon');
-
-      var loading = player.querySelector('.lesson-demo-loading');
-
-      // If iframe fails to load within 12s, show fallback
-      var failTimer = setTimeout(function() {
-        if (!frame.dataset.loaded) {
-          player.classList.add('lesson-demo-failed');
-          if (loading) loading.innerHTML = '<span>Не удалось загрузить урок</span>';
-        }
-      }, 12000);
-
-      frame.addEventListener('load', function() {
-        frame.dataset.loaded = '1';
-        clearTimeout(failTimer);
-        player.classList.add('lesson-demo-active');
-        if (loading) loading.style.display = 'none';
-      });
-
-      player.appendChild(frame);
-
-      // Analytics
-      if (window.ym) {
-        window.ym(108311343, 'reachGoal', 'lesson_demo_view');
-      }
-    }
-
-    // Mount iframe immediately
-    mountFrame();
-
-    // Listen to postMessage events from the embed for analytics
-    window.addEventListener('message', function(ev) {
-      if (!ev.origin || ev.origin.indexOf('quillon.ru') === -1) return;
-      var msg = ev.data || {};
-      if (!msg.type || msg.type.indexOf('lesson:') !== 0) return;
-      if (window.ym) {
-        window.ym(108311343, 'reachGoal', msg.type.replace(':', '_'));
-      }
-    });
-  }
+  /* ── Lesson-demo iframe — moved to renderer.js for reliable DOM timing ── */
 }
 
 /* Export for renderer.js */
