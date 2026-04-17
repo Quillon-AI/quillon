@@ -8,6 +8,8 @@
   --bg-deep:          #080B14;           /* Deepest background (body)        */
   --bg:               #0F172A;           /* Section alternate background     */
   --bg-card:          #141D35;           /* Card background (slightly light) */
+  --card:             #141D35;           /* Alias for bg-card (compat)       */
+  --card-elevated:    rgba(255, 255, 255, 0.04); /* Elevated surface (chips)  */
 
   /* ── Colors: Accent ──────────────────────────────────────────────────── */
   --accent:           #1F4ED8;           /* Primary accent (CTA, links)      */
@@ -18,6 +20,7 @@
   /* ── Colors: Text ────────────────────────────────────────────────────── */
   --text-primary:     #F0F4FF;           /* Headings, primary copy           */
   --text-secondary:   #94A3B8;           /* Descriptions, secondary copy     */
+  --text-tertiary:    #64748B;           /* Tertiary: stats labels, notes    */
   --text-muted:       #4A5568;           /* Disabled, placeholder            */
   --text-blue:        #60A5FA;           /* Inline accent text               */
 
@@ -72,7 +75,10 @@
   --glass-bg: rgba(255, 255, 255, 0.8);
   --text-primary: #0F172A;
   --text-secondary: #475569;
+  --text-tertiary: #64748B;
   --text-muted: #94A3B8;
+  --card: #F1F5F9;
+  --card-elevated: rgba(0, 0, 0, 0.04);
   --border: rgba(0, 0, 0, 0.08);
   --border-light: rgba(0, 0, 0, 0.12);
   --border-blue: rgba(31, 78, 216, 0.3);

@@ -702,55 +702,47 @@ function initInteractions() {
     if (!player) return;
 
     var embedSrc = player.getAttribute('data-embed-src');
-    var fallback = player.getAttribute('data-fallback');
     if (!embedSrc) return;
 
-    var poster = player.querySelector('.lesson-demo-poster');
-    if (!poster) return;
-
     function mountFrame() {
-      // Prevent double-mount
       if (player.querySelector('iframe')) return;
 
       var frame = document.createElement('iframe');
       frame.src = embedSrc;
       frame.className = 'lesson-demo-frame';
       frame.setAttribute('allow', 'autoplay; clipboard-write');
-      frame.setAttribute('loading', 'lazy');
       frame.setAttribute('title', 'Интерактивный урок Quillon');
 
-      // If iframe fails to load (CORS, offline), show fallback link
+      var loading = player.querySelector('.lesson-demo-loading');
+
+      // If iframe fails to load within 12s, show fallback
       var failTimer = setTimeout(function() {
         if (!frame.dataset.loaded) {
           player.classList.add('lesson-demo-failed');
+          if (loading) loading.innerHTML = '<span>Не удалось загрузить урок</span>';
         }
-      }, 8000);
+      }, 12000);
 
       frame.addEventListener('load', function() {
         frame.dataset.loaded = '1';
         clearTimeout(failTimer);
         player.classList.add('lesson-demo-active');
+        if (loading) loading.style.display = 'none';
       });
 
       player.appendChild(frame);
 
-      // Analytics event (Yandex.Metrika goal)
+      // Analytics
       if (window.ym) {
-        window.ym(108311343, 'reachGoal', 'lesson_demo_play');
+        window.ym(108311343, 'reachGoal', 'lesson_demo_view');
       }
     }
 
-    poster.addEventListener('click', mountFrame);
-    poster.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        mountFrame();
-      }
-    });
+    // Mount iframe immediately
+    mountFrame();
 
-    // Optional: listen to postMessage events from the embed for analytics
+    // Listen to postMessage events from the embed for analytics
     window.addEventListener('message', function(ev) {
-      // Accept only from lesson player origin
       if (!ev.origin || ev.origin.indexOf('quillon.ru') === -1) return;
       var msg = ev.data || {};
       if (!msg.type || msg.type.indexOf('lesson:') !== 0) return;

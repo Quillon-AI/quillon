@@ -140,7 +140,7 @@
 
   function addTooltips(html) {
     // Classes whose text content should NOT get tooltips
-    const skipClasses = /tag|product-meta|btn|nav-|section-label|hero-supertag|step-period|track-badge|adv-num|metric-value|price-main|footer-|tip/;
+    const skipClasses = /tag|product-meta|btn|nav-|section-label|hero-supertag|track-hero-title|track-hero-stat|step-period|track-badge|adv-num|metric-value|price-main|footer-|tip|program-module-title|c-/;
 
     const parts = html.split(/(<[^>]+>)/g);
     let skipDepth = 0;
@@ -841,23 +841,50 @@
         <div class="hero-grid"></div>
         <div class="container">
           <div class="track-hero-layout">
-            <span class="hero-supertag">${data.supertag}</span>
-            <h1 class="track-hero-title">${data.title}</h1>
-            <p class="track-hero-sub">${data.subtitle}</p>
-            <div class="track-hero-stats">
-              ${(data.stats || []).map(s => `
-                <div class="track-hero-stat">
-                  <span class="track-hero-stat-value">${s.value}</span>
-                  <span class="track-hero-stat-label">${s.label}</span>
-                </div>
-              `).join('')}
+            <div class="track-hero-content">
+              <span class="track-hero-supertag">${data.supertag}</span>
+              <h1 class="track-hero-title">${data.title}</h1>
+              <p class="track-hero-sub">${data.subtitle}</p>
+              <div class="track-hero-stats">
+                ${(data.stats || []).map(s => `
+                  <div class="track-hero-stat">
+                    <span class="track-hero-stat-value">${s.value}</span>
+                    <span class="track-hero-stat-label">${s.label}</span>
+                  </div>
+                `).join('')}
+              </div>
+              <div class="hero-ctas track-hero-ctas">
+                <a href="${data.cta_primary.href}" class="btn btn-primary btn-big btn-hero-cta">
+                  <span class="btn-hero-title">${data.cta_primary.title} →</span>
+                  <span class="btn-hero-sub">${data.cta_primary.subtitle}</span>
+                </a>
+                <a href="${data.cta_secondary.href}" class="btn btn-secondary">${data.cta_secondary.text}</a>
+              </div>
             </div>
-            <div class="hero-ctas track-hero-ctas">
-              <a href="${data.cta_primary.href}" class="btn btn-primary btn-big btn-hero-cta">
-                <span class="btn-hero-title">${data.cta_primary.title} →</span>
-                <span class="btn-hero-sub">${data.cta_primary.subtitle}</span>
-              </a>
-              <a href="${data.cta_secondary.href}" class="btn btn-secondary">${data.cta_secondary.text}</a>
+            <div class="track-hero-visual" aria-hidden="true">
+              <div class="track-hero-code">
+                <div class="track-hero-code-header">
+                  <span class="track-hero-code-dot" style="background:#EF4444"></span>
+                  <span class="track-hero-code-dot" style="background:#F59E0B"></span>
+                  <span class="track-hero-code-dot" style="background:#10B981"></span>
+                  <span class="track-hero-code-file">api/main.py</span>
+                </div>
+                <pre class="track-hero-code-body"><code><span class="c-kw">from</span> fastapi <span class="c-kw">import</span> FastAPI
+<span class="c-kw">from</span> claude <span class="c-kw">import</span> Anthropic
+
+app = FastAPI()
+client = Anthropic()
+
+<span class="c-dec">@app.post</span>(<span class="c-str">"/ask"</span>)
+<span class="c-kw">async def</span> <span class="c-fn">ask_ai</span>(q: <span class="c-tp">str</span>):
+    resp = client.messages.create(
+        model=<span class="c-str">"claude-sonnet-4-5-20250514"</span>,
+        messages=[{<span class="c-str">"role"</span>: <span class="c-str">"user"</span>,
+                   <span class="c-str">"content"</span>: q}]
+    )
+    <span class="c-kw">return</span> {<span class="c-str">"answer"</span>: resp.content}</code></pre>
+              </div>
+              <div class="track-hero-glow"></div>
             </div>
           </div>
         </div>
@@ -866,13 +893,15 @@
     /* ------------------------------------------------------------------ */
     /*  TRACK_DEMAND — market demand & why this stack                     */
     /* ------------------------------------------------------------------ */
-    trackDemand: (data) => `
+    trackDemand: (data) => {
+      const demandColors = ['#3B6FFF', '#10B981', '#F59E0B', '#7C3AED'];
+      return `
       <section id="demand" class="animate-on-scroll ${sectionBgClass()}">
         <div class="container">
           ${sectionHeader(data)}
           <div class="grid-4 demand-grid" data-stagger="true">
-            ${data.points.map(p => `
-              <div class="card demand-card">
+            ${data.points.map((p, i) => `
+              <div class="card demand-card" style="--demand-accent:${demandColors[i % demandColors.length]}">
                 <div class="demand-icon">${icon(p.icon, '')}</div>
                 <h3 class="demand-title">${p.title}</h3>
                 <p class="demand-text">${p.text}</p>
@@ -880,7 +909,8 @@
             `).join('')}
           </div>
         </div>
-      </section>`,
+      </section>`;
+    },
 
     /* ------------------------------------------------------------------ */
     /*  TRACK_FIT — who this is for / not for                              */
@@ -915,32 +945,41 @@
     /* ------------------------------------------------------------------ */
     /*  TRACK_PROGRAM — weekly module breakdown                            */
     /* ------------------------------------------------------------------ */
-    trackProgram: (data) => `
+    trackProgram: (data) => {
+      const moduleColors = ['#3B6FFF', '#7C3AED', '#10B981', '#F59E0B', '#EC4899'];
+      return `
       <section id="program" class="animate-on-scroll ${sectionBgClass()}">
         <div class="container">
           ${sectionHeader(data)}
           <div class="program-timeline">
-            ${data.modules.map((m, i) => `
-              <article class="program-module">
-                <div class="program-module-period">
-                  <span class="program-module-num">${String(i + 1).padStart(2, '0')}</span>
-                  <span class="program-module-weeks">${m.period}</span>
+            <div class="program-timeline-line" aria-hidden="true"></div>
+            ${data.modules.map((m, i) => {
+              const color = moduleColors[i % moduleColors.length];
+              return `
+              <article class="program-module" style="--module-accent:${color}">
+                <div class="program-module-marker" aria-hidden="true">
+                  <span class="program-module-step">${String(i + 1).padStart(2, '0')}</span>
                 </div>
-                <div class="program-module-body">
+                <div class="program-module-card">
+                  <div class="program-module-head">
+                    <span class="program-module-num">Модуль ${i + 1}</span>
+                    <span class="program-module-weeks">${m.period}</span>
+                  </div>
                   <h3 class="program-module-title">${m.title}</h3>
                   <ul class="program-module-topics">
                     ${m.topics.map(t => `<li>${t}</li>`).join('')}
                   </ul>
                   <div class="program-module-outcome">
-                    <span class="program-module-outcome-label">Итог</span>
+                    <span class="program-module-outcome-label">Результат</span>
                     <p>${m.outcome}</p>
                   </div>
                 </div>
-              </article>
-            `).join('')}
+              </article>`;
+            }).join('')}
           </div>
         </div>
-      </section>`,
+      </section>`;
+    },
 
     /* ------------------------------------------------------------------ */
     /*  TRACK_STACK — grouped stack with rationale                         */
@@ -970,63 +1009,68 @@
     /* ------------------------------------------------------------------ */
     /*  TRACK_PROJECTS — portfolio projects                                */
     /* ------------------------------------------------------------------ */
-    trackProjects: (data) => `
+    trackProjects: (data) => {
+      const projColors = ['#3B6FFF', '#7C3AED', '#10B981', '#F59E0B', '#EC4899'];
+      return `
       <section id="projects" class="animate-on-scroll ${sectionBgClass()}">
         <div class="container">
           ${sectionHeader(data)}
-          <div class="grid-3 projects-grid" data-stagger="true">
-            ${data.items.map(p => `
-              <article class="card project-card">
+          <div class="projects-layout" data-stagger="true">
+            ${data.items.map((p, i) => `
+              <article class="card project-card ${i === 0 ? 'project-card-featured' : ''}" style="--proj-accent:${projColors[i % projColors.length]}">
                 <span class="project-emoji">${icon(p.emoji, '')}</span>
-                <h3 class="project-title">${p.title}</h3>
-                <p class="project-text">${p.text}</p>
-                <div class="project-tech">
-                  ${p.tech.map(t => `<span class="project-tech-chip">${t}</span>`).join('')}
+                <div class="project-body">
+                  <h3 class="project-title">${p.title}</h3>
+                  <p class="project-text">${p.text}</p>
+                  <div class="project-tech">
+                    ${p.tech.map(t => `<span class="project-tech-chip">${t}</span>`).join('')}
+                  </div>
                 </div>
               </article>
             `).join('')}
           </div>
         </div>
-      </section>`,
+      </section>`;
+    },
 
     /* ------------------------------------------------------------------ */
-    /*  TRACK_LESSON_DEMO — embedded lesson player (lazy iframe)           */
+    /*  TRACK_LESSON_DEMO — embedded lesson player (auto-load iframe)      */
     /* ------------------------------------------------------------------ */
     trackLessonDemo: (data) => `
       <section id="lesson-demo" class="animate-on-scroll ${sectionBgClass()}">
         <div class="container">
           ${sectionHeader(data)}
-          <div class="lesson-demo-layout">
-            <div class="lesson-demo-player"
+          <div class="lesson-demo-embed-wrap">
+            <div class="lesson-demo-player lesson-demo-autoload"
                  data-embed-src="${data.embed.src}"
                  data-fallback="${data.embed.fallback_href}">
-              <div class="lesson-demo-poster" role="button" tabindex="0" aria-label="Запустить интерактивный урок">
-                <div class="lesson-demo-poster-bg"></div>
-                <div class="lesson-demo-poster-content">
-                  <button class="lesson-demo-play" aria-hidden="true">${icon('play', '')}</button>
-                  <h3 class="lesson-demo-poster-title">${data.embed.poster_title}</h3>
-                  <p class="lesson-demo-poster-sub">${data.embed.poster_subtitle}</p>
-                  <div class="lesson-demo-chips">
-                    ${(data.embed.poster_chips || []).map(c => `<span class="lesson-demo-chip">${c}</span>`).join('')}
-                  </div>
-                </div>
+              <div class="lesson-demo-loading" aria-label="Загрузка урока">
+                <span class="lesson-demo-spinner"></span>
+                <span>Загружаем урок...</span>
               </div>
             </div>
-            <div class="lesson-demo-features">
-              ${data.features.map(f => `
-                <div class="lesson-demo-feature">
-                  <span class="lesson-demo-feature-icon">${icon(f.icon, '')}</span>
-                  <div>
-                    <h4>${f.title}</h4>
-                    <p>${f.text}</p>
-                  </div>
-                </div>
-              `).join('')}
-            </div>
           </div>
-          <p class="lesson-demo-note">
-            Не загружается? <a href="${data.embed.fallback_href}" target="_blank" rel="noopener">Открой полный урок в новой вкладке →</a>
-          </p>
+          <div class="lesson-demo-bar">
+            <div class="lesson-demo-bar-info">
+              <span class="lesson-demo-bar-title">${data.embed.poster_title}</span>
+              <span class="lesson-demo-bar-sub">${data.embed.poster_subtitle}</span>
+            </div>
+            <div class="lesson-demo-chips">
+              ${(data.embed.poster_chips || []).map(c => `<span class="lesson-demo-chip">${c}</span>`).join('')}
+            </div>
+            <a href="${data.embed.fallback_href}" target="_blank" rel="noopener" class="lesson-demo-bar-link">Открыть в новой вкладке →</a>
+          </div>
+          <div class="lesson-demo-features-row">
+            ${data.features.map(f => `
+              <div class="lesson-demo-feature">
+                <span class="lesson-demo-feature-icon">${icon(f.icon, '')}</span>
+                <div>
+                  <h4>${f.title}</h4>
+                  <p>${f.text}</p>
+                </div>
+              </div>
+            `).join('')}
+          </div>
         </div>
       </section>`,
 
@@ -1037,30 +1081,71 @@
       <section id="quilly-ai" class="animate-on-scroll ${sectionBgClass()} track-quilly">
         <div class="container">
           ${sectionHeader(data)}
-          <div class="grid-4 track-quilly-grid" data-stagger="true">
-            ${data.use_cases.map(u => `
-              <div class="card track-quilly-card">
-                <span class="track-quilly-icon">${icon(u.icon, '')}</span>
-                <h3>${u.title}</h3>
-                <p>${u.text}</p>
+          <div class="quilly-layout">
+            <div class="quilly-chat" aria-hidden="true">
+              <div class="quilly-chat-header">
+                <span class="quilly-chat-avatar">Q</span>
+                <div>
+                  <span class="quilly-chat-name">Квилли</span>
+                  <span class="quilly-chat-status">онлайн</span>
+                </div>
               </div>
-            `).join('')}
+              <div class="quilly-chat-body">
+                <div class="quilly-msg quilly-msg-user">
+                  <p>У меня ошибка <code>TypeError: 'NoneType'</code> на строке 42. Не могу понять, почему</p>
+                </div>
+                <div class="quilly-msg quilly-msg-ai">
+                  <p>Вижу проблему! Функция <code>get_user()</code> возвращает <code>None</code>, когда пользователь не найден в БД. Добавь проверку:</p>
+                  <pre class="quilly-msg-code"><code><span class="c-kw">if</span> user <span class="c-kw">is</span> <span class="c-kw">None</span>:
+    <span class="c-kw">raise</span> HTTPException(<span class="c-tp">404</span>)</code></pre>
+                </div>
+                <div class="quilly-msg quilly-msg-user">
+                  <p>Работает, спасибо! А как лучше обрабатывать такие случаи в FastAPI?</p>
+                </div>
+                <div class="quilly-msg quilly-msg-ai quilly-msg-typing">
+                  <span></span><span></span><span></span>
+                </div>
+              </div>
+              <div class="quilly-chat-input">
+                <span>Спроси Квилли...</span>
+              </div>
+            </div>
+            <div class="quilly-features-wrap">
+              <div class="grid-2 track-quilly-grid" data-stagger="true">
+                ${data.use_cases.map(u => `
+                  <div class="card track-quilly-card">
+                    <span class="track-quilly-icon">${icon(u.icon, '')}</span>
+                    <h3>${u.title}</h3>
+                    <p>${u.text}</p>
+                  </div>
+                `).join('')}
+              </div>
+              ${inlineCta(data.cta)}
+            </div>
           </div>
-          ${inlineCta(data.cta)}
         </div>
       </section>`,
 
     /* ------------------------------------------------------------------ */
     /*  TRACK_MENTORS                                                      */
     /* ------------------------------------------------------------------ */
-    trackMentors: (data) => `
+    trackMentors: (data) => {
+      const avatarGradients = [
+        ['#3B6FFF', '#7C3AED'],
+        ['#10B981', '#3B6FFF'],
+        ['#F59E0B', '#EC4899'],
+        ['#7C3AED', '#EC4899']
+      ];
+      return `
       <section id="mentors" class="animate-on-scroll ${sectionBgClass()}">
         <div class="container">
           ${sectionHeader(data)}
           <div class="grid-2 mentors-grid" data-stagger="true">
-            ${data.items.map(m => `
+            ${data.items.map((m, i) => {
+              const [c1, c2] = avatarGradients[i % avatarGradients.length];
+              return `
               <article class="card mentor-card">
-                <div class="mentor-avatar" aria-hidden="true">
+                <div class="mentor-avatar" aria-hidden="true" style="background:linear-gradient(135deg,${c1},${c2})">
                   <span>${m.name.split(' ').map(w => w[0]).join('').slice(0, 2)}</span>
                 </div>
                 <div class="mentor-body">
@@ -1072,12 +1157,13 @@
                   </div>
                   <p class="mentor-bio">${m.bio}</p>
                 </div>
-              </article>
-            `).join('')}
+              </article>`;
+            }).join('')}
           </div>
           <p class="mentors-disclaimer">* Данные менторов — для примера. Полный список преподавателей мы показываем после прохождения теста.</p>
         </div>
-      </section>`,
+      </section>`;
+    },
 
     /* ------------------------------------------------------------------ */
     /*  TRACK_CAREER — career growth path                                  */
@@ -1170,16 +1256,21 @@
     /* ── Track page: fixed order, mixes per-track + shared data ── */
     const t = trackContent;
 
+    const divider = '<hr class="track-section-divider" aria-hidden="true">';
+
     // Track-specific sections first
     renderSection('hero', t.hero, sectionRenderers.trackHero);
     renderSection('demand', t.demand, sectionRenderers.trackDemand);
     renderSection('fit', t.fit, sectionRenderers.trackFit);
+    html += divider;
     renderSection('program', t.program, sectionRenderers.trackProgram);
     renderSection('stack', t.stack, sectionRenderers.trackStack);
     renderSection('projects', t.projects, sectionRenderers.trackProjects);
+    html += divider;
     renderSection('lesson-demo', t.lesson_demo, sectionRenderers.trackLessonDemo);
     renderSection('quilly-ai', t.quilly_ai, sectionRenderers.trackQuillyAi);
     renderSection('mentors', t.mentors, sectionRenderers.trackMentors);
+    html += divider;
 
     // Shared sections from main content.json — reuse main templates
     renderSection('startup', content.startup, sectionRenderers.startup);
@@ -1187,6 +1278,7 @@
     renderSection('launchpad', content.launchpad, sectionRenderers.launchpad);
     renderSection('quillon_jobs', content.quillon_jobs, sectionRenderers.quillon_jobs);
     renderSection('how_money', content.how_money, sectionRenderers.how_money);
+    html += divider;
 
     // Pricing — shared markup but override CTA with track-specific link
     if (content.pricing) {
