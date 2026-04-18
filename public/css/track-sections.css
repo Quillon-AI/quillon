@@ -1283,19 +1283,50 @@
 }
 
 .career-step-num {
+  position: relative;
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: var(--accent);
-  color: var(--bg);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-display);
+  font-family: var(--font-mono);
   font-weight: 700;
-  font-size: 1.1rem;
-  border: 3px solid var(--card);
-  box-shadow: 0 0 0 2px var(--accent);
+  font-size: 0.95rem;
+  color: #FFFFFF;
+  background:
+    radial-gradient(circle at 35% 30%, #3B6FFF 0%, #1F4ED8 55%, #0F172A 100%);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+    0 0 20px rgba(31, 78, 216, 0.32),
+    0 6px 14px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="light"] .career-step-num {
+  color: #1F4ED8;
+  background: #FFFFFF;
+  border: 1.5px solid rgba(31, 78, 216, 0.45);
+  box-shadow:
+    0 2px 6px rgba(15, 23, 42, 0.06),
+    0 0 0 4px rgba(31, 78, 216, 0.06);
+}
+
+.career-step:last-child .career-step-num {
+  background:
+    radial-gradient(circle at 35% 30%, #A78BFA 0%, #7C3AED 55%, #0F172A 100%);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+    0 0 22px rgba(124, 58, 237, 0.4),
+    0 6px 14px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="light"] .career-step:last-child .career-step-num {
+  color: #7C3AED;
+  background: #FFFFFF;
+  border-color: rgba(124, 58, 237, 0.45);
+  box-shadow:
+    0 2px 6px rgba(15, 23, 42, 0.06),
+    0 0 0 4px rgba(124, 58, 237, 0.06);
 }
 
 .career-step-body {
