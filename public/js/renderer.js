@@ -218,14 +218,79 @@
               </div>` : ''}
             </div>
             <div class="hero-visual" aria-hidden="true">
-              <lottie-player
-                src="https://assets2.lottiefiles.com/packages/lf20_w51pcehl.json"
-                background="transparent"
-                speed="0.7"
-                style="width: 340px; height: 340px;"
-                loop
-                autoplay>
-              </lottie-player>
+              <svg class="hero-orbit" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img">
+                <defs>
+                  <radialGradient id="orbCore" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#3B6FFF" stop-opacity="0.9"/>
+                    <stop offset="55%" stop-color="#1F4ED8" stop-opacity="0.55"/>
+                    <stop offset="100%" stop-color="#1F4ED8" stop-opacity="0"/>
+                  </radialGradient>
+                  <radialGradient id="orbHalo" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#7C3AED" stop-opacity="0.35"/>
+                    <stop offset="100%" stop-color="#7C3AED" stop-opacity="0"/>
+                  </radialGradient>
+                  <linearGradient id="orbStroke" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#3B6FFF" stop-opacity="0.55"/>
+                    <stop offset="50%" stop-color="#7C3AED" stop-opacity="0.2"/>
+                    <stop offset="100%" stop-color="#3B6FFF" stop-opacity="0"/>
+                  </linearGradient>
+                  <filter id="nodeGlow" x="-80%" y="-80%" width="260%" height="260%">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="3"/>
+                  </filter>
+                </defs>
+
+                <!-- soft purple halo -->
+                <circle cx="200" cy="200" r="200" fill="url(#orbHalo)"/>
+
+                <!-- core glow -->
+                <circle cx="200" cy="200" r="60" fill="url(#orbCore)"/>
+
+                <!-- Q mark / centerpiece -->
+                <g class="hero-orbit-core">
+                  <circle cx="200" cy="200" r="34" fill="#0F172A" stroke="url(#orbStroke)" stroke-width="1.5"/>
+                  <text x="200" y="212" text-anchor="middle" font-family="Syne, sans-serif" font-size="28" font-weight="800" fill="#F0F4FF">Q</text>
+                </g>
+
+                <!-- orbit rings -->
+                <g class="hero-orbit-ring hero-orbit-ring--1">
+                  <circle cx="200" cy="200" r="90" fill="none" stroke="url(#orbStroke)" stroke-width="1" stroke-dasharray="2 6"/>
+                  <circle cx="290" cy="200" r="4" fill="#3B6FFF"/>
+                  <circle cx="290" cy="200" r="9" fill="#3B6FFF" fill-opacity="0.25" filter="url(#nodeGlow)"/>
+                </g>
+
+                <g class="hero-orbit-ring hero-orbit-ring--2">
+                  <circle cx="200" cy="200" r="135" fill="none" stroke="url(#orbStroke)" stroke-width="1"/>
+                  <g transform="translate(65 200)">
+                    <circle r="5" fill="#7C3AED"/>
+                    <circle r="11" fill="#7C3AED" fill-opacity="0.22" filter="url(#nodeGlow)"/>
+                  </g>
+                  <g transform="translate(335 200)">
+                    <circle r="3.5" fill="#F0F4FF" fill-opacity="0.8"/>
+                  </g>
+                </g>
+
+                <g class="hero-orbit-ring hero-orbit-ring--3">
+                  <circle cx="200" cy="200" r="175" fill="none" stroke="url(#orbStroke)" stroke-width="1" stroke-dasharray="1 4"/>
+                  <g transform="translate(200 25)">
+                    <circle r="4" fill="#3B6FFF"/>
+                    <circle r="10" fill="#3B6FFF" fill-opacity="0.2" filter="url(#nodeGlow)"/>
+                  </g>
+                  <g transform="translate(200 375)">
+                    <circle r="3" fill="#F0F4FF" fill-opacity="0.55"/>
+                  </g>
+                  <g transform="translate(50 90)">
+                    <circle r="2.5" fill="#F0F4FF" fill-opacity="0.4"/>
+                  </g>
+                </g>
+
+                <!-- tech labels floating -->
+                <g class="hero-orbit-labels" font-family="JetBrains Mono, monospace" font-size="10" fill="#94A3B8" letter-spacing="0.1em">
+                  <text x="60" y="70" font-weight="500">PYTHON</text>
+                  <text x="310" y="85" font-weight="500">FLUTTER</text>
+                  <text x="30" y="330" font-weight="500">AI · ML</text>
+                  <text x="300" y="340" font-weight="500">FASTAPI</text>
+                </g>
+              </svg>
             </div>
           </div>
         </div>
@@ -235,7 +300,7 @@
     /*  HOW_MONEY                                                          */
     /* ------------------------------------------------------------------ */
     how_money: (data) => `
-      <section id="how_money" class="animate-on-scroll ${sectionBgClass()}">
+      <section id="how_money" class="${sectionBgClass()}">
         <div class="container">
           ${sectionHeader(data)}
           <div class="grid-3 how-money-cards" data-stagger="true">
@@ -254,7 +319,7 @@
     /*  MARKET                                                             */
     /* ------------------------------------------------------------------ */
     market: (data) => `
-      <section id="market" class="animate-on-scroll ${sectionBgClass()}">
+      <section id="market" class="${sectionBgClass()}">
         <div class="container">
           ${sectionHeader(data)}
           <div class="grid-4 metric-cards" data-stagger="true">
@@ -277,7 +342,7 @@
     /*  SOLUTION                                                           */
     /* ------------------------------------------------------------------ */
     solution: (data) => `
-      <section id="solution" class="animate-on-scroll ${sectionBgClass()}">
+      <section id="solution" class="${sectionBgClass()}">
         <div class="container">
           ${sectionHeader(data)}
           <div class="grid-2 solution-cards" data-stagger="true">
@@ -330,7 +395,7 @@
     /*  FORMAT                                                             */
     /* ------------------------------------------------------------------ */
     format: (data) => `
-      <section id="format" class="animate-on-scroll ${sectionBgClass()}">
+      <section id="format" class="${sectionBgClass()}">
         <div class="container">
           ${sectionHeader(data)}
           <div class="format-layout">
@@ -364,7 +429,7 @@
     /*  QUILLON_JOBS                                                       */
     /* ------------------------------------------------------------------ */
     quillon_jobs: (data) => `
-      <section id="quillon_jobs" class="animate-on-scroll ${sectionBgClass()}">
+      <section id="quillon_jobs" class="${sectionBgClass()}">
         <div class="container">
           ${sectionHeader(data)}
           <div class="grid-2 jobs-features" data-stagger="true">
@@ -395,7 +460,7 @@
     /*  PRODUCTS                                                           */
     /* ------------------------------------------------------------------ */
     products: (data) => `
-      <section id="products" class="animate-on-scroll ${sectionBgClass()}">
+      <section id="products" class="${sectionBgClass()}">
         <div class="container">
           ${sectionHeader(data)}
           <div class="grid-3 product-cards" data-stagger="true">
@@ -428,7 +493,7 @@
     /*  PATH                                                               */
     /* ------------------------------------------------------------------ */
     path: (data) => `
-      <section id="path" class="animate-on-scroll ${sectionBgClass()}">
+      <section id="path" class="${sectionBgClass()}">
         <div class="container">
           ${sectionHeader(data)}
           <div class="stepper">
@@ -453,7 +518,7 @@
     /*  AI_ANSWER                                                          */
     /* ------------------------------------------------------------------ */
     ai_answer: (data) => `
-      <section id="ai_answer" class="animate-on-scroll ${sectionBgClass()}">
+      <section id="ai_answer" class="${sectionBgClass()}">
         <div class="container">
           <div class="ai-answer-layout">
             <div class="ai-answer-question">
@@ -473,7 +538,7 @@
     /*  LAUNCHPAD                                                          */
     /* ------------------------------------------------------------------ */
     launchpad: (data) => `
-      <section id="launchpad" class="animate-on-scroll ${sectionBgClass()}">
+      <section id="launchpad" class="${sectionBgClass()}">
         <div class="container">
           ${sectionHeader(data)}
 
@@ -524,7 +589,7 @@
     /*  ADVANTAGES                                                         */
     /* ------------------------------------------------------------------ */
     advantages: (data) => `
-      <section id="advantages" class="animate-on-scroll ${sectionBgClass()}">
+      <section id="advantages" class="${sectionBgClass()}">
         <div class="container">
           ${sectionHeader(data)}
           <div class="grid-3 advantages-grid" data-stagger="true">
@@ -574,7 +639,7 @@
           ${data.personas.map((p, i) => audienceCard(p, i)).join('')}
         </div>`;
       return `
-      <section id="audience" class="animate-on-scroll ${sectionBgClass()}">
+      <section id="audience" class="${sectionBgClass()}">
         <div class="container">
           ${sectionHeader(data)}
           ${groupsHtml}
@@ -645,7 +710,7 @@
     /*  FAQ                                                                */
     /* ------------------------------------------------------------------ */
     faq: (data) => `
-      <section id="faq" class="animate-on-scroll ${sectionBgClass()}">
+      <section id="faq" class="${sectionBgClass()}">
         <div class="container">
           ${sectionHeader(data)}
           <div class="faq-list">
@@ -668,7 +733,7 @@
     /*  STARTUP                                                            */
     /* ------------------------------------------------------------------ */
     startup: (data) => `
-      <section id="startup" class="animate-on-scroll ${sectionBgClass()}">
+      <section id="startup" class="${sectionBgClass()}">
         <div class="container">
           ${sectionHeader(data)}
 
@@ -703,7 +768,7 @@
     /*  QUILLY_AI                                                          */
     /* ------------------------------------------------------------------ */
     quilly_ai: (data) => `
-      <section id="quilly_ai" class="animate-on-scroll ${sectionBgClass()}">
+      <section id="quilly_ai" class="${sectionBgClass()}">
         <div class="container">
           ${sectionHeader(data)}
 
@@ -733,7 +798,7 @@
     /*  CONTACT_FORM                                                       */
     /* ------------------------------------------------------------------ */
     contact_form: (data) => `
-      <section id="contact_form" class="animate-on-scroll ${sectionBgClass()}">
+      <section id="contact_form" class="${sectionBgClass()}">
         <div class="container">
           <div class="contact-form-layout">
             <div class="contact-form-info">

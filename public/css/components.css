@@ -248,19 +248,45 @@
   text-decoration: none;
 }
 
-/* Primary — gradient blue */
+/* Primary — gradient blue with glow aura on hover */
 .btn-primary {
+  position: relative;
   background: linear-gradient(135deg, var(--accent), var(--accent-light));
   color: #fff;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.18) inset,
+              0 8px 24px rgba(31, 78, 216, 0.28);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Sheen — diagonal light sweep on hover */
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.18) 50%,
+    transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: -1;
+  pointer-events: none;
 }
 
 .btn-primary:hover {
-  transform: scale(1.02);
-  box-shadow: 0 12px 32px rgba(31, 78, 216, 0.4);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.22) inset,
+              0 16px 40px rgba(31, 78, 216, 0.5),
+              0 0 0 1px rgba(59, 111, 255, 0.3);
+}
+
+.btn-primary:hover::before {
+  transform: translateX(120%);
 }
 
 .btn-primary:active {
-  transform: scale(0.98);
+  transform: translateY(0) scale(0.99);
 }
 
 /* Secondary — outlined */
@@ -281,7 +307,6 @@
   padding: 0 44px;
   border-radius: 16px;
   font-size: 1.125rem;
-  animation: glow 3s ease-in-out infinite;
 }
 
 /* Small — inline, compact */
@@ -295,6 +320,7 @@
    CARDS
    ========================================================================== */
 .card {
+  position: relative;
   background: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
@@ -302,13 +328,42 @@
   border-radius: var(--card-radius);
   padding: clamp(24px, 5vw, 40px);
   box-shadow: var(--shadow-card);
-  transition: all var(--transition);
+  transition: transform var(--transition),
+              border-color var(--transition),
+              box-shadow var(--transition);
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* Hover spotlight — accent glow from bottom-left */
+.card::after {
+  content: '';
+  position: absolute;
+  left: -20%;
+  bottom: -40%;
+  width: 70%;
+  height: 80%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(59, 111, 255, 0.22),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+  z-index: -1;
 }
 
 .card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
   border-color: var(--border-blue);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset,
+              0 24px 50px rgba(0, 0, 0, 0.4),
+              0 8px 24px rgba(31, 78, 216, 0.18);
+}
+
+.card:hover::after {
+  opacity: 1;
 }
 
 /* Highlighted card — gradient accent border */

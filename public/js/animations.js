@@ -235,21 +235,22 @@ function initAnimations() {
     }
   });
 
-  /* ── 6. Hero parallax (subtle) ──────────────────────────────────────── */
+  /* ── 6. Hero parallax (layered depth) ───────────────────────────────── */
   var heroBg = document.querySelector('.hero-bg');
   var heroGrid = document.querySelector('.hero-grid');
+  var heroVisual = document.querySelector('.hero-visual');
   var heroSection = document.getElementById('hero');
   var parallaxTicking = false;
 
-  if (heroBg && heroGrid && heroSection) {
+  if (heroSection && (heroBg || heroGrid || heroVisual)) {
     function updateParallax() {
       var scrollY = window.scrollY;
-      /* Only apply within hero viewport range for performance */
       var heroHeight = heroSection.offsetHeight;
       if (scrollY <= heroHeight) {
-        var offset = Math.round(scrollY * 0.3);
-        heroBg.style.transform = 'translateY(' + offset + 'px)';
-        heroGrid.style.transform = 'translateY(' + offset + 'px)';
+        if (heroBg)   heroBg.style.transform   = 'translateY(' + Math.round(scrollY * 0.3) + 'px)';
+        if (heroGrid) heroGrid.style.transform = 'translateY(' + Math.round(scrollY * 0.3) + 'px)';
+        /* Orbit moves slower — depth effect */
+        if (heroVisual) heroVisual.style.transform = 'translateY(calc(-50% + ' + Math.round(scrollY * 0.18) + 'px))';
       }
     }
 
