@@ -81,14 +81,14 @@
     "items": [
       {
         "name": "Quillon ChatAI",
-        "icon": "brain",
+        "icon": "<img src=\"/assets/images/products/quilly-ai.svg\" alt=\"Quilly AI\" width=\"56\" height=\"56\">",
         "description": "AI-ассистент на собственной платформе Quillon. Серверная часть на Python, мобильный клиент на Flutter, автотесты от QA-команды. Три трека работают над одним продуктом — как в реальной компании.",
         "meta": "Python · FastAPI · RAG · Собственная платформа",
         "demo": true
       },
       {
         "name": "Quillon Meet",
-        "icon": "video",
+        "icon": "<img src=\"/assets/images/products/quillon-meet.svg\" alt=\"Quillon Meet\" width=\"56\" height=\"56\">",
         "description": "Платформа видеоконференций — собственная разработка Quillon. Видеовстречи, демонстрация экрана, командные созвоны — на нашей инфраструктуре, без зависимости от зарубежных сервисов.",
         "meta": "WebRTC · Python · Собственная инфраструктура",
         "link": {
@@ -98,7 +98,7 @@
       },
       {
         "name": "Quillon LMS",
-        "icon": "<svg viewBox=\"0 0 32 32\" width=\"32\" height=\"32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"lms-grad\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\"><stop offset=\"0%\" stop-color=\"#1F4ED8\"/><stop offset=\"100%\" stop-color=\"#3B82F6\"/></linearGradient></defs><path d=\"M16 4C9.37258 4 4 9.37258 4 16C4 22.6274 9.37258 28 16 28C18.6144 28 21.0315 27.1648 23 25.7416L27.2584 30L30 27.2584L25.7416 23C27.1648 21.0315 28 18.6144 28 16C28 9.37258 22.6274 4 16 4ZM16 24C11.5817 24 8 20.4183 8 16C8 11.5817 11.5817 8 16 8C20.4183 8 24 11.5817 24 16C24 20.4183 20.4183 24 16 24Z\" fill=\"url(#lms-grad)\"/><circle cx=\"16\" cy=\"16\" r=\"4\" fill=\"white\" fill-opacity=\"0.8\"/></svg>",
+        "icon": "<img src=\"/assets/images/products/quilly-lms.svg\" alt=\"Quilly LMS\" width=\"56\" height=\"56\">",
         "description": "Внутренняя платформа для работы над программой — та самая, которую вы используете. Разрабатывается командой Quillon: вы и работаете на продукте, и улучшаете его.",
         "meta": "Python · Django · Flutter",
         "link": {

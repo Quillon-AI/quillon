@@ -63,9 +63,9 @@
 
   /* ── 3. Helpers ──────────────────────────────────────────────────────── */
 
-  /** Return Lucide icon element or inline SVG if the value already contains <svg */
+  /** Return Lucide icon element, inline SVG, or pass-through <img> markup */
   function icon(name, fallback) {
-    if (name && name.indexOf('<svg') !== -1) return name;
+    if (name && (name.indexOf('<svg') !== -1 || name.indexOf('<img') !== -1)) return name;
     return '<i data-lucide="' + name + '"></i>';
   }
 
@@ -229,6 +229,11 @@
                     <stop offset="0%" stop-color="#7C3AED" stop-opacity="0.35"/>
                     <stop offset="100%" stop-color="#7C3AED" stop-opacity="0"/>
                   </radialGradient>
+                  <radialGradient id="coreBright" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#F0F4FF" stop-opacity="1"/>
+                    <stop offset="40%" stop-color="#3B6FFF" stop-opacity="0.95"/>
+                    <stop offset="100%" stop-color="#1F4ED8" stop-opacity="0.8"/>
+                  </radialGradient>
                   <linearGradient id="orbStroke" x1="0" y1="0" x2="1" y2="1">
                     <stop offset="0%" stop-color="#3B6FFF" stop-opacity="0.55"/>
                     <stop offset="50%" stop-color="#7C3AED" stop-opacity="0.2"/>
@@ -240,15 +245,19 @@
                 </defs>
 
                 <!-- soft purple halo -->
-                <circle cx="200" cy="200" r="200" fill="url(#orbHalo)"/>
+                <circle class="hero-orbit-halo" cx="200" cy="200" r="200" fill="url(#orbHalo)"/>
 
                 <!-- core glow -->
-                <circle cx="200" cy="200" r="60" fill="url(#orbCore)"/>
+                <circle class="hero-orbit-coreglow" cx="200" cy="200" r="60" fill="url(#orbCore)"/>
 
-                <!-- Q mark / centerpiece -->
+                <!-- Centerpiece — luminous core (reactor/star) -->
                 <g class="hero-orbit-core">
-                  <circle cx="200" cy="200" r="34" fill="#0F172A" stroke="url(#orbStroke)" stroke-width="1.5"/>
-                  <text x="200" y="212" text-anchor="middle" font-family="Syne, sans-serif" font-size="28" font-weight="800" fill="#F0F4FF">Q</text>
+                  <!-- thin dashed boundary ring -->
+                  <circle cx="200" cy="200" r="38" fill="none" stroke="#3B6FFF" stroke-opacity="0.3" stroke-width="1" stroke-dasharray="1.5 5"/>
+                  <!-- soft bright halo -->
+                  <circle cx="200" cy="200" r="20" fill="#3B6FFF" fill-opacity="0.3" filter="url(#nodeGlow)"/>
+                  <!-- bright core disc with radial gradient -->
+                  <circle cx="200" cy="200" r="10" fill="url(#coreBright)"/>
                 </g>
 
                 <!-- orbit rings -->
@@ -284,7 +293,7 @@
                 </g>
 
                 <!-- tech labels floating -->
-                <g class="hero-orbit-labels" font-family="JetBrains Mono, monospace" font-size="10" fill="#94A3B8" letter-spacing="0.1em">
+                <g class="hero-orbit-labels" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="0.1em">
                   <text x="60" y="70" font-weight="500">PYTHON</text>
                   <text x="310" y="85" font-weight="500">FLUTTER</text>
                   <text x="30" y="330" font-weight="500">AI · ML</text>
@@ -772,6 +781,65 @@
         <div class="container">
           ${sectionHeader(data)}
 
+          <!-- Flow diagram: question → AI → answer -->
+          <div class="quilly-flow" aria-hidden="true">
+            <svg class="quilly-flow-svg" viewBox="0 0 900 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <radialGradient id="qfCore" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#F0F4FF"/>
+                  <stop offset="45%" stop-color="#3B6FFF"/>
+                  <stop offset="100%" stop-color="#1F4ED8"/>
+                </radialGradient>
+                <linearGradient id="qfLine" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%"  stop-color="#3B6FFF" stop-opacity="0"/>
+                  <stop offset="50%" stop-color="#3B6FFF" stop-opacity="0.7"/>
+                  <stop offset="100%" stop-color="#3B6FFF" stop-opacity="0"/>
+                </linearGradient>
+                <linearGradient id="qfLine2" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%"  stop-color="#7C3AED" stop-opacity="0"/>
+                  <stop offset="50%" stop-color="#7C3AED" stop-opacity="0.7"/>
+                  <stop offset="100%" stop-color="#7C3AED" stop-opacity="0"/>
+                </linearGradient>
+                <filter id="qfGlow" x="-80%" y="-80%" width="260%" height="260%">
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="3"/>
+                </filter>
+              </defs>
+
+              <!-- Connector lines (static base) -->
+              <line x1="160" y1="110" x2="380" y2="110" stroke="url(#qfLine)"  stroke-width="1.5"/>
+              <line x1="520" y1="110" x2="740" y2="110" stroke="url(#qfLine2)" stroke-width="1.5"/>
+
+              <!-- Animated data packets travelling along lines -->
+              <circle class="qf-packet qf-packet--1" r="3" fill="#3B6FFF"/>
+              <circle class="qf-packet qf-packet--2" r="3" fill="#7C3AED"/>
+
+              <!-- Node 1: QUESTION bubble -->
+              <g class="qf-node qf-node--question">
+                <circle cx="100" cy="110" r="42" fill="#0F172A" stroke="rgba(59,111,255,0.3)" stroke-width="1"/>
+                <circle cx="100" cy="110" r="48" fill="none" stroke="rgba(59,111,255,0.18)" stroke-width="1" stroke-dasharray="2 5"/>
+                <text x="100" y="120" text-anchor="middle" font-family="Syne, sans-serif" font-size="28" font-weight="700" fill="#3B6FFF">?</text>
+              </g>
+              <text class="qf-label" x="100" y="185" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="500" letter-spacing="0.12em">ВОПРОС</text>
+
+              <!-- Node 2: AI core (orbit-style, matches hero) -->
+              <g class="qf-node qf-node--ai">
+                <circle cx="450" cy="110" r="58" fill="none" stroke="rgba(59,111,255,0.22)" stroke-width="1" stroke-dasharray="1.5 5"/>
+                <circle cx="450" cy="110" r="44" fill="none" stroke="rgba(59,111,255,0.35)" stroke-width="1"/>
+                <circle class="qf-core-glow" cx="450" cy="110" r="26" fill="#3B6FFF" fill-opacity="0.3" filter="url(#qfGlow)"/>
+                <circle cx="450" cy="110" r="14" fill="url(#qfCore)"/>
+              </g>
+              <text class="qf-label qf-label--ai" x="450" y="195" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600" letter-spacing="0.14em">QUILLY AI</text>
+
+              <!-- Node 3: ANSWER bubble (checkmark) -->
+              <g class="qf-node qf-node--answer">
+                <circle cx="800" cy="110" r="42" fill="#0F172A" stroke="rgba(124,58,237,0.3)" stroke-width="1"/>
+                <circle cx="800" cy="110" r="48" fill="none" stroke="rgba(124,58,237,0.18)" stroke-width="1" stroke-dasharray="2 5"/>
+                <path d="M 785 110 L 797 122 L 815 100" stroke="#7C3AED" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              </g>
+              <text class="qf-label" x="800" y="185" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="500" letter-spacing="0.12em">ОТВЕТ · КОД · РАЗБОР</text>
+            </svg>
+          </div>
+
           <!-- Features grid -->
           <div class="grid-3 quilly-features" data-stagger="true">
             ${data.features.map(f => `
@@ -878,6 +946,79 @@
     /* ------------------------------------------------------------------ */
     final_cta: (data, settings) => `
       <section id="final_cta" class="animate-on-scroll final-cta-section">
+        <div class="final-cta-bg" aria-hidden="true">
+          <svg class="final-cta-constellation" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <filter id="starGlow" x="-100%" y="-100%" width="300%" height="300%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="2.5"/>
+              </filter>
+              <linearGradient id="lineFade" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#3B6FFF" stop-opacity="0"/>
+                <stop offset="50%" stop-color="#3B6FFF" stop-opacity="0.45"/>
+                <stop offset="100%" stop-color="#3B6FFF" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="shootingStar" x1="0" y1="0" x2="1" y2="0.2">
+                <stop offset="0%" stop-color="#F0F4FF" stop-opacity="0"/>
+                <stop offset="70%" stop-color="#F0F4FF" stop-opacity="0.6"/>
+                <stop offset="100%" stop-color="#3B6FFF" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+
+            <!-- LEFT constellation cluster -->
+            <g class="cta-stars-left">
+              <!-- Connecting lines -->
+              <line x1="90"  y1="120" x2="210" y2="180" stroke="url(#lineFade)" stroke-width="1"/>
+              <line x1="210" y1="180" x2="160" y2="340" stroke="url(#lineFade)" stroke-width="1"/>
+              <line x1="160" y1="340" x2="310" y2="420" stroke="url(#lineFade)" stroke-width="1"/>
+              <line x1="310" y1="420" x2="280" y2="260" stroke="url(#lineFade)" stroke-width="1"/>
+              <line x1="280" y1="260" x2="210" y2="180" stroke="url(#lineFade)" stroke-width="1"/>
+
+              <!-- Accent stars with glow -->
+              <circle cx="210" cy="180" r="3" fill="#3B6FFF"/>
+              <circle cx="210" cy="180" r="7" fill="#3B6FFF" fill-opacity="0.3" filter="url(#starGlow)"/>
+
+              <circle cx="310" cy="420" r="2.5" fill="#7C3AED"/>
+              <circle cx="310" cy="420" r="6" fill="#7C3AED" fill-opacity="0.25" filter="url(#starGlow)"/>
+
+              <!-- Small stars -->
+              <circle cx="90"  cy="120" r="1.5" fill="#F0F4FF" fill-opacity="0.6"/>
+              <circle cx="160" cy="340" r="1.8" fill="#F0F4FF" fill-opacity="0.5"/>
+              <circle cx="280" cy="260" r="1.2" fill="#F0F4FF" fill-opacity="0.4"/>
+              <circle cx="50"  cy="420" r="1"   fill="#F0F4FF" fill-opacity="0.3"/>
+              <circle cx="130" cy="500" r="1.5" fill="#F0F4FF" fill-opacity="0.45"/>
+              <circle cx="350" cy="150" r="1"   fill="#F0F4FF" fill-opacity="0.35"/>
+            </g>
+
+            <!-- RIGHT constellation cluster -->
+            <g class="cta-stars-right">
+              <line x1="890"  y1="150" x2="1010" y2="240" stroke="url(#lineFade)" stroke-width="1"/>
+              <line x1="1010" y1="240" x2="960"  y2="400" stroke="url(#lineFade)" stroke-width="1"/>
+              <line x1="960"  y1="400" x2="1100" y2="450" stroke="url(#lineFade)" stroke-width="1"/>
+              <line x1="1100" y1="450" x2="1130" y2="280" stroke="url(#lineFade)" stroke-width="1"/>
+              <line x1="1130" y1="280" x2="1010" y2="240" stroke="url(#lineFade)" stroke-width="1"/>
+
+              <circle cx="1010" cy="240" r="3" fill="#7C3AED"/>
+              <circle cx="1010" cy="240" r="7" fill="#7C3AED" fill-opacity="0.3" filter="url(#starGlow)"/>
+
+              <circle cx="1100" cy="450" r="2.5" fill="#3B6FFF"/>
+              <circle cx="1100" cy="450" r="6" fill="#3B6FFF" fill-opacity="0.25" filter="url(#starGlow)"/>
+
+              <circle cx="890"  cy="150" r="1.5" fill="#F0F4FF" fill-opacity="0.6"/>
+              <circle cx="960"  cy="400" r="1.8" fill="#F0F4FF" fill-opacity="0.5"/>
+              <circle cx="1130" cy="280" r="1.2" fill="#F0F4FF" fill-opacity="0.4"/>
+              <circle cx="1150" cy="130" r="1"   fill="#F0F4FF" fill-opacity="0.3"/>
+              <circle cx="1070" cy="520" r="1.5" fill="#F0F4FF" fill-opacity="0.45"/>
+              <circle cx="850"  cy="350" r="1"   fill="#F0F4FF" fill-opacity="0.35"/>
+            </g>
+
+            <!-- Shooting stars — animated via CSS -->
+            <g class="cta-shooting">
+              <line class="cta-shoot cta-shoot--1" x1="-100" y1="80"  x2="80"   y2="140" stroke="url(#shootingStar)" stroke-width="1.4" stroke-linecap="round"/>
+              <line class="cta-shoot cta-shoot--2" x1="1220" y1="500" x2="1040" y2="450" stroke="url(#shootingStar)" stroke-width="1.4" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+
         <div class="container final-cta-container">
           <h2>${data.title}</h2>
           <p class="final-cta-sub">${data.subtitle}</p>
