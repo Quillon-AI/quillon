@@ -369,7 +369,155 @@ client = Anthropic()
           </div>
         </div>
         <span class="fl-device-label fl-device-label--web">Web</span>
-      </div>`
+      </div>`,
+
+    /* ── QA Automation: "Bug Catcher Pipeline" ─────────────────────────── */
+    qa: () => `
+        <div class="qa-decor qa-decor-grid"></div>
+        <div class="qa-decor qa-blob qa-blob--a"></div>
+        <div class="qa-decor qa-blob qa-blob--b"></div>
+        <div class="qa-decor qa-blob qa-blob--c"></div>
+
+        <svg class="qa-beams" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="qa-beam-allure" x1="0" y1="1" x2="1" y2="0">
+              <stop offset="0"   stop-color="#10B981" stop-opacity="0"/>
+              <stop offset="0.5" stop-color="#34D399" stop-opacity="0.75"/>
+              <stop offset="1"   stop-color="#34D399" stop-opacity="0.95"/>
+            </linearGradient>
+            <linearGradient id="qa-beam-ci" x1="1" y1="1" x2="0" y2="0">
+              <stop offset="0"   stop-color="#10B981" stop-opacity="0"/>
+              <stop offset="0.5" stop-color="#34D399" stop-opacity="0.6"/>
+              <stop offset="1"   stop-color="#FBBF24" stop-opacity="0.85"/>
+            </linearGradient>
+            <linearGradient id="qa-beam-shield" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0"   stop-color="#EF4444" stop-opacity="0.9"/>
+              <stop offset="0.55" stop-color="#34D399" stop-opacity="0.7"/>
+              <stop offset="1"   stop-color="#10B981" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path class="qa-beam qa-beam--allure" d="M 36 70 C 50 60 64 42 76 22"
+                stroke="url(#qa-beam-allure)" stroke-width="0.45" fill="none"
+                stroke-linecap="round" stroke-dasharray="1.4 2.6"/>
+          <path class="qa-beam qa-beam--ci" d="M 30 70 C 22 56 18 38 22 22"
+                stroke="url(#qa-beam-ci)" stroke-width="0.45" fill="none"
+                stroke-linecap="round" stroke-dasharray="1.4 2.6"/>
+          <path class="qa-beam qa-beam--shield" d="M 50 72 C 62 70 72 70 82 72"
+                stroke="url(#qa-beam-shield)" stroke-width="0.5" fill="none"
+                stroke-linecap="round" stroke-dasharray="1.6 2.4"/>
+        </svg>
+
+        <div class="qa-device qa-device--allure" data-qa="allure">
+          <div class="qa-allure">
+            <div class="qa-allure-header">
+              <span class="qa-allure-logo">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                  <circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M5 2v3l2 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                Allure
+              </span>
+              <span class="qa-allure-chip" data-qa="allure-chip">ALL GREEN</span>
+            </div>
+            <div class="qa-allure-body">
+              <div class="qa-donut" data-qa="donut">
+                <svg viewBox="0 0 36 36">
+                  <circle class="qa-donut-track" cx="18" cy="18" r="15.5"
+                          fill="none" stroke="rgba(148,163,184,0.18)" stroke-width="3"/>
+                  <circle class="qa-donut-arc" cx="18" cy="18" r="15.5"
+                          fill="none" stroke="#34D399" stroke-width="3"
+                          stroke-linecap="round"
+                          stroke-dasharray="95.5 97.4"
+                          transform="rotate(-90 18 18)"/>
+                </svg>
+                <span class="qa-donut-value" data-qa="donut-val">98%</span>
+                <span class="qa-donut-label">PASS</span>
+              </div>
+              <ul class="qa-allure-bars">
+                <li><span class="qa-allure-bar-label">UNIT</span><span class="qa-allure-bar"><i style="--w:96%"></i></span><span class="qa-allure-bar-count">182</span></li>
+                <li><span class="qa-allure-bar-label">INTEG</span><span class="qa-allure-bar"><i style="--w:88%"></i></span><span class="qa-allure-bar-count">47</span></li>
+                <li><span class="qa-allure-bar-label">E2E</span><span class="qa-allure-bar"><i style="--w:78%"></i></span><span class="qa-allure-bar-count">14</span></li>
+              </ul>
+            </div>
+          </div>
+          <span class="qa-device-label qa-device-label--allure">ALLURE REPORT</span>
+        </div>
+
+        <div class="qa-device qa-device--ci" data-qa="ci">
+          <div class="qa-ci">
+            <div class="qa-ci-header">
+              <span class="qa-ci-icon">
+                <svg width="9" height="9" viewBox="0 0 9 9" fill="none">
+                  <path d="M4.5 0a4.5 4.5 0 00-1.42 8.77c.22.04.3-.1.3-.21v-.74c-1.25.27-1.51-.6-1.51-.6-.2-.52-.5-.66-.5-.66-.41-.28.03-.27.03-.27.46.03.7.47.7.47.4.7 1.06.5 1.32.38.04-.3.16-.5.29-.61-1-.11-2.05-.5-2.05-2.23 0-.5.18-.9.46-1.21-.05-.12-.2-.58.04-1.21 0 0 .38-.12 1.24.46a4.27 4.27 0 012.26 0c.86-.58 1.24-.46 1.24-.46.25.63.09 1.09.05 1.21.28.31.46.71.46 1.21 0 1.74-1.05 2.12-2.05 2.23.16.14.3.41.3.83v1.23c0 .12.08.26.31.21A4.5 4.5 0 004.5 0z" fill="currentColor"/>
+                </svg>
+                Actions
+              </span>
+              <span class="qa-ci-branch">main</span>
+            </div>
+            <ul class="qa-ci-list">
+              <li class="qa-ci-row"><span class="qa-ci-status qa-ci-status--ok"></span><span class="qa-ci-msg">feat: pagination</span><span class="qa-ci-time">2m</span></li>
+              <li class="qa-ci-row"><span class="qa-ci-status qa-ci-status--ok"></span><span class="qa-ci-msg">test: auth flow</span><span class="qa-ci-time">14m</span></li>
+              <li class="qa-ci-row"><span class="qa-ci-status qa-ci-status--ok"></span><span class="qa-ci-msg">fix: cart total</span><span class="qa-ci-time">31m</span></li>
+              <li class="qa-ci-row qa-ci-row--head"><span class="qa-ci-status qa-ci-status--running" data-qa="ci-status"></span><span class="qa-ci-msg">refactor: api client</span><span class="qa-ci-time" data-qa="ci-time">…</span></li>
+            </ul>
+          </div>
+          <span class="qa-device-label qa-device-label--ci">CI · GITHUB ACTIONS</span>
+        </div>
+
+        <div class="qa-terminal" data-qa="terminal">
+          <div class="qa-terminal-header">
+            <span class="qa-terminal-dot" style="background:#EF4444"></span>
+            <span class="qa-terminal-dot" style="background:#FBBF24"></span>
+            <span class="qa-terminal-dot" style="background:#10B981"></span>
+            <span class="qa-terminal-file">pytest -q tests/</span>
+            <span class="qa-pytest-badge" data-qa="pytest-badge">
+              <svg width="9" height="9" viewBox="0 0 9 9" fill="none">
+                <path d="M1 4.5L3.5 7L8 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>passing</span>
+            </span>
+          </div>
+          <pre class="qa-terminal-body"><code><span class="qa-c-prompt">$</span> <span class="qa-c-cmd">pytest -q tests/</span>
+<span class="qa-c-bar" data-qa="bar">▰▰▰▰▰▰▰▰▰▰▱▱▱▱▱</span> <span class="qa-c-pct" data-qa="pct">68%</span>
+<span class="qa-c-line">tests/auth/test_login.py <span class="qa-c-pass">..........</span></span>
+<span class="qa-c-line">tests/api/test_users.py <span class="qa-c-pass">..........</span></span>
+<span class="qa-c-line qa-c-line--fail" data-qa="fail-line">tests/cart/test_total.py <span class="qa-c-pass">.....</span><span class="qa-c-fail">F</span><span class="qa-c-pass">....</span></span>
+<span class="qa-c-line qa-c-line--trace" data-qa="trace">  <span class="qa-c-fail">FAILED</span> test_total — AssertionError: 99 != 100</span>
+<span class="qa-c-line qa-c-line--retry" data-qa="retry">  <span class="qa-c-warn">→</span> retrying with fixture cart_with_tax…</span>
+<span class="qa-c-line qa-c-line--ok" data-qa="ok">  <span class="qa-c-pass">PASSED</span> test_total — fixture stabilized</span>
+<span class="qa-c-summary" data-qa="summary"><span class="qa-c-pass">═══</span> <span class="qa-c-strong">243 passed</span> in <span class="qa-c-strong">2.41s</span> <span class="qa-c-pass">═══</span></span></code></pre>
+          <span class="qa-terminal-caret"></span>
+        </div>
+
+        <div class="qa-shield" data-qa="shield">
+          <svg class="qa-shield-svg" viewBox="0 0 60 70" fill="none">
+            <path class="qa-shield-body"
+                  d="M30 2 L56 10 V34 C56 50 44 62 30 68 C16 62 4 50 4 34 V10 Z"
+                  fill="rgba(16,185,129,0.10)" stroke="#34D399" stroke-width="1.6" stroke-linejoin="round"/>
+            <path class="qa-shield-glow"
+                  d="M30 8 L51 14 V34 C51 47 41 57 30 62 C19 57 9 47 9 34 V14 Z"
+                  fill="none" stroke="#34D399" stroke-opacity="0.35" stroke-width="0.8"
+                  stroke-dasharray="2 3"/>
+            <path class="qa-shield-check"
+                  d="M19 34 L27 42 L42 24"
+                  stroke="#34D399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                  fill="none"/>
+            <g class="qa-shield-bug" transform="translate(30 34)">
+              <ellipse cx="0" cy="0" rx="5" ry="4" fill="#EF4444"/>
+              <line x1="-7" y1="-2" x2="-4" y2="-1" stroke="#EF4444" stroke-width="1.2" stroke-linecap="round"/>
+              <line x1="7"  y1="-2" x2="4"  y2="-1" stroke="#EF4444" stroke-width="1.2" stroke-linecap="round"/>
+              <line x1="-7" y1="3"  x2="-4" y2="2"  stroke="#EF4444" stroke-width="1.2" stroke-linecap="round"/>
+              <line x1="7"  y1="3"  x2="4"  y2="2"  stroke="#EF4444" stroke-width="1.2" stroke-linecap="round"/>
+              <circle cx="-1.6" cy="-1" r="0.7" fill="#fff"/>
+              <circle cx="1.6"  cy="-1" r="0.7" fill="#fff"/>
+            </g>
+          </svg>
+          <div class="qa-shield-meta">
+            <span class="qa-shield-stat" data-qa="uptime">99.97%</span>
+            <span class="qa-shield-label">UPTIME · 30d</span>
+          </div>
+          <span class="qa-device-label qa-device-label--shield">PROD GUARDED</span>
+        </div>`
   };
 
   /* ── 4. Section Renderers ────────────────────────────────────────────── */
@@ -1232,7 +1380,9 @@ client = Anthropic()
       const slug = trackSlug;
       const visual = slug === 'flutter'
         ? trackHeroVisuals.flutter()
-        : trackHeroVisuals.pythonBackend();
+        : slug === 'qa'
+          ? trackHeroVisuals.qa()
+          : trackHeroVisuals.pythonBackend();
       return `
       <section id="hero" class="track-hero track-hero--${slug || 'default'}">
         <div class="hero-bg"></div>

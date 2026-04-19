@@ -753,15 +753,15 @@
         "links": [
           {
             "text": "Python Backend + ML",
-            "href": "#tracks"
+            "href": "/tracks/python-backend-ml/"
           },
           {
             "text": "Flutter Developer",
-            "href": "#tracks"
+            "href": "/tracks/flutter/"
           },
           {
             "text": "QA Automation",
-            "href": "#tracks"
+            "href": "/tracks/qa/"
           }
         ]
       },
