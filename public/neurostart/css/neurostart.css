@@ -133,14 +133,13 @@ button { cursor: pointer; font-family: inherit; }
 @keyframes ns-forge-ring-rot-a { to { transform: rotate(360deg); } }
 @keyframes ns-forge-ring-rot-b { to { transform: rotate(360deg); } }
 
-.ns-forge-core-orb { position:absolute; inset:28%; border-radius:50%; background: radial-gradient(circle at 35% 30%, rgba(59,130,246,0.95) 0%, rgba(124,58,237,0.85) 50%, rgba(8,11,20,0.95) 100%); box-shadow: 0 0 40px -4px rgba(59,130,246,0.7), 0 0 0 1px rgba(255,255,255,0.08) inset; animation: ns-forge-core-pulse 6s ease-in-out infinite; }
+.ns-forge-core-halo { position:absolute; inset:18%; border-radius:28%; background: radial-gradient(circle at 50% 50%, rgba(59,130,246,0.45) 0%, rgba(124,58,237,0.25) 45%, transparent 70%); filter: blur(16px); z-index:1; animation: ns-forge-core-pulse 6s ease-in-out infinite; pointer-events:none; }
+.ns-forge-core-logo { position:absolute; inset:26%; width:48%; height:48%; z-index:2; border-radius:22%; box-shadow: 0 12px 32px -8px rgba(8,11,20,0.65), 0 0 0 1px rgba(96,165,250,0.18), 0 0 40px -10px rgba(59,130,246,0.45); animation: ns-forge-core-pulse 6s ease-in-out infinite; }
 @keyframes ns-forge-core-pulse {
-  0%, 30% { box-shadow: 0 0 40px -4px rgba(59,130,246,0.7), 0 0 0 1px rgba(255,255,255,0.08) inset; transform: scale(1); }
-  55%, 75% { box-shadow: 0 0 70px -2px rgba(59,130,246,0.95), 0 0 120px -10px rgba(124,58,237,0.6), 0 0 0 1.5px rgba(255,255,255,0.15) inset; transform: scale(1.06); }
-  100% { box-shadow: 0 0 40px -4px rgba(59,130,246,0.7), 0 0 0 1px rgba(255,255,255,0.08) inset; transform: scale(1); }
+  0%, 30% { opacity:0.85; transform: scale(1); }
+  55%, 75% { opacity:1; transform: scale(1.06); }
+  100% { opacity:0.85; transform: scale(1); }
 }
-
-.ns-forge-core-glyph { position:absolute; font-family:var(--fd); font-weight:800; font-size:clamp(1.4rem, 3.5vw, 2.2rem); color:#fff; letter-spacing:-1px; text-shadow: 0 2px 12px rgba(8,11,20,0.6); z-index:2; }
 .ns-forge-core-label { position:absolute; top:calc(100% + 10px); left:50%; transform: translateX(-50%); font-family:var(--fm); font-size:.62rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--tb); white-space:nowrap; opacity:0; animation: ns-forge-label-in 6s ease-in-out infinite; }
 @keyframes ns-forge-label-in {
   0%, 35% { opacity:0; }
@@ -165,7 +164,8 @@ button { cursor: pointer; font-family: inherit; }
 .ns-hero-forge:hover .ns-forge-task,
 .ns-hero-forge:hover .ns-forge-prompt,
 .ns-hero-forge:hover .ns-forge-beam,
-.ns-hero-forge:hover .ns-forge-core-orb,
+.ns-hero-forge:hover .ns-forge-core-logo,
+.ns-hero-forge:hover .ns-forge-core-halo,
 .ns-hero-forge:hover .ns-forge-core-label,
 .ns-hero-forge:hover .ns-forge-core-ring,
 .ns-hero-forge:hover .ns-forge-result,
@@ -377,7 +377,8 @@ button { cursor: pointer; font-family: inherit; }
   .ns-forge-task,
   .ns-forge-prompt,
   .ns-forge-beam,
-  .ns-forge-core-orb,
+  .ns-forge-core-logo,
+  .ns-forge-core-halo,
   .ns-forge-core-ring,
   .ns-forge-core-label,
   .ns-forge-result,

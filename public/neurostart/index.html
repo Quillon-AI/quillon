@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="/neurostart/css/neurostart.css?v=3">
+  <link rel="stylesheet" href="/neurostart/css/neurostart.css?v=4">
 </head>
 <body>
 
@@ -111,8 +111,31 @@
         <div class="ns-forge-core">
           <span class="ns-forge-core-ring ns-forge-core-ring--a"></span>
           <span class="ns-forge-core-ring ns-forge-core-ring--b"></span>
-          <span class="ns-forge-core-orb"></span>
-          <span class="ns-forge-core-glyph">Q</span>
+          <span class="ns-forge-core-halo"></span>
+          <svg class="ns-forge-core-logo" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="ns-logo-ring" x1="146" y1="146" x2="146" y2="366" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#3B82F6"/>
+                <stop offset="1" stop-color="#7C3AED"/>
+              </linearGradient>
+              <linearGradient id="ns-logo-tail" x1="356.853" y1="272" x2="382.961" y2="402.543" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#2DD4BF"/>
+                <stop offset="1" stop-color="#60A5FA"/>
+              </linearGradient>
+              <mask id="ns-logo-mask" maskUnits="userSpaceOnUse" x="-256" y="-256" width="1024" height="1024">
+                <path d="M768 -256H-256V768H768V-256Z" fill="white"/>
+                <path d="M256 366C316.751 366 366 316.751 366 256C366 195.249 316.751 146 256 146C195.249 146 146 195.249 146 256C146 316.751 195.249 366 256 366Z" stroke="black" stroke-width="52"/>
+              </mask>
+            </defs>
+            <path d="M400 0H112C50.1441 0 0 50.1441 0 112V400C0 461.856 50.1441 512 112 512H400C461.856 512 512 461.856 512 400V112C512 50.1441 461.856 0 400 0Z" fill="#080B14"/>
+            <g opacity="0.3">
+              <path d="M256 426C349.888 426 426 349.888 426 256C426 162.112 349.888 86 256 86C162.112 86 86 162.112 86 256C86 349.888 162.112 426 256 426Z" stroke="#60A5FA" stroke-width="1.5" stroke-dasharray="4 24"/>
+            </g>
+            <path d="M256 366C316.751 366 366 316.751 366 256C366 195.249 316.751 146 256 146C195.249 146 146 195.249 146 256C146 316.751 195.249 366 256 366Z" stroke="url(#ns-logo-ring)" stroke-width="36"/>
+            <g mask="url(#ns-logo-mask)">
+              <path d="M356.853 272L370.995 370.995L272 356.853" stroke="url(#ns-logo-tail)" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+          </svg>
           <span class="ns-forge-core-label" data-cms="hero.forge.core_label">Твоя AI-Система</span>
         </div>
 
