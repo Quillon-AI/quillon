@@ -8,7 +8,7 @@
   "hero": {
     "tag": "Бесплатный курс",
     "title_start": "За 10 дней ты соберёшь",
-    "title_accent": "личную AI-систему",
+    "title_accent": "личную AI-систему,",
     "title_end": "которая делает твои отчёты, презентации и тексты за тебя",
     "subtitle": "Бесплатный курс от IT-компании Quillon. 20+ инструментов. Финальный результат — страница с AI-ассистентом, библиотекой промптов и автоматизациями. Открываешь завтра на работе и пользуешься.",
     "cta_button": "Смотреть программу 10 дней →",
@@ -98,7 +98,8 @@
     "items": [
       "ChatGPT", "Claude", "Gemini", "Perplexity", "NotebookLM",
       "Nano Banana", "Kandinsky", "Ideogram", "Napkin.ai", "Gamma.app",
-      "ElevenLabs", "n8n", "Chatbase", "Bolt.new", "v0.dev", "Custom GPTs"
+      "ElevenLabs", "Suno", "Runway", "n8n", "Chatbase",
+      "Bolt.new", "v0.dev", "Cursor", "Lovable", "Custom GPTs", "HeyGen"
     ]
   },
   "ai_system": {
