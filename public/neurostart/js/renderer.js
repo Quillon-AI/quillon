@@ -83,11 +83,35 @@
     setMeta('meta[name="twitter:description"]', 'content', meta.og_description || meta.description);
   }
 
+  /** SVG icons for problem cards, keyed by [data-icon] modifier */
+  const PROBLEM_ICONS = {
+    clock:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg>',
+    chat:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H8.5L4 19.5V5z"/><path d="M8 10h8M8 13h5"/></svg>',
+    trend:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 7-8"/><path d="M14 7h6v6"/></svg>',
+    wallet:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7c0-1.1.9-2 2-2h12a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V7z"/><path d="M4 10h14"/><circle cx="16" cy="14.5" r="1.1" fill="currentColor" stroke="none"/></svg>',
+  };
+
+  /** Inject inline SVGs into .ns-card-ico--{key} containers after render */
+  function injectProblemIcons() {
+    Object.keys(PROBLEM_ICONS).forEach((key) => {
+      document
+        .querySelectorAll('.ns-card-ico--' + key)
+        .forEach((el) => {
+          if (!el.querySelector('svg')) el.innerHTML = PROBLEM_ICONS[key];
+        });
+    });
+  }
+
   /** Public API — render data into document */
   function render(data) {
     applyMeta(data.meta);
     bindLists(document, data);
     bindScalars(document, data);
+    injectProblemIcons();
     document.dispatchEvent(new CustomEvent('neurostart:rendered', { detail: data }));
   }
 

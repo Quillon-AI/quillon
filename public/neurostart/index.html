@@ -41,20 +41,92 @@
 <section class="ns-hero">
   <canvas data-particles></canvas>
   <div class="ns-hero-glow"></div>
-  <div class="ns-hero-inner">
-    <div class="ns-tag">
-      <span class="dot"></span><span data-cms="hero.tag">Бесплатный курс</span>
+  <div class="ns-hero-layout">
+    <div class="ns-hero-inner">
+      <div class="ns-tag">
+        <span class="dot"></span><span data-cms="hero.tag">Бесплатный курс</span>
+      </div>
+      <h1>
+        <span data-cms="hero.title_start">За 10 дней ты соберёшь</span>
+        <span class="text-gradient" data-cms="hero.title_accent">личную AI-систему</span>
+        <span data-cms="hero.title_end">которая делает твои отчёты, презентации и тексты за тебя</span>
+      </h1>
+      <p class="ns-hero-sub" data-cms="hero.subtitle">Бесплатный курс от IT-компании Quillon.</p>
+      <div class="ns-hero-cta">
+        <a href="#program"><button class="btn-big" data-cms="hero.cta_button">Смотреть программу 10 дней →</button></a>
+        <a href="#final" class="ns-hero-cta-ghost" data-cms="hero.cta_secondary">Записаться на поток</a>
+      </div>
+      <p class="ns-hero-hint" data-cms="hero.hint">60–80 мин/день · В своём темпе · Следующий поток: скоро</p>
     </div>
-    <h1>
-      <span data-cms="hero.title_start">Через 10 дней ты будешь делать за</span>
-      <span class="text-gradient" data-cms="hero.title_accent">15 минут</span>
-      <span data-cms="hero.title_end">то, на что сейчас тратишь полдня</span>
-    </h1>
-    <p class="ns-hero-sub" data-cms="hero.subtitle">Бесплатный курс от IT-компании Quillon.</p>
-    <div class="ns-hero-cta">
-      <a href="#final"><button class="btn-big" data-cms="hero.cta_button">Начать бесплатно →</button></a>
+
+    <!-- FORGE VISUAL: Personal AI-System assembly (6s sync cycle) -->
+    <div class="ns-hero-forge" aria-hidden="true">
+      <div class="ns-forge-deck">
+        <span class="ns-forge-deck-corner ns-forge-deck-corner--tl"></span>
+        <span class="ns-forge-deck-corner ns-forge-deck-corner--tr"></span>
+        <span class="ns-forge-deck-corner ns-forge-deck-corner--bl"></span>
+        <span class="ns-forge-deck-corner ns-forge-deck-corner--br"></span>
+
+        <!-- task chip (top-left) -->
+        <div class="ns-forge-task">
+          <span class="ns-forge-task-dot"></span>
+          <span class="ns-forge-task-label" data-cms="hero.forge.task_chip">Задача: собрать отчёт</span>
+        </div>
+
+        <!-- 3 prompt cards (left, staggered) -->
+        <div class="ns-forge-prompts" data-cms-each="hero.forge.prompts">
+          <template>
+            <div class="ns-forge-prompt ns-forge-prompt--{{color}}" style="--i:{{_index}}">
+              <span class="ns-forge-prompt-tag">PROMPT</span>
+              <span class="ns-forge-prompt-label">{{label}}</span>
+            </div>
+          </template>
+        </div>
+
+        <!-- beams (inline SVG) -->
+        <svg class="ns-forge-beams" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="ns-beam-1" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#3B82F6" stop-opacity="0"/>
+              <stop offset="40%" stop-color="#3B82F6" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#3B82F6" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="ns-beam-2" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#7C3AED" stop-opacity="0"/>
+              <stop offset="40%" stop-color="#7C3AED" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#7C3AED" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="ns-beam-3" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#22D3EE" stop-opacity="0"/>
+              <stop offset="40%" stop-color="#22D3EE" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#22D3EE" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path class="ns-forge-beam ns-forge-beam--1" d="M 18 26 C 34 28 44 42 54 50" stroke="url(#ns-beam-1)" stroke-width="0.5" fill="none" stroke-linecap="round" stroke-dasharray="1.6 2.4"/>
+          <path class="ns-forge-beam ns-forge-beam--2" d="M 18 50 C 32 50 42 50 54 50" stroke="url(#ns-beam-2)" stroke-width="0.55" fill="none" stroke-linecap="round" stroke-dasharray="1.6 2.4"/>
+          <path class="ns-forge-beam ns-forge-beam--3" d="M 18 74 C 34 72 44 58 54 50" stroke="url(#ns-beam-3)" stroke-width="0.5" fill="none" stroke-linecap="round" stroke-dasharray="1.6 2.4"/>
+        </svg>
+
+        <!-- core (center-right) -->
+        <div class="ns-forge-core">
+          <span class="ns-forge-core-ring ns-forge-core-ring--a"></span>
+          <span class="ns-forge-core-ring ns-forge-core-ring--b"></span>
+          <span class="ns-forge-core-orb"></span>
+          <span class="ns-forge-core-glyph">Q</span>
+          <span class="ns-forge-core-label" data-cms="hero.forge.core_label">Твоя AI-Система</span>
+        </div>
+
+        <!-- result card (bottom-right) -->
+        <div class="ns-forge-result">
+          <span class="ns-forge-result-label" data-cms="hero.forge.result_label">Отчёт готов</span>
+          <div class="ns-forge-result-time">
+            <span class="ns-forge-result-before" data-cms="hero.forge.result_before">4 часа</span>
+            <span class="ns-forge-result-arrow">→</span>
+            <span class="ns-forge-result-after" data-cms="hero.forge.result_after">20 минут</span>
+          </div>
+        </div>
+      </div>
     </div>
-    <p class="ns-hero-hint" data-cms="hero.hint">60–80 мин/день · В своём темпе · Следующий поток: скоро</p>
   </div>
 </section>
 
@@ -62,13 +134,14 @@
 <section class="ns-section">
   <div class="ns-section-inner">
     <div class="ns-sh ns-reveal"><h2 data-cms="problem.title">Знакомо?</h2></div>
-    <div class="ns-grid-3" data-cms-each="problem.cards">
+    <div class="ns-grid-4" data-cms-each="problem.cards">
       <template>
-        <div class="ns-card ns-reveal">
-          <div class="ns-card-ico">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        <div class="ns-card ns-card--problem ns-reveal" data-icon="{{icon}}">
+          <div class="ns-card-ico ns-card-ico--{{icon}}">
+            <!-- icon injected by renderer based on data-icon -->
           </div>
-          <p>{{value}}</p>
+          <p>{{text}}</p>
+          <span class="ns-card-diag" aria-hidden="true"></span>
         </div>
       </template>
     </div>
@@ -96,11 +169,22 @@
         </div>
       </template>
     </div>
+
+    <!-- Inline email-capture (mid-funnel) -->
+    <div class="ns-inline-cta ns-reveal">
+      <span class="ns-inline-cta-label" data-cms="results.cta_inline.label">Не пропусти следующий поток</span>
+      <form class="ns-inline-cta-form" id="nsInlineForm" novalidate>
+        <input type="email" name="email" data-cms-attr="placeholder:results.cta_inline.placeholder" placeholder="твой@email.ru" required autocomplete="email">
+        <button type="submit" data-cms="results.cta_inline.button">Записаться</button>
+      </form>
+      <div class="ns-inline-cta-ok" id="nsInlineOk" data-cms="results.cta_inline.success">✓ Записали</div>
+      <p class="ns-inline-cta-note" data-cms="results.cta_inline.note">Без спама.</p>
+    </div>
   </div>
 </section>
 
 <!-- BLOCK 4: PROGRAM TIMELINE -->
-<section class="ns-section">
+<section class="ns-section" id="program">
   <div class="ns-section-inner">
     <div class="ns-sh ns-reveal">
       <h2>
@@ -109,9 +193,9 @@
       </h2>
       <p data-cms="program.subtitle">Каждое видео — скринкаст «делай как я».</p>
     </div>
-    <div class="ns-timeline" data-cms-each="program.days">
+    <div class="ns-timeline" data-tl-progress data-cms-each="program.days">
       <template>
-        <div class="ns-tl-item ns-reveal">
+        <div class="ns-tl-item ns-reveal" style="--i:{{_index}}">
           <div class="ns-tl-day">{{day}}</div>
           <div class="ns-tl-title">{{title}}</div>
         </div>
@@ -153,11 +237,11 @@
             <div class="ns-mockup-dot r"></div>
             <div class="ns-mockup-dot y"></div>
             <div class="ns-mockup-dot g"></div>
-            <div class="ns-mockup-url" data-cms="ai_system.mockup_url">quillon.ru/my-ai-system</div>
+            <div class="ns-mockup-url"><span data-cms="ai_system.mockup_url">quillon.ru/my-ai-system</span><span class="ns-mockup-caret" aria-hidden="true"></span></div>
           </div>
-          <div class="ns-mockup-list" data-cms-each="ai_system.mockup_items">
+          <div class="ns-mockup-list" data-seq-list data-cms-each="ai_system.mockup_items">
             <template>
-              <div class="ns-mockup-row">
+              <div class="ns-mockup-row" data-seq-index="{{_index}}" style="--i:{{_index}}">
                 <div class="ns-mockup-ico">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
                 </div>
@@ -165,6 +249,7 @@
                   <div class="ns-mockup-ttl">{{title}}</div>
                   <div class="ns-mockup-dsc">{{desc}}</div>
                 </div>
+                <span class="ns-mockup-progress" aria-hidden="true"></span>
               </div>
             </template>
           </div>
@@ -272,9 +357,9 @@
 </footer>
 
 <!-- Scripts: renderer first (populates DOM), then particles + interactions -->
-<script src="/neurostart/js/renderer.js"></script>
+<script src="/neurostart/js/renderer.js?v=3"></script>
 <script src="/shared/particles.js"></script>
-<script src="/neurostart/js/interactions.js"></script>
+<script src="/neurostart/js/interactions.js?v=3"></script>
 
 </body>
 </html>
