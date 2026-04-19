@@ -3374,3 +3374,978 @@
   .qa-allure-bars li { grid-template-columns: 32px 1fr 20px; }
   .qa-shield-meta .qa-shield-stat { font-size: 0.72rem; }
 }
+<style>
+/* ──────────────────────────────────────────────────────────────────────
+   Python Backend+ML hero — "AI Request Flow"
+   Asymmetric AI pipeline: FastAPI code center-bottom, RAG retrieval
+   top-left tilted, Claude reasoning top-right tilted, Response pill
+   right-side overlay. Synchronous 6s cycle: request → retrieve →
+   think → stream → 200 OK. Mockups stay dark in light theme.
+   Palette: Python gold #FBBF24 + electric violet #8B5CF6, cyan
+   thinking #22D3EE, mint success #6EE7B7.
+   ────────────────────────────────────────────────────────────────────── */
+
+.track-hero--python-backend-ml .track-hero-visual {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  min-height: 460px;
+  isolation: isolate;
+}
+
+.track-hero--python-backend-ml .track-hero-glow { display: none; }
+.track-hero--python-backend-ml .track-hero-code:not(.py-code-card) { display: none; }
+
+/* ── Decorative layers ───────────────────────────────────────────────── */
+
+.py-decor { position: absolute; pointer-events: none; }
+
+.py-decor-grid {
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255,255,255,0.055) 1px, transparent 0);
+  background-size: 28px 28px;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black 35%, transparent 80%);
+          mask-image: radial-gradient(ellipse at 50% 50%, black 35%, transparent 80%);
+  z-index: 1;
+}
+
+.py-blob {
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: 2;
+  animation: py-blob-drift 9s ease-in-out infinite alternate;
+}
+.py-blob--a {
+  top: -12%; right: -6%;
+  width: 360px; height: 360px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.32), transparent 70%);
+  animation-delay: -2s;
+}
+.py-blob--b {
+  bottom: -16%; left: -10%;
+  width: 420px; height: 420px;
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.22), transparent 70%);
+  animation-delay: -5s;
+}
+.py-blob--c {
+  top: 42%; right: 14%;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.20), transparent 70%);
+  filter: blur(60px);
+  animation-delay: -7s;
+}
+
+@keyframes py-blob-drift {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.85; }
+  100% { transform: translate(16px, -12px) scale(1.06); opacity: 1; }
+}
+
+/* ── SVG beams — chained pulse (wave left-to-right) ──────────────────── */
+
+.py-beams {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.py-beam {
+  stroke-dashoffset: 0;
+  animation: py-beam-drift 4s linear infinite;
+  filter: drop-shadow(0 0 1.5px currentColor);
+  opacity: 0.5;
+}
+.py-beam--rag    { color: #FBBF24; animation: py-beam-drift 4s linear infinite, py-beam-pulse-rag    6s ease-in-out infinite; }
+.py-beam--claude { color: #22D3EE; animation: py-beam-drift 4s linear infinite, py-beam-pulse-claude 6s ease-in-out infinite; animation-delay: -1.3s, 0s; }
+.py-beam--stream { color: #8B5CF6; animation: py-beam-drift 4s linear infinite, py-beam-pulse-stream 6s ease-in-out infinite; animation-delay: -2.6s, 0s; }
+
+@keyframes py-beam-drift {
+  to { stroke-dashoffset: -16; }
+}
+
+/* Cascaded pulse — each beam lights in its own slice of the cycle,
+   producing a wave effect: code→RAG (15–30%) → RAG→Claude (35–55%)
+   → Claude→Response (55–80%). */
+@keyframes py-beam-pulse-rag {
+  0%, 10%, 35%, 100% { opacity: 0.35; stroke-width: 0.45; }
+  20%                { opacity: 1;    stroke-width: 0.95; }
+  28%                { opacity: 0.7;  stroke-width: 0.65; }
+}
+@keyframes py-beam-pulse-claude {
+  0%, 30%, 58%, 100% { opacity: 0.35; stroke-width: 0.45; }
+  42%                { opacity: 1;    stroke-width: 0.95; }
+  52%                { opacity: 0.7;  stroke-width: 0.65; }
+}
+@keyframes py-beam-pulse-stream {
+  0%, 55%, 88%, 100% { opacity: 0.35; stroke-width: 0.5; }
+  70%                { opacity: 1;    stroke-width: 1.0; }
+  82%                { opacity: 0.75; stroke-width: 0.7; }
+}
+
+/* ── Code card (centered-bottom, foreground) ─────────────────────────── */
+
+.py-code-card {
+  position: absolute;
+  left: 16%;
+  bottom: 6%;
+  width: 60%;
+  z-index: 30;
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg,
+      color-mix(in oklab, #0B0F1E 96%, transparent),
+      color-mix(in oklab, #10152A 96%, transparent));
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  box-shadow:
+    0 30px 60px -20px rgba(139, 92, 246, 0.42),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 0 60px -8px rgba(251, 191, 36, 0.22);
+  transform: perspective(1100px) rotateY(-2deg) rotateX(1.5deg);
+  transform-origin: center bottom;
+  overflow: hidden;
+  animation: py-code-breath 5.5s ease-in-out infinite alternate,
+             py-code-flash 6s ease-in-out infinite;
+}
+
+@keyframes py-code-breath {
+  0%   { transform: perspective(1100px) rotateY(-2deg) rotateX(1.5deg) translateY(0); }
+  100% { transform: perspective(1100px) rotateY(-2deg) rotateX(1.5deg) translateY(-3px); }
+}
+
+/* Border waveform: violet idle → gold flare at start → mint flash at 200 OK */
+@keyframes py-code-flash {
+  0%, 10%, 90%, 100% {
+    border-color: rgba(139, 92, 246, 0.25);
+    box-shadow:
+      0 30px 60px -20px rgba(139, 92, 246, 0.42),
+      0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+      0 0 60px -8px rgba(251, 191, 36, 0.22);
+  }
+  18% {
+    border-color: rgba(251, 191, 36, 0.75);
+    box-shadow:
+      0 30px 60px -20px rgba(251, 191, 36, 0.45),
+      0 0 0 1.2px rgba(251, 191, 36, 0.4) inset,
+      0 0 80px -4px rgba(139, 92, 246, 0.35);
+  }
+  82% {
+    border-color: rgba(110, 231, 183, 0.75);
+    box-shadow:
+      0 30px 60px -20px rgba(110, 231, 183, 0.45),
+      0 0 0 1.5px rgba(110, 231, 183, 0.4) inset,
+      0 0 80px -4px rgba(139, 92, 246, 0.4);
+  }
+}
+
+.py-code-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.py-code-dot {
+  width: 8px; height: 8px; border-radius: 50%; opacity: 0.75;
+}
+
+.py-code-file {
+  margin-left: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.py-live-badge {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 9px;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6EE7B7;
+  background: color-mix(in oklab, #6EE7B7 14%, transparent);
+  border: 1px solid color-mix(in oklab, #6EE7B7 35%, transparent);
+  border-radius: 999px;
+  animation: py-live-pulse 6s ease-in-out infinite;
+}
+
+.py-live-badge svg {
+  filter: drop-shadow(0 0 4px rgba(110, 231, 183, 0.7));
+}
+
+@keyframes py-live-pulse {
+  0%, 10%, 80%, 100% {
+    box-shadow: 0 0 0 0 rgba(110, 231, 183, 0);
+    transform: scale(1);
+  }
+  18% { box-shadow: 0 0 14px 0 rgba(251, 191, 36, 0.55); transform: scale(1.06); color: #FBBF24;
+        background: color-mix(in oklab, #FBBF24 14%, transparent);
+        border-color: color-mix(in oklab, #FBBF24 40%, transparent); }
+  85% { box-shadow: 0 0 16px 0 rgba(110, 231, 183, 0.7); transform: scale(1.1); }
+  92% { transform: scale(1); }
+}
+
+.py-code-body {
+  margin: 0;
+  padding: 14px 16px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.65;
+  color: rgba(226, 232, 240, 0.85);
+  white-space: pre;
+  overflow: hidden;
+}
+.py-code-body code { font-family: inherit; display: block; }
+
+.py-c-kw  { color: #C084FC; font-weight: 600; }
+.py-c-dec { color: #FBBF24; }
+.py-c-str { color: #6EE7B7; }
+.py-c-num { color: #FBBF24; }
+.py-c-fn  { color: #60A5FA; }
+.py-c-tp  { color: #22D3EE; }
+
+/* Execution pointer — an inset stripe that travels line-to-line */
+.py-c-line { display: block; position: relative; }
+.py-c-line::before {
+  content: '';
+  position: absolute;
+  left: -16px; top: 0; bottom: 0;
+  width: 2px;
+  background: transparent;
+  transition: background 0.2s ease;
+}
+[data-py-line="1"] { animation: py-line-1 6s ease-in-out infinite; }
+[data-py-line="2"] { animation: py-line-2 6s ease-in-out infinite; }
+[data-py-line="3"] { animation: py-line-3 6s ease-in-out infinite; }
+[data-py-line="4"] { animation: py-line-4 6s ease-in-out infinite; }
+[data-py-line="5"] { animation: py-line-5 6s ease-in-out infinite; }
+
+@keyframes py-line-1 {
+  0%, 14%, 100% { background: transparent; }
+  2%,  12%      { background: color-mix(in oklab, #FBBF24 10%, transparent); box-shadow: inset 2px 0 0 0 #FBBF24; }
+}
+@keyframes py-line-2 {
+  0%, 14%, 100% { background: transparent; box-shadow: none; }
+  18%, 30%      { background: color-mix(in oklab, #FBBF24 10%, transparent); box-shadow: inset 2px 0 0 0 #FBBF24; }
+}
+@keyframes py-line-3 {
+  0%, 32%, 100% { background: transparent; box-shadow: none; }
+  35%, 52%      { background: color-mix(in oklab, #22D3EE 12%, transparent); box-shadow: inset 2px 0 0 0 #22D3EE; }
+}
+@keyframes py-line-4 {
+  0%, 54%, 100% { background: transparent; box-shadow: none; }
+  56%, 76%      { background: color-mix(in oklab, #8B5CF6 12%, transparent); box-shadow: inset 2px 0 0 0 #A78BFA; }
+}
+@keyframes py-line-5 {
+  0%, 78%, 100% { background: transparent; box-shadow: none; }
+  80%, 94%      { background: color-mix(in oklab, #6EE7B7 12%, transparent); box-shadow: inset 2px 0 0 0 #6EE7B7; }
+}
+
+/* Caret blink */
+.py-code-caret {
+  position: absolute;
+  bottom: 18px;
+  right: 18px;
+  width: 7px;
+  height: 13px;
+  background: #8B5CF6;
+  box-shadow: 0 0 6px rgba(139, 92, 246, 0.7);
+  animation: py-caret-blink 1.1s steps(2) infinite;
+}
+@keyframes py-caret-blink {
+  0%, 50%   { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* ── Devices: shared ─────────────────────────────────────────────────── */
+
+.py-device {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.py-device-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.py-device-label--rag      { color: #FBBF24; }
+.py-device-label--claude   { color: #A78BFA; }
+.py-device-label--response { color: #6EE7B7; }
+
+/* ── RAG panel (top-left, tilted -7°, scale 0.86) ───────────────────── */
+
+.py-device--rag {
+  left: 2%;
+  top: 4%;
+  z-index: 15;
+  animation: py-float-rag 7.3s ease-in-out infinite alternate;
+}
+@keyframes py-float-rag {
+  0%   { transform: translateY(0) rotate(-7deg) scale(0.86); }
+  100% { transform: translateY(-7px) rotate(-7deg) scale(0.86); }
+}
+
+.py-rag {
+  width: 244px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #1A1407, #0F0C06);
+  border: 1.5px solid rgba(251, 191, 36, 0.4);
+  padding: 10px 12px 10px;
+  box-shadow:
+    0 20px 48px -10px rgba(15, 23, 42, 0.65),
+    0 0 28px -6px rgba(251, 191, 36, 0.32);
+  animation: py-rag-flash 6s ease-in-out infinite;
+}
+
+@keyframes py-rag-flash {
+  0%, 12%, 50%, 100% {
+    box-shadow:
+      0 20px 48px -10px rgba(15, 23, 42, 0.65),
+      0 0 28px -6px rgba(251, 191, 36, 0.32),
+      0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  }
+  22%, 34% {
+    box-shadow:
+      0 20px 56px -8px rgba(15, 23, 42, 0.7),
+      0 0 60px -2px rgba(251, 191, 36, 0.7),
+      0 0 0 1.5px rgba(251, 191, 36, 0.55) inset;
+  }
+}
+
+.py-rag-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.py-rag-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #FBBF24;
+}
+
+.py-rag-db {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.08em;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: rgba(251, 191, 36, 0.12);
+  color: rgba(251, 191, 36, 0.9);
+  text-transform: lowercase;
+}
+
+.py-rag-query {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 7px;
+  margin-bottom: 8px;
+  background: rgba(34, 211, 238, 0.08);
+  border: 1px solid rgba(34, 211, 238, 0.18);
+  border-radius: 6px;
+  animation: py-rag-query 6s ease-in-out infinite;
+}
+@keyframes py-rag-query {
+  0%, 6%, 30%, 100% { opacity: 0.55; background: rgba(34, 211, 238, 0.06); }
+  10%, 24%          { opacity: 1;    background: rgba(34, 211, 238, 0.14); box-shadow: inset 2px 0 0 0 #22D3EE; }
+}
+.py-rag-q-label {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  font-weight: 700;
+  color: #22D3EE;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: rgba(34, 211, 238, 0.18);
+}
+.py-rag-q-text {
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  color: rgba(226, 232, 240, 0.88);
+}
+
+.py-rag-chunks {
+  list-style: none;
+  margin: 0 0 8px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.py-rag-chunk {
+  display: grid;
+  grid-template-columns: 1fr 46px 28px;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 5px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  font-family: var(--font-mono);
+}
+
+.py-rag-doc {
+  font-size: 0.52rem;
+  color: rgba(226, 232, 240, 0.75);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.py-rag-bar {
+  display: block;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(148, 163, 184, 0.15);
+  overflow: hidden;
+}
+.py-rag-bar i {
+  display: block;
+  height: 100%;
+  width: var(--w);
+  background: linear-gradient(90deg, #F59E0B, #FBBF24);
+  border-radius: 2px;
+}
+
+.py-rag-score {
+  font-size: 0.5rem;
+  font-weight: 700;
+  color: #FBBF24;
+  text-align: right;
+}
+
+/* Chunks surface one by one during retrieve phase; chunk-1 wins */
+[data-py="chunk-1"] { animation: py-chunk-1 6s ease-in-out infinite; }
+[data-py="chunk-2"] { animation: py-chunk-2 6s ease-in-out infinite; }
+[data-py="chunk-3"] { animation: py-chunk-3 6s ease-in-out infinite; }
+
+@keyframes py-chunk-1 {
+  0%, 14%   { opacity: 0.3; transform: translateX(-3px); border-color: transparent; background: transparent; }
+  20%, 60%  { opacity: 1; transform: translateX(0);
+              border-color: rgba(251, 191, 36, 0.55);
+              background: rgba(251, 191, 36, 0.10);
+              box-shadow: 0 0 12px rgba(251, 191, 36, 0.25); }
+  68%, 100% { opacity: 0.8; transform: translateX(0); border-color: rgba(251, 191, 36, 0.25); background: rgba(251, 191, 36, 0.04); box-shadow: none; }
+}
+@keyframes py-chunk-2 {
+  0%, 20%   { opacity: 0.25; transform: translateX(-3px); }
+  26%, 100% { opacity: 0.8;  transform: translateX(0); }
+}
+@keyframes py-chunk-3 {
+  0%, 26%   { opacity: 0.2; transform: translateX(-3px); }
+  32%, 100% { opacity: 0.7; transform: translateX(0); }
+}
+
+/* Embedding scatter — soft pink-cyan dots, one gets the hit */
+.py-rag-scatter {
+  position: relative;
+  height: 38px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(34, 211, 238, 0.06));
+  border: 1px solid rgba(148, 163, 184, 0.08);
+  overflow: hidden;
+}
+.py-rag-scatter span {
+  position: absolute;
+  width: 4px; height: 4px;
+  left: var(--x); top: var(--y);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: #F472B6;
+  opacity: 0.5;
+}
+.py-rag-dot--hit {
+  background: #22D3EE !important;
+  opacity: 1 !important;
+  box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.6);
+  animation: py-rag-hit 6s ease-in-out infinite;
+}
+@keyframes py-rag-hit {
+  0%, 16%, 60%, 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 0 rgba(34, 211, 238, 0); }
+  22%                { transform: translate(-50%, -50%) scale(1.8); box-shadow: 0 0 0 7px rgba(34, 211, 238, 0); }
+  30%                { transform: translate(-50%, -50%) scale(1.2); box-shadow: 0 0 8px rgba(34, 211, 238, 0.7); }
+}
+
+/* ── Claude Reasoning card (top-right, tilted +5°) ──────────────────── */
+
+.py-device--claude {
+  right: 4%;
+  top: 4%;
+  z-index: 25;
+  animation: py-float-claude 6.2s ease-in-out infinite alternate;
+}
+@keyframes py-float-claude {
+  0%   { transform: translateY(0) rotate(5deg); }
+  100% { transform: translateY(-6px) rotate(5deg); }
+}
+
+.py-claude {
+  width: 228px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #1A132C, #120B22);
+  border: 1.5px solid rgba(139, 92, 246, 0.48);
+  padding: 10px 12px 12px;
+  box-shadow:
+    0 22px 50px -12px rgba(15, 23, 42, 0.6),
+    0 0 30px -4px rgba(139, 92, 246, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  animation: py-claude-flash 6s ease-in-out infinite;
+}
+
+@keyframes py-claude-flash {
+  0%, 30%, 62%, 100% {
+    box-shadow:
+      0 22px 50px -12px rgba(15, 23, 42, 0.6),
+      0 0 30px -4px rgba(139, 92, 246, 0.35),
+      0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  }
+  42%, 54% {
+    box-shadow:
+      0 22px 60px -10px rgba(15, 23, 42, 0.7),
+      0 0 60px -2px rgba(34, 211, 238, 0.6),
+      0 0 0 1.5px rgba(139, 92, 246, 0.6) inset;
+  }
+}
+
+.py-claude-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.py-claude-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-display);
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #C084FC;
+}
+
+.py-claude-model {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: color-mix(in oklab, #8B5CF6 18%, transparent);
+  color: #C4B5FD;
+  border: 1px solid color-mix(in oklab, #8B5CF6 40%, transparent);
+}
+
+.py-claude-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.py-claude-think {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: rgba(34, 211, 238, 0.06);
+  border: 1px solid rgba(34, 211, 238, 0.15);
+  animation: py-think-wake 6s ease-in-out infinite;
+}
+
+@keyframes py-think-wake {
+  0%, 30%, 60%, 100% { opacity: 0.5; background: rgba(34, 211, 238, 0.04); border-color: rgba(34, 211, 238, 0.1); }
+  42%, 54%           { opacity: 1;   background: rgba(34, 211, 238, 0.14); border-color: rgba(34, 211, 238, 0.38); box-shadow: 0 0 14px rgba(34, 211, 238, 0.3); }
+}
+
+.py-claude-think-label {
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #22D3EE;
+}
+
+.py-claude-dots {
+  display: inline-flex;
+  gap: 3px;
+  margin-left: auto;
+}
+.py-claude-dots i {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: #22D3EE;
+  opacity: 0.35;
+  animation: py-dot-bounce 1.3s ease-in-out infinite;
+}
+.py-claude-dots i:nth-child(2) { animation-delay: 0.15s; }
+.py-claude-dots i:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes py-dot-bounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.35; }
+  40%           { transform: translateY(-3px); opacity: 1; box-shadow: 0 0 6px rgba(34, 211, 238, 0.7); }
+}
+
+.py-claude-meters {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.py-claude-meter {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.py-claude-meter-label {
+  font-family: var(--font-mono);
+  font-size: 0.46rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.75);
+}
+
+.py-claude-meter-bar {
+  display: block;
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(148, 163, 184, 0.12);
+  overflow: hidden;
+}
+.py-claude-meter-bar i {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #22D3EE, #8B5CF6);
+  border-radius: 3px;
+  box-shadow: 0 0 6px rgba(139, 92, 246, 0.55);
+  animation: py-ctx-fill 6s ease-in-out infinite;
+}
+
+@keyframes py-ctx-fill {
+  0%, 30%   { width: 12%; }
+  35%       { width: 42%; }
+  55%       { width: 78%; }
+  80%, 100% { width: 94%; }
+}
+
+.py-claude-tokens {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #22D3EE, #8B5CF6);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.01em;
+  animation: py-tokens-roll 6s steps(1) infinite;
+  min-width: 48px;
+  text-align: right;
+}
+
+@keyframes py-tokens-roll {
+  0%, 35%   { content: '847'; }
+  40%       { content: '1.2k'; }
+  55%       { content: '1.8k'; }
+  70%       { content: '2.4k'; }
+  85%, 100% { content: '2.4k'; }
+}
+/* `content` only works on ::before — fallback: we animate the text via
+   visibility/text-shadow and rely on data-py hooks at JS level if ever
+   needed. For now, the static value reads 847 baseline; the gradient
+   + subtle pulse below gives the "alive" feel even without JS. */
+
+[data-py="tokens"] {
+  animation: py-tokens-pulse 6s ease-in-out infinite;
+}
+@keyframes py-tokens-pulse {
+  0%, 35%, 100% { filter: none; transform: scale(1); }
+  42%           { filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.6)); transform: scale(1.04); }
+  70%           { filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.7)); transform: scale(1.08); }
+  80%           { transform: scale(1); }
+}
+
+/* ── Response pill (right-side overlay) ─────────────────────────────── */
+
+.py-response {
+  position: absolute;
+  right: 4%;
+  bottom: 16%;
+  width: 230px;
+  z-index: 28;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #071712, #0B1F17);
+  border: 1.5px solid rgba(110, 231, 183, 0.42);
+  padding: 10px 12px 11px;
+  box-shadow:
+    0 20px 46px -10px rgba(15, 23, 42, 0.6),
+    0 0 28px -6px rgba(110, 231, 183, 0.35);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transform: rotate(-3deg);
+  animation: py-response-float 5.8s ease-in-out infinite alternate,
+             py-response-flash 6s ease-in-out infinite;
+}
+
+@keyframes py-response-float {
+  0%   { transform: translateY(0) rotate(-3deg); }
+  100% { transform: translateY(-5px) rotate(-3deg); }
+}
+
+@keyframes py-response-flash {
+  0%, 60%, 96%, 100% {
+    border-color: rgba(110, 231, 183, 0.42);
+    box-shadow:
+      0 20px 46px -10px rgba(15, 23, 42, 0.6),
+      0 0 28px -6px rgba(110, 231, 183, 0.35);
+  }
+  80%, 88% {
+    border-color: rgba(110, 231, 183, 0.9);
+    box-shadow:
+      0 20px 56px -8px rgba(110, 231, 183, 0.55),
+      0 0 60px -2px rgba(110, 231, 183, 0.65),
+      0 0 0 1.5px rgba(110, 231, 183, 0.5) inset;
+  }
+}
+
+.py-response-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.py-response-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #6EE7B7;
+  animation: py-status-resolve 6s ease-in-out infinite;
+}
+.py-response-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #FBBF24;
+  box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.7);
+  animation: py-status-dot 6s ease-in-out infinite;
+}
+@keyframes py-status-dot {
+  0%, 60% { background: #FBBF24; box-shadow: 0 0 6px rgba(251, 191, 36, 0.55); }
+  80%, 100% { background: #6EE7B7; box-shadow: 0 0 10px rgba(110, 231, 183, 0.8); }
+}
+@keyframes py-status-resolve {
+  0%, 60% { color: rgba(251, 191, 36, 0.8); }
+  80%, 100% { color: #6EE7B7; }
+}
+
+.py-response-time {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  color: rgba(148, 163, 184, 0.7);
+  animation: py-time-resolve 6s ease-in-out infinite;
+}
+@keyframes py-time-resolve {
+  0%, 60%    { color: rgba(148, 163, 184, 0.5); }
+  80%, 100%  { color: #6EE7B7; }
+}
+
+.py-response-body {
+  padding: 6px 8px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.py-response-json {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  line-height: 1.5;
+  color: rgba(226, 232, 240, 0.9);
+  white-space: nowrap;
+  overflow: hidden;
+}
+.py-response-json code { font-family: inherit; }
+
+[data-py="stream"] {
+  display: inline-block;
+  max-width: 0;
+  overflow: hidden;
+  vertical-align: bottom;
+  animation: py-stream-type 6s steps(22) infinite;
+  color: #6EE7B7;
+}
+@keyframes py-stream-type {
+  0%, 58%   { max-width: 0; }
+  62%, 78%  { max-width: 12ch; }
+  82%, 100% { max-width: 22ch; }
+}
+
+.py-device-label--response {
+  margin-top: 2px;
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: 0.54rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(110, 231, 183, 0.75);
+}
+
+/* ── Light theme — paper desk ───────────────────────────────────────── */
+
+[data-theme="light"] .py-decor-grid {
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(15, 23, 42, 0.085) 1px, transparent 0);
+}
+[data-theme="light"] .py-blob--a { background: radial-gradient(circle, rgba(139, 92, 246, 0.32), transparent 70%); }
+[data-theme="light"] .py-blob--b { background: radial-gradient(circle, rgba(251, 191, 36, 0.24), transparent 70%); }
+[data-theme="light"] .py-blob--c { background: radial-gradient(circle, rgba(34, 211, 238, 0.22), transparent 70%); }
+
+[data-theme="light"] .py-beam {
+  stroke-width: 0.65;
+  filter: drop-shadow(0 0 3px currentColor);
+}
+
+/* Keep mockup screens dark — they read as real app/IDE previews on paper */
+[data-theme="light"] .py-code-card,
+[data-theme="light"] .py-rag,
+[data-theme="light"] .py-claude,
+[data-theme="light"] .py-response {
+  box-shadow:
+    0 30px 60px -20px rgba(15, 23, 42, 0.32),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 0 60px -8px rgba(139, 92, 246, 0.18);
+}
+
+/* ── Reduced motion ─────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .py-blob,
+  .py-beam,
+  .py-code-card,
+  .py-device--rag,
+  .py-device--claude,
+  .py-response,
+  .py-live-badge,
+  .py-code-caret,
+  .py-rag,
+  .py-claude,
+  [data-py-line],
+  [data-py="chunk-1"],
+  [data-py="chunk-2"],
+  [data-py="chunk-3"],
+  [data-py="rag-query"],
+  .py-rag-dot--hit,
+  .py-claude-think,
+  .py-claude-dots i,
+  .py-claude-meter-bar i,
+  [data-py="tokens"],
+  .py-response-dot,
+  [data-py="status-text"],
+  [data-py="rtime"],
+  [data-py="stream"] {
+    animation: none !important;
+  }
+  /* Restore static transforms */
+  .py-device--rag    { transform: rotate(-7deg) scale(0.86); }
+  .py-device--claude { transform: rotate(5deg); }
+  .py-response       { transform: rotate(-3deg); }
+  /* Static resolved states */
+  [data-py="chunk-1"] { opacity: 1; border-color: rgba(251, 191, 36, 0.4); background: rgba(251, 191, 36, 0.06); }
+  [data-py="chunk-2"] { opacity: 0.85; }
+  [data-py="chunk-3"] { opacity: 0.75; }
+  .py-claude-meter-bar i { width: 94%; }
+  [data-py="stream"] { max-width: 22ch; }
+}
+
+/* ── Mobile recomposition (≤900px) ──────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .track-hero--python-backend-ml .track-hero-visual {
+    aspect-ratio: auto;
+    min-height: 0;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 0;
+    overflow: visible;
+  }
+
+  .py-code-card {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    width: 100%;
+    transform: none;
+    order: 1;
+    animation: py-code-flash 6s ease-in-out infinite;
+  }
+
+  .py-device--rag,
+  .py-device--claude {
+    position: relative;
+    inset: auto;
+    transform: none !important;
+    animation: none;
+    flex: 1 1 0;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .py-device--rag    { order: 2; align-self: stretch; }
+  .py-device--claude { order: 3; align-self: stretch; }
+  .py-response       { order: 4; position: relative; right: auto; bottom: auto; transform: none !important; width: 100%; box-sizing: border-box; align-self: stretch; }
+
+  .py-rag    { width: 100%; }
+  .py-claude { width: 100%; }
+
+  .py-beams { display: none; }
+  .py-blob  { opacity: 0.6; filter: blur(50px); }
+}
+
+@media (max-width: 480px) {
+  .py-live-badge span { display: none; }
+
+  .py-code-body {
+    font-size: 0.62rem;
+    padding: 10px 12px;
+  }
+
+  .py-rag-chunk       { grid-template-columns: 1fr 38px 26px; }
+  .py-rag-doc         { font-size: 0.48rem; }
+  .py-claude-tokens   { font-size: 0.95rem; }
+  .py-response-json   { font-size: 0.54rem; }
+  .py-response        { width: 100%; }
+}

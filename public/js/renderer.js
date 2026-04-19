@@ -190,28 +190,165 @@
 
   const trackHeroVisuals = {
     pythonBackend: () => `
-      <div class="track-hero-code">
-        <div class="track-hero-code-header">
-          <span class="track-hero-code-dot" style="background:#EF4444"></span>
-          <span class="track-hero-code-dot" style="background:#F59E0B"></span>
-          <span class="track-hero-code-dot" style="background:#10B981"></span>
-          <span class="track-hero-code-file">api/main.py</span>
-        </div>
-        <pre class="track-hero-code-body"><code><span class="c-kw">from</span> fastapi <span class="c-kw">import</span> FastAPI
-<span class="c-kw">from</span> claude <span class="c-kw">import</span> Anthropic
+        <div class="py-decor py-decor-grid" aria-hidden="true"></div>
+        <div class="py-decor py-blob py-blob--a" aria-hidden="true"></div>
+        <div class="py-decor py-blob py-blob--b" aria-hidden="true"></div>
+        <div class="py-decor py-blob py-blob--c" aria-hidden="true"></div>
+
+        <svg class="py-beams" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="py-beam-rag" x1="1" y1="1" x2="0" y2="0">
+              <stop offset="0"   stop-color="#FBBF24" stop-opacity="0"/>
+              <stop offset="0.5" stop-color="#FBBF24" stop-opacity="0.85"/>
+              <stop offset="1"   stop-color="#22D3EE" stop-opacity="0.95"/>
+            </linearGradient>
+            <linearGradient id="py-beam-claude" x1="0" y1="1" x2="1" y2="0">
+              <stop offset="0"   stop-color="#22D3EE" stop-opacity="0"/>
+              <stop offset="0.5" stop-color="#22D3EE" stop-opacity="0.8"/>
+              <stop offset="1"   stop-color="#A78BFA" stop-opacity="0.95"/>
+            </linearGradient>
+            <linearGradient id="py-beam-stream" x1="1" y1="0" x2="0" y2="1">
+              <stop offset="0"   stop-color="#8B5CF6" stop-opacity="0.9"/>
+              <stop offset="0.55" stop-color="#6EE7B7" stop-opacity="0.75"/>
+              <stop offset="1"   stop-color="#6EE7B7" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path class="py-beam py-beam--rag" d="M 34 70 C 26 58 22 40 22 22"
+                stroke="url(#py-beam-rag)" stroke-width="0.45" fill="none"
+                stroke-linecap="round" stroke-dasharray="1.4 2.6"/>
+          <path class="py-beam py-beam--claude" d="M 30 26 C 48 18 64 18 78 22"
+                stroke="url(#py-beam-claude)" stroke-width="0.45" fill="none"
+                stroke-linecap="round" stroke-dasharray="1.4 2.6"/>
+          <path class="py-beam py-beam--stream" d="M 76 32 C 80 44 82 58 82 70"
+                stroke="url(#py-beam-stream)" stroke-width="0.5" fill="none"
+                stroke-linecap="round" stroke-dasharray="1.6 2.4"/>
+        </svg>
+
+        <div class="py-code-card" data-py="code">
+          <div class="py-code-header">
+            <span class="py-code-dot" style="background:#EF4444"></span>
+            <span class="py-code-dot" style="background:#FBBF24"></span>
+            <span class="py-code-dot" style="background:#6EE7B7"></span>
+            <span class="py-code-file">app/routes/ask.py</span>
+            <span class="py-live-badge" aria-hidden="true">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                <circle cx="5" cy="5" r="2.4" fill="currentColor"/>
+              </svg>
+              <span>FastAPI</span>
+            </span>
+          </div>
+          <pre class="py-code-body"><code><span class="py-c-kw">from</span> fastapi <span class="py-c-kw">import</span> FastAPI
+<span class="py-c-kw">from</span> anthropic <span class="py-c-kw">import</span> Anthropic
+<span class="py-c-kw">from</span> rag <span class="py-c-kw">import</span> retrieve
 
 app = FastAPI()
-client = Anthropic()
+claude = Anthropic()
 
-<span class="c-dec">@app.post</span>(<span class="c-str">"/ask"</span>)
-<span class="c-kw">async def</span> <span class="c-fn">ask_ai</span>(q: <span class="c-tp">str</span>):
-    resp = client.messages.create(
-        model=<span class="c-str">"claude-sonnet-4-5-20250514"</span>,
-        messages=[{<span class="c-str">"role"</span>: <span class="c-str">"user"</span>,
-                   <span class="c-str">"content"</span>: q}]
-    )
-    <span class="c-kw">return</span> {<span class="c-str">"answer"</span>: resp.content}</code></pre>
-      </div>`,
+<span class="py-c-line" data-py-line="1"><span class="py-c-dec">@app.post</span>(<span class="py-c-str">"/ask"</span>)</span>
+<span class="py-c-line" data-py-line="2"><span class="py-c-kw">async def</span> <span class="py-c-fn">ask</span>(q: <span class="py-c-tp">str</span>):</span>
+<span class="py-c-line" data-py-line="3">    ctx = <span class="py-c-kw">await</span> <span class="py-c-fn">retrieve</span>(q, k=<span class="py-c-num">4</span>)</span>
+<span class="py-c-line" data-py-line="4">    resp = claude.messages.<span class="py-c-fn">create</span>(</span>
+<span class="py-c-line" data-py-line="4">        model=<span class="py-c-str">"claude-sonnet-4-5"</span>,</span>
+<span class="py-c-line" data-py-line="4">        messages=[{<span class="py-c-str">"role"</span>:<span class="py-c-str">"user"</span>,</span>
+<span class="py-c-line" data-py-line="4">                   <span class="py-c-str">"content"</span>: ctx + q}])</span>
+<span class="py-c-line" data-py-line="5">    <span class="py-c-kw">return</span> {<span class="py-c-str">"answer"</span>: resp.content}</span></code></pre>
+          <span class="py-code-caret" aria-hidden="true"></span>
+        </div>
+
+        <div class="py-device py-device--rag" data-py="rag">
+          <div class="py-rag">
+            <div class="py-rag-header">
+              <span class="py-rag-title">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+                  <circle cx="5" cy="5" r="3.2" stroke="currentColor" stroke-width="1.3"/>
+                  <path d="M7.4 7.4L9 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                </svg>
+                Vector Search
+              </span>
+              <span class="py-rag-db">pgvector</span>
+            </div>
+            <div class="py-rag-query" data-py="rag-query">
+              <span class="py-rag-q-label">Q</span>
+              <span class="py-rag-q-text">how to ship rag?</span>
+            </div>
+            <ul class="py-rag-chunks">
+              <li class="py-rag-chunk" data-py="chunk-1">
+                <span class="py-rag-doc">docs/architecture.md</span>
+                <span class="py-rag-bar"><i style="--w:92%"></i></span>
+                <span class="py-rag-score">0.92</span>
+              </li>
+              <li class="py-rag-chunk" data-py="chunk-2">
+                <span class="py-rag-doc">guides/embeddings.md</span>
+                <span class="py-rag-bar"><i style="--w:87%"></i></span>
+                <span class="py-rag-score">0.87</span>
+              </li>
+              <li class="py-rag-chunk" data-py="chunk-3">
+                <span class="py-rag-doc">book/chapter-03.md</span>
+                <span class="py-rag-bar"><i style="--w:81%"></i></span>
+                <span class="py-rag-score">0.81</span>
+              </li>
+            </ul>
+            <div class="py-rag-scatter" aria-hidden="true">
+              <span style="--x:12%;--y:62%"></span>
+              <span style="--x:28%;--y:40%"></span>
+              <span style="--x:40%;--y:70%"></span>
+              <span class="py-rag-dot--hit" style="--x:56%;--y:36%"></span>
+              <span style="--x:68%;--y:58%"></span>
+              <span style="--x:82%;--y:44%"></span>
+              <span style="--x:90%;--y:72%"></span>
+            </div>
+          </div>
+          <span class="py-device-label py-device-label--rag">RAG · RETRIEVAL</span>
+        </div>
+
+        <div class="py-device py-device--claude" data-py="claude">
+          <div class="py-claude">
+            <div class="py-claude-header">
+              <span class="py-claude-logo">
+                <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+                  <path d="M5.5 1 L9.5 3.25 V7.75 L5.5 10 L1.5 7.75 V3.25 Z"
+                        stroke="currentColor" stroke-width="1.2" fill="none" stroke-linejoin="round"/>
+                  <circle cx="5.5" cy="5.5" r="1.4" fill="currentColor"/>
+                </svg>
+                Claude
+              </span>
+              <span class="py-claude-model">sonnet-4-5</span>
+            </div>
+            <div class="py-claude-body">
+              <div class="py-claude-think" data-py="think">
+                <span class="py-claude-think-label">thinking</span>
+                <span class="py-claude-dots" aria-hidden="true">
+                  <i></i><i></i><i></i>
+                </span>
+              </div>
+              <div class="py-claude-meters">
+                <div class="py-claude-meter">
+                  <span class="py-claude-meter-label">context</span>
+                  <span class="py-claude-meter-bar"><i data-py="ctx-bar"></i></span>
+                </div>
+                <div class="py-claude-meter">
+                  <span class="py-claude-meter-label">tokens</span>
+                  <span class="py-claude-tokens" data-py="tokens">847</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <span class="py-device-label py-device-label--claude">LLM · REASONING</span>
+        </div>
+
+        <div class="py-response" data-py="response">
+          <div class="py-response-head">
+            <span class="py-response-status" data-py="status">
+              <span class="py-response-dot" aria-hidden="true"></span>
+              <span data-py="status-text">200 OK</span>
+            </span>
+            <span class="py-response-time" data-py="rtime">234ms</span>
+          </div>
+          <div class="py-response-body">
+            <pre class="py-response-json"><code>{ <span class="py-c-str">"answer"</span>: <span class="py-c-str" data-py="stream">"Ship RAG with pgvector…"</span> }</code></pre>
+          </div>
+          <span class="py-device-label py-device-label--response">200 · STREAMED</span>
+        </div>`,
 
     flutter: () => `
       <!-- Decorative layers -->
