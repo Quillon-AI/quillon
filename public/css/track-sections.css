@@ -239,6 +239,161 @@
 }
 
 
+/* ── Flutter-specific hero ───────────────────────────────────────────── */
+
+.track-hero--flutter .track-hero-visual {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.flutter-hero-code .track-hero-code-header {
+  position: relative;
+}
+
+.flutter-hot-reload {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #FBBF24;
+  background: color-mix(in oklab, #FBBF24 14%, transparent);
+  border: 1px solid color-mix(in oklab, #FBBF24 35%, transparent);
+  border-radius: 999px;
+  animation: hot-reload-pulse 3s ease-in-out infinite;
+}
+
+.flutter-hot-reload svg {
+  filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.6));
+}
+
+@keyframes hot-reload-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); }
+  50%      { box-shadow: 0 0 12px 0 rgba(251, 191, 36, 0.4); }
+}
+
+/* file label sits before hot-reload badge — preserve mono style */
+.flutter-hero-code .track-hero-code-file {
+  margin-left: auto;
+}
+.flutter-hero-code .flutter-hot-reload {
+  margin-left: 8px;
+}
+
+/* Three-platforms cluster */
+.flutter-platforms {
+  display: grid;
+  grid-template-columns: auto repeat(3, 1fr);
+  align-items: end;
+  gap: 12px;
+  padding: 18px 16px;
+  border-radius: 16px;
+  border: 1px solid var(--border-light);
+  background: color-mix(in oklab, var(--bg-deep) 75%, var(--accent) 4%);
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+}
+
+.flutter-platforms-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 6px;
+}
+
+.flutter-platforms-arrow svg {
+  width: 56px;
+  height: 22px;
+}
+
+.flutter-platforms-arrow-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+.flutter-platform {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+}
+
+.flutter-platform svg {
+  width: auto;
+  max-width: 100%;
+  max-height: 96px;
+  border-radius: 10px;
+  animation: flutter-platform-pulse 3s ease-in-out infinite;
+  animation-delay: calc(var(--idx, 0) * 1s);
+}
+
+.flutter-platform--web svg {
+  max-height: 78px;
+}
+
+.flutter-platform-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.flutter-platform--ios .flutter-platform-label    { color: #3B6FFF; }
+.flutter-platform--android .flutter-platform-label { color: #A78BFA; }
+.flutter-platform--web .flutter-platform-label    { color: #34D399; }
+
+@keyframes flutter-platform-pulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 0 transparent);
+    transform: translateY(0);
+  }
+  50% {
+    filter: drop-shadow(0 0 14px color-mix(in oklab, var(--pulse-color, #3B6FFF) 70%, transparent));
+    transform: translateY(-2px);
+  }
+}
+
+.flutter-platform--ios     { --pulse-color: #3B6FFF; }
+.flutter-platform--android { --pulse-color: #A78BFA; }
+.flutter-platform--web     { --pulse-color: #34D399; }
+
+/* Light theme: airy panel */
+[data-theme="light"] .flutter-platforms {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(15, 23, 42, 0.08);
+  box-shadow:
+    0 8px 24px rgba(15, 23, 42, 0.06),
+    0 0 0 1px rgba(15, 23, 42, 0.02) inset;
+}
+
+[data-theme="light"] .flutter-hot-reload {
+  color: #B45309;
+  background: rgba(251, 191, 36, 0.12);
+  border-color: rgba(251, 191, 36, 0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flutter-platform svg,
+  .flutter-hot-reload {
+    animation: none;
+  }
+}
+
+
 /* ── Demand ───────────────────────────────────────────────────────────── */
 
 .demand-grid {
@@ -1455,6 +1610,29 @@
 
   .track-hero-code:hover {
     transform: none;
+  }
+
+  /* Flutter platforms: keep horizontal but hide arrow on tight screens */
+  .track-hero--flutter .flutter-platforms {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 14px 10px;
+  }
+
+  .flutter-platforms-arrow {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .flutter-hot-reload span {
+    display: none;
+  }
+  .flutter-platform svg {
+    max-height: 80px;
+  }
+  .flutter-platform--web svg {
+    max-height: 64px;
   }
 
   .track-hero-stats {
