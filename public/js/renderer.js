@@ -239,19 +239,15 @@
           </div>
           <pre class="py-code-body"><code><span class="py-c-kw">from</span> fastapi <span class="py-c-kw">import</span> FastAPI
 <span class="py-c-kw">from</span> anthropic <span class="py-c-kw">import</span> Anthropic
-<span class="py-c-kw">from</span> rag <span class="py-c-kw">import</span> retrieve
 
 app = FastAPI()
 claude = Anthropic()
 
 <span class="py-c-line" data-py-line="1"><span class="py-c-dec">@app.post</span>(<span class="py-c-str">"/ask"</span>)</span>
 <span class="py-c-line" data-py-line="2"><span class="py-c-kw">async def</span> <span class="py-c-fn">ask</span>(q: <span class="py-c-tp">str</span>):</span>
-<span class="py-c-line" data-py-line="3">    ctx = <span class="py-c-kw">await</span> <span class="py-c-fn">retrieve</span>(q, k=<span class="py-c-num">4</span>)</span>
-<span class="py-c-line" data-py-line="4">    resp = claude.messages.<span class="py-c-fn">create</span>(</span>
-<span class="py-c-line" data-py-line="4">        model=<span class="py-c-str">"claude-sonnet-4-5"</span>,</span>
-<span class="py-c-line" data-py-line="4">        messages=[{<span class="py-c-str">"role"</span>:<span class="py-c-str">"user"</span>,</span>
-<span class="py-c-line" data-py-line="4">                   <span class="py-c-str">"content"</span>: ctx + q}])</span>
-<span class="py-c-line" data-py-line="5">    <span class="py-c-kw">return</span> {<span class="py-c-str">"answer"</span>: resp.content}</span></code></pre>
+<span class="py-c-line" data-py-line="3">    ctx = <span class="py-c-fn">retrieve</span>(q, k=<span class="py-c-num">4</span>)</span>
+<span class="py-c-line" data-py-line="4">    r = claude.<span class="py-c-fn">create</span>(ctx + q)</span>
+<span class="py-c-line" data-py-line="5">    <span class="py-c-kw">return</span> r.content</span></code></pre>
           <span class="py-code-caret" aria-hidden="true"></span>
         </div>
 

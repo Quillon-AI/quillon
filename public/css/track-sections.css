@@ -3385,11 +3385,15 @@
    thinking #22D3EE, mint success #6EE7B7.
    ────────────────────────────────────────────────────────────────────── */
 
+.track-hero--python-backend-ml .track-hero-layout {
+  grid-template-columns: 1fr minmax(540px, 600px);
+}
+
 .track-hero--python-backend-ml .track-hero-visual {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
-  min-height: 460px;
+  aspect-ratio: 5 / 4;
+  min-height: 540px;
   isolation: isolate;
 }
 
@@ -3490,9 +3494,10 @@
 
 .py-code-card {
   position: absolute;
-  left: 16%;
-  bottom: 6%;
-  width: 60%;
+  left: 18%;
+  bottom: 5%;
+  width: 64%;
+  max-height: 88%;
   z-index: 30;
   border-radius: 14px;
   background:
@@ -3597,10 +3602,10 @@
 
 .py-code-body {
   margin: 0;
-  padding: 14px 16px;
+  padding: 12px 16px 14px;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
-  line-height: 1.65;
+  font-size: 0.7rem;
+  line-height: 1.5;
   color: rgba(226, 232, 240, 0.85);
   white-space: pre;
   overflow: hidden;
@@ -4292,6 +4297,10 @@
 /* ── Mobile recomposition (≤900px) ──────────────────────────────────── */
 
 @media (max-width: 900px) {
+  .track-hero--python-backend-ml .track-hero-layout {
+    grid-template-columns: 1fr;
+  }
+
   .track-hero--python-backend-ml .track-hero-visual {
     aspect-ratio: auto;
     min-height: 0;
