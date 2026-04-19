@@ -2216,24 +2216,61 @@
     clear: both;
   }
 
-  /* Wrap devices in a flex row using container query-ish approach via CSS */
+  /* Wrap devices in a flex row — flexbox avoids float math pitfalls */
+  .track-hero--flutter .track-hero-visual {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 0;
+    overflow: visible;
+  }
+
   .fl-device--android,
   .fl-device--ios,
   .fl-device--web {
     transform: none !important;
     animation: none;
-    float: left;
-    width: calc(33.33% - 8px);
-    margin: 0 4px;
+    float: none;
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: calc(33.33% - 6px);
+    margin: 0;
+    box-sizing: border-box;
   }
 
-  .fl-iphone   { width: 100%; height: auto; aspect-ratio: 162 / 332; }
-  .fl-android  { width: 100%; height: auto; aspect-ratio: 152 / 312; }
-  .fl-browser  { width: 100%; height: auto; aspect-ratio: 240 / 168; margin-top: 24px; }
+  .fl-iphone,
+  .fl-android,
+  .fl-browser {
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+  }
+  .fl-iphone   { aspect-ratio: 162 / 332; }
+  .fl-android  { aspect-ratio: 152 / 312; }
+  .fl-browser  { aspect-ratio: 240 / 168; margin-top: 24px; }
 
   /* SVG beams: hidden on mobile (re-composition makes curves wrong) */
   .fl-beams { display: none; }
   .fl-blob  { opacity: 0.6; filter: blur(50px); }
+
+  /* Inner mockup content — reduce so values don't overflow narrow wrappers */
+  .fl-iphone-screen   { padding: 26px 8px 8px; }
+  .fl-android-screen  { padding: 0; }
+  .fl-browser-screen  { padding: 8px 8px 6px; gap: 4px; }
+  .fl-ios-count       { font-size: 2.4rem; }
+  .fl-ios-title       { font-size: 0.6rem; }
+  .fl-ios-sub         { font-size: 0.5rem; }
+  .fl-mat-bar         { font-size: 0.6rem; padding: 8px 6px; }
+  .fl-mat-list li     { font-size: 0.55rem; padding: 4px 6px; }
+  .fl-web-title       { font-size: 0.6rem; }
+  .fl-web-stats       { gap: 3px; }
+  .fl-web-stat        { padding: 4px 4px; }
+  .fl-web-stat-value  { font-size: 0.62rem; }
+  .fl-web-stat-label  { font-size: 0.38rem; letter-spacing: 0.02em; }
+  .fl-web-chart       { height: 22px; gap: 2px; }
+  .fl-browser-url     { font-size: 0.42rem; padding: 1px 5px; }
 }
 
 @media (max-width: 480px) {
@@ -2244,13 +2281,16 @@
     padding: 10px 12px;
   }
 
-  .fl-ios-count    { font-size: 2rem; }
+  /* Web mockup at very narrow viewports — stack stats to avoid overflow */
+  .fl-web-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+  .fl-web-stat:nth-child(3) { display: none; }
+  .fl-web-stat-value { font-size: 0.7rem; }
+  .fl-web-stat-label { font-size: 0.42rem; }
+  .fl-web-chart { height: 20px; }
+  .fl-ios-count { font-size: 2rem; }
   .fl-fab          { width: 26px; height: 26px; font-size: 14px; }
-  .fl-mat-bar      { font-size: 0.55rem; padding: 8px; }
-  .fl-mat-list li  { font-size: 0.5rem; }
-  .fl-web-title    { font-size: 0.55rem; }
-  .fl-web-stat-value { font-size: 0.6rem; }
-  .fl-web-stat-label { font-size: 0.4rem; }
 
   .track-hero-stats {
     flex-wrap: wrap;

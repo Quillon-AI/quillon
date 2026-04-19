@@ -236,6 +236,23 @@
     "label": "ИИ-тьютор 24/7",
     "title": "Квилли знает про Flutter всё — и живёт рядом с твоим виджетом",
     "subtitle": "Не общий ChatGPT, а специализированный тьютор под наш трек. Понимает контекст урока, видит твой Dart-код, помнит где у тебя RenderFlex overflowed.",
+    "chat_demo": {
+      "messages": [
+        {
+          "role": "user",
+          "html": "У меня <code>RenderFlex overflowed by 42 pixels</code> в Row. Не понимаю, как чинить"
+        },
+        {
+          "role": "ai",
+          "html": "<p>Классика! Row пытается уместить детей по горизонтали, а места не хватает. Оберни длинный Text в <code>Expanded</code> или <code>Flexible</code>:</p>",
+          "code": "<span class=\"c-kw\">Row</span>(\n  children: [\n    <span class=\"c-kw\">Icon</span>(Icons.bolt),\n    <span class=\"c-kw\">Expanded</span>(child: <span class=\"c-kw\">Text</span>(longTitle))\n  ],\n)"
+        },
+        {
+          "role": "user",
+          "html": "Заработало! А ещё ловлю <code>setState() called after dispose()</code> — это про что?"
+        }
+      ]
+    },
     "use_cases": [
       {
         "icon": "bug",

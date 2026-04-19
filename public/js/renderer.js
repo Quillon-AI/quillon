@@ -56,7 +56,8 @@
 
   const metaTitle = (pageType === 'track' && trackContent?.meta?.title) || settings.meta.title;
   const metaDesc = (pageType === 'track' && trackContent?.meta?.description) || settings.meta.description;
-  const metaOg = (pageType === 'track' && trackContent?.meta?.og_image) || settings.meta.og_image;
+  const rawOg = (pageType === 'track' && trackContent?.meta?.og_image) || settings.meta.og_image;
+  const metaOg = rawOg && rawOg.startsWith('/') ? `https://quillon.ru${rawOg}` : rawOg;
   setMeta('og:title', metaTitle);
   setMeta('og:description', metaDesc);
   setMeta('og:image', metaOg);
@@ -1454,7 +1455,31 @@ client = Anthropic()
     /* ------------------------------------------------------------------ */
     /*  TRACK_QUILLY_AI — track-specific tutor usage                       */
     /* ------------------------------------------------------------------ */
-    trackQuillyAi: (data) => `
+    trackQuillyAi: (data) => {
+      const defaultMessages = [
+        {
+          role: 'user',
+          html: `У меня ошибка <code>TypeError: 'NoneType'</code> на строке 42. Не могу понять, почему`
+        },
+        {
+          role: 'ai',
+          html: `<p>Вижу проблему! Функция <code>get_user()</code> возвращает <code>None</code>, когда пользователь не найден в БД. Добавь проверку:</p>`,
+          code: `<span class="c-kw">if</span> user <span class="c-kw">is</span> <span class="c-kw">None</span>:\n    <span class="c-kw">raise</span> HTTPException(<span class="c-tp">404</span>)`
+        },
+        {
+          role: 'user',
+          html: `Работает, спасибо! А как лучше обрабатывать такие случаи в FastAPI?`
+        }
+      ];
+      const messages = (data.chat_demo && Array.isArray(data.chat_demo.messages) && data.chat_demo.messages.length)
+        ? data.chat_demo.messages
+        : defaultMessages;
+      const renderMsg = (m) => {
+        const codeBlock = m.code ? `<pre class="quilly-msg-code"><code>${m.code}</code></pre>` : '';
+        const bodyHtml = m.html || (m.text ? `<p>${m.text}</p>` : '');
+        return `<div class="quilly-msg quilly-msg-${m.role === 'ai' ? 'ai' : 'user'}">${bodyHtml}${codeBlock}</div>`;
+      };
+      return `
       <section id="quilly-ai" class="animate-on-scroll ${sectionBgClass()} track-quilly">
         <div class="container">
           ${sectionHeader(data)}
@@ -1468,17 +1493,7 @@ client = Anthropic()
                 </div>
               </div>
               <div class="quilly-chat-body">
-                <div class="quilly-msg quilly-msg-user">
-                  <p>У меня ошибка <code>TypeError: 'NoneType'</code> на строке 42. Не могу понять, почему</p>
-                </div>
-                <div class="quilly-msg quilly-msg-ai">
-                  <p>Вижу проблему! Функция <code>get_user()</code> возвращает <code>None</code>, когда пользователь не найден в БД. Добавь проверку:</p>
-                  <pre class="quilly-msg-code"><code><span class="c-kw">if</span> user <span class="c-kw">is</span> <span class="c-kw">None</span>:
-    <span class="c-kw">raise</span> HTTPException(<span class="c-tp">404</span>)</code></pre>
-                </div>
-                <div class="quilly-msg quilly-msg-user">
-                  <p>Работает, спасибо! А как лучше обрабатывать такие случаи в FastAPI?</p>
-                </div>
+                ${messages.map(renderMsg).join('')}
                 <div class="quilly-msg quilly-msg-ai quilly-msg-typing">
                   <span></span><span></span><span></span>
                 </div>
@@ -1501,7 +1516,8 @@ client = Anthropic()
             </div>
           </div>
         </div>
-      </section>`,
+      </section>`;
+    },
 
     /* ------------------------------------------------------------------ */
     /*  TRACK_MENTORS                                                      */
