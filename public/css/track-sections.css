@@ -239,158 +239,728 @@
 }
 
 
-/* ── Flutter-specific hero ───────────────────────────────────────────── */
+/* ──────────────────────────────────────────────────────────────────────
+   Flutter hero — "Hot Reload Forge"
+   Asymmetric workspace: code-card center-bottom, iPhone foreground,
+   Android tilted top-left, Browser tilted top-right.
+   Synchronous Hot Reload cycle every 6s — all 3 device values bump
+   simultaneously to visualize «один код → 3 платформы».
+   ────────────────────────────────────────────────────────────────────── */
 
+/* Override default visual layout: we use absolute positioning */
 .track-hero--flutter .track-hero-visual {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-}
-
-.flutter-hero-code .track-hero-code-header {
   position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  min-height: 460px;
+  isolation: isolate;
 }
 
-.flutter-hot-reload {
+.track-hero--flutter .track-hero-glow { display: none; }
+
+/* Hide python's default code card if it ever rendered */
+.track-hero--flutter .track-hero-code:not(.fl-code-card) { display: none; }
+
+/* ── Decorative layers ───────────────────────────────────────────────── */
+
+.fl-decor {
+  position: absolute;
+  pointer-events: none;
+}
+
+.fl-decor-grid {
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255,255,255,0.055) 1px, transparent 0);
+  background-size: 28px 28px;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black 35%, transparent 80%);
+          mask-image: radial-gradient(ellipse at 50% 50%, black 35%, transparent 80%);
+  z-index: 1;
+}
+
+.fl-blob {
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: 2;
+  animation: fl-blob-drift 9s ease-in-out infinite alternate;
+}
+
+.fl-blob--a {
+  top: -12%; right: -8%;
+  width: 360px; height: 360px;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.32), transparent 70%);
+  animation-delay: -2s;
+}
+.fl-blob--b {
+  bottom: -14%; left: -10%;
+  width: 420px; height: 420px;
+  background: radial-gradient(circle, rgba(59, 111, 255, 0.32), transparent 70%);
+  animation-delay: -5s;
+}
+.fl-blob--c {
+  top: 38%; left: 36%;
+  width: 240px; height: 240px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.16), transparent 70%);
+  filter: blur(60px);
+  animation-delay: -7s;
+}
+
+@keyframes fl-blob-drift {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.85; }
+  100% { transform: translate(20px, -14px) scale(1.06); opacity: 1; }
+}
+
+/* ── SVG beams ───────────────────────────────────────────────────────── */
+
+.fl-beams {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.fl-beam {
+  stroke-dashoffset: 0;
+  animation: fl-beam-drift 4s linear infinite;
+  filter: drop-shadow(0 0 1.5px currentColor);
+}
+.fl-beam--ios     { color: #3B6FFF; animation-delay: -0.4s; }
+.fl-beam--android { color: #A78BFA; animation-delay: -1.7s; }
+.fl-beam--web     { color: #34D399; animation-delay: -2.6s; }
+
+@keyframes fl-beam-drift {
+  to { stroke-dashoffset: -16; }
+}
+
+/* Hot Reload pulse on beams — synchronized brightness flash */
+@keyframes fl-beam-pulse {
+  0%, 70%, 100% { opacity: 0.55; stroke-width: 0.45; }
+  10%           { opacity: 1;    stroke-width: 0.95; }
+  30%           { opacity: 0.85; stroke-width: 0.7; }
+}
+.track-hero--flutter .fl-beam {
+  opacity: 0.55;
+  animation: fl-beam-drift 4s linear infinite, fl-beam-pulse 6s ease-in-out infinite;
+}
+
+/* ── Code card (centered-bottom, foreground) ─────────────────────────── */
+
+.fl-code-card {
+  position: absolute;
+  left: 18%;
+  bottom: 6%;
+  width: 56%;
+  z-index: 30;
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg,
+      color-mix(in oklab, #0B1020 96%, transparent),
+      color-mix(in oklab, #0F172A 96%, transparent));
+  border: 1px solid rgba(59, 111, 255, 0.22);
+  box-shadow:
+    0 30px 60px -20px rgba(59, 111, 255, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 0 60px -8px rgba(124, 58, 237, 0.25);
+  transform: perspective(1100px) rotateY(-3deg) rotateX(1.5deg);
+  transform-origin: center bottom;
+  overflow: hidden;
+  animation: fl-code-breath 5.5s ease-in-out infinite alternate, fl-code-flash 6s ease-in-out infinite;
+}
+
+@keyframes fl-code-breath {
+  0%   { transform: perspective(1100px) rotateY(-3deg) rotateX(1.5deg) translateY(0); }
+  100% { transform: perspective(1100px) rotateY(-3deg) rotateX(1.5deg) translateY(-3px); }
+}
+
+/* Border flash on Hot Reload */
+@keyframes fl-code-flash {
+  0%, 70%, 100% { border-color: rgba(59, 111, 255, 0.22); }
+  10%           { border-color: rgba(59, 111, 255, 0.85); box-shadow:
+    0 30px 60px -20px rgba(59, 111, 255, 0.6),
+    0 0 0 1px rgba(59, 111, 255, 0.4) inset,
+    0 0 80px -4px rgba(124, 58, 237, 0.45); }
+}
+
+.fl-code-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.fl-code-dot {
+  width: 8px; height: 8px; border-radius: 50%; opacity: 0.7;
+}
+
+.fl-code-file {
+  margin-left: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.fl-hot-reload {
   margin-left: auto;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 3px 8px;
+  gap: 4px;
+  padding: 2px 8px;
   font-family: var(--font-mono);
-  font-size: 0.62rem;
+  font-size: 0.58rem;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #FBBF24;
   background: color-mix(in oklab, #FBBF24 14%, transparent);
   border: 1px solid color-mix(in oklab, #FBBF24 35%, transparent);
   border-radius: 999px;
-  animation: hot-reload-pulse 3s ease-in-out infinite;
+  animation: fl-hot-reload-flash 6s ease-in-out infinite;
 }
 
-.flutter-hot-reload svg {
-  filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.6));
+.fl-hot-reload svg {
+  filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.7));
+  transform-origin: center;
 }
 
-@keyframes hot-reload-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); }
-  50%      { box-shadow: 0 0 12px 0 rgba(251, 191, 36, 0.4); }
+@keyframes fl-hot-reload-flash {
+  0%, 70%, 100% {
+    box-shadow: 0 0 0 0 rgba(251, 191, 36, 0);
+    transform: scale(1);
+  }
+  10% {
+    box-shadow: 0 0 16px 0 rgba(251, 191, 36, 0.65);
+    transform: scale(1.12);
+  }
+  20% {
+    transform: scale(1);
+  }
 }
 
-/* file label sits before hot-reload badge — preserve mono style */
-.flutter-hero-code .track-hero-code-file {
-  margin-left: auto;
-}
-.flutter-hero-code .flutter-hot-reload {
-  margin-left: 8px;
-}
-
-/* Three-platforms cluster */
-.flutter-platforms {
-  display: grid;
-  grid-template-columns: auto repeat(3, 1fr);
-  align-items: end;
-  gap: 12px;
-  padding: 18px 16px;
-  border-radius: 16px;
-  border: 1px solid var(--border-light);
-  background: color-mix(in oklab, var(--bg-deep) 75%, var(--accent) 4%);
-  box-shadow:
-    0 16px 40px rgba(0, 0, 0, 0.35),
-    0 0 0 1px rgba(255, 255, 255, 0.02) inset;
-}
-
-.flutter-platforms-arrow {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  padding-bottom: 6px;
-}
-
-.flutter-platforms-arrow svg {
-  width: 56px;
-  height: 22px;
-}
-
-.flutter-platforms-arrow-label {
+.fl-code-body {
+  margin: 0;
+  padding: 14px 16px;
   font-family: var(--font-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-tertiary);
-  white-space: nowrap;
+  font-size: 0.72rem;
+  line-height: 1.65;
+  color: rgba(226, 232, 240, 0.85);
+  white-space: pre;
+  overflow: hidden;
 }
 
-.flutter-platform {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
+.fl-code-body code { font-family: inherit; }
+
+/* Counter source value — flashes on Hot Reload */
+.c-num {
+  color: #FBBF24;
   position: relative;
+  display: inline-block;
+  animation: fl-num-flash 6s ease-in-out infinite;
 }
 
-.flutter-platform svg {
-  width: auto;
-  max-width: 100%;
-  max-height: 96px;
-  border-radius: 10px;
-  animation: flutter-platform-pulse 3s ease-in-out infinite;
-  animation-delay: calc(var(--idx, 0) * 1s);
+@keyframes fl-num-flash {
+  0%, 65%, 100% { color: #FBBF24; text-shadow: none; }
+  72%           { color: #fff; text-shadow: 0 0 8px rgba(251, 191, 36, 0.9); }
+  85%           { color: #FBBF24; }
 }
 
-.flutter-platform--web svg {
-  max-height: 78px;
+/* Caret blink */
+.fl-code-caret {
+  position: absolute;
+  bottom: 18px;
+  right: 18px;
+  width: 7px;
+  height: 13px;
+  background: #3B6FFF;
+  box-shadow: 0 0 6px rgba(59, 111, 255, 0.7);
+  animation: fl-caret-blink 1.1s steps(2) infinite;
 }
 
-.flutter-platform-label {
+@keyframes fl-caret-blink {
+  0%, 50%   { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* ── Devices: shared ─────────────────────────────────────────────────── */
+
+.fl-device {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.fl-device-label {
   font-family: var(--font-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.08em;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--text-tertiary);
 }
 
-.flutter-platform--ios .flutter-platform-label    { color: #3B6FFF; }
-.flutter-platform--android .flutter-platform-label { color: #A78BFA; }
-.flutter-platform--web .flutter-platform-label    { color: #34D399; }
+.fl-device-label--ios     { color: #3B6FFF; }
+.fl-device-label--android { color: #A78BFA; }
+.fl-device-label--web     { color: #34D399; }
 
-@keyframes flutter-platform-pulse {
-  0%, 100% {
-    filter: drop-shadow(0 0 0 transparent);
-    transform: translateY(0);
-  }
-  50% {
-    filter: drop-shadow(0 0 14px color-mix(in oklab, var(--pulse-color, #3B6FFF) 70%, transparent));
-    transform: translateY(-2px);
-  }
+/* ── iPhone (foreground, center-right) ──────────────────────────────── */
+
+.fl-device--ios {
+  right: 6%;
+  top: 14%;
+  z-index: 25;
+  animation: fl-float-a 6.2s ease-in-out infinite alternate;
 }
 
-.flutter-platform--ios     { --pulse-color: #3B6FFF; }
-.flutter-platform--android { --pulse-color: #A78BFA; }
-.flutter-platform--web     { --pulse-color: #34D399; }
+@keyframes fl-float-a {
+  0%   { transform: translateY(0) rotate(5deg); }
+  100% { transform: translateY(-7px) rotate(5deg); }
+}
 
-/* Light theme: airy panel */
-[data-theme="light"] .flutter-platforms {
-  background: rgba(255, 255, 255, 0.7);
-  border-color: rgba(15, 23, 42, 0.08);
+.fl-iphone {
+  position: relative;
+  width: 162px;
+  height: 332px;
+  border-radius: 30px;
+  background: linear-gradient(180deg, #1B2236, #0E1424);
+  border: 1.5px solid rgba(59, 111, 255, 0.45);
+  padding: 7px;
   box-shadow:
-    0 8px 24px rgba(15, 23, 42, 0.06),
-    0 0 0 1px rgba(15, 23, 42, 0.02) inset;
+    0 22px 50px -12px rgba(15, 23, 42, 0.6),
+    0 0 30px -4px rgba(59, 111, 255, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  animation: fl-device-flash 6s ease-in-out infinite;
 }
 
-[data-theme="light"] .flutter-hot-reload {
-  color: #B45309;
-  background: rgba(251, 191, 36, 0.12);
-  border-color: rgba(251, 191, 36, 0.4);
+@keyframes fl-device-flash {
+  0%, 70%, 100% { box-shadow:
+    0 22px 50px -12px rgba(15, 23, 42, 0.6),
+    0 0 30px -4px var(--dev-glow, rgba(59, 111, 255, 0.35)),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset; }
+  12%           { box-shadow:
+    0 22px 60px -10px rgba(15, 23, 42, 0.7),
+    0 0 60px -2px var(--dev-glow, rgba(59, 111, 255, 0.7)),
+    0 0 0 1.5px var(--dev-glow, rgba(59, 111, 255, 0.6)) inset; }
 }
+
+.fl-device--ios     .fl-iphone   { --dev-glow: rgba(59, 111, 255, 0.7); }
+.fl-device--android .fl-android  { --dev-glow: rgba(167, 139, 250, 0.7); }
+.fl-device--web     .fl-browser  { --dev-glow: rgba(52, 211, 153, 0.65); }
+
+.fl-iphone-notch {
+  position: absolute;
+  top: 11px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 14px;
+  background: #050810;
+  border-radius: 999px;
+  z-index: 2;
+}
+
+.fl-iphone-screen {
+  width: 100%;
+  height: 100%;
+  border-radius: 23px;
+  background: linear-gradient(180deg, #0F172A 0%, #1A2238 100%);
+  position: relative;
+  overflow: hidden;
+  padding: 28px 14px 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.fl-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 14px;
+}
+
+.fl-status-icons { display: inline-flex; gap: 2px; }
+.fl-status-icons i {
+  width: 4px; height: 4px; background: rgba(255, 255, 255, 0.6); border-radius: 1px;
+}
+.fl-status-icons i:last-child { width: 8px; }
+
+.fl-ios-title {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: rgba(226, 232, 240, 0.95);
+  margin-bottom: 4px;
+}
+
+.fl-ios-sub {
+  font-family: var(--font-body);
+  font-size: 0.55rem;
+  color: rgba(148, 163, 184, 0.7);
+  margin-bottom: 18px;
+  line-height: 1.4;
+}
+
+.fl-ios-count {
+  font-family: var(--font-display);
+  font-size: 3.4rem;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  background: linear-gradient(135deg, #3B6FFF 0%, #A78BFA 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: auto 0;
+  padding: 18px 0;
+  animation: fl-ios-count-bump 6s ease-in-out infinite;
+}
+
+@keyframes fl-ios-count-bump {
+  0%, 70%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 transparent); }
+  12%           { transform: scale(1.18); filter: drop-shadow(0 0 12px rgba(59, 111, 255, 0.7)); }
+  25%           { transform: scale(1); }
+}
+
+.fl-fab {
+  position: absolute;
+  right: 14px;
+  bottom: 16px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3B6FFF, #7C3AED);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 14px rgba(59, 111, 255, 0.5),
+              0 0 0 0 rgba(59, 111, 255, 0.6);
+  animation: fl-fab-ring 6s ease-in-out infinite;
+}
+
+@keyframes fl-fab-ring {
+  0%, 70%, 100% { box-shadow: 0 6px 14px rgba(59, 111, 255, 0.5), 0 0 0 0 rgba(59, 111, 255, 0); }
+  12%           { box-shadow: 0 6px 14px rgba(59, 111, 255, 0.5), 0 0 0 8px rgba(59, 111, 255, 0); }
+  10%           { box-shadow: 0 6px 14px rgba(59, 111, 255, 0.5), 0 0 0 0 rgba(59, 111, 255, 0.55); }
+}
+
+/* ── Android (background, top-left, tilted) ─────────────────────────── */
+
+.fl-device--android {
+  left: 2%;
+  top: 4%;
+  z-index: 15;
+  opacity: 0.94;
+  animation: fl-float-b 7.3s ease-in-out infinite alternate;
+}
+
+@keyframes fl-float-b {
+  0%   { transform: translateY(0) rotate(-8deg) scale(0.85); }
+  100% { transform: translateY(-9px) rotate(-8deg) scale(0.85); }
+}
+
+.fl-android {
+  position: relative;
+  width: 152px;
+  height: 312px;
+  border-radius: 22px;
+  background: linear-gradient(180deg, #1F1731, #120D20);
+  border: 1.5px solid rgba(167, 139, 250, 0.5);
+  padding: 6px;
+  box-shadow:
+    0 20px 48px -10px rgba(15, 23, 42, 0.65),
+    0 0 28px -6px rgba(124, 58, 237, 0.4);
+  animation: fl-device-flash 6s ease-in-out infinite;
+  animation-delay: 0s;
+}
+
+.fl-android-punch {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 7px;
+  height: 7px;
+  background: #050810;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.fl-android-screen {
+  width: 100%;
+  height: 100%;
+  border-radius: 17px;
+  background: linear-gradient(180deg, #161023 0%, #1E1631 100%);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.fl-mat-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 12px 10px;
+  background: linear-gradient(135deg, #7C3AED, #A78BFA);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.7rem;
+}
+.fl-mat-bar-icon { font-size: 14px; }
+.fl-mat-bar-add { margin-left: auto; font-size: 14px; opacity: 0.9; }
+
+.fl-mat-list {
+  list-style: none;
+  margin: 0;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  color: rgba(226, 232, 240, 0.85);
+  flex: 1;
+}
+.fl-mat-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.fl-check {
+  width: 11px;
+  height: 11px;
+  border: 1.5px solid rgba(167, 139, 250, 0.6);
+  border-radius: 3px;
+  display: inline-block;
+  position: relative;
+  flex-shrink: 0;
+}
+.fl-check--on {
+  background: #A78BFA;
+  border-color: #A78BFA;
+}
+.fl-check--on::after {
+  content: '';
+  position: absolute;
+  left: 2px; top: -1px;
+  width: 4px; height: 7px;
+  border: solid #fff;
+  border-width: 0 1.5px 1.5px 0;
+  transform: rotate(45deg);
+}
+[data-fl="android-check"] {
+  animation: fl-check-toggle 6s ease-in-out infinite;
+}
+@keyframes fl-check-toggle {
+  0%, 70%, 100% { transform: scale(1); }
+  12%           { transform: scale(1.3); box-shadow: 0 0 10px rgba(167, 139, 250, 0.7); }
+  25%           { transform: scale(1); }
+}
+
+.fl-mat-nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 8px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.15);
+}
+.fl-mat-nav i {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+}
+.fl-mat-nav i.active {
+  background: #A78BFA;
+  box-shadow: 0 0 6px rgba(167, 139, 250, 0.7);
+}
+
+/* ── Browser (background, top-right, tilted) ────────────────────────── */
+
+.fl-device--web {
+  right: 8%;
+  top: -2%;
+  z-index: 10;
+  opacity: 0.92;
+  animation: fl-float-c 5.5s ease-in-out infinite alternate;
+}
+
+@keyframes fl-float-c {
+  0%   { transform: translateY(0) rotate(6deg) scale(0.8); }
+  100% { transform: translateY(-5px) rotate(6deg) scale(0.8); }
+}
+
+.fl-browser {
+  width: 240px;
+  height: 168px;
+  border-radius: 11px;
+  background: linear-gradient(180deg, #0F2820, #0A1B16);
+  border: 1.5px solid rgba(52, 211, 153, 0.4);
+  overflow: hidden;
+  box-shadow:
+    0 20px 44px -12px rgba(15, 23, 42, 0.65),
+    0 0 26px -6px rgba(16, 185, 129, 0.4);
+  animation: fl-device-flash 6s ease-in-out infinite;
+}
+
+.fl-browser-bar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 7px 10px;
+  background: rgba(0, 0, 0, 0.25);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+.fl-browser-dot {
+  width: 7px; height: 7px; border-radius: 50%; opacity: 0.85;
+}
+.fl-browser-url {
+  margin-left: 6px;
+  padding: 2px 8px;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  color: rgba(255, 255, 255, 0.55);
+  flex: 1;
+  text-align: center;
+}
+
+.fl-browser-screen {
+  padding: 10px 12px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  height: calc(100% - 28px);
+}
+
+.fl-web-title {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #10B981, #34D399);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.fl-web-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.fl-web-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 7px;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.18);
+  border-radius: 5px;
+}
+
+.fl-web-stat-value {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.78rem;
+  color: #34D399;
+  animation: fl-web-stat-bump 6s ease-in-out infinite;
+}
+
+@keyframes fl-web-stat-bump {
+  0%, 70%, 100% { transform: translateY(0); color: #34D399; }
+  12%           { transform: translateY(-2px); color: #fff; text-shadow: 0 0 8px rgba(52, 211, 153, 0.8); }
+  25%           { transform: translateY(0); color: #34D399; }
+}
+
+.fl-web-stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.46rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.7);
+}
+
+.fl-web-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 32px;
+  margin-top: auto;
+}
+.fl-web-chart span {
+  flex: 1;
+  background: linear-gradient(180deg, #34D399, rgba(52, 211, 153, 0.2));
+  border-radius: 1.5px;
+  height: var(--h);
+  animation: fl-chart-bump 6s ease-in-out infinite;
+}
+.fl-web-chart span:nth-child(odd)  { animation-delay: -0.05s; }
+.fl-web-chart span:nth-child(even) { animation-delay: -0.1s; }
+
+@keyframes fl-chart-bump {
+  0%, 70%, 100% { opacity: 0.85; }
+  12%           { opacity: 1; filter: drop-shadow(0 0 4px rgba(52, 211, 153, 0.7)); }
+}
+
+/* ── Light theme — paper workspace ──────────────────────────────────── */
+
+[data-theme="light"] .fl-decor-grid {
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(15, 23, 42, 0.085) 1px, transparent 0);
+}
+[data-theme="light"] .fl-blob--a { background: radial-gradient(circle, rgba(124, 58, 237, 0.35), transparent 70%); }
+[data-theme="light"] .fl-blob--b { background: radial-gradient(circle, rgba(59, 111, 255, 0.32), transparent 70%); }
+[data-theme="light"] .fl-blob--c { background: radial-gradient(circle, rgba(16, 185, 129, 0.18), transparent 70%); }
+
+[data-theme="light"] .fl-beam {
+  stroke-width: 0.65;
+  filter: drop-shadow(0 0 3px currentColor);
+}
+
+[data-theme="light"] .fl-code-card,
+[data-theme="light"] .fl-iphone,
+[data-theme="light"] .fl-android,
+[data-theme="light"] .fl-browser {
+  /* Keep mockup screens dark — they read as real app previews on light desk */
+  box-shadow:
+    0 30px 60px -20px rgba(15, 23, 42, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 0 60px -8px rgba(124, 58, 237, 0.15);
+}
+
+/* ── Reduced motion ─────────────────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
-  .flutter-platform svg,
-  .flutter-hot-reload {
-    animation: none;
+  .fl-blob,
+  .fl-beam,
+  .fl-code-card,
+  .fl-device--ios,
+  .fl-device--android,
+  .fl-device--web,
+  .fl-hot-reload,
+  .c-num,
+  .fl-code-caret,
+  .fl-ios-count,
+  .fl-fab,
+  [data-fl="android-check"],
+  .fl-web-stat-value,
+  .fl-web-chart span,
+  .fl-iphone, .fl-android, .fl-browser {
+    animation: none !important;
   }
+  /* Restore static transforms for tilted devices */
+  .fl-device--android { transform: rotate(-8deg) scale(0.85); }
+  .fl-device--web     { transform: rotate(6deg) scale(0.8); }
+  .fl-device--ios     { transform: rotate(5deg); }
 }
 
 
@@ -1612,28 +2182,75 @@
     transform: none;
   }
 
-  /* Flutter platforms: keep horizontal but hide arrow on tight screens */
-  .track-hero--flutter .flutter-platforms {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    padding: 14px 10px;
+  /* Flutter "Hot Reload Forge" — recompose for narrow viewports */
+  .track-hero--flutter .track-hero-visual {
+    aspect-ratio: auto;
+    min-height: 0;
+    height: auto;
   }
 
-  .flutter-platforms-arrow {
-    display: none;
+  .fl-code-card {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    width: 100%;
+    transform: none;
+    margin-bottom: 18px;
+    animation: fl-code-flash 6s ease-in-out infinite;
   }
+
+  /* Devices: row of 3 below code card */
+  .fl-device--ios,
+  .fl-device--android,
+  .fl-device--web {
+    position: relative;
+    inset: auto;
+    display: inline-flex;
+    margin: 0;
+  }
+
+  .track-hero--flutter .track-hero-visual::after {
+    content: '';
+    display: block;
+    height: 0;
+    clear: both;
+  }
+
+  /* Wrap devices in a flex row using container query-ish approach via CSS */
+  .fl-device--android,
+  .fl-device--ios,
+  .fl-device--web {
+    transform: none !important;
+    animation: none;
+    float: left;
+    width: calc(33.33% - 8px);
+    margin: 0 4px;
+  }
+
+  .fl-iphone   { width: 100%; height: auto; aspect-ratio: 162 / 332; }
+  .fl-android  { width: 100%; height: auto; aspect-ratio: 152 / 312; }
+  .fl-browser  { width: 100%; height: auto; aspect-ratio: 240 / 168; margin-top: 24px; }
+
+  /* SVG beams: hidden on mobile (re-composition makes curves wrong) */
+  .fl-beams { display: none; }
+  .fl-blob  { opacity: 0.6; filter: blur(50px); }
 }
 
 @media (max-width: 480px) {
-  .flutter-hot-reload span {
-    display: none;
+  .fl-hot-reload span { display: none; }
+
+  .fl-code-body {
+    font-size: 0.62rem;
+    padding: 10px 12px;
   }
-  .flutter-platform svg {
-    max-height: 80px;
-  }
-  .flutter-platform--web svg {
-    max-height: 64px;
-  }
+
+  .fl-ios-count    { font-size: 2rem; }
+  .fl-fab          { width: 26px; height: 26px; font-size: 14px; }
+  .fl-mat-bar      { font-size: 0.55rem; padding: 8px; }
+  .fl-mat-list li  { font-size: 0.5rem; }
+  .fl-web-title    { font-size: 0.55rem; }
+  .fl-web-stat-value { font-size: 0.6rem; }
+  .fl-web-stat-label { font-size: 0.4rem; }
 
   .track-hero-stats {
     flex-wrap: wrap;

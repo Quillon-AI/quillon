@@ -213,97 +213,161 @@ client = Anthropic()
       </div>`,
 
     flutter: () => `
-      <div class="track-hero-code flutter-hero-code">
-        <div class="track-hero-code-header">
-          <span class="track-hero-code-dot" style="background:#EF4444"></span>
-          <span class="track-hero-code-dot" style="background:#F59E0B"></span>
-          <span class="track-hero-code-dot" style="background:#10B981"></span>
-          <span class="track-hero-code-file">lib/main.dart</span>
-          <span class="flutter-hot-reload" aria-hidden="true">
+      <!-- Decorative layers -->
+      <div class="fl-decor fl-decor-grid" aria-hidden="true"></div>
+      <div class="fl-decor fl-blob fl-blob--a" aria-hidden="true"></div>
+      <div class="fl-decor fl-blob fl-blob--b" aria-hidden="true"></div>
+      <div class="fl-decor fl-blob fl-blob--c" aria-hidden="true"></div>
+
+      <!-- SVG beam layer connecting code-card to each device -->
+      <svg class="fl-beams" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="fl-beam-ios" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#3B6FFF" stop-opacity="0"/>
+            <stop offset="0.4" stop-color="#3B6FFF" stop-opacity="0.7"/>
+            <stop offset="1" stop-color="#3B6FFF" stop-opacity="0.9"/>
+          </linearGradient>
+          <linearGradient id="fl-beam-android" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#7C3AED" stop-opacity="0"/>
+            <stop offset="0.5" stop-color="#A78BFA" stop-opacity="0.7"/>
+            <stop offset="1" stop-color="#A78BFA" stop-opacity="0.9"/>
+          </linearGradient>
+          <linearGradient id="fl-beam-web" x1="1" y1="1" x2="0" y2="0">
+            <stop offset="0" stop-color="#10B981" stop-opacity="0.9"/>
+            <stop offset="0.5" stop-color="#10B981" stop-opacity="0.7"/>
+            <stop offset="1" stop-color="#10B981" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <!-- code (~38,72) → iPhone (~62,52) -->
+        <path class="fl-beam fl-beam--ios"
+              d="M 38 72 C 50 72 56 62 62 52"
+              stroke="url(#fl-beam-ios)" stroke-width="0.45" fill="none"
+              stroke-linecap="round" stroke-dasharray="1.4 2.6"/>
+        <!-- code (~30,68) → Android (~22,28) -->
+        <path class="fl-beam fl-beam--android"
+              d="M 30 68 C 22 56 20 42 22 28"
+              stroke="url(#fl-beam-android)" stroke-width="0.45" fill="none"
+              stroke-linecap="round" stroke-dasharray="1.4 2.6"/>
+        <!-- code (~46,68) → Browser (~78,28) -->
+        <path class="fl-beam fl-beam--web"
+              d="M 46 68 C 60 60 70 42 78 28"
+              stroke="url(#fl-beam-web)" stroke-width="0.45" fill="none"
+              stroke-linecap="round" stroke-dasharray="1.4 2.6"/>
+
+        <!-- Idle particles (animated via CSS offset-path inside hidden tracks) -->
+      </svg>
+
+      <!-- Code card -->
+      <div class="fl-code-card" data-fl="code">
+        <div class="fl-code-header">
+          <span class="fl-code-dot" style="background:#EF4444"></span>
+          <span class="fl-code-dot" style="background:#F59E0B"></span>
+          <span class="fl-code-dot" style="background:#10B981"></span>
+          <span class="fl-code-file">lib/main.dart</span>
+          <span class="fl-hot-reload" aria-hidden="true">
             <svg width="10" height="12" viewBox="0 0 10 12" fill="none">
               <path d="M6 0L0 7h3l-1 5 6-7H5l1-5z" fill="currentColor"/>
             </svg>
             <span>Hot Reload</span>
           </span>
         </div>
-        <pre class="track-hero-code-body"><code><span class="c-kw">import</span> <span class="c-str">'package:flutter/material.dart'</span>;
+        <pre class="fl-code-body"><code><span class="c-kw">class</span> <span class="c-tp">CounterApp</span> <span class="c-kw">extends</span> <span class="c-tp">StatefulWidget</span> {
+  <span class="c-dec">@override</span> _S createState() =&gt; _S();
+}
 
-<span class="c-kw">class</span> <span class="c-tp">QuillonApp</span> <span class="c-kw">extends</span> <span class="c-tp">StatelessWidget</span> {
+<span class="c-kw">class</span> _S <span class="c-kw">extends</span> <span class="c-tp">State</span>&lt;<span class="c-tp">CounterApp</span>&gt; {
+  <span class="c-tp">int</span> count = <span class="c-num" data-fl="count-src">42</span>;
+
   <span class="c-dec">@override</span>
-  <span class="c-tp">Widget</span> <span class="c-fn">build</span>(<span class="c-tp">BuildContext</span> context) {
-    <span class="c-kw">return</span> <span class="c-tp">MaterialApp</span>(
-      home: <span class="c-tp">Scaffold</span>(
-        appBar: <span class="c-tp">AppBar</span>(title: <span class="c-tp">Text</span>(<span class="c-str">'Quillon'</span>)),
-        body: <span class="c-tp">Center</span>(
-          child: <span class="c-tp">Text</span>(<span class="c-str">'Привет, Flutter!'</span>),
-        ),
-      ),
-    );
-  }
+  <span class="c-tp">Widget</span> <span class="c-fn">build</span>(_) =&gt; <span class="c-tp">Scaffold</span>(
+    body: <span class="c-tp">Center</span>(child: <span class="c-tp">Text</span>(<span class="c-str">'$count'</span>)),
+    floatingActionButton: <span class="c-tp">FAB</span>(
+      onPressed: () =&gt; setState(() =&gt; count++),
+      child: <span class="c-tp">Icon</span>(<span class="c-tp">Icons</span>.add),
+    ),
+  );
 }</code></pre>
+        <span class="fl-code-caret" aria-hidden="true"></span>
       </div>
 
-      <div class="flutter-platforms" aria-hidden="true">
-        <div class="flutter-platforms-arrow">
-          <svg viewBox="0 0 60 24" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="fp-grad" x1="0" x2="1">
-                <stop offset="0" stop-color="#3B6FFF" stop-opacity="0"/>
-                <stop offset="0.5" stop-color="#3B6FFF" stop-opacity="0.7"/>
-                <stop offset="1" stop-color="#7C3AED" stop-opacity="0.7"/>
-              </linearGradient>
-            </defs>
-            <path d="M0 12 H54 M48 6 L54 12 L48 18" stroke="url(#fp-grad)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-          </svg>
-          <span class="flutter-platforms-arrow-label">один код</span>
+      <!-- iPhone (foreground) — Cupertino counter -->
+      <div class="fl-device fl-device--ios" data-fl="ios">
+        <div class="fl-iphone">
+          <span class="fl-iphone-notch"></span>
+          <div class="fl-iphone-screen">
+            <div class="fl-status">
+              <span>9:41</span>
+              <span class="fl-status-icons"><i></i><i></i><i></i></span>
+            </div>
+            <div class="fl-ios-title">Counter</div>
+            <div class="fl-ios-sub">Press the button to increment</div>
+            <div class="fl-ios-count" data-fl="ios-count">42</div>
+            <div class="fl-fab" aria-hidden="true">+</div>
+          </div>
         </div>
+        <span class="fl-device-label fl-device-label--ios">iOS</span>
+      </div>
 
-        <div class="flutter-platform flutter-platform--ios" style="--idx:0">
-          <svg viewBox="0 0 56 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="2" y="2" width="52" height="96" rx="11" fill="#0F172A" stroke="#3B6FFF" stroke-width="1.5"/>
-            <rect x="22" y="4" width="12" height="3" rx="1.5" fill="#1E293B"/>
-            <rect x="6" y="14" width="44" height="8" rx="2" fill="#3B6FFF" opacity="0.85"/>
-            <rect x="10" y="30" width="36" height="3" rx="1.5" fill="#3B6FFF" opacity="0.6"/>
-            <rect x="10" y="38" width="28" height="3" rx="1.5" fill="#475569"/>
-            <rect x="10" y="46" width="32" height="3" rx="1.5" fill="#475569"/>
-            <rect x="10" y="58" width="36" height="20" rx="3" fill="#1E293B" stroke="#3B6FFF" stroke-width="0.8" opacity="0.9"/>
-            <rect x="20" y="92" width="16" height="2" rx="1" fill="#475569"/>
-          </svg>
-          <span class="flutter-platform-label">iOS</span>
+      <!-- Android (background-left, tilted) — Material 3 tasks -->
+      <div class="fl-device fl-device--android" data-fl="android">
+        <div class="fl-android">
+          <span class="fl-android-punch"></span>
+          <div class="fl-android-screen">
+            <div class="fl-mat-bar">
+              <span class="fl-mat-bar-icon">≡</span>
+              <span>Tasks</span>
+              <span class="fl-mat-bar-add">+</span>
+            </div>
+            <ul class="fl-mat-list">
+              <li><span class="fl-check fl-check--on" data-fl="android-check"></span>Build app</li>
+              <li><span class="fl-check fl-check--on"></span>Hot reload</li>
+              <li><span class="fl-check"></span>Ship to stores</li>
+              <li><span class="fl-check"></span>Profit</li>
+            </ul>
+            <div class="fl-mat-nav">
+              <i class="active"></i><i></i><i></i>
+            </div>
+          </div>
         </div>
+        <span class="fl-device-label fl-device-label--android">Android</span>
+      </div>
 
-        <div class="flutter-platform flutter-platform--android" style="--idx:1">
-          <svg viewBox="0 0 56 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="2" y="2" width="52" height="96" rx="6" fill="#0F172A" stroke="#7C3AED" stroke-width="1.5"/>
-            <circle cx="28" cy="6" r="1.4" fill="#1E293B"/>
-            <rect x="6" y="14" width="44" height="8" rx="2" fill="#7C3AED" opacity="0.85"/>
-            <rect x="10" y="30" width="36" height="3" rx="1.5" fill="#7C3AED" opacity="0.6"/>
-            <rect x="10" y="38" width="28" height="3" rx="1.5" fill="#475569"/>
-            <rect x="10" y="46" width="32" height="3" rx="1.5" fill="#475569"/>
-            <rect x="10" y="58" width="36" height="20" rx="3" fill="#1E293B" stroke="#7C3AED" stroke-width="0.8" opacity="0.9"/>
-            <rect x="14" y="92" width="3" height="3" fill="#475569"/>
-            <circle cx="28" cy="93.5" r="1.5" fill="none" stroke="#475569" stroke-width="0.8"/>
-            <rect x="38" y="91" width="3" height="5" fill="#475569"/>
-          </svg>
-          <span class="flutter-platform-label">Android</span>
+      <!-- Web (background-right, tilted) — Dashboard -->
+      <div class="fl-device fl-device--web" data-fl="web">
+        <div class="fl-browser">
+          <div class="fl-browser-bar">
+            <span class="fl-browser-dot" style="background:#EF4444"></span>
+            <span class="fl-browser-dot" style="background:#F59E0B"></span>
+            <span class="fl-browser-dot" style="background:#10B981"></span>
+            <span class="fl-browser-url">localhost:8080</span>
+          </div>
+          <div class="fl-browser-screen">
+            <div class="fl-web-title">Dashboard</div>
+            <div class="fl-web-stats">
+              <div class="fl-web-stat">
+                <span class="fl-web-stat-value" data-fl="web-users">1.2k</span>
+                <span class="fl-web-stat-label">users</span>
+              </div>
+              <div class="fl-web-stat">
+                <span class="fl-web-stat-value" data-fl="web-growth">42%</span>
+                <span class="fl-web-stat-label">growth</span>
+              </div>
+              <div class="fl-web-stat">
+                <span class="fl-web-stat-value" data-fl="web-mrr">$8.4k</span>
+                <span class="fl-web-stat-label">MRR</span>
+              </div>
+            </div>
+            <div class="fl-web-chart" aria-hidden="true">
+              <span style="--h:30%"></span><span style="--h:55%"></span>
+              <span style="--h:75%"></span><span style="--h:90%"></span>
+              <span style="--h:80%"></span><span style="--h:65%"></span>
+              <span style="--h:50%"></span><span style="--h:70%"></span>
+              <span style="--h:85%"></span><span style="--h:95%"></span>
+              <span style="--h:80%"></span><span style="--h:65%"></span>
+            </div>
+          </div>
         </div>
-
-        <div class="flutter-platform flutter-platform--web" style="--idx:2">
-          <svg viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="2" y="2" width="96" height="76" rx="6" fill="#0F172A" stroke="#10B981" stroke-width="1.5"/>
-            <rect x="2" y="2" width="96" height="12" fill="#1E293B"/>
-            <circle cx="9" cy="8" r="1.5" fill="#EF4444"/>
-            <circle cx="15" cy="8" r="1.5" fill="#F59E0B"/>
-            <circle cx="21" cy="8" r="1.5" fill="#10B981"/>
-            <rect x="30" y="5" width="62" height="6" rx="3" fill="#0F172A"/>
-            <rect x="8" y="22" width="84" height="8" rx="2" fill="#10B981" opacity="0.85"/>
-            <rect x="12" y="38" width="48" height="3" rx="1.5" fill="#10B981" opacity="0.6"/>
-            <rect x="12" y="46" width="40" height="3" rx="1.5" fill="#475569"/>
-            <rect x="12" y="54" width="56" height="3" rx="1.5" fill="#475569"/>
-            <rect x="68" y="40" width="20" height="20" rx="3" fill="#1E293B" stroke="#10B981" stroke-width="0.8" opacity="0.9"/>
-          </svg>
-          <span class="flutter-platform-label">Web</span>
-        </div>
+        <span class="fl-device-label fl-device-label--web">Web</span>
       </div>`
   };
 
