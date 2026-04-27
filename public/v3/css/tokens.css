@@ -1,0 +1,112 @@
+/* Quillon v3 — Design Tokens
+ * Scope: isolated under /v3/. Do not import into legacy pages.
+ * All tokens are defined on :root and consumed by base/components.
+ */
+
+:root {
+  /* ——— Surface (backgrounds) ——— */
+  --q-ink: #0E0E12;             /* page bg, hsl(240 11% 6%) — warmer than #000, less AI-blue than #0B0F1A */
+  --q-ink-2: #16161C;           /* elevated surface / dark card */
+  --q-ink-3: #1D1D24;           /* nested surface inside dark card */
+  --q-line: #262630;            /* hairline borders on dark */
+  --q-line-strong: #3A3A47;     /* visible divider on dark */
+
+  /* ——— Paper (light surfaces) ——— */
+  --q-paper: #F4F1EA;           /* off-white, warm, для splash/light cards. НЕ #FFF — холод режет */
+  --q-paper-2: #EAE6DC;         /* чуть глубже для hover/layer */
+  --q-bone: #DCD7CB;            /* тёплый border на paper */
+
+  /* ——— Violet (primary accent) ——— */
+  /* Выбран indigo-periwinkle hsl(245 95% 72%). Отстройка:
+   *  - SmartClass ~#8A7EFF сдвинут в серо-фиолетовый, у нас — чище в индиго.
+   *  - Practicum жёлтый, Skillbox синий, Yandex жёлтый — violet уверенно отделяет.
+   *  - Контраст на --q-ink: 6.3:1 (WCAG AA для body, AAA для large).
+   *  - Эмоция: «технологично + спокойно», без кричащего пурпура.
+   */
+  --q-violet: #6E6BFF;          /* основной акцент, flat. Никогда не gradient. */
+  --q-violet-ink: #5350D6;      /* pressed / active */
+  --q-violet-bright: #8A88FF;   /* hover lift (сдвиг по L, не градиент) */
+  --q-lavender: #C9C6FF;        /* splash / soft full-bleed fill */
+  --q-lavender-2: #DEDCFF;      /* ещё мягче, для больших surfaces */
+
+  /* ——— Text ——— */
+  --q-text-hi: #F4F1EA;         /* high on dark */
+  --q-text-mid: #A7A3B4;        /* secondary on dark */
+  --q-text-low: #6E6A7B;        /* tertiary/captions on dark */
+  --q-text-dark-hi: #16161C;    /* text on paper/lavender */
+  --q-text-dark-mid: #4B4856;   /* secondary on paper */
+
+  /* ——— Semantic (не трогают violet) ——— */
+  --q-ok: #6FD28A;              /* green, soft */
+  --q-warn: #F0B84A;            /* amber */
+  --q-err: #E56A6A;             /* coral, не красный-в-лоб */
+  --q-info: #7FB8E8;
+
+  /* ——— Radii (лестница: chip → button → card → splash) ——— */
+  --q-r-1: 6px;                 /* chip/tag */
+  --q-r-2: 12px;                /* input, small card */
+  --q-r-pill: 999px;            /* pill button, avatar, tag */
+  --q-r-3: 20px;                /* standard card */
+  --q-r-4: 28px;                /* feature card */
+  --q-r-5: 36px;                /* splash / hero card (SmartClass-like) */
+
+  /* ——— Spacing (4/8/12/16/24/32/40/64/96) ——— */
+  --q-s-1: 4px;
+  --q-s-2: 8px;
+  --q-s-3: 12px;
+  --q-s-4: 16px;
+  --q-s-5: 24px;
+  --q-s-6: 32px;
+  --q-s-7: 40px;
+  --q-s-8: 64px;
+  --q-s-9: 96px;
+  --q-s-10: 128px;
+
+  /* ——— Grid ——— */
+  --q-container: 1240px;
+  --q-gutter: 16px;
+  --q-bento-gap: 12px;          /* плотнее чем обычные 24px — bento дышит иначе */
+
+  /* ——— Typography families ———
+   * Display: Unbounded — display-grotesque с широкими пропорциями,
+   *   хорошая кириллица (cyrillic, cyrillic-ext), weights 200-900.
+   *   Отстройка от Inter/Manrope/Montserrat.
+   * Body: DM Sans — нейтральный humanist, отличная кириллица, быстрый read.
+   * Mono: JetBrains Mono — кириллица + программистский контекст school.
+   * Резервы: Space Grotesk (display fallback), system -apple-system (body fallback).
+   */
+  --q-font-display: "Unbounded", "Space Grotesk", -apple-system, BlinkMacSystemFont, sans-serif;
+  --q-font-body: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --q-font-mono: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, monospace;
+
+  /* ——— Type scale (fluid, clamp) ——— */
+  --q-t-display-xl: clamp(3.25rem, 7vw, 6.5rem);   /* hero, editorial */
+  --q-t-display-l: clamp(2.5rem, 5vw, 4.25rem);
+  --q-t-h1: clamp(2rem, 3.8vw, 3rem);
+  --q-t-h2: clamp(1.5rem, 2.6vw, 2.25rem);
+  --q-t-h3: clamp(1.25rem, 1.8vw, 1.5rem);
+  --q-t-body-l: 1.125rem;
+  --q-t-body: 1rem;
+  --q-t-small: 0.875rem;
+  --q-t-micro: 0.75rem;         /* mono captions, labels */
+
+  /* ——— Motion ——— */
+  --q-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --q-dur-fast: 140ms;
+  --q-dur-med: 240ms;
+  --q-dur-slow: 420ms;
+
+  /* ——— Elevation (на дарке shadow почти не видно, используем border+inset) ——— */
+  --q-el-0: none;
+  --q-el-1: 0 1px 0 rgba(255,255,255,0.04) inset;
+  --q-el-2: 0 12px 32px -16px rgba(0,0,0,0.6);
+  --q-el-3: 0 24px 64px -24px rgba(0,0,0,0.7);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --q-dur-fast: 0ms;
+    --q-dur-med: 0ms;
+    --q-dur-slow: 0ms;
+  }
+}

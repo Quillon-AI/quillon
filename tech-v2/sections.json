@@ -1,0 +1,52 @@
+{
+  "sections": [
+    {
+      "id": "hero",
+      "order": 1,
+      "name": "Hero",
+      "description": "Главный экран — позиционирование IT-компании"
+    },
+    {
+      "id": "products",
+      "order": 2,
+      "name": "Продукты",
+      "description": "4 продукта Quillon в production"
+    },
+    {
+      "id": "tech-stack",
+      "order": 3,
+      "name": "Технологический стек",
+      "description": "Карта технологий с обоснованием выбора"
+    },
+    {
+      "id": "principles",
+      "order": 4,
+      "name": "Принципы",
+      "description": "Engineering Culture — 5 принципов"
+    },
+    {
+      "id": "infrastructure",
+      "order": 5,
+      "name": "Инфраструктура",
+      "description": "Серверная инфраструктура и подход Own Your Stack"
+    },
+    {
+      "id": "opensource",
+      "order": 6,
+      "name": "Open Source и разработчики",
+      "description": "Для сообщества: GitHub, API, стажировка"
+    },
+    {
+      "id": "studio",
+      "order": 7,
+      "name": "Quillon Studio",
+      "description": "B2B IT-студия: проекты для клиентов"
+    },
+    {
+      "id": "footer",
+      "order": 8,
+      "name": "Футер",
+      "description": "Навигация, контакты, ссылки"
+    }
+  ]
+}

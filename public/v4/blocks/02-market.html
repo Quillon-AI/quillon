@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quillon v4 · Market block (02)</title>
+
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+     * 02 · MARKET — editorial data-spread
+     *
+     * Концепция: страница финансового отчёта (FT / Bloomberg Terminal),
+     * а не «edtech-infographic». Метрики — типографика, не иконки.
+     * Hairline-разделители + tabular-nums + mono-атрибуция источников.
+     *
+     * Отстройка от блока 01 (hero):
+     *   • hero: 2-col asymmetric 1.15/1, правая — абстрактная plot-карусель
+     *   • market: 12-col table-spread, одна «шок-метрика» (57 400) крупно
+     *     слева, три «контекстных» справа в hairline-grid
+     *   • hero — эмоция и обещание; market — данные и холодный факт
+     *
+     * Anti-AI решения (по чек-листу):
+     *   ✓ H2 монохром Inter 510 (наследуется от .q-section-head__title)
+     *   ✓ Zero glow / orb / blur — только 1 deep корнер halo с opacity 0.05
+     *   ✓ Zero SVG-иконки в метриках (типографика несёт смысл)
+     *   ✓ Numerals — Geist Mono с tabular-nums (financial-press paradigm)
+     *   ✓ Источники inline mono как signed data ("by the numbers"-column)
+     *   ✓ Один accent indigo — только на hero-metric (57 400) и cta
+     * ═══════════════════════════════════════════════════════════════ */
+
+    /* Отдельный фон для блока: едва видимый корнер-halo СПРАВА-СНИЗУ
+       (противоположно hero, где halo top-left — создаёт ритм чередования,
+       hero смотрит налево-вверх, market — направо-вниз, как «страницы разворота»). */
+    .q-market {
+      position: relative;
+      overflow: hidden;
+    }
+    .q-market::before {
+      content: "";
+      position: absolute;
+      right: -240px;
+      bottom: -240px;
+      width: 640px;
+      height: 640px;
+      background: radial-gradient(circle, rgba(94, 106, 210, 0.06), transparent 62%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .q-market .q-container { position: relative; z-index: 1; }
+
+    /* Section-head: override для market — растягиваем sub до 62ch
+       (контент длиннее, чем дефолтные 56ch; не хочется разрыва «работодатели |
+       требуют опыт» на двух словах). Заголовок leftalign как hero. */
+    .q-market .q-section-head { max-width: 760px; }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * DATA SPREAD — главный layout блока
+     *
+     * Grid: 12 колонок, 24px gutter.
+     *   • HERO metric (57 400) занимает 7/12 слева
+     *   • MINOR metrics (3 штуки) занимают 5/12 справа, стекуются вертикально
+     *     c hairline-разделителями
+     *
+     * Это editorial-композиция FT/NYT data-spread: одна «lede-цифра»
+     * плюс три supporting metrics в боковой колонке. Никаких card-grids
+     * 2×2 (cliché). Никаких бар-чартов. Только типографика и линии.
+     * ═══════════════════════════════════════════════════════════════ */
+
+    .q-mkt-spread {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: var(--q-s-8);
+      border-top: 1px solid var(--q-line-strong);
+      border-bottom: 1px solid var(--q-line-strong);
+      padding: var(--q-s-9) 0;
+    }
+
+    /* ─────────── HERO METRIC (левая колонка, 7/12) ─────────── */
+
+    .q-mkt-hero {
+      grid-column: span 7;
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-5);
+      padding-right: var(--q-s-8);
+      border-right: 1px solid var(--q-line);   /* vertical hairline разделитель */
+    }
+
+    /* Mono-метка над цифрой — «ref-number», создаёт financial-ощущение.
+       Не «🔥 главный факт» (infotsygan), а «FIG. 01 · DEFICIT» (data-press). */
+    .q-mkt-hero__ref {
+      display: flex;
+      align-items: center;
+      gap: var(--q-s-3);
+      font-family: var(--q-font-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+    .q-mkt-hero__ref b {
+      color: var(--q-accent);
+      font-weight: var(--q-fw-medium);
+    }
+    .q-mkt-hero__ref-sep {
+      display: inline-block;
+      width: 14px;
+      height: 1px;
+      background: var(--q-line-strong);
+    }
+
+    /* Цифра-гигант. Geist Mono, weight 500, tabular-nums.
+       Clamp от 5rem до 8.5rem — НЕ выходит за cap H1=64 по вертикали сильно,
+       но по горизонтали занимает всю колонку → «шок-факт» как в годовом отчёте.
+
+       Accent-hue применяется только к самой цифре (не к единице измерения
+       «+ человек» и не к meta-строке). Это соблюдает «один accent на экран». */
+    .q-mkt-hero__fig {
+      font-family: var(--q-font-mono);
+      font-weight: 500;
+      font-size: clamp(5rem, 9vw, 8.5rem);
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      color: var(--q-text-hi);
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum", "ss01";
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.18em;
+    }
+    /* Plus-sign и «человек» — outlined / muted, чтобы сама цифра читалась как главное */
+    .q-mkt-hero__fig-unit {
+      font-size: 0.22em;
+      font-weight: var(--q-fw-medium);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--q-text-low);
+      align-self: flex-end;
+      margin-bottom: 0.55em;
+    }
+
+    .q-mkt-hero__desc {
+      font-family: var(--q-font-sans);
+      font-size: var(--q-t-lead);
+      font-weight: var(--q-fw-linear);
+      line-height: 1.4;
+      letter-spacing: -0.01em;
+      color: var(--q-text-hi);
+      max-width: 28ch;
+      margin: 0;
+    }
+
+    .q-mkt-hero__meta {
+      font-family: var(--q-font-mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--q-text-low);
+      margin: 0;
+    }
+    .q-mkt-hero__meta b {
+      color: var(--q-text-mid);
+      font-weight: var(--q-fw-medium);
+    }
+
+    /* ─────────── MINOR METRICS (правая колонка, 5/12) ─────────── */
+
+    .q-mkt-minors {
+      grid-column: span 5;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Каждая минорная метрика — table-row со 1px top-border между.
+       Первая — без top-border (чтобы не дублировать spread-border сверху).
+       Padding вертикальный большой → «данные дышат», не crammed. */
+    .q-mkt-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+      gap: var(--q-s-6);
+      align-items: baseline;
+      padding: var(--q-s-6) 0;
+      border-top: 1px solid var(--q-line);
+    }
+    .q-mkt-row:first-child { border-top: 0; padding-top: 0; }
+    .q-mkt-row:last-child  { padding-bottom: 0; }
+
+    /* Цифра минорной метрики — Geist Mono, Inter-sized (cap ~2rem).
+       НЕ кричит громче hero-metric. Иерархия сохранена. */
+    .q-mkt-row__fig {
+      font-family: var(--q-font-mono);
+      font-weight: 500;
+      font-size: clamp(1.75rem, 2.6vw, 2.25rem);
+      line-height: 1;
+      letter-spacing: -0.025em;
+      color: var(--q-text-hi);
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum", "ss01";
+      white-space: nowrap;
+    }
+
+    .q-mkt-row__desc {
+      font-family: var(--q-font-sans);
+      font-size: var(--q-t-small);
+      font-weight: var(--q-fw-regular);
+      line-height: 1.45;
+      color: var(--q-text-mid);
+      letter-spacing: -0.005em;
+      margin: 0;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * NARRATIVE BAR — pulled quote ниже spread
+     *
+     * Цитата-тезис как news-pullquote. Tight max-width (60ch), left-rule
+     * в accent (2px, не декоративный — семантический «highlight»).
+     * Это мостик от данных к CTA: «вот цифра — вот вывод».
+     * ═══════════════════════════════════════════════════════════════ */
+
+    .q-mkt-pull {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+      gap: var(--q-s-8);
+      align-items: start;
+      padding: var(--q-s-9) 0 var(--q-s-8);
+    }
+
+    .q-mkt-pull__body {
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-4);
+      padding-left: var(--q-s-5);
+      border-left: 2px solid var(--q-accent);
+    }
+
+    .q-mkt-pull__label {
+      font-family: var(--q-font-mono);
+      font-size: 11px;
+      font-weight: var(--q-fw-medium);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--q-accent);
+    }
+
+    .q-mkt-pull__quote {
+      font-family: var(--q-font-display);
+      font-size: clamp(1.25rem, 2vw, 1.625rem);
+      font-weight: var(--q-fw-linear);
+      line-height: 1.35;
+      letter-spacing: -0.015em;
+      color: var(--q-text-hi);
+      margin: 0;
+      max-width: 54ch;
+    }
+    .q-mkt-pull__quote b {
+      color: var(--q-text-hi);
+      font-weight: var(--q-fw-semibold);
+      /* Subtle one-color underline — editorial highlight. НЕ gradient. */
+      background-image: linear-gradient(transparent 70%, rgba(94, 106, 210, 0.28) 70%);
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      padding: 0 2px;
+    }
+
+    .q-mkt-pull__context {
+      font-size: var(--q-t-small);
+      line-height: 1.55;
+      color: var(--q-text-mid);
+      max-width: 52ch;
+      margin: 0;
+    }
+
+    /* ─────────── side column: «вывод» + source ─────────── */
+
+    .q-mkt-pull__aside {
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-5);
+      padding-top: var(--q-s-1);
+    }
+
+    .q-mkt-pull__aside-eyebrow {
+      font-family: var(--q-font-mono);
+      font-size: 11px;
+      font-weight: var(--q-fw-medium);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+
+    .q-mkt-pull__aside-text {
+      font-size: var(--q-t-small);
+      line-height: 1.55;
+      color: var(--q-text-mid);
+      margin: 0;
+    }
+    .q-mkt-pull__aside-text b {
+      color: var(--q-text-hi);
+      font-weight: var(--q-fw-semibold);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * FOOT — attribution + CTA
+     *
+     * Источники inline mono — anti-AI-signal, что цифры не сочинены.
+     * Линк на «Консоль.Про» — как footnote-reference в editorial.
+     * CTA справа, чтобы не перетягивал визуальный вес с данных.
+     * ═══════════════════════════════════════════════════════════════ */
+
+    .q-mkt-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--q-s-6);
+      flex-wrap: wrap;
+      padding-top: var(--q-s-7);
+      border-top: 1px solid var(--q-line);
+    }
+
+    .q-mkt-sources {
+      display: flex;
+      align-items: center;
+      gap: var(--q-s-3);
+      font-family: var(--q-font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--q-text-low);
+      flex-wrap: wrap;
+    }
+    .q-mkt-sources__prefix { color: var(--q-text-dim); }
+    .q-mkt-sources__item {
+      color: var(--q-text-mid);
+      border-bottom: 1px solid var(--q-line-strong);
+      padding-bottom: 1px;
+      transition:
+        color var(--q-dur-fast) var(--q-ease),
+        border-color var(--q-dur-fast) var(--q-ease);
+    }
+    .q-mkt-sources__item:hover {
+      color: var(--q-accent-hover);
+      border-color: var(--q-accent-hover);
+    }
+    .q-mkt-sources__dot {
+      color: var(--q-text-dim);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * SCROLL-REVEAL — opt-in на метриках.
+     *
+     * Только на цифрах hero+minors: 300ms fade-up с небольшим stagger.
+     * Остальной текст — instantly visible (не прячем контент за анимацией).
+     * ═══════════════════════════════════════════════════════════════ */
+
+    .q-reveal {
+      opacity: 0;
+      transform: translateY(8px);
+      transition:
+        opacity var(--q-dur-slow) var(--q-ease),
+        transform var(--q-dur-slow) var(--q-ease);
+    }
+    .q-reveal[data-revealed="true"] {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .q-reveal { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * RESPONSIVE — 960 / 640
+     * ═══════════════════════════════════════════════════════════════ */
+
+    @media (max-width: 960px) {
+      .q-mkt-spread {
+        grid-template-columns: 1fr;
+        gap: var(--q-s-7);
+        padding: var(--q-s-8) 0;
+      }
+      .q-mkt-hero {
+        grid-column: 1 / -1;
+        padding-right: 0;
+        border-right: 0;
+        padding-bottom: var(--q-s-7);
+        border-bottom: 1px solid var(--q-line);   /* разделитель становится горизонтальным */
+      }
+      .q-mkt-minors { grid-column: 1 / -1; }
+
+      .q-mkt-pull {
+        grid-template-columns: 1fr;
+        gap: var(--q-s-6);
+        padding: var(--q-s-8) 0;
+      }
+      .q-mkt-pull__aside { padding-top: 0; }
+    }
+
+    @media (max-width: 640px) {
+      .q-mkt-spread { padding: var(--q-s-7) 0; }
+      .q-mkt-hero__fig {
+        font-size: clamp(3.5rem, 14vw, 5rem);
+      }
+      .q-mkt-row {
+        grid-template-columns: 1fr;
+        gap: var(--q-s-2);
+        padding: var(--q-s-5) 0;
+      }
+      .q-mkt-row__fig { font-size: 1.75rem; }
+      .q-mkt-foot {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--q-s-4);
+      }
+      .q-mkt-foot .q-btn { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       STICKY TOPBAR — (same spec as hero block)
+       ═══════════════════════════════════════════════════════════════ -->
+
+  <header class="q-topbar">
+    <a href="#" class="q-topbar__brand">
+      <span class="q-topbar__brand-mark">Q</span>
+      <span>Quillon</span>
+    </a>
+
+    <nav class="q-topbar__nav" aria-label="Главная навигация">
+      <a class="q-topbar__link" href="#products">Треки</a>
+      <a class="q-topbar__link" href="#format">Формат</a>
+      <a class="q-topbar__link" href="#pricing">Цена</a>
+      <a class="q-topbar__link" href="#quillon_jobs">Jobs</a>
+      <a class="q-topbar__link" href="#faq">FAQ</a>
+    </nav>
+
+    <div class="q-topbar__actions">
+      <a class="q-btn q-btn--link" href="#">Войти</a>
+      <a class="q-btn q-btn--primary q-btn--sm" href="/quiz">Пройти тест</a>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       02 · MARKET
+       ═══════════════════════════════════════════════════════════════ -->
+
+  <section class="q-section q-market" id="market">
+    <div class="q-container">
+
+      <!-- Section head: numbered 02 · РЫНОК + H2 + sub.
+           Используем компонент .q-section-head как есть — единственный
+           override: расширен max-width для длинного подзаголовка. -->
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>02</em> · РЫНОК</div>
+        <h2 class="q-section-head__title">Работодатели требуют опыт.<br>Сертификат не считается.</h2>
+        <p class="q-section-head__sub">
+          9 из 10 вакансий junior-разработчика требуют коммерческий опыт. Учебные проекты — калькулятор, TODO-лист — не проходят этот барьер. Но дефицит специалистов растёт, и компании готовы брать тех, у кого есть реальное портфолио.
+        </p>
+      </header>
+
+      <!-- ═════════════════════════════════════════════════════════
+           DATA SPREAD: 1 hero-metric + 3 minors
+           Editorial-верстка FT/NYT, а не 4-card-grid (infographic-cliché).
+           ═════════════════════════════════════════════════════════ -->
+      <div class="q-mkt-spread">
+
+        <!-- HERO METRIC: 57 400 — шок-факт, потому что он самый абстрактный
+             и самый большой по числу; именно он делает «проблему рынка»
+             материальной. Meta-строка снизу — атрибуция к ведомству. -->
+        <div class="q-mkt-hero">
+          <div class="q-mkt-hero__ref">
+            <span>№&nbsp;01</span>
+            <span class="q-mkt-hero__ref-sep" aria-hidden="true"></span>
+            <b>Дефицит IT в РФ</b>
+          </div>
+
+          <div class="q-mkt-hero__fig q-reveal" aria-label="57 400 специалистов">
+            <span>57&thinsp;400</span>
+            <span class="q-mkt-hero__fig-unit" aria-hidden="true">+&nbsp;чел.</span>
+          </div>
+
+          <p class="q-mkt-hero__desc">
+            Не хватает IT-специалистов в России прямо сейчас — больше, чем выпускают все школы вместе за год.
+          </p>
+
+          <p class="q-mkt-hero__meta">
+            Минцифры РФ <b>·</b> данные на 2025
+          </p>
+        </div>
+
+        <!-- MINOR METRICS: 3 штуки вертикально, hairline divide.
+             Иерархия: цифры меньше, но шрифт тот же (Geist Mono tabular-nums) —
+             чтобы визуально читалось как один dataset, а не разные штуки. -->
+        <div class="q-mkt-minors">
+
+          <div class="q-mkt-row">
+            <div class="q-mkt-row__fig q-reveal">12&thinsp;000+</div>
+            <p class="q-mkt-row__desc">
+              открытых junior-вакансий для Python, Flutter и&nbsp;QA на&nbsp;hh.ru
+            </p>
+          </div>
+
+          <div class="q-mkt-row">
+            <div class="q-mkt-row__fig q-reveal">80&nbsp;%</div>
+            <p class="q-mkt-row__desc">
+              работодателей оценивают по&nbsp;портфолио и&nbsp;навыкам — не&nbsp;по&nbsp;дипломам
+            </p>
+          </div>
+
+          <div class="q-mkt-row">
+            <div class="q-mkt-row__fig q-reveal">90&thinsp;000&nbsp;₽</div>
+            <p class="q-mkt-row__desc">
+              медианная зарплата junior Python-разработчика по&nbsp;данным hh.ru
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ═════════════════════════════════════════════════════════
+           PULL QUOTE + CONTEXT: мостик от данных к CTA
+           Левая колонка — editorial highlight. Правая — дополнительный
+           факт (замкнутый круг) + как Quillon его разрывает.
+           ═════════════════════════════════════════════════════════ -->
+      <div class="q-mkt-pull">
+        <div class="q-mkt-pull__body">
+          <span class="q-mkt-pull__label">Что это значит</span>
+          <p class="q-mkt-pull__quote">
+            На одну junior Python-вакансию — <b>1,7 приглашения</b>. Один из самых низких показателей конкуренции в IT. Рынок открыт для тех, кто может показать production-код.
+          </p>
+          <p class="q-mkt-pull__context">
+            Сертификат — не показатель. HR-ы смотрят на GitHub, pull-requestы, историю коммитов в реальные проекты. Если в портфолио только учебные калькуляторы — резюме не доходит до собеседования.
+          </p>
+        </div>
+
+        <aside class="q-mkt-pull__aside">
+          <span class="q-mkt-pull__aside-eyebrow">Замкнутый круг</span>
+          <p class="q-mkt-pull__aside-text">
+            90&nbsp;% выпускников онлайн-программ выходят с учебными проектами, которые HR-ы игнорируют. Нужен опыт для работы, нужна работа для опыта.
+          </p>
+          <p class="q-mkt-pull__aside-text">
+            <b>Quillon разрывает круг:</b> ты работаешь на живых продуктах компании и получаешь тот самый коммерческий опыт — прямо внутри программы.
+          </p>
+        </aside>
+      </div>
+
+      <!-- ═════════════════════════════════════════════════════════
+           FOOT: источники (mono, editorial-footnote) + CTA
+           Источники слева как footnote. CTA справа — primary, индиго.
+           ═════════════════════════════════════════════════════════ -->
+      <div class="q-mkt-foot">
+        <div class="q-mkt-sources" aria-label="Источники данных">
+          <span class="q-mkt-sources__prefix">Источники&nbsp;/</span>
+          <a class="q-mkt-sources__item" href="https://digital.gov.ru/" target="_blank" rel="noopener">Минцифры РФ</a>
+          <span class="q-mkt-sources__dot" aria-hidden="true">·</span>
+          <a class="q-mkt-sources__item" href="https://hh.ru/" target="_blank" rel="noopener">hh.ru</a>
+          <span class="q-mkt-sources__dot" aria-hidden="true">·</span>
+          <a class="q-mkt-sources__item" href="https://konsol.pro/" target="_blank" rel="noopener">«Консоль.Про», 2025</a>
+        </div>
+
+        <a class="q-btn q-btn--primary q-btn--lg" href="/quiz">
+          Пройти тест и узнать свой трек
+          <span class="q-btn__icon" aria-hidden="true">→</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    /* Scroll-reveal для цифр: 300ms fade-up с лёгким stagger.
+       Используем IntersectionObserver, порог 0.25 — цифра появляется
+       когда её видно хотя бы на четверть. Запускается один раз.
+
+       Осторожность: НЕ скрываем supporting text — только numerals,
+       чтобы при быстром скролле юзер всегда видел описание. */
+    (function () {
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const targets = document.querySelectorAll('.q-reveal');
+      if (!targets.length) return;
+
+      if (reduced || !('IntersectionObserver' in window)) {
+        targets.forEach(el => el.setAttribute('data-revealed', 'true'));
+        return;
+      }
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target;
+          // stagger по индексу появления (max 4 штуки на экран)
+          const delay = Math.min(i, 3) * 80;
+          setTimeout(() => el.setAttribute('data-revealed', 'true'), delay);
+          io.unobserve(el);
+        });
+      }, { threshold: 0.25, rootMargin: '0px 0px -40px 0px' });
+
+      targets.forEach(el => io.observe(el));
+    })();
+  </script>
+
+</body>
+</html>

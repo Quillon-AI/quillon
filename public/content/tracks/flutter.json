@@ -7,7 +7,7 @@
   },
   "hero": {
     "supertag": "Трек · Flutter Developer",
-    "title": "Flutter — один код на iOS, Android и web. И в 3 раза меньше конкурентов, чем у мобильщиков",
+    "title": "Flutter — <em>один код</em> на iOS, Android и web",
     "subtitle": "Один язык Dart, один код — три платформы. В России Flutter-разработчиков в 3–4 раза меньше, чем iOS/Android-спецов. Рынок, где за тебя конкурируют работодатели, а не ты за вакансии.",
     "stats": [
       { "value": "4\u00a0500+", "label": "открытых вакансий на hh.ru" },

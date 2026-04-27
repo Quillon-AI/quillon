@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quillon v4 · Path block (08)</title>
+
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/tokens.css?v=4">
+  <link rel="stylesheet" href="../css/base.css?v=4">
+  <link rel="stylesheet" href="../css/components.css?v=4">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+     * 08 · PATH — 48-недельная дорожная карта
+     *
+     * Тексты 1:1 с прод-content.json (`.path`).
+     *
+     * Композиция:
+     *   • Section head (08 · ДОРОЖНАЯ КАРТА)
+     *   • Axis-шкала: 0 ─ 8 ─ 20 ─ 36 ─ 48 (proportional)
+     *   • 4 phase-карточки в горизонтальной ленте (equal width)
+     *   • Inline CTA
+     *
+     * Anti-AI:
+     *   • Никаких ✓ галочек, glow-tracker, decorative dots на оси.
+     *   • Цифры в tabular-nums, недели — mono.
+     *   • Фазы пронумерованы 01–04 индиго, без иконок.
+     * ═══════════════════════════════════════════════════════════════ */
+
+    .q-path {
+      position: relative;
+      padding: var(--q-s-10) 0 var(--q-s-11);
+      overflow: hidden;
+    }
+    .q-path::before {
+      content: "";
+      position: absolute;
+      bottom: -240px;
+      left: -240px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(94, 106, 210, 0.06), transparent 62%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .q-path .q-container { position: relative; z-index: 1; }
+    .q-path .q-section-head { max-width: 800px; margin-bottom: var(--q-s-9); }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * AXIS — proportional weeks scale (0 ─ 8 ─ 20 ─ 36 ─ 48)
+     *
+     * Линейка показывает реальное распределение фаз во времени:
+     *   фаза 1 = 8/48 = 16.6%, фаза 2 = 12/48 = 25%,
+     *   фаза 3 = 16/48 = 33.3%, фаза 4 = 12/48 = 25%.
+     * Над линейкой — диапазон недель и номер фазы (mono).
+     * Линейка ниже — segment'ы с тонкими hairline между ними,
+     *   у первой фазы — индиго-тинт (active phase = entry).
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-path-axis {
+      display: grid;
+      grid-template-columns:
+        calc(8 / 48 * 100%)
+        calc(12 / 48 * 100%)
+        calc(16 / 48 * 100%)
+        calc(12 / 48 * 100%);
+      margin-bottom: var(--q-s-3);
+    }
+    .q-path-axis__tick {
+      position: relative;
+      padding: 0 var(--q-s-3);
+    }
+    .q-path-axis__tick::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: calc(100% + 4px);
+      bottom: -8px;
+      width: 1px;
+      background: var(--q-line-strong);
+    }
+    .q-path-axis__tick:last-child::before {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: calc(100% + 4px);
+      bottom: -8px;
+      width: 1px;
+      background: var(--q-line-strong);
+    }
+    .q-path-axis__num {
+      font-family: var(--q-font-mono);
+      font-size: 10px;
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-text-low);
+      font-feature-settings: "tnum" 1;
+      display: block;
+    }
+    .q-path-axis__week {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-text-mid);
+      font-feature-settings: "tnum" 1;
+      display: block;
+      margin-top: 2px;
+    }
+    .q-path-axis__week b {
+      color: var(--q-accent-hover);
+      font-weight: var(--q-fw-medium);
+    }
+
+    /* Bar — proportional segments */
+    .q-path-bar {
+      display: grid;
+      grid-template-columns:
+        calc(8 / 48 * 100%)
+        calc(12 / 48 * 100%)
+        calc(16 / 48 * 100%)
+        calc(12 / 48 * 100%);
+      height: 4px;
+      margin-bottom: var(--q-s-7);
+    }
+    .q-path-bar__seg {
+      background: var(--q-bg-2);
+      border-right: 1px solid var(--q-bg-1);
+    }
+    .q-path-bar__seg:last-child { border-right: 0; }
+    .q-path-bar__seg--active {
+      background: linear-gradient(90deg,
+        rgba(94,106,210,0.55) 0%,
+        rgba(94,106,210,0.18) 100%);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * PHASES — 4 equal-width карточки
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-path-phases {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border-top: 1px solid var(--q-line-strong);
+      border-bottom: 1px solid var(--q-line-strong);
+    }
+    .q-path-phase {
+      position: relative;
+      padding: var(--q-s-7) var(--q-s-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-3);
+      border-right: 1px solid var(--q-line);
+      transition: background var(--q-dur-fast) var(--q-ease);
+    }
+    .q-path-phase:last-child { border-right: 0; }
+    .q-path-phase:hover { background: rgba(94, 106, 210, 0.025); }
+
+    .q-path-phase__head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--q-s-3);
+      margin-bottom: var(--q-s-3);
+    }
+    .q-path-phase__num {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      color: var(--q-accent-hover);
+      font-weight: var(--q-fw-medium);
+      font-feature-settings: "tnum" 1;
+    }
+    .q-path-phase__period {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      color: var(--q-text-low);
+      font-feature-settings: "tnum" 1;
+      text-transform: uppercase;
+    }
+
+    .q-path-phase__title {
+      font-family: var(--q-font-display);
+      font-size: var(--q-t-h5);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.014em;
+      color: var(--q-text-hi);
+      line-height: 1.2;
+      margin: 0;
+    }
+    .q-path-phase__text {
+      font-size: var(--q-t-small);
+      line-height: 1.5;
+      color: var(--q-text-mid);
+      margin: 0;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * INLINE CTA
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-path-cta {
+      margin-top: var(--q-s-9);
+      padding-top: var(--q-s-7);
+      border-top: 1px solid var(--q-line);
+      display: flex;
+      justify-content: flex-end;
+    }
+    .q-path-cta a {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--q-s-3);
+      font-family: var(--q-font-display);
+      font-size: var(--q-t-h6);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.012em;
+      color: var(--q-text-hi);
+      text-decoration: none;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--q-line-strong);
+      transition: color var(--q-dur-fast) var(--q-ease),
+                  border-color var(--q-dur-fast) var(--q-ease);
+    }
+    .q-path-cta a:hover {
+      color: var(--q-accent-hover);
+      border-color: var(--q-accent);
+    }
+    .q-path-cta__arrow {
+      font-family: var(--q-font-mono);
+      color: var(--q-text-low);
+      transition: transform var(--q-dur-fast) var(--q-ease),
+                  color var(--q-dur-fast) var(--q-ease);
+    }
+    .q-path-cta a:hover .q-path-cta__arrow {
+      color: var(--q-accent);
+      transform: translateX(2px);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * RESPONSIVE
+     * ═══════════════════════════════════════════════════════════════ */
+    @media (max-width: 1100px) {
+      .q-path-phases { grid-template-columns: repeat(2, 1fr); }
+      .q-path-phase:nth-child(2) { border-right: 0; }
+      .q-path-phase:nth-child(1),
+      .q-path-phase:nth-child(2) { border-bottom: 1px solid var(--q-line); }
+    }
+    @media (max-width: 720px) {
+      .q-path { padding: var(--q-s-8) 0 var(--q-s-9); }
+      .q-path-axis,
+      .q-path-bar { display: none; }
+      .q-path-phases { grid-template-columns: 1fr; }
+      .q-path-phase {
+        border-right: 0;
+        border-bottom: 1px solid var(--q-line);
+      }
+      .q-path-phase:last-child { border-bottom: 0; }
+      .q-path-cta { justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       STICKY TOPBAR
+       ═══════════════════════════════════════════════════════════════ -->
+  <header class="q-topbar">
+    <a href="#" class="q-topbar__brand">
+      <span class="q-topbar__brand-mark">Q</span>
+      <span>Quillon</span>
+    </a>
+
+    <nav class="q-topbar__nav" aria-label="Главная навигация">
+      <a class="q-topbar__link" href="#tracks">Треки</a>
+      <a class="q-topbar__link" href="#format">Формат</a>
+      <a class="q-topbar__link" href="#pricing">Цена</a>
+      <a class="q-topbar__link" href="#quillon_jobs">Jobs</a>
+      <a class="q-topbar__link" href="#faq">FAQ</a>
+    </nav>
+
+    <div class="q-topbar__actions">
+      <a class="q-btn q-btn--link" href="#">Войти</a>
+      <a class="q-btn q-btn--primary q-btn--sm" href="/quiz">Пройти тест</a>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       08 · PATH
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="q-section q-path" id="path">
+    <div class="q-container">
+
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>08</em> · ДОРОЖНАЯ КАРТА</div>
+        <h2 class="q-section-head__title">48&nbsp;недель от&nbsp;старта до&nbsp;оффера</h2>
+      </header>
+
+      <!-- ═══════════════ AXIS · proportional weeks ═══════════════ -->
+      <div class="q-path-axis" aria-hidden="true">
+        <div class="q-path-axis__tick">
+          <span class="q-path-axis__num">01</span>
+          <span class="q-path-axis__week"><b>1—8</b> нед.</span>
+        </div>
+        <div class="q-path-axis__tick">
+          <span class="q-path-axis__num">02</span>
+          <span class="q-path-axis__week">9—20 нед.</span>
+        </div>
+        <div class="q-path-axis__tick">
+          <span class="q-path-axis__num">03</span>
+          <span class="q-path-axis__week">21—36 нед.</span>
+        </div>
+        <div class="q-path-axis__tick">
+          <span class="q-path-axis__num">04</span>
+          <span class="q-path-axis__week">37—48 нед.</span>
+        </div>
+      </div>
+
+      <!-- ═══════════════ BAR · proportional segments ═══════════════ -->
+      <div class="q-path-bar" aria-hidden="true">
+        <div class="q-path-bar__seg q-path-bar__seg--active"></div>
+        <div class="q-path-bar__seg"></div>
+        <div class="q-path-bar__seg"></div>
+        <div class="q-path-bar__seg"></div>
+      </div>
+
+      <!-- ═══════════════ PHASES · 4 cards ═══════════════ -->
+      <div class="q-path-phases" role="list" aria-label="Этапы программы">
+
+        <article class="q-path-phase" role="listitem">
+          <div class="q-path-phase__head">
+            <span class="q-path-phase__num">01</span>
+            <span class="q-path-phase__period">Нед. 1—8</span>
+          </div>
+          <h3 class="q-path-phase__title">Фундамент и&nbsp;первый код</h3>
+          <p class="q-path-phase__text">С&nbsp;первого дня&nbsp;— в&nbsp;команде 4–6&nbsp;человек с&nbsp;наставником-практиком. Осваиваете основы языка и&nbsp;инструменты трека. 70%&nbsp;времени&nbsp;— практика. Первые задачи, первый код, первые коммиты.</p>
+        </article>
+
+        <article class="q-path-phase" role="listitem">
+          <div class="q-path-phase__head">
+            <span class="q-path-phase__num">02</span>
+            <span class="q-path-phase__period">Нед. 9—20</span>
+          </div>
+          <h3 class="q-path-phase__title">Фреймворки, API, тестирование</h3>
+          <p class="q-path-phase__text">Работаете на&nbsp;реальном продукте Quillon. Изучаете фреймворки (FastAPI, Flutter, Pytest), базы данных, API и&nbsp;CI/CD. Код-ревью, спринты, вебинары от&nbsp;практиков.</p>
+        </article>
+
+        <article class="q-path-phase" role="listitem">
+          <div class="q-path-phase__head">
+            <span class="q-path-phase__num">03</span>
+            <span class="q-path-phase__period">Нед. 21—36</span>
+          </div>
+          <h3 class="q-path-phase__title">Кросс-команды и&nbsp;коммерческие задачи</h3>
+          <p class="q-path-phase__text">Команды по&nbsp;10&nbsp;человек: 6&nbsp;Python + 2&nbsp;Flutter + 2&nbsp;QA. Scrum, daily-созвоны, ретроспективы. Возможность взять коммерческие проекты: от&nbsp;5&nbsp;000 до&nbsp;80&nbsp;000&nbsp;руб за&nbsp;проект. Код попадает в&nbsp;production.</p>
+        </article>
+
+        <article class="q-path-phase" role="listitem">
+          <div class="q-path-phase__head">
+            <span class="q-path-phase__num">04</span>
+            <span class="q-path-phase__period">Нед. 37—48</span>
+          </div>
+          <h3 class="q-path-phase__title">Стажировка, стартап и&nbsp;LaunchPad</h3>
+          <p class="q-path-phase__text">Официальная стажировка на&nbsp;продуктах компании&nbsp;— строчка в&nbsp;резюме. Стартап как дипломный проект: команда создаёт MVP. Лучший проект получает до&nbsp;500&nbsp;000&nbsp;руб инвестиций. Параллельно&nbsp;— подготовка к&nbsp;трудоустройству через LaunchPad.</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

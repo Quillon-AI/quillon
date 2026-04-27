@@ -1,0 +1,13 @@
+[
+  { "id": "hero", "visible": true },
+  { "id": "studio", "visible": true },
+  { "id": "products", "visible": true },
+  { "id": "tech_stack", "visible": true },
+  { "id": "ai_capabilities", "visible": true },
+  { "id": "cases", "visible": true },
+  { "id": "engineering_notes", "visible": true },
+  { "id": "principles", "visible": false },
+  { "id": "contact", "visible": true },
+  { "id": "faq", "visible": true },
+  { "id": "careers", "visible": true }
+]

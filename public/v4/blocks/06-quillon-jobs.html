@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quillon v4 · Quillon Jobs block (06)</title>
+
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/tokens.css?v=4">
+  <link rel="stylesheet" href="../css/base.css?v=4">
+  <link rel="stylesheet" href="../css/components.css?v=4">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+     * 06 · QUILLON JOBS — pipeline-механика платформы
+     *
+     * Тексты 1:1 с прод-content.json (`.quillon_jobs`).
+     *
+     * Композиция:
+     *   • Section head (06 · ПЛАТФОРМА ЗАКАЗОВ)
+     *   • Hero stats row — 3 числа из `.stats[]` (500+ / 3-30K ₽ / со 2-го мес)
+     *   • Pipeline 4-step — поиск → подбор → ревью → оплата (`.features[]`)
+     *   • Inline CTA из `.cta`
+     *
+     * Anti-AI:
+     *   • Никаких feather-иконок (search/filter/shield-check/wallet),
+     *     даже хотя они в JSON. Replaced mono-номерами 01–04.
+     *   • Нет 2×2 grid'а — линейный 4-col pipeline left→right.
+     *   • Subtle indigo «→» между шагами как индикатор потока.
+     *   • Числа в tabular-nums.
+     * ═══════════════════════════════════════════════════════════════ */
+
+    .q-jobs {
+      position: relative;
+      padding: var(--q-s-10) 0 var(--q-s-11);
+      overflow: hidden;
+    }
+    .q-jobs::before {
+      content: "";
+      position: absolute;
+      top: -200px;
+      left: -240px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(94, 106, 210, 0.06), transparent 62%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .q-jobs .q-container { position: relative; z-index: 1; }
+    .q-jobs .q-section-head { max-width: 800px; margin-bottom: var(--q-s-9); }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * STATS — 3 hero-числа (горизонтальный ledger с vertical hairlines)
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-jobs-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0;
+      padding: var(--q-s-7) 0;
+      border-top: 1px solid var(--q-line-strong);
+      border-bottom: 1px solid var(--q-line-strong);
+      margin-bottom: var(--q-s-9);
+    }
+    .q-jobs-stat {
+      padding: 0 var(--q-s-6);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      border-left: 1px solid var(--q-line);
+    }
+    .q-jobs-stat:first-child { border-left: 0; padding-left: 0; }
+    .q-jobs-stat__num {
+      font-family: var(--q-font-display);
+      font-size: clamp(2.5rem, 4.4vw, 4rem);
+      font-weight: var(--q-fw-linear);
+      line-height: 1;
+      letter-spacing: -0.028em;
+      color: var(--q-text-hi);
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+    }
+    .q-jobs-stat__num em {
+      font-style: normal;
+      color: var(--q-text-mid);
+      font-size: 0.5em;
+      letter-spacing: -0.012em;
+    }
+    .q-jobs-stat__num span { color: var(--q-accent-hover); }
+    .q-jobs-stat__label {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * PIPELINE — 4 step-карточки в линию
+     *   01 Поиск → 02 Подбор → 03 Ревью → 04 Оплата
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-jobs-pipeline-head {
+      padding-bottom: var(--q-s-5);
+      margin-bottom: 0;
+    }
+    .q-jobs-pipeline-head__title {
+      font-family: var(--q-font-display);
+      font-size: clamp(1.5rem, 2.2vw, 1.875rem);
+      font-weight: var(--q-fw-linear);
+      letter-spacing: -0.02em;
+      color: var(--q-text-hi);
+      line-height: 1.1;
+      margin: 0;
+    }
+
+    .q-jobs-pipeline {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border-top: 1px solid var(--q-line-strong);
+      border-bottom: 1px solid var(--q-line-strong);
+    }
+    .q-jobs-step {
+      position: relative;
+      padding: var(--q-s-7) var(--q-s-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-3);
+      border-right: 1px solid var(--q-line);
+      transition: background var(--q-dur-fast) var(--q-ease);
+    }
+    .q-jobs-step:last-child { border-right: 0; }
+    .q-jobs-step:hover { background: rgba(94, 106, 210, 0.025); }
+
+    .q-jobs-step__head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--q-s-4);
+    }
+    .q-jobs-step__num {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      color: var(--q-accent-hover);
+      font-weight: var(--q-fw-medium);
+      font-feature-settings: "tnum" 1;
+    }
+    .q-jobs-step__arrow {
+      font-family: var(--q-font-mono);
+      font-size: 16px;
+      color: var(--q-text-low);
+      line-height: 1;
+      transition: color var(--q-dur-fast) var(--q-ease),
+                  transform var(--q-dur-fast) var(--q-ease);
+    }
+    .q-jobs-step:hover .q-jobs-step__arrow {
+      color: var(--q-accent);
+      transform: translateX(2px);
+    }
+    .q-jobs-step:last-child .q-jobs-step__arrow { visibility: hidden; }
+
+    .q-jobs-step__title {
+      font-family: var(--q-font-display);
+      font-size: var(--q-t-h5);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.014em;
+      color: var(--q-text-hi);
+      line-height: 1.2;
+      margin: 0;
+    }
+    .q-jobs-step__text {
+      font-size: var(--q-t-small);
+      line-height: 1.5;
+      color: var(--q-text-mid);
+      margin: 0;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * SCREENSHOT — мокап интерфейса платформы (из прод-ассетов)
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-jobs-screen {
+      margin: var(--q-s-9) 0 0;
+      padding: var(--q-s-6);
+      background: var(--q-bg-2);
+      border: 1px solid var(--q-line);
+      border-radius: var(--q-r-lg);
+      position: relative;
+      overflow: hidden;
+    }
+    .q-jobs-screen__head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: var(--q-s-4);
+      margin-bottom: var(--q-s-5);
+    }
+    .q-jobs-screen__kicker {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+    .q-jobs-screen__kicker b {
+      color: var(--q-accent-hover);
+      font-weight: var(--q-fw-medium);
+    }
+    .q-jobs-screen__meta {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-text-low);
+      font-feature-settings: "tnum" 1;
+    }
+    .q-jobs-screen__frame {
+      border: 1px solid var(--q-line-strong);
+      border-radius: var(--q-r-md);
+      overflow: hidden;
+      background: var(--q-bg-1);
+      box-shadow: 0 24px 60px -32px rgba(0, 0, 0, 0.6);
+    }
+    .q-jobs-screen__frame img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * INLINE CTA
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-jobs-cta {
+      margin-top: var(--q-s-9);
+      padding-top: var(--q-s-7);
+      border-top: 1px solid var(--q-line);
+      display: flex;
+      justify-content: flex-end;
+    }
+    .q-jobs-cta a {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--q-s-3);
+      font-family: var(--q-font-display);
+      font-size: var(--q-t-h6);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.012em;
+      color: var(--q-text-hi);
+      text-decoration: none;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--q-line-strong);
+      transition: color var(--q-dur-fast) var(--q-ease),
+                  border-color var(--q-dur-fast) var(--q-ease);
+    }
+    .q-jobs-cta a:hover {
+      color: var(--q-accent-hover);
+      border-color: var(--q-accent);
+    }
+    .q-jobs-cta__arrow {
+      font-family: var(--q-font-mono);
+      color: var(--q-text-low);
+      transition: transform var(--q-dur-fast) var(--q-ease),
+                  color var(--q-dur-fast) var(--q-ease);
+    }
+    .q-jobs-cta a:hover .q-jobs-cta__arrow {
+      color: var(--q-accent);
+      transform: translateX(2px);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * RESPONSIVE
+     * ═══════════════════════════════════════════════════════════════ */
+    @media (max-width: 1100px) {
+      .q-jobs-pipeline { grid-template-columns: repeat(2, 1fr); }
+      .q-jobs-step:nth-child(2) { border-right: 0; }
+      .q-jobs-step:nth-child(1),
+      .q-jobs-step:nth-child(2) { border-bottom: 1px solid var(--q-line); }
+      .q-jobs-step:nth-child(2) .q-jobs-step__arrow { visibility: hidden; }
+      .q-jobs-step:nth-child(4) .q-jobs-step__arrow { visibility: hidden; }
+    }
+    @media (max-width: 720px) {
+      .q-jobs { padding: var(--q-s-8) 0 var(--q-s-9); }
+      .q-jobs-stats {
+        grid-template-columns: 1fr;
+        padding: var(--q-s-5) 0;
+      }
+      .q-jobs-stat {
+        padding: var(--q-s-5) 0;
+        border-left: 0;
+        border-top: 1px solid var(--q-line);
+      }
+      .q-jobs-stat:first-child { border-top: 0; padding-top: 0; }
+      .q-jobs-pipeline { grid-template-columns: 1fr; }
+      .q-jobs-step {
+        border-right: 0;
+        border-bottom: 1px solid var(--q-line);
+      }
+      .q-jobs-step:last-child { border-bottom: 0; }
+      .q-jobs-step:nth-child(n) .q-jobs-step__arrow { visibility: hidden; }
+      .q-jobs-cta { justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       STICKY TOPBAR
+       ═══════════════════════════════════════════════════════════════ -->
+  <header class="q-topbar">
+    <a href="#" class="q-topbar__brand">
+      <span class="q-topbar__brand-mark">Q</span>
+      <span>Quillon</span>
+    </a>
+
+    <nav class="q-topbar__nav" aria-label="Главная навигация">
+      <a class="q-topbar__link" href="#tracks">Треки</a>
+      <a class="q-topbar__link" href="#format">Формат</a>
+      <a class="q-topbar__link" href="#pricing">Цена</a>
+      <a class="q-topbar__link" href="#quillon_jobs">Jobs</a>
+      <a class="q-topbar__link" href="#faq">FAQ</a>
+    </nav>
+
+    <div class="q-topbar__actions">
+      <a class="q-btn q-btn--link" href="#">Войти</a>
+      <a class="q-btn q-btn--primary q-btn--sm" href="/quiz">Пройти тест</a>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       06 · QUILLON JOBS
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="q-section q-jobs" id="quillon_jobs">
+    <div class="q-container">
+
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>06</em> · ПЛАТФОРМА ЗАКАЗОВ</div>
+        <h2 class="q-section-head__title">Quillon&nbsp;Jobs:<br>заказы находятся сами</h2>
+        <p class="q-section-head__sub">
+          Платформа автоматически подбирает подходящие под твой уровень. Тебе остаётся только взять заказ и&nbsp;получить оплату. Доступ к&nbsp;платформе открывается со&nbsp;2-го месяца программы. Реализовываете задачу вместе с&nbsp;ментором, под его наставничеством.
+        </p>
+      </header>
+
+      <!-- ═══════════════ HERO STATS ═══════════════ -->
+      <div class="q-jobs-stats" aria-label="Метрики платформы">
+        <div class="q-jobs-stat">
+          <div class="q-jobs-stat__num">500<em>+</em></div>
+          <div class="q-jobs-stat__label">задач в&nbsp;месяц на&nbsp;платформе</div>
+        </div>
+        <div class="q-jobs-stat">
+          <div class="q-jobs-stat__num">3–30<em>&nbsp;K&nbsp;₽</em></div>
+          <div class="q-jobs-stat__label">заработок за&nbsp;проект</div>
+        </div>
+        <div class="q-jobs-stat">
+          <div class="q-jobs-stat__num"><span>со&nbsp;2-го</span><em>&nbsp;мес</em></div>
+          <div class="q-jobs-stat__label">первый заказ</div>
+        </div>
+      </div>
+
+      <!-- ═══════════════ PIPELINE — 4 process steps ═══════════════ -->
+      <header class="q-jobs-pipeline-head">
+        <h3 class="q-jobs-pipeline-head__title">Как это работает</h3>
+      </header>
+
+      <div class="q-jobs-pipeline" role="list" aria-label="Процесс работы платформы">
+
+        <article class="q-jobs-step" role="listitem">
+          <div class="q-jobs-step__head">
+            <span class="q-jobs-step__num">01</span>
+            <span class="q-jobs-step__arrow" aria-hidden="true">→</span>
+          </div>
+          <h4 class="q-jobs-step__title">Автоматический поиск</h4>
+          <p class="q-jobs-step__text">Quillon&nbsp;Jobs сканирует FL.ru, Kwork, Workzilla и&nbsp;другие биржи. Находит задачи, которые ты&nbsp;можешь выполнить на&nbsp;текущем уровне.</p>
+        </article>
+
+        <article class="q-jobs-step" role="listitem">
+          <div class="q-jobs-step__head">
+            <span class="q-jobs-step__num">02</span>
+            <span class="q-jobs-step__arrow" aria-hidden="true">→</span>
+          </div>
+          <h4 class="q-jobs-step__title">Подбор по&nbsp;уровню</h4>
+          <p class="q-jobs-step__text">Система знает твой прогресс в&nbsp;программе и&nbsp;предлагает задачи, которые ты&nbsp;потянешь&nbsp;— от&nbsp;простых парсеров до&nbsp;Telegram-ботов.</p>
+        </article>
+
+        <article class="q-jobs-step" role="listitem">
+          <div class="q-jobs-step__head">
+            <span class="q-jobs-step__num">03</span>
+            <span class="q-jobs-step__arrow" aria-hidden="true">→</span>
+          </div>
+          <h4 class="q-jobs-step__title">Менторская проверка</h4>
+          <p class="q-jobs-step__text">Перед сдачей заказчику ментор проверяет твою работу. Ты&nbsp;не&nbsp;рискуешь репутацией&nbsp;— Quillon гарантирует качество.</p>
+        </article>
+
+        <article class="q-jobs-step" role="listitem">
+          <div class="q-jobs-step__head">
+            <span class="q-jobs-step__num">04</span>
+            <span class="q-jobs-step__arrow" aria-hidden="true">→</span>
+          </div>
+          <h4 class="q-jobs-step__title">Деньги на&nbsp;твой счёт</h4>
+          <p class="q-jobs-step__text">Оплата приходит тебе напрямую. Средний заработок на&nbsp;2–6&nbsp;месяце: от&nbsp;3&nbsp;000 до&nbsp;30&nbsp;000&nbsp;руб за&nbsp;проект.</p>
+        </article>
+
+      </div>
+
+      <!-- ═══════════════ SCREENSHOT — интерфейс платформы ═══════════════ -->
+      <figure class="q-jobs-screen">
+        <div class="q-jobs-screen__head">
+          <span class="q-jobs-screen__kicker"><b>Интерфейс</b> · Quillon Jobs</span>
+          <span class="q-jobs-screen__meta">live</span>
+        </div>
+        <div class="q-jobs-screen__frame">
+          <img src="/assets/images/quillon-jobs-mockup.png"
+               alt="Quillon Jobs — платформа для поиска оплачиваемых IT-заказов"
+               loading="lazy">
+        </div>
+      </figure>
+
+      <!-- ═══════════════ INLINE CTA ═══════════════ -->
+      <div class="q-jobs-cta">
+        <a href="/quiz">
+          Узнать свой потенциальный заработок
+          <span class="q-jobs-cta__arrow">→</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+</body>
+</html>

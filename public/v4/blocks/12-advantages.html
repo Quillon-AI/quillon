@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quillon v4 · Advantages block (12)</title>
+
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/tokens.css?v=4">
+  <link rel="stylesheet" href="../css/base.css?v=4">
+  <link rel="stylesheet" href="../css/components.css?v=4">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+     * 12 · ADVANTAGES — 6 структурных отличий (manifesto-grid)
+     *
+     * Тексты 1:1 с прод-content.json (`.advantages`).
+     *
+     * Композиция:
+     *   • Section head (12 · ПОЧЕМУ ЭТО РАБОТАЕТ)
+     *   • 3×2 grid из 6 карточек: mono-номер + title + body
+     *
+     * Anti-AI:
+     *   • Никаких ✓-bullets, чек-листов, glow-orb'ов.
+     *   • Большие mono-номера 01–06 (display-level) — типографика-якорь.
+     *   • Hairline-сетка между карточками (без скруглённых boxes).
+     *   • Все 6 карточек равновесные — все отличия одного веса.
+     * ═══════════════════════════════════════════════════════════════ */
+
+    .q-adv {
+      position: relative;
+      padding: var(--q-s-10) 0 var(--q-s-11);
+      overflow: hidden;
+    }
+    .q-adv::before {
+      content: "";
+      position: absolute;
+      top: -200px;
+      left: -240px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(94, 106, 210, 0.06), transparent 62%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .q-adv .q-container { position: relative; z-index: 1; }
+    .q-adv .q-section-head { max-width: 800px; margin-bottom: var(--q-s-9); }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * GRID — 3×2, hairlines между карточками, толстые сверху/снизу
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-adv-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-top: 1px solid var(--q-line-strong);
+      border-bottom: 1px solid var(--q-line-strong);
+    }
+
+    .q-adv-item {
+      position: relative;
+      padding: var(--q-s-7) var(--q-s-7);
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-3);
+      border-right: 1px solid var(--q-line);
+      transition: background var(--q-dur-fast) var(--q-ease);
+    }
+    /* Убираем правую границу у последней карточки в ряду (3-я колонка). */
+    .q-adv-item:nth-child(3n) { border-right: 0; }
+    /* Нижняя hairline только у первого ряда (карточки 1–3). */
+    .q-adv-item:nth-child(-n+3) { border-bottom: 1px solid var(--q-line); }
+
+    .q-adv-item:hover { background: rgba(94, 106, 210, 0.025); }
+    .q-adv-item:hover .q-adv-item__num { color: var(--q-accent-hover); }
+
+    /* Большой display-номер сверху, как chapter-mark */
+    .q-adv-item__num {
+      font-family: var(--q-font-mono);
+      font-size: clamp(2rem, 3.4vw, 2.875rem);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.018em;
+      color: var(--q-text-low);
+      line-height: 1;
+      font-feature-settings: "tnum" 1;
+      margin-bottom: var(--q-s-5);
+      transition: color var(--q-dur-fast) var(--q-ease);
+    }
+
+    .q-adv-item__title {
+      font-family: var(--q-font-display);
+      font-size: clamp(1.125rem, 1.6vw, 1.375rem);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.014em;
+      color: var(--q-text-hi);
+      line-height: 1.25;
+      margin: 0;
+      /* Резерв под 2 строки, чтобы body-тексты выравнивались */
+      min-height: 2.5em;
+    }
+
+    .q-adv-item__text {
+      font-size: var(--q-t-small);
+      line-height: 1.55;
+      color: var(--q-text-mid);
+      margin: 0;
+      max-width: 36ch;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * RESPONSIVE
+     * ═══════════════════════════════════════════════════════════════ */
+    @media (max-width: 1100px) {
+      .q-adv-grid { grid-template-columns: repeat(2, 1fr); }
+      .q-adv-item { padding: var(--q-s-6); }
+      /* Сброс предыдущих nth-rules */
+      .q-adv-item:nth-child(n) { border-right: 1px solid var(--q-line); border-bottom: 1px solid var(--q-line); }
+      .q-adv-item:nth-child(2n) { border-right: 0; }
+      .q-adv-item:nth-last-child(-n+2) { border-bottom: 0; }
+    }
+    @media (max-width: 720px) {
+      .q-adv { padding: var(--q-s-8) 0 var(--q-s-9); }
+      .q-adv-grid { grid-template-columns: 1fr; }
+      .q-adv-item:nth-child(n) {
+        border-right: 0;
+        border-bottom: 1px solid var(--q-line);
+        padding: var(--q-s-5) 0;
+      }
+      .q-adv-item:last-child { border-bottom: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       STICKY TOPBAR
+       ═══════════════════════════════════════════════════════════════ -->
+  <header class="q-topbar">
+    <a href="#" class="q-topbar__brand">
+      <span class="q-topbar__brand-mark">Q</span>
+      <span>Quillon</span>
+    </a>
+
+    <nav class="q-topbar__nav" aria-label="Главная навигация">
+      <a class="q-topbar__link" href="#tracks">Треки</a>
+      <a class="q-topbar__link" href="#format">Формат</a>
+      <a class="q-topbar__link" href="#pricing">Цена</a>
+      <a class="q-topbar__link" href="#quillon_jobs">Jobs</a>
+      <a class="q-topbar__link" href="#faq">FAQ</a>
+    </nav>
+
+    <div class="q-topbar__actions">
+      <a class="q-btn q-btn--link" href="#">Войти</a>
+      <a class="q-btn q-btn--primary q-btn--sm" href="/quiz">Пройти тест</a>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       12 · ADVANTAGES
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="q-section q-adv" id="advantages">
+    <div class="q-container">
+
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>12</em> · ПОЧЕМУ ЭТО РАБОТАЕТ</div>
+        <h2 class="q-section-head__title">6&nbsp;отличий от&nbsp;онлайн-программ</h2>
+        <p class="q-section-head__sub">
+          Не&nbsp;обещания&nbsp;— структурные отличия модели Quillon, которые не&nbsp;может повторить ни&nbsp;одна онлайн-школа.
+        </p>
+      </header>
+
+      <!-- ═══════════════ GRID · 6 advantages ═══════════════ -->
+      <div class="q-adv-grid" role="list" aria-label="Структурные отличия программы">
+
+        <article class="q-adv-item" role="listitem">
+          <span class="q-adv-item__num">01</span>
+          <h3 class="q-adv-item__title">Production-код, не&nbsp;учебные проекты</h3>
+          <p class="q-adv-item__text">ChatAI, Meet, LMS&nbsp;— вы&nbsp;работаете над кодом, который используют реальные пользователи. В&nbsp;GitHub&nbsp;— коммиты в&nbsp;production-репозиторий, а&nbsp;не&nbsp;TODO-лист.</p>
+        </article>
+
+        <article class="q-adv-item" role="listitem">
+          <span class="q-adv-item__num">02</span>
+          <h3 class="q-adv-item__title">Оплачиваемые задачи со&nbsp;2-го месяца</h3>
+          <p class="q-adv-item__text">Со&nbsp;2-го месяца&nbsp;— оплачиваемые задачи через Quillon&nbsp;Jobs: парсеры, боты, автоматизации. С&nbsp;7-го&nbsp;— коммерческие проекты через Студию: от&nbsp;5&nbsp;000 до&nbsp;80&nbsp;000&nbsp;руб за&nbsp;проект. Рассрочка начинает возвращаться ещё до&nbsp;окончания программы.</p>
+        </article>
+
+        <article class="q-adv-item" role="listitem">
+          <span class="q-adv-item__num">03</span>
+          <h3 class="q-adv-item__title">Кросс-команды, не&nbsp;одиночество</h3>
+          <p class="q-adv-item__text">С&nbsp;21-й недели&nbsp;— команды по&nbsp;10&nbsp;человек: backend, mobile, QA на&nbsp;одном продукте. Scrum, спринты, код-ревью, daily-созвоны&nbsp;— как в&nbsp;реальной IT-компании.</p>
+        </article>
+
+        <article class="q-adv-item" role="listitem">
+          <span class="q-adv-item__num">04</span>
+          <h3 class="q-adv-item__title">Стартап с&nbsp;инвестицией 500К</h3>
+          <p class="q-adv-item__text">Ваша команда создаёт MVP: от&nbsp;идеи до&nbsp;первых пользователей. Лучший проект получает до&nbsp;500&nbsp;000&nbsp;руб инвестиций от&nbsp;Quillon.</p>
+        </article>
+
+        <article class="q-adv-item" role="listitem">
+          <span class="q-adv-item__num">05</span>
+          <h3 class="q-adv-item__title">AI встроен в&nbsp;работу</h3>
+          <p class="q-adv-item__text">Передовые AI-инструменты&nbsp;— не&nbsp;бонусы, а&nbsp;рабочие инструменты с&nbsp;первого дня. Плюс модули: Prompt Engineering и&nbsp;Vibe Coding. Вы&nbsp;выходите как специалист, который умеет и&nbsp;кодить, и&nbsp;управлять AI.</p>
+        </article>
+
+        <article class="q-adv-item" role="listitem">
+          <span class="q-adv-item__num">06</span>
+          <h3 class="q-adv-item__title">Помощь до&nbsp;первого оффера</h3>
+          <p class="q-adv-item__text">LaunchPad: резюме, мок-интервью с&nbsp;видеоразбором, рекомендательные письма от&nbsp;наставников. Без ограничения по&nbsp;времени после выпуска.</p>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+</body>
+</html>

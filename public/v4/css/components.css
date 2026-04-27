@@ -1,0 +1,582 @@
+/* ═══════════════════════════════════════════════════════════════════
+ * Quillon v4 — Components
+ * Self-contained. Prefixed with .q-.
+ * ═══════════════════════════════════════════════════════════════════ */
+
+
+/* ═══════════════════════════════════════════════════════════════════
+ * BUTTONS
+ *
+ * Радиус 8px (Raycast/Linear range). Padding компактный: 8px 14px
+ * для default, 10px 18px для large. Вес 510 — Linear crispness.
+ *
+ * Варианты:
+ *   primary   — accent fill, белый текст, тонкий one-hue gradient
+ *   secondary — light surface на dark page (Raycast-style inversion)
+ *   ghost     — border-only
+ *   dark      — dark surface с accent hover-border (для navbar)
+ * ═══════════════════════════════════════════════════════════════════ */
+
+.q-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--q-s-2);
+  padding: 10px 16px;
+  font-family: var(--q-font-sans);
+  font-weight: var(--q-fw-linear);
+  font-size: var(--q-t-small);
+  line-height: 1;
+  letter-spacing: -0.005em;
+  border-radius: var(--q-r-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color var(--q-dur-fast) var(--q-ease),
+    border-color    var(--q-dur-fast) var(--q-ease),
+    color           var(--q-dur-fast) var(--q-ease),
+    transform       var(--q-dur-fast) var(--q-ease),
+    box-shadow      var(--q-dur-fast) var(--q-ease);
+}
+
+.q-btn--sm  { padding: 6px 12px;  font-size: var(--q-t-xs); border-radius: var(--q-r-sm); }
+.q-btn--lg  { padding: 12px 20px; font-size: var(--q-t-body); }
+
+/* Primary — accent fill. Тонкий gradient ОДНОГО hue (Vercel-style).
+   Никогда не multi-hue violet→pink. */
+.q-btn--primary {
+  background: linear-gradient(180deg, var(--q-accent-hover) 0%, var(--q-accent) 100%);
+  color: #FFFFFF;
+  box-shadow:
+    0 0 0 1px rgba(94, 106, 210, 0.6),
+    0 1px 0 0 rgba(255, 255, 255, 0.12) inset,
+    0 6px 20px -8px rgba(94, 106, 210, 0.55);
+}
+.q-btn--primary:hover {
+  background: linear-gradient(180deg, #7E8AE8 0%, var(--q-accent-hover) 100%);
+  box-shadow:
+    0 0 0 1px rgba(110, 122, 226, 0.8),
+    0 1px 0 0 rgba(255, 255, 255, 0.14) inset,
+    0 10px 28px -10px rgba(94, 106, 210, 0.7);
+}
+.q-btn--primary:active {
+  background: var(--q-accent-press);
+  transform: translateY(0.5px);
+  box-shadow:
+    0 0 0 1px rgba(76, 88, 190, 0.7),
+    0 1px 0 0 rgba(0, 0, 0, 0.12) inset;
+}
+
+/* Secondary — Raycast inversion: light button on dark page. */
+.q-btn--secondary {
+  background: var(--q-text-hi);
+  color: var(--q-text-inv-hi);
+  border-color: transparent;
+}
+.q-btn--secondary:hover { background: #FFFFFF; }
+.q-btn--secondary:active { background: #E4E4E7; }
+
+/* Ghost — border-only. Для secondary CTA в hero. */
+.q-btn--ghost {
+  background: transparent;
+  color: var(--q-text-hi);
+  border-color: var(--q-line-strong);
+}
+.q-btn--ghost:hover {
+  background: var(--q-bg-2);
+  border-color: var(--q-line-hover);
+}
+
+/* Dark — для nav-CTA и chips-like inline buttons */
+.q-btn--dark {
+  background: var(--q-bg-2);
+  color: var(--q-text-hi);
+  border-color: var(--q-line);
+}
+.q-btn--dark:hover {
+  background: var(--q-bg-3);
+  border-color: var(--q-line-strong);
+}
+
+/* Link-style button — Vercel «Log In»: минималистичный */
+.q-btn--link {
+  background: transparent;
+  color: var(--q-text-hi);
+  border: 0;
+  padding: 4px 8px;
+  font-size: var(--q-t-xs);
+  font-weight: var(--q-fw-medium);
+}
+.q-btn--link:hover { color: var(--q-accent-hover); }
+
+.q-btn[disabled],
+.q-btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.q-btn__icon {
+  display: inline-flex;
+  width: 1em; height: 1em;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+ * ICON BUTTON (square, icon only) — 32/40px
+ * ═══════════════════════════════════════════════════════════════════ */
+
+.q-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--q-r-sm);
+  background: transparent;
+  color: var(--q-text-mid);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--q-dur-fast) var(--q-ease);
+}
+.q-icon-btn:hover {
+  background: var(--q-bg-2);
+  color: var(--q-text-hi);
+  border-color: var(--q-line);
+}
+.q-icon-btn--lg { width: 40px; height: 40px; border-radius: var(--q-r-md); }
+
+
+/* ═══════════════════════════════════════════════════════════════════
+ * CARDS
+ *
+ * Border-first elevation. Shadow — намёк, не драма.
+ * Три «характера»:
+ *   • card-default   — bg-2 + 1px line
+ *   • card-elevated  — bg-2 + двойной shadow + line-strong
+ *   • card-bordered  — transparent bg + видимый border (Linear-style)
+ * ═══════════════════════════════════════════════════════════════════ */
+
+.q-card {
+  position: relative;
+  background: var(--q-bg-2);
+  border: 1px solid var(--q-line);
+  border-radius: var(--q-r-xl);
+  padding: var(--q-s-7);
+  transition:
+    border-color var(--q-dur-med) var(--q-ease),
+    background   var(--q-dur-med) var(--q-ease),
+    transform    var(--q-dur-med) var(--q-ease);
+}
+
+.q-card--sm { padding: var(--q-s-5); border-radius: var(--q-r-lg); }
+.q-card--lg { padding: var(--q-s-8); border-radius: var(--q-r-2xl); }
+
+.q-card--elevated {
+  background: var(--q-bg-2);
+  box-shadow: var(--q-el-2);
+}
+
+.q-card--bordered {
+  background: transparent;
+  border-color: var(--q-line-strong);
+}
+
+.q-card--hover:hover {
+  border-color: var(--q-line-hover);
+  background: var(--q-bg-3);
+}
+
+.q-card__eyebrow {
+  font-family: var(--q-font-mono);
+  font-size: var(--q-t-mono);
+  font-weight: var(--q-fw-medium);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--q-text-low);
+  margin: 0 0 var(--q-s-3);
+}
+
+.q-card__title {
+  font-family: var(--q-font-display);
+  font-size: var(--q-t-h3);
+  font-weight: var(--q-fw-linear);
+  letter-spacing: var(--q-tracking-h3);
+  line-height: 1.25;
+  margin: 0 0 var(--q-s-3);
+  color: var(--q-text-hi);
+}
+
+.q-card__text {
+  font-size: var(--q-t-small);
+  color: var(--q-text-mid);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.q-card__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--q-s-6);
+  gap: var(--q-s-4);
+  flex-wrap: wrap;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+ * CHIPS / BADGES / PILLS
+ *
+ * Pill-форма — ТОЛЬКО для chips/nav/status. Не для CTA.
+ * ═══════════════════════════════════════════════════════════════════ */
+
+.q-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: var(--q-r-pill);
+  font-family: var(--q-font-sans);
+  font-size: var(--q-t-xs);
+  font-weight: var(--q-fw-medium);
+  line-height: 1.2;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  transition: all var(--q-dur-fast) var(--q-ease);
+}
+
+.q-chip--outline {
+  background: transparent;
+  color: var(--q-text-mid);
+  border-color: var(--q-line-strong);
+}
+.q-chip--outline:hover { color: var(--q-text-hi); border-color: var(--q-line-hover); }
+
+.q-chip--solid {
+  background: var(--q-bg-2);
+  color: var(--q-text-hi);
+  border-color: var(--q-line);
+}
+
+.q-chip--accent {
+  background: var(--q-accent-soft);
+  color: #B0B9FF;
+  border-color: rgba(94, 106, 210, 0.3);
+}
+
+.q-chip--dot::before {
+  content: "";
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--q-accent);
+}
+
+.q-chip--ok::before    { background: var(--q-ok);  }
+.q-chip--warn::before  { background: var(--q-warn);}
+.q-chip--err::before   { background: var(--q-err); }
+
+/* Mono-badge — tech signal */
+.q-badge-mono {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: var(--q-r-sm);
+  font-family: var(--q-font-mono);
+  font-size: 11px;
+  font-weight: var(--q-fw-medium);
+  letter-spacing: 0.04em;
+  color: var(--q-text-mid);
+  background: var(--q-bg-2);
+  border: 1px solid var(--q-line);
+  text-transform: uppercase;
+}
+.q-badge-mono--accent {
+  color: #B0B9FF;
+  background: var(--q-accent-soft);
+  border-color: rgba(94, 106, 210, 0.3);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+ * NAV / TOPBAR (Linear-style thin sticky)
+ * ═══════════════════════════════════════════════════════════════════ */
+
+.q-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  padding: 0 var(--q-gutter);
+  gap: var(--q-s-4);
+  background: rgba(8, 9, 10, 0.72);
+  backdrop-filter: saturate(1.4) blur(12px);
+  -webkit-backdrop-filter: saturate(1.4) blur(12px);
+  border-bottom: 1px solid var(--q-line);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.q-topbar__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--q-s-2);
+  font-family: var(--q-font-display);
+  font-weight: var(--q-fw-semibold);
+  font-size: 0.9375rem;
+  letter-spacing: -0.015em;
+  color: var(--q-text-hi);
+}
+
+.q-topbar__brand-mark {
+  width: 22px;
+  height: 22px;
+  border-radius: var(--q-r-sm);
+  background: var(--q-accent);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-family: var(--q-font-display);
+  font-weight: var(--q-fw-bold);
+  font-size: 12px;
+  letter-spacing: 0;
+}
+
+.q-topbar__brand-img {
+  height: 28px;
+  width: auto;
+  display: block;
+}
+
+.q-topbar__nav {
+  display: flex;
+  gap: 2px;
+}
+
+.q-topbar__link {
+  padding: 6px 10px;
+  border-radius: var(--q-r-sm);
+  font-size: var(--q-t-xs);
+  font-weight: var(--q-fw-medium);
+  color: var(--q-text-mid);
+  transition: all var(--q-dur-fast) var(--q-ease);
+}
+.q-topbar__link:hover { color: var(--q-text-hi); background: var(--q-bg-2); }
+.q-topbar__link[aria-current="page"] { color: var(--q-text-hi); }
+
+.q-topbar__actions { display: inline-flex; align-items: center; gap: var(--q-s-2); }
+
+
+/* ═══════════════════════════════════════════════════════════════════
+ * INPUT / CODE / CALLOUT
+ * ═══════════════════════════════════════════════════════════════════ */
+
+.q-input {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--q-bg-2);
+  color: var(--q-text-hi);
+  font-family: var(--q-font-sans);
+  font-size: var(--q-t-small);
+  line-height: 1.4;
+  border: 1px solid var(--q-line-strong);
+  border-radius: var(--q-r-md);
+  transition: border-color var(--q-dur-fast) var(--q-ease),
+              box-shadow   var(--q-dur-fast) var(--q-ease);
+  outline: none;
+}
+.q-input::placeholder { color: var(--q-text-dim); }
+.q-input:focus,
+.q-input:focus-visible {
+  border-color: var(--q-accent);
+  box-shadow: 0 0 0 3px rgba(94, 106, 210, 0.2);
+}
+
+.q-code {
+  font-family: var(--q-font-mono);
+  font-size: 13px;
+  background: var(--q-bg-3);
+  color: var(--q-text-hi);
+  padding: 2px 6px;
+  border-radius: var(--q-r-xs);
+  border: 1px solid var(--q-line);
+}
+
+.q-code-block {
+  display: block;
+  padding: var(--q-s-5);
+  background: var(--q-bg-3);
+  border: 1px solid var(--q-line);
+  border-radius: var(--q-r-lg);
+  font-family: var(--q-font-mono);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--q-text-hi);
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.q-callout {
+  display: flex;
+  gap: var(--q-s-3);
+  padding: var(--q-s-5);
+  background: var(--q-bg-2);
+  border: 1px solid var(--q-line);
+  border-left: 2px solid var(--q-accent);
+  border-radius: var(--q-r-md);
+  font-size: var(--q-t-small);
+  color: var(--q-text-mid);
+}
+.q-callout strong { color: var(--q-text-hi); font-weight: var(--q-fw-semibold); }
+
+
+/* ═══════════════════════════════════════════════════════════════════
+ * SECTION HEAD (numbered, но дисциплинированный — НЕ как v3)
+ * ═══════════════════════════════════════════════════════════════════ */
+
+.q-section {
+  position: relative;
+  padding: var(--q-s-11) 0;
+  border-top: 1px solid var(--q-line-strong);
+  /* bg bleed'ит горизонтально (до края страницы), клипуется вертикально.
+     -1px на top — чтобы 1px border-top не съело clip-path. */
+  clip-path: inset(-1px -100vw 0 -100vw);
+}
+.q-section:first-child { border-top: 0; }
+
+.q-section-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--q-s-3);
+  margin-bottom: var(--q-s-8);
+  max-width: 640px;
+}
+.q-section-head__num {
+  font-family: var(--q-font-mono);
+  font-size: var(--q-t-mono);
+  font-weight: var(--q-fw-medium);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--q-text-low);
+}
+.q-section-head__num em {
+  font-style: normal;
+  color: var(--q-accent);
+}
+.q-section-head__title {
+  font-family: var(--q-font-display);
+  font-size: var(--q-t-h2);
+  font-weight: var(--q-fw-linear);
+  letter-spacing: var(--q-tracking-h2);
+  line-height: 1.1;
+  margin: 0;
+}
+.q-section-head__sub {
+  color: var(--q-text-mid);
+  font-size: var(--q-t-small);
+  line-height: 1.55;
+  max-width: 56ch;
+  margin: 0;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+ * DO / DON'T
+ * ═══════════════════════════════════════════════════════════════════ */
+
+.q-dodont {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--q-s-4);
+}
+.q-dodont__cell {
+  position: relative;
+  padding: var(--q-s-6);
+  border-radius: var(--q-r-lg);
+  border: 1px solid var(--q-line);
+  background: var(--q-bg-1);
+}
+.q-dodont__cell--do   { border-top: 2px solid var(--q-ok);  }
+.q-dodont__cell--dont { border-top: 2px solid var(--q-err); }
+.q-dodont__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--q-font-mono);
+  font-size: 11px;
+  font-weight: var(--q-fw-medium);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: var(--q-s-4);
+}
+.q-dodont__cell--do   .q-dodont__label { color: var(--q-ok);  }
+.q-dodont__cell--dont .q-dodont__label { color: var(--q-err); }
+.q-dodont__label::before {
+  content: "";
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+ * ANTIPATTERNS (воссоздаём, чтобы показать «так — нет»)
+ * ═══════════════════════════════════════════════════════════════════ */
+
+.q-anti-gradient-text {
+  font-family: var(--q-font-display);
+  font-size: 2rem;
+  font-weight: var(--q-fw-bold);
+  background: linear-gradient(135deg, #F1F5F9, #3B6FFF, #FF6FCF);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+}
+
+.q-anti-glow {
+  position: relative;
+  padding: var(--q-s-8);
+  display: inline-block;
+  isolation: isolate;
+}
+.q-anti-glow::before {
+  content: "";
+  position: absolute; inset: -20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(94,106,210,0.5), transparent 60%);
+  filter: blur(40px);
+  z-index: -1;
+}
+
+.q-anti-giant-h1 {
+  font-family: var(--q-font-display);
+  font-size: clamp(4rem, 12vw, 8rem);
+  font-weight: 900;
+  line-height: 0.85;
+  letter-spacing: -0.06em;
+  color: var(--q-text-hi);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+ * RESPONSIVE
+ * ═══════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 900px) {
+  .q-dodont        { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .q-topbar        { height: 52px; padding: 0 var(--q-s-4); }
+  .q-topbar__nav   { display: none; }
+  .q-section       { padding: var(--q-s-9) 0; }
+  .q-card          { padding: var(--q-s-5); border-radius: var(--q-r-lg); }
+  .q-card--lg      { padding: var(--q-s-6); }
+}

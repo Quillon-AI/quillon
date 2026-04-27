@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quillon v4 · Pricing block (14)</title>
+
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/tokens.css?v=4">
+  <link rel="stylesheet" href="../css/base.css?v=4">
+  <link rel="stylesheet" href="../css/components.css?v=4">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+     * 14 · PRICING — конверсионный блок (v2 после sales+designer audit)
+     *
+     * Решение жалобы «за что платишь не сразу видно»:
+     *   • HERO 5/7 split: слева price-stack, справа includes-ledger.
+     *   • Trial поднят в price-stack (risk-reversal рядом с ценой).
+     *   • Bonus + ROI ушли в 2-cell trust band ниже hero.
+     *   • Якорь 319₽/час встроен в price-stack между ценой и trial.
+     *
+     * Тексты 1:1 с прод-content.json (`.pricing`).
+     * Согласованные правки: 576→480 ч, Диплом→Сертификат.
+     *
+     * Anti-AI:
+     *   • Никаких ✓ галочек — editorial mono-num вместо bullet.
+     *   • Никаких glow-orb'ов, decorative dots, color-fill cards.
+     *   • Цена индиго — единственный display-якорь.
+     *   • Vertical hairline между колонками hero.
+     * ═══════════════════════════════════════════════════════════════ */
+
+    .q-pr {
+      position: relative;
+      padding: var(--q-s-10) 0 var(--q-s-11);
+      overflow: hidden;
+    }
+    .q-pr::before {
+      content: "";
+      position: absolute;
+      top: -240px;
+      right: -240px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(94, 106, 210, 0.06), transparent 62%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .q-pr .q-container { position: relative; z-index: 1; }
+    .q-pr .q-section-head { max-width: 800px; margin-bottom: var(--q-s-9); }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * HERO — 5/7 grid: PRICE-STACK | INCLUDES-LEDGER
+     *   Single panel с hairline-top/bottom strong.
+     *   Vertical hairline между колонками — через border-right на левой.
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-pr-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    }
+    .q-pr-hero__col {
+      padding: var(--q-s-8) var(--q-s-7);
+      display: flex;
+      flex-direction: column;
+    }
+    .q-pr-hero__col--left {
+      border-right: 1px solid var(--q-line);
+      padding-left: 0;
+      gap: var(--q-s-5);
+    }
+    .q-pr-hero__col--right {
+      padding-right: 0;
+      gap: var(--q-s-5);
+    }
+
+    /* ─── LEFT: price-stack ─── */
+    .q-pr-hero__price {
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-3);
+    }
+    .q-pr-hero__num {
+      font-family: var(--q-font-display);
+      font-size: clamp(3rem, 6.4vw, 5.25rem);
+      font-weight: var(--q-fw-linear);
+      line-height: 0.95;
+      letter-spacing: -0.032em;
+      color: var(--q-text-hi);
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+    }
+    .q-pr-hero__num span { color: var(--q-accent-hover); }
+    .q-pr-hero__num em {
+      font-style: normal;
+      color: var(--q-text-mid);
+      font-size: 0.42em;
+      letter-spacing: -0.012em;
+    }
+    .q-pr-hero__detail {
+      font-size: var(--q-t-base);
+      color: var(--q-text-mid);
+      margin: 0;
+    }
+    .q-pr-hero__detail b {
+      color: var(--q-text-hi);
+      font-weight: var(--q-fw-medium);
+    }
+
+    /* Dashed-divider между группами в price-stack */
+    .q-pr-hero__sep {
+      border: 0;
+      border-top: 1px dashed var(--q-line);
+      margin: var(--q-s-2) 0;
+    }
+
+    /* Group: kicker + body */
+    .q-pr-hero__group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-2);
+    }
+    .q-pr-hero__kicker {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+    .q-pr-hero__kicker--accent {
+      color: var(--q-accent-hover);
+      font-weight: var(--q-fw-medium);
+    }
+    .q-pr-hero__group-title {
+      font-family: var(--q-font-display);
+      font-size: var(--q-t-h6);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.012em;
+      color: var(--q-text-hi);
+      margin: 0;
+      line-height: 1.3;
+    }
+    .q-pr-hero__group-text {
+      font-size: var(--q-t-small);
+      line-height: 1.55;
+      color: var(--q-text-mid);
+      margin: 0;
+      max-width: 42ch;
+    }
+    .q-pr-hero__group-text b {
+      color: var(--q-text-hi);
+      font-weight: var(--q-fw-medium);
+    }
+
+    /* ─── RIGHT: includes-ledger ─── */
+    .q-pr-incl-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--q-s-4);
+      padding-bottom: var(--q-s-4);
+      border-bottom: 1px solid var(--q-line-strong);
+    }
+    .q-pr-incl-head__title {
+      font-family: var(--q-font-display);
+      font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.014em;
+      color: var(--q-text-hi);
+      line-height: 1.2;
+      margin: 0;
+    }
+    .q-pr-incl-head__count {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-text-low);
+      font-feature-settings: "tnum" 1;
+    }
+
+    .q-pr-incl {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .q-pr-incl__item {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      column-gap: var(--q-s-3);
+      align-items: baseline;
+      padding: var(--q-s-4) 0;
+      border-bottom: 1px solid var(--q-line);
+    }
+    .q-pr-incl__item:last-child { border-bottom: 0; }
+    .q-pr-incl__num {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      color: var(--q-text-low);
+      font-weight: var(--q-fw-medium);
+      font-feature-settings: "tnum" 1;
+    }
+    .q-pr-incl__text {
+      font-size: var(--q-t-base);
+      line-height: 1.5;
+      color: var(--q-text-hi);
+      margin: 0;
+      max-width: 46ch;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * TRUST BAND — 2-cell: Bonus · ROI
+     *   (Trial поднят в hero, поэтому здесь только два supporting cells.)
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-pr-trust {
+      display: grid;
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      border-top: 1px solid var(--q-line-strong);
+      border-bottom: 1px solid var(--q-line-strong);
+    }
+    .q-pr-trust__cell {
+      padding: var(--q-s-7) var(--q-s-7);
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-3);
+      border-right: 1px solid var(--q-line);
+    }
+    .q-pr-trust__cell:first-child { padding-left: 0; }
+    .q-pr-trust__cell:last-child { padding-right: 0; border-right: 0; }
+    .q-pr-trust__kicker {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-text-low);
+      margin-bottom: var(--q-s-2);
+    }
+    .q-pr-trust__title {
+      font-family: var(--q-font-display);
+      font-size: var(--q-t-h6);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.012em;
+      color: var(--q-text-hi);
+      line-height: 1.3;
+      margin: 0;
+    }
+    .q-pr-trust__text {
+      font-size: var(--q-t-small);
+      line-height: 1.55;
+      color: var(--q-text-mid);
+      margin: 0;
+    }
+    .q-pr-trust__text b {
+      color: var(--q-text-hi);
+      font-weight: var(--q-fw-medium);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * MAIN CTA
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-pr-cta {
+      padding: var(--q-s-7) 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--q-s-5);
+    }
+    .q-pr-cta__copy {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      max-width: 56ch;
+    }
+    .q-pr-cta__title {
+      font-family: var(--q-font-display);
+      font-size: var(--q-t-h5);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.014em;
+      color: var(--q-text-hi);
+    }
+    .q-pr-cta__sub {
+      font-size: var(--q-t-small);
+      color: var(--q-text-mid);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * RESPONSIVE
+     * ═══════════════════════════════════════════════════════════════ */
+    @media (max-width: 1100px) {
+      .q-pr-hero { grid-template-columns: 1fr; }
+      .q-pr-hero__col--left {
+        border-right: 0;
+        border-bottom: 1px solid var(--q-line);
+        padding: var(--q-s-7) 0;
+      }
+      .q-pr-hero__col--right {
+        padding: var(--q-s-7) 0;
+      }
+    }
+    @media (max-width: 860px) {
+      .q-pr-trust { grid-template-columns: 1fr; }
+      .q-pr-trust__cell {
+        border-right: 0;
+        border-bottom: 1px solid var(--q-line);
+        padding: var(--q-s-6) var(--q-s-5);
+      }
+      .q-pr-trust__cell:last-child { border-bottom: 0; }
+      .q-pr-cta { flex-direction: column; align-items: flex-start; gap: var(--q-s-4); }
+    }
+    @media (max-width: 720px) {
+      .q-pr { padding: var(--q-s-8) 0 var(--q-s-9); }
+      .q-pr-incl__item { grid-template-columns: 28px 1fr; padding: var(--q-s-3) 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       STICKY TOPBAR
+       ═══════════════════════════════════════════════════════════════ -->
+  <header class="q-topbar">
+    <a href="#" class="q-topbar__brand">
+      <span class="q-topbar__brand-mark">Q</span>
+      <span>Quillon</span>
+    </a>
+
+    <nav class="q-topbar__nav" aria-label="Главная навигация">
+      <a class="q-topbar__link" href="#tracks">Треки</a>
+      <a class="q-topbar__link" href="#format">Формат</a>
+      <a class="q-topbar__link" href="#pricing">Цена</a>
+      <a class="q-topbar__link" href="#quillon_jobs">Jobs</a>
+      <a class="q-topbar__link" href="#faq">FAQ</a>
+    </nav>
+
+    <div class="q-topbar__actions">
+      <a class="q-btn q-btn--link" href="#">Войти</a>
+      <a class="q-btn q-btn--primary q-btn--sm" href="/quiz">Пройти тест</a>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       14 · PRICING
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="q-section q-pr" id="pricing">
+    <div class="q-container">
+
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>14</em> · СТОИМОСТЬ</div>
+        <h2 class="q-section-head__title">Открытая цена, без&nbsp;мелкого шрифта</h2>
+      </header>
+
+      <!-- ═══════════════ HERO · 5/7 split ═══════════════ -->
+      <div class="q-pr-hero">
+
+        <!-- ─── LEFT: price-stack ─── -->
+        <div class="q-pr-hero__col q-pr-hero__col--left">
+
+          <div class="q-pr-hero__price">
+            <div class="q-pr-hero__num"><span>8&nbsp;250</span>&nbsp;<em>₽/мес</em></div>
+            <p class="q-pr-hero__detail"><b>Рассрочка 0%</b> на&nbsp;24&nbsp;месяца · без переплат</p>
+          </div>
+
+          <hr class="q-pr-hero__sep" />
+
+          <div class="q-pr-hero__group">
+            <span class="q-pr-hero__kicker">Якорь цены</span>
+            <p class="q-pr-hero__group-text"><b>319 руб</b> за&nbsp;час программы&nbsp;— дешевле, чем час с&nbsp;репетитором по&nbsp;Python (от&nbsp;1&nbsp;500&nbsp;руб).</p>
+          </div>
+
+          <hr class="q-pr-hero__sep" />
+
+          <div class="q-pr-hero__group">
+            <span class="q-pr-hero__kicker q-pr-hero__kicker--accent">7&nbsp;дней · возврат 100%</span>
+            <h3 class="q-pr-hero__group-title">Полный доступ ко&nbsp;всему</h3>
+            <p class="q-pr-hero__group-text">Если не&nbsp;подойдёт&nbsp;— <b>вернём 100% без вопросов.</b> Без мелкого шрифта, без «удержания за&nbsp;обработку».</p>
+          </div>
+
+        </div>
+
+        <!-- ─── RIGHT: includes-ledger ─── -->
+        <div class="q-pr-hero__col q-pr-hero__col--right">
+
+          <div class="q-pr-incl-head">
+            <h3 class="q-pr-incl-head__title">Что входит в&nbsp;программу</h3>
+            <span class="q-pr-incl-head__count">09 пунктов</span>
+          </div>
+
+          <ol class="q-pr-incl" aria-label="Что входит в программу">
+
+            <li class="q-pr-incl__item">
+              <span class="q-pr-incl__num">01</span>
+              <p class="q-pr-incl__text">12&nbsp;месяцев программы&nbsp;— от&nbsp;480&nbsp;часов практики</p>
+            </li>
+            <li class="q-pr-incl__item">
+              <span class="q-pr-incl__num">02</span>
+              <p class="q-pr-incl__text">1&nbsp;трек на&nbsp;выбор: Python, Flutter или QA</p>
+            </li>
+            <li class="q-pr-incl__item">
+              <span class="q-pr-incl__num">03</span>
+              <p class="q-pr-incl__text">Стажировка на&nbsp;production-продуктах Quillon</p>
+            </li>
+            <li class="q-pr-incl__item">
+              <span class="q-pr-incl__num">04</span>
+              <p class="q-pr-incl__text">Оплачиваемые задачи со&nbsp;2-го месяца, возможность взять коммерческие проекты</p>
+            </li>
+            <li class="q-pr-incl__item">
+              <span class="q-pr-incl__num">05</span>
+              <p class="q-pr-incl__text">Стартап как дипломный проект (до&nbsp;500&nbsp;000&nbsp;руб инвестиций)</p>
+            </li>
+            <li class="q-pr-incl__item">
+              <span class="q-pr-incl__num">06</span>
+              <p class="q-pr-incl__text">AI-помощник Quilly&nbsp;— поддержка 24/7</p>
+            </li>
+            <li class="q-pr-incl__item">
+              <span class="q-pr-incl__num">07</span>
+              <p class="q-pr-incl__text">LaunchPad: помощь до&nbsp;первого оффера</p>
+            </li>
+            <li class="q-pr-incl__item">
+              <span class="q-pr-incl__num">08</span>
+              <p class="q-pr-incl__text">Модули: Prompt Engineering + Vibe Coding + AI-инструменты</p>
+            </li>
+            <li class="q-pr-incl__item">
+              <span class="q-pr-incl__num">09</span>
+              <p class="q-pr-incl__text">Сертификат об&nbsp;окончании программы</p>
+            </li>
+
+          </ol>
+
+        </div>
+      </div>
+
+      <!-- ═══════════════ TRUST BAND · 2-cell ═══════════════ -->
+      <div class="q-pr-trust">
+
+        <div class="q-pr-trust__cell">
+          <span class="q-pr-trust__kicker">В&nbsp;подарок</span>
+          <h3 class="q-pr-trust__title">Модуль «AI-разработчик»</h3>
+          <p class="q-pr-trust__text">Prompt Engineering + Vibe Coding + инструменты нового поколения. <b>Для&nbsp;участников текущего набора&nbsp;— бесплатно.</b></p>
+        </div>
+
+        <div class="q-pr-trust__cell">
+          <span class="q-pr-trust__kicker">Первый заказ · со&nbsp;2-го месяца</span>
+          <h3 class="q-pr-trust__title">Зарабатываешь до&nbsp;выпуска</h3>
+          <p class="q-pr-trust__text">Не&nbsp;ждёшь окончания программы: со&nbsp;2-го месяца берёшь оплачиваемые задачи через <b>Quillon&nbsp;Jobs</b>&nbsp;— парсеры, боты, автоматизации.</p>
+        </div>
+
+      </div>
+
+      <!-- ═══════════════ MAIN CTA ═══════════════ -->
+      <div class="q-pr-cta">
+        <div class="q-pr-cta__copy">
+          <span class="q-pr-cta__title">Готовы начать?</span>
+          <span class="q-pr-cta__sub">Тест за&nbsp;5&nbsp;минут&nbsp;— подберём трек и&nbsp;покажем расчёт окупаемости.</span>
+        </div>
+        <a class="q-btn q-btn--primary q-btn--lg" href="/quiz">
+          Пройти тест и&nbsp;узнать свой трек
+          <span class="q-btn__icon" aria-hidden="true">→</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+</body>
+</html>

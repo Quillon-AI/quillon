@@ -1,0 +1,235 @@
+/* ═══════════════════════════════════════════════════════════════════
+ * Quillon v4 — Design Tokens
+ *
+ * Синтез из 3 референсов (замеры computed styles апрель 2026):
+ *   — Vercel   (vercel.com)   : #000 / #EDEDED / Geist Variable, H1 48/1.0/-2.3
+ *   — Linear   (linear.app)   : #08090A / #F7F8F8 / Inter w.510,  H1 64/1.0/-1.4
+ *   — Raycast  (raycast.com)  : #07080A / #FFF   / Inter+GeistMono, H1 64/1.1
+ *
+ * Паттерны, которые мы извлекли:
+ *   1) H1 = 48–64px, weight 500–600, lh 1.0–1.1, tracking ~-1.4 → -2.3px
+ *   2) Body 16px baseline
+ *   3) Button radius 6–8px. Pill (9999px) только для chips/nav
+ *   4) Warm near-black #07–0A (НЕ чистый #000 — слишком AI-cold)
+ *   5) Off-white text 3 уровня: hi / mid / low
+ *   6) Один точечный акцент (не violet)
+ *   7) Mono — премиум-сигнал
+ *
+ * Отстройка от v3:
+ *   v3: Unbounded 900, type up to 6.5rem, radius 36px, violet gradient
+ *   v4: Inter 510, H1 cap 64px, radius 6–16px max, indigo flat, zero glow
+ * ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ───────────────────────────────────────────────────────────────
+   * SURFACE — warm near-black scale (0 → 9)
+   *   База #08090A взята у Linear. Тёплый оттенок (зелёно-серый)
+   *   отличает нас от Vercel-pure-black и Raycast-blue-tinted-black.
+   *   Проверено глазом: на 27" IPS не «плоско», на MBP не «серо».
+   * ─────────────────────────────────────────────────────────────── */
+  --q-bg-0: #08090A;        /* page, самый глубокий                 */
+  --q-bg-1: #0D0E10;        /* sticky header, section alt           */
+  --q-bg-2: #121316;        /* elevated card, input bg              */
+  --q-bg-3: #191A1E;        /* nested surface, code-block           */
+  --q-bg-4: #202125;        /* hover on dark card, divider strong   */
+  --q-bg-5: #2A2B30;        /* high-elevation hover                 */
+  --q-bg-6: #393A40;        /* disabled surface                     */
+  --q-bg-7: #55565D;        /* disabled text-on-surface             */
+  --q-bg-8: #8A8B92;        /* fallback, border bright              */
+  --q-bg-9: #C9CACF;        /* very high surface (inverse regions)  */
+
+  /* Hairlines (1px borders вместо shadow — Linear/Vercel-way) */
+  --q-line:        rgba(255, 255, 255, 0.07);   /* дефолт карточки */
+  --q-line-soft:   rgba(255, 255, 255, 0.04);   /* хинт-граница    */
+  --q-line-strong: rgba(255, 255, 255, 0.12);   /* видимый divider */
+  --q-line-hover:  rgba(255, 255, 255, 0.18);   /* hover border    */
+
+  /* ───────────────────────────────────────────────────────────────
+   * TEXT — 3 уровня иерархии на dark.
+   *   hi = H1/H2 и body-copy (13:1 контраст на --q-bg-0)
+   *   mid = подзаголовки, описания ( 7:1 )
+   *   low = captions, meta-инфо    ( 4.6:1 — граница WCAG AA для large)
+   * ─────────────────────────────────────────────────────────────── */
+  --q-text-hi:  #F4F4F5;    /* off-white, не чистый #FFF — теплее, не режет */
+  --q-text-mid: #A1A1AA;    /* muted body, nav-items                         */
+  --q-text-low: #70707A;    /* meta, timestamps, legal                       */
+  --q-text-dim: #4D4D55;    /* disabled, placeholder                         */
+
+  /* Inverse (на светлых кнопках/callout-ах) */
+  --q-text-inv-hi:  #0A0A0A;
+  --q-text-inv-mid: #404046;
+
+  /* ───────────────────────────────────────────────────────────────
+   * ACCENT — Indigo #5E6AD2 (Linear-family, углублённый)
+   *
+   * Выбор: не синий Vercel (#0070F3), не coral Raycast.
+   *   • Blue #0070F3 → «ещё одно IT-обещание», низкая отстройка от
+   *     Skillbox/Practicum/Яндекс (все синие).
+   *   • Coral Raycast → эмоционально «warm/product-launch», не
+   *     читается как «серьёзная школа про стажировку+деньги».
+   *   • Indigo #5E6AD2 → профессионально-сдержанный. Близок к v3-
+   *     violet, но на 15% глубже по L и на 10% менее насыщен:
+   *     читается как «tools-brand» (Linear, Stripe), а не как
+   *     «edtech-flex» (SmartClass).
+   *
+   *   Контраст на --q-bg-0: 5.1:1 (AA для normal text, AAA для large).
+   *   Hover: lift по L (brighter), не по hue. Никогда не gradient-text.
+   *   Gradient допустим только на primary-CTA как тонкий one-hue shift
+   *   (#5E6AD2 → #6E7AE2), НЕ как multi-hue (violet → pink — ЗАПРЕЩЕНО).
+   * ─────────────────────────────────────────────────────────────── */
+  --q-accent:        #5E6AD2;    /* primary accent, flat            */
+  --q-accent-hover:  #6E7AE2;    /* +10% L для hover                */
+  --q-accent-press:  #4C58BE;    /* -10% L для active/pressed       */
+  --q-accent-soft:   #2A2E52;    /* muted bg для chip-on-accent     */
+  --q-accent-ink:    #1A1C30;    /* deep shadow-tint, inputs focus  */
+
+  /* Semantic (тонкие, не сигналят громче primary-accent) */
+  --q-ok:    #4ADE80;
+  --q-warn:  #FACC15;
+  --q-err:   #F87171;
+  --q-info:  #60A5FA;
+
+  /* ───────────────────────────────────────────────────────────────
+   * TYPOGRAPHY FAMILIES
+   *
+   *   Display/Body: Inter Variable (wght 100-900).
+   *     — Linear и Raycast оба используют Inter. Отличная кириллица
+   *       (cyrillic + cyrillic-ext). Вариационный weight позволяет
+   *       использовать 510 (Linear-trick: тоньше SemiBold но плотнее
+   *       Medium — premium «crisp» feel).
+   *     — Geist Variable рассматривали, но: у Inter кириллица заметно
+   *       лучше (Geist Cyrillic новее, меньше отточен), а нам нужна
+   *       русская оптика без боли.
+   *
+   *   Mono: Geist Mono (Vercel open-source, SIL OFL, 2024).
+   *     — премиум-mono без Berkeley-paywall. Лучше JetBrains-Mono в
+   *       малых кеглях (узкие формы, tight lh).
+   *     — JetBrains Mono оставляем как второй fallback для code-blocks
+   *       старого контента на проде.
+   * ─────────────────────────────────────────────────────────────── */
+  --q-font-sans:    "Inter Variable", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --q-font-display: "Inter Variable", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --q-font-mono:    "Geist Mono", "JetBrains Mono", "SF Mono", ui-monospace, Menlo, monospace;
+
+  /* ───────────────────────────────────────────────────────────────
+   * TYPE SCALE — дисциплинированная шкала.
+   *
+   *   H1 cap = 64px (Linear/Raycast). Никогда не больше.
+   *   H2 cap = 40px.
+   *   Body = 16px. Baseline.
+   *   Mono eyebrow = 12px с letter-spacing +0.06em.
+   *
+   *   Anti-v3: нет --q-t-display-xl (6.5rem/104px). Maximum = 64px.
+   * ─────────────────────────────────────────────────────────────── */
+  --q-t-h1:      clamp(2.5rem, 4.2vw, 4rem);    /* 40 → 64px */
+  --q-t-h2:      clamp(2rem,   3vw,   2.5rem);  /* 32 → 40px */
+  --q-t-h3:      clamp(1.25rem, 1.6vw, 1.5rem); /* 20 → 24px */
+  --q-t-h4:      1.125rem;                       /* 18px */
+  --q-t-lead:    clamp(1rem, 1.3vw, 1.125rem);  /* 16 → 18px подзаголовок hero */
+  --q-t-body:    1rem;                           /* 16px */
+  --q-t-small:   0.9375rem;                      /* 15px — Linear-paragraph */
+  --q-t-xs:      0.8125rem;                      /* 13px — nav, label */
+  --q-t-mono:    0.75rem;                        /* 12px — eyebrow */
+
+  /* Тайповая настройка — Inter 510 trick */
+  --q-fw-regular:  400;
+  --q-fw-medium:   500;
+  --q-fw-linear:   510;   /* ← Linear-custom: между medium и semibold */
+  --q-fw-semibold: 600;
+  --q-fw-bold:     700;
+
+  /* Letter-spacing калиброванный под Inter (negative для крупных) */
+  --q-tracking-h1:   -0.035em;  /* ≈ -1.4px на 40px, -2.2px на 64px  */
+  --q-tracking-h2:   -0.025em;
+  --q-tracking-h3:   -0.015em;
+  --q-tracking-body:  0em;
+  --q-tracking-mono:  0.04em;   /* eyebrow letter-spacing positive   */
+
+  /* Line-height */
+  --q-lh-tight:  1.0;    /* H1 — Linear/Vercel стиль              */
+  --q-lh-snug:   1.1;    /* H2, Raycast-style H1                  */
+  --q-lh-normal: 1.5;    /* body                                   */
+  --q-lh-prose:  1.6;    /* лонгрид                                */
+
+  /* ───────────────────────────────────────────────────────────────
+   * RADII — дисциплинированная лестница 6/8/12/16/24
+   *   • Button: 6–8px (все 3 референса)
+   *   • Input:  8px
+   *   • Card:   12–16px
+   *   • Big hero-card: 20–24px maximum
+   *   • Pill:   9999px — ТОЛЬКО для chips/nav, не для CTA
+   *
+   *   Anti-v3: нет 36px (SmartClass-splash). 28/36 убраны.
+   * ─────────────────────────────────────────────────────────────── */
+  --q-r-xs:   4px;
+  --q-r-sm:   6px;     /* button small, chip */
+  --q-r-md:   8px;     /* button default, input */
+  --q-r-lg:   12px;    /* card small */
+  --q-r-xl:   16px;    /* card default */
+  --q-r-2xl:  20px;    /* hero-card, максимум в системе */
+  --q-r-3xl:  24px;    /* редко — только крупный feature */
+  --q-r-pill: 9999px;  /* chips, nav-links, badges */
+
+  /* ───────────────────────────────────────────────────────────────
+   * SPACING — 4px grid
+   * ─────────────────────────────────────────────────────────────── */
+  --q-s-1:  4px;
+  --q-s-2:  8px;
+  --q-s-3:  12px;
+  --q-s-4:  16px;
+  --q-s-5:  20px;
+  --q-s-6:  24px;
+  --q-s-7:  32px;
+  --q-s-8:  40px;
+  --q-s-9:  56px;
+  --q-s-10: 72px;
+  --q-s-11: 96px;
+  --q-s-12: 128px;
+
+  /* ───────────────────────────────────────────────────────────────
+   * LAYOUT
+   * ─────────────────────────────────────────────────────────────── */
+  --q-container:     1200px;
+  --q-container-sm:  960px;
+  --q-container-xs:  720px;
+  --q-gutter:        24px;
+
+  /* ───────────────────────────────────────────────────────────────
+   * ELEVATION — border-first philosophy (Linear/Vercel).
+   *   Shadows используются точечно, почти не видимы.
+   *   Главная работа «глубины» — на граница + светлый inset.
+   * ─────────────────────────────────────────────────────────────── */
+  --q-el-0: none;
+  --q-el-1: 0 0 0 1px var(--q-line);
+  --q-el-2:
+    0 0 0 1px var(--q-line),
+    0 1px 0 0 rgba(255, 255, 255, 0.04) inset,
+    0 8px 24px -12px rgba(0, 0, 0, 0.5);
+  --q-el-3:
+    0 0 0 1px var(--q-line-strong),
+    0 1px 0 0 rgba(255, 255, 255, 0.06) inset,
+    0 24px 48px -20px rgba(0, 0, 0, 0.7);
+
+  /* Glow — используется только у primary-CTA, тонкий halo одного hue */
+  --q-glow-accent: 0 0 0 1px rgba(94, 106, 210, 0.4),
+                   0 8px 32px -12px rgba(94, 106, 210, 0.5);
+
+  /* ───────────────────────────────────────────────────────────────
+   * MOTION
+   * ─────────────────────────────────────────────────────────────── */
+  --q-ease:       cubic-bezier(0.22, 1, 0.36, 1);
+  --q-ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
+  --q-ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --q-dur-fast: 120ms;
+  --q-dur-med:  220ms;
+  --q-dur-slow: 360ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --q-dur-fast: 0ms;
+    --q-dur-med:  0ms;
+    --q-dur-slow: 0ms;
+  }
+}

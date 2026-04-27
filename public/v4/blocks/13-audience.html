@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quillon v4 · Audience block (13)</title>
+
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/tokens.css?v=4">
+  <link rel="stylesheet" href="../css/base.css?v=4">
+  <link rel="stylesheet" href="../css/components.css?v=4">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+     * 13 · AUDIENCE — для кого программа
+     *
+     * Тексты 1:1 с прод-content.json (`.audience`).
+     *
+     * Структура:
+     *   • Section head (13 · ДЛЯ КОГО)
+     *   • 3 group-блока, в каждом:
+     *       - title + subtitle (одна строка с hairline снизу)
+     *       - 2-col grid из 4 персон
+     *   • Каждая персона: tag (mono) + title + pain → solution (стрелка)
+     *
+     * Anti-AI:
+     *   • Иконки `emoji` (compass, briefcase, flame, home, etc.) ИГНОРИРУЕМ
+     *     — заменены mono-tag-метками.
+     *   • Никаких картинок-аватаров «персонажей».
+     *   • «→» как естественный визуальный пивот pain→solution.
+     * ═══════════════════════════════════════════════════════════════ */
+
+    .q-aud {
+      position: relative;
+      padding: var(--q-s-10) 0 var(--q-s-11);
+      overflow: hidden;
+    }
+    .q-aud::before {
+      content: "";
+      position: absolute;
+      bottom: -240px;
+      right: -240px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(94, 106, 210, 0.06), transparent 62%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .q-aud .q-container { position: relative; z-index: 1; }
+    .q-aud .q-section-head { max-width: 800px; margin-bottom: var(--q-s-9); }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * GROUP — заголовок + 2-col персоны
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-aud-group {
+      margin-bottom: var(--q-s-10);
+    }
+    .q-aud-group:last-child { margin-bottom: 0; }
+
+    .q-aud-group__head {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: var(--q-s-5);
+      align-items: baseline;
+      padding-bottom: var(--q-s-5);
+      margin-bottom: 0;
+      border-bottom: 1px solid var(--q-line);
+    }
+    .q-aud-group__num {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      color: var(--q-accent-hover);
+      font-weight: var(--q-fw-medium);
+      font-feature-settings: "tnum" 1;
+    }
+    .q-aud-group__copy {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .q-aud-group__title {
+      font-family: var(--q-font-display);
+      font-size: clamp(1.5rem, 2.4vw, 2rem);
+      font-weight: var(--q-fw-linear);
+      letter-spacing: -0.02em;
+      color: var(--q-text-hi);
+      line-height: 1.1;
+      margin: 0;
+    }
+    .q-aud-group__subtitle {
+      font-size: var(--q-t-base);
+      color: var(--q-text-mid);
+      max-width: 64ch;
+      margin: 0;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * PERSONAS — 2-col grid (4 элемента → 2×2 ряд)
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-aud-personas {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      border-bottom: 1px solid var(--q-line-strong);
+    }
+    .q-aud-persona {
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-3);
+      padding: var(--q-s-7);
+      border-right: 1px solid var(--q-line);
+      border-bottom: 1px solid var(--q-line);
+      transition: background var(--q-dur-fast) var(--q-ease);
+    }
+    .q-aud-persona:nth-child(2n) { border-right: 0; }
+    .q-aud-persona:nth-last-child(-n+2) { border-bottom: 0; }
+    .q-aud-persona:hover { background: rgba(94, 106, 210, 0.025); }
+
+    .q-aud-persona__tag {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-text-low);
+      margin-bottom: var(--q-s-2);
+    }
+    .q-aud-persona__title {
+      font-family: var(--q-font-display);
+      font-size: clamp(1.125rem, 1.5vw, 1.25rem);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.012em;
+      color: var(--q-text-hi);
+      line-height: 1.25;
+      margin: 0 0 var(--q-s-3);
+      /* Резерв под 2 строки для выравнивания */
+      min-height: 2.5em;
+    }
+    .q-aud-persona__pain {
+      font-size: var(--q-t-small);
+      line-height: 1.55;
+      color: var(--q-text-mid);
+      margin: 0;
+      max-width: 50ch;
+    }
+    .q-aud-persona__solution {
+      display: grid;
+      grid-template-columns: 16px 1fr;
+      gap: 8px;
+      align-items: baseline;
+      margin-top: var(--q-s-3);
+      padding-top: var(--q-s-3);
+      border-top: 1px dashed var(--q-line);
+    }
+    .q-aud-persona__arrow {
+      font-family: var(--q-font-mono);
+      color: var(--q-accent);
+      font-weight: var(--q-fw-medium);
+      line-height: 1.55;
+    }
+    .q-aud-persona__solution-text {
+      font-size: var(--q-t-small);
+      line-height: 1.55;
+      color: var(--q-text-hi);
+      margin: 0;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * RESPONSIVE
+     * ═══════════════════════════════════════════════════════════════ */
+    @media (max-width: 1100px) {
+      .q-aud-persona { padding: var(--q-s-6); }
+    }
+    @media (max-width: 720px) {
+      .q-aud { padding: var(--q-s-8) 0 var(--q-s-9); }
+      .q-aud-personas { grid-template-columns: 1fr; }
+      .q-aud-persona:nth-child(n) {
+        border-right: 0;
+        border-bottom: 1px solid var(--q-line);
+        padding: var(--q-s-5) 0;
+      }
+      .q-aud-persona:last-child { border-bottom: 0; }
+      .q-aud-group__head { grid-template-columns: 40px 1fr; gap: var(--q-s-3); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       STICKY TOPBAR
+       ═══════════════════════════════════════════════════════════════ -->
+  <header class="q-topbar">
+    <a href="#" class="q-topbar__brand">
+      <span class="q-topbar__brand-mark">Q</span>
+      <span>Quillon</span>
+    </a>
+
+    <nav class="q-topbar__nav" aria-label="Главная навигация">
+      <a class="q-topbar__link" href="#tracks">Треки</a>
+      <a class="q-topbar__link" href="#format">Формат</a>
+      <a class="q-topbar__link" href="#pricing">Цена</a>
+      <a class="q-topbar__link" href="#quillon_jobs">Jobs</a>
+      <a class="q-topbar__link" href="#faq">FAQ</a>
+    </nav>
+
+    <div class="q-topbar__actions">
+      <a class="q-btn q-btn--link" href="#">Войти</a>
+      <a class="q-btn q-btn--primary q-btn--sm" href="/quiz">Пройти тест</a>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       13 · AUDIENCE
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="q-section q-aud" id="audience">
+    <div class="q-container">
+
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>13</em> · ДЛЯ КОГО</div>
+        <h2 class="q-section-head__title">Программа подойдёт тебе, если</h2>
+        <p class="q-section-head__sub">
+          Разные точки старта&nbsp;— один результат: коммерческий опыт в&nbsp;IT, портфолио с&nbsp;production-кодом и&nbsp;помощь до&nbsp;оффера.
+        </p>
+      </header>
+
+      <!-- ═══════════════ GROUP 01 ═══════════════ -->
+      <section class="q-aud-group">
+        <header class="q-aud-group__head">
+          <span class="q-aud-group__num">01</span>
+          <div class="q-aud-group__copy">
+            <h3 class="q-aud-group__title">В&nbsp;текущей работе уже тесно</h3>
+            <p class="q-aud-group__subtitle">Когда старая работа больше не&nbsp;отвечает, а&nbsp;IT выглядит как реальный выход.</p>
+          </div>
+        </header>
+
+        <div class="q-aud-personas" role="list">
+
+          <article class="q-aud-persona" role="listitem">
+            <span class="q-aud-persona__tag">Смена&nbsp;профессии</span>
+            <h4 class="q-aud-persona__title">Хочешь сменить профессию</h4>
+            <p class="q-aud-persona__pain">Текущая работа кормит, но&nbsp;не&nbsp;радует. Смотришь вакансии, читаешь про&nbsp;IT — и&nbsp;не&nbsp;знаешь, с&nbsp;чего начать и&nbsp;как не&nbsp;потерять доход.</p>
+            <div class="q-aud-persona__solution">
+              <span class="q-aud-persona__arrow" aria-hidden="true">→</span>
+              <p class="q-aud-persona__solution-text">Войдёшь в&nbsp;новую сферу с&nbsp;чёткой траекторией&nbsp;— без хаоса и&nbsp;слепых шагов.</p>
+            </div>
+          </article>
+
+          <article class="q-aud-persona" role="listitem">
+            <span class="q-aud-persona__tag">Карьерный&nbsp;потолок</span>
+            <h4 class="q-aud-persona__title">Зарплата не&nbsp;растёт 2+ года</h4>
+            <p class="q-aud-persona__pain">Работаешь, стараешься&nbsp;— а&nbsp;цифра в&nbsp;оффере стоит на&nbsp;месте.</p>
+            <div class="q-aud-persona__solution">
+              <span class="q-aud-persona__arrow" aria-hidden="true">→</span>
+              <p class="q-aud-persona__solution-text">В&nbsp;IT рост дохода идёт вместе с&nbsp;ростом навыков. Выстроим путь, где усилия наконец конвертируются в&nbsp;деньги.</p>
+            </div>
+          </article>
+
+          <article class="q-aud-persona" role="listitem">
+            <span class="q-aud-persona__tag">Выгорание</span>
+            <h4 class="q-aud-persona__title">Выгорел на&nbsp;текущей работе</h4>
+            <p class="q-aud-persona__pain">Утром уже устал, вечером нет сил ни&nbsp;на&nbsp;что. Ты&nbsp;не&nbsp;ленивый — ты&nbsp;просто там, где тебя не&nbsp;должно быть.</p>
+            <div class="q-aud-persona__solution">
+              <span class="q-aud-persona__arrow" aria-hidden="true">→</span>
+              <p class="q-aud-persona__solution-text">Иногда нужен не&nbsp;отпуск, а&nbsp;другое направление. Поможем найти то, что будет реально заряжать, а&nbsp;не&nbsp;выжимать.</p>
+            </div>
+          </article>
+
+          <article class="q-aud-persona" role="listitem">
+            <span class="q-aud-persona__tag">Без&nbsp;отрыва</span>
+            <h4 class="q-aud-persona__title">Совмещаешь с&nbsp;работой и&nbsp;семьёй</h4>
+            <p class="q-aud-persona__pain">У&nbsp;тебя нет возможности бросить всё и&nbsp;учиться по&nbsp;8&nbsp;часов в&nbsp;день. Это нормально.</p>
+            <div class="q-aud-persona__solution">
+              <span class="q-aud-persona__arrow" aria-hidden="true">→</span>
+              <p class="q-aud-persona__solution-text">Программа рассчитана на&nbsp;реальный ритм жизни: занятия вписываются в&nbsp;график, а&nbsp;не&nbsp;требуют его ломать.</p>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ═══════════════ GROUP 02 ═══════════════ -->
+      <section class="q-aud-group">
+        <header class="q-aud-group__head">
+          <span class="q-aud-group__num">02</span>
+          <div class="q-aud-group__copy">
+            <h3 class="q-aud-group__title">Уже пробовал войти в&nbsp;IT</h3>
+            <p class="q-aud-group__subtitle">Если путь в&nbsp;IT уже начинался — и&nbsp;не&nbsp;довёл до&nbsp;результата. Скептицизм заслужен.</p>
+          </div>
+        </header>
+
+        <div class="q-aud-personas" role="list">
+
+          <article class="q-aud-persona" role="listitem">
+            <span class="q-aud-persona__tag">Пробовал</span>
+            <h4 class="q-aud-persona__title">Пробовал другие курсы&nbsp;— разочаровался</h4>
+            <p class="q-aud-persona__pain">Платил, начинал, бросал. Или доходил до&nbsp;конца&nbsp;— но&nbsp;работу так и&nbsp;не&nbsp;нашёл. Скептицизм после этого понятен.</p>
+            <div class="q-aud-persona__solution">
+              <span class="q-aud-persona__arrow" aria-hidden="true">→</span>
+              <p class="q-aud-persona__solution-text">Quillon строился с&nbsp;учётом того, почему курсы не&nbsp;работают: меньше теории, больше реальных задач и&nbsp;живое сопровождение до&nbsp;результата.</p>
+            </div>
+          </article>
+
+          <article class="q-aud-persona" role="listitem">
+            <span class="q-aud-persona__tag">Самоучка</span>
+            <h4 class="q-aud-persona__title">Начинал сам — забуксовал</h4>
+            <p class="q-aud-persona__pain">Видео, статьи, курсы по&nbsp;частям. Начал — но&nbsp;через месяц всё встало. Без структуры и&nbsp;обратной связи легко потерять темп.</p>
+            <div class="q-aud-persona__solution">
+              <span class="q-aud-persona__arrow" aria-hidden="true">→</span>
+              <p class="q-aud-persona__solution-text">Маршрут, наставник и&nbsp;среда, где двигаться становится проще, чем останавливаться.</p>
+            </div>
+          </article>
+
+          <article class="q-aud-persona" role="listitem">
+            <span class="q-aud-persona__tag">Первая&nbsp;работа</span>
+            <h4 class="q-aud-persona__title">Диплом есть, опыта нет</h4>
+            <p class="q-aud-persona__pain">Корочка есть, а&nbsp;на&nbsp;собеседовании спрашивают про&nbsp;проекты — и&nbsp;показать нечего.</p>
+            <div class="q-aud-persona__solution">
+              <span class="q-aud-persona__arrow" aria-hidden="true">→</span>
+              <p class="q-aud-persona__solution-text">Программа строится вокруг практики: выходишь не&nbsp;с&nbsp;теорией, а&nbsp;с&nbsp;работами в&nbsp;портфолио, которые можно показать работодателю.</p>
+            </div>
+          </article>
+
+          <article class="q-aud-persona" role="listitem">
+            <span class="q-aud-persona__tag">Выбор&nbsp;направления</span>
+            <h4 class="q-aud-persona__title">Не&nbsp;понимаешь, какое направление выбрать</h4>
+            <p class="q-aud-persona__pain">Разработка, аналитика, дизайн, продакт, тестирование&nbsp;— звучит по-разному, а&nbsp;разобраться без опыта сложно.</p>
+            <div class="q-aud-persona__solution">
+              <span class="q-aud-persona__arrow" aria-hidden="true">→</span>
+              <p class="q-aud-persona__solution-text">Помогаем сориентироваться до&nbsp;старта: понять, что тебе ближе, и&nbsp;выбрать направление осознанно, а&nbsp;не&nbsp;наугад.</p>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ═══════════════ GROUP 03 ═══════════════ -->
+      <section class="q-aud-group">
+        <header class="q-aud-group__head">
+          <span class="q-aud-group__num">03</span>
+          <div class="q-aud-group__copy">
+            <h3 class="q-aud-group__title">Есть сомнения и&nbsp;цели</h3>
+            <p class="q-aud-group__subtitle">Когда уже видишь куда идти — но&nbsp;остались страхи или&nbsp;амбиции, которые нужно закрыть.</p>
+          </div>
+        </header>
+
+        <div class="q-aud-personas" role="list">
+
+          <article class="q-aud-persona" role="listitem">
+            <span class="q-aud-persona__tag">AI-тревога</span>
+            <h4 class="q-aud-persona__title">Боишься, что AI оставит без работы</h4>
+            <p class="q-aud-persona__pain">Нейросети уже делают то, что раньше делал ты. Это не&nbsp;паранойя — это тренд.</p>
+            <div class="q-aud-persona__solution">
+              <span class="q-aud-persona__arrow" aria-hidden="true">→</span>
+              <p class="q-aud-persona__solution-text">Те, кто умеет работать с&nbsp;AI, не&nbsp;теряют место — они становятся ценнее. Учим использовать технологии в&nbsp;свою пользу.</p>
+            </div>
+          </article>
+
+          <article class="q-aud-persona" role="listitem">
+            <span class="q-aud-persona__tag">Адекватный&nbsp;старт</span>
+            <h4 class="q-aud-persona__title">Не&nbsp;хочешь начинать с&nbsp;маленькой зарплаты</h4>
+            <p class="q-aud-persona__pain">Слышал истории «сначала за&nbsp;еду, потом вырастешь»? Это не&nbsp;обязательный сценарий.</p>
+            <div class="q-aud-persona__solution">
+              <span class="q-aud-persona__arrow" aria-hidden="true">→</span>
+              <p class="q-aud-persona__solution-text">Правильный старт — с&nbsp;реальными проектами и&nbsp;портфолио — позволяет претендовать на&nbsp;адекватные условия с&nbsp;первых шагов.</p>
+            </div>
+          </article>
+
+          <article class="q-aud-persona" role="listitem">
+            <span class="q-aud-persona__tag">Удалёнка</span>
+            <h4 class="q-aud-persona__title">Хочешь удалёнку и&nbsp;свободу</h4>
+            <p class="q-aud-persona__pain">Работать из&nbsp;любой точки, не&nbsp;сидеть в&nbsp;офисе, самому выбирать проекты — в&nbsp;IT это реальность для&nbsp;многих, а&nbsp;не&nbsp;привилегия единиц.</p>
+            <div class="q-aud-persona__solution">
+              <span class="q-aud-persona__arrow" aria-hidden="true">→</span>
+              <p class="q-aud-persona__solution-text">Осваиваешь навыки, которые востребованы там, где нет привязки к&nbsp;месту.</p>
+            </div>
+          </article>
+
+          <article class="q-aud-persona" role="listitem">
+            <span class="q-aud-persona__tag">Свой&nbsp;продукт</span>
+            <h4 class="q-aud-persona__title">Есть IT-идея — нет навыков</h4>
+            <p class="q-aud-persona__pain">Ты&nbsp;понимаешь, что хочешь сделать, но&nbsp;не&nbsp;знаешь как. Идея без реализации остаётся идеей.</p>
+            <div class="q-aud-persona__solution">
+              <span class="q-aud-persona__arrow" aria-hidden="true">→</span>
+              <p class="q-aud-persona__solution-text">Получаешь именно те&nbsp;навыки, которые нужны, чтобы твой проект стал чем-то настоящим.</p>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+    </div>
+  </section>
+
+</body>
+</html>

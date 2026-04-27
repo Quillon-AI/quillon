@@ -10,13 +10,6 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  /* Audience: 4 → 2 cols (2×2 per group).
-     Subgrid needs 2 card-rows worth of tracks (2 × 4 = 8). */
-  .audience-grid {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, auto auto 1fr auto);
-  }
-
   /* Footer: collapse 5-col into 2-col + full-width brand */
   .footer-top {
     grid-template-columns: repeat(2, 1fr);
@@ -92,11 +85,6 @@
 
   .hero-content {
     max-width: 100%;
-  }
-
-  /* Audience: 3 columns on mid-tablet */
-  .audience-grid {
-    grid-template-columns: repeat(2, 1fr);
   }
 
   /* Jobs mockup: narrower sidebar on tablet */
@@ -222,20 +210,9 @@
     left: 12px;
   }
 
-  /* Advantages / audience grids */
-  .advantages-grid,
-  .audience-grid {
+  /* Advantages grid stacks */
+  .advantages-grid {
     grid-template-columns: 1fr;
-  }
-
-  /* Single column: drop subgrid, let cards flow naturally — no sibling to align with */
-  .audience-grid {
-    grid-template-rows: none;
-  }
-  .audience-card {
-    display: block;
-    grid-row: auto;
-    grid-template-rows: none;
   }
 
   /* How money cards stack */
@@ -331,7 +308,7 @@
   /* Further reduce card padding */
   .card {
     padding: var(--space-sm);
-    border-radius: 16px;
+    border-radius: 6px;
   }
 
   /* FAQ tighter */

@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quillon v4 · Styleguide</title>
+
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+
+  <style>
+    .sg-hero {
+      padding: var(--q-s-11) 0 var(--q-s-8);
+      border-bottom: 1px solid var(--q-line);
+    }
+    .sg-hero__kicker {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--q-accent-hover);
+      margin-bottom: var(--q-s-4);
+    }
+    .sg-hero__title {
+      font-family: var(--q-font-display);
+      font-size: clamp(2.25rem, 3.6vw, 3.25rem);
+      font-weight: var(--q-fw-semibold);
+      line-height: 1.05;
+      letter-spacing: var(--q-tracking-h1);
+      color: var(--q-text-hi);
+      margin: 0 0 var(--q-s-5);
+      max-width: 18ch;
+    }
+    .sg-hero__sub {
+      font-size: var(--q-t-lead);
+      line-height: 1.55;
+      color: var(--q-text-mid);
+      max-width: 62ch;
+      margin: 0 0 var(--q-s-7);
+    }
+    .sg-hero__refs {
+      display: flex;
+      gap: var(--q-s-2);
+      flex-wrap: wrap;
+    }
+
+    .sg-toc {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: var(--q-s-3);
+      padding: var(--q-s-7) 0;
+      border-bottom: 1px solid var(--q-line);
+    }
+    .sg-toc a {
+      display: flex;
+      align-items: center;
+      gap: var(--q-s-3);
+      padding: var(--q-s-4);
+      border: 1px solid var(--q-line);
+      border-radius: var(--q-r-lg);
+      background: var(--q-bg-1);
+      color: var(--q-text-mid);
+      font-size: var(--q-t-small);
+      transition: all var(--q-dur-fast) var(--q-ease);
+    }
+    .sg-toc a:hover {
+      border-color: var(--q-line-hover);
+      color: var(--q-text-hi);
+      background: var(--q-bg-2);
+    }
+    .sg-toc__num {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      color: var(--q-text-low);
+      letter-spacing: 0.08em;
+    }
+
+    .sg-block {
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-6);
+    }
+
+    .sg-demo {
+      padding: var(--q-s-8);
+      background: var(--q-bg-1);
+      border: 1px solid var(--q-line);
+      border-radius: var(--q-r-xl);
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-5);
+    }
+    .sg-demo--row { flex-direction: row; flex-wrap: wrap; align-items: center; }
+    .sg-demo--grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: var(--q-s-4);
+    }
+
+    .sg-label {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      color: var(--q-text-low);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: var(--q-s-2);
+    }
+
+    /* Colour swatches */
+    .sg-swatches {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: var(--q-s-3);
+    }
+    .sg-swatch {
+      border: 1px solid var(--q-line);
+      border-radius: var(--q-r-lg);
+      overflow: hidden;
+      background: var(--q-bg-1);
+    }
+    .sg-swatch__chip {
+      height: 88px;
+      border-bottom: 1px solid var(--q-line);
+    }
+    .sg-swatch__meta {
+      padding: var(--q-s-4);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .sg-swatch__name {
+      font-size: var(--q-t-xs);
+      font-weight: var(--q-fw-medium);
+      color: var(--q-text-hi);
+      letter-spacing: -0.005em;
+    }
+    .sg-swatch__code {
+      font-family: var(--q-font-mono);
+      font-size: 11px;
+      color: var(--q-text-low);
+      letter-spacing: 0.04em;
+    }
+
+    /* Type specimens */
+    .sg-type {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: var(--q-s-5);
+      padding: var(--q-s-5) 0;
+      border-bottom: 1px solid var(--q-line-soft);
+      align-items: baseline;
+    }
+    .sg-type:last-child { border-bottom: 0; }
+    .sg-type__meta {
+      font-family: var(--q-font-mono);
+      font-size: 11px;
+      color: var(--q-text-low);
+      line-height: 1.5;
+      letter-spacing: 0.04em;
+    }
+    .sg-type__meta b { color: var(--q-text-mid); font-weight: var(--q-fw-medium); }
+    .sg-type__specimen { color: var(--q-text-hi); }
+
+    /* Radii grid */
+    .sg-radii {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: var(--q-s-4);
+    }
+    .sg-radius {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--q-bg-2);
+      border: 1px solid var(--q-line);
+      color: var(--q-text-mid);
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-xs);
+      letter-spacing: 0.04em;
+    }
+
+    /* Spacing scale */
+    .sg-scale {
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-2);
+    }
+    .sg-scale__row {
+      display: grid;
+      grid-template-columns: 60px 80px 1fr;
+      gap: var(--q-s-4);
+      align-items: center;
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-xs);
+      color: var(--q-text-low);
+    }
+    .sg-scale__row b { color: var(--q-text-mid); font-weight: var(--q-fw-medium); }
+    .sg-scale__bar {
+      height: 12px;
+      background: linear-gradient(90deg, var(--q-accent) 0%, var(--q-accent-hover) 100%);
+      border-radius: var(--q-r-xs);
+    }
+
+    /* Anti-patterns inverted badge */
+    .sg-anti-note {
+      margin-top: var(--q-s-4);
+      padding: var(--q-s-4);
+      background: rgba(248, 113, 113, 0.08);
+      border: 1px solid rgba(248, 113, 113, 0.25);
+      border-radius: var(--q-r-md);
+      color: #FCA5A5;
+      font-size: var(--q-t-small);
+      line-height: 1.55;
+    }
+    .sg-anti-note b { color: #FECACA; font-weight: var(--q-fw-semibold); }
+
+    /* Diff table v3 → v4 */
+    .sg-diff {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .sg-diff th, .sg-diff td {
+      text-align: left;
+      padding: var(--q-s-3) var(--q-s-4);
+      border-bottom: 1px solid var(--q-line-soft);
+      font-size: var(--q-t-small);
+      vertical-align: top;
+    }
+    .sg-diff th {
+      color: var(--q-text-low);
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--q-line);
+    }
+    .sg-diff__v3 { color: var(--q-text-low); text-decoration: line-through; text-decoration-color: rgba(248, 113, 113, 0.4); }
+    .sg-diff__v4 { color: var(--q-text-hi); }
+
+    /* Nav demo */
+    .sg-nav-demo {
+      border: 1px solid var(--q-line);
+      border-radius: var(--q-r-lg);
+      overflow: hidden;
+      background: var(--q-bg-1);
+    }
+    .sg-nav-demo .q-topbar {
+      position: static;
+      background: var(--q-bg-1);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =================== TOPBAR =================== -->
+  <header class="q-topbar">
+    <a href="#" class="q-topbar__brand">
+      <span class="q-topbar__brand-mark">Q</span>
+      <span>Quillon Design System <span class="q-muted" style="font-weight:400;margin-left:6px">v4</span></span>
+    </a>
+    <nav class="q-topbar__nav">
+      <a class="q-topbar__link" href="#palette">Цвет</a>
+      <a class="q-topbar__link" href="#typography">Типографика</a>
+      <a class="q-topbar__link" href="#buttons">Кнопки</a>
+      <a class="q-topbar__link" href="#cards">Карточки</a>
+      <a class="q-topbar__link" href="#dodont">Do / Don't</a>
+    </nav>
+    <div class="q-topbar__actions">
+      <a class="q-btn q-btn--link" href="blocks/01-hero.html">Hero →</a>
+      <a class="q-btn q-btn--dark q-btn--sm" href="#diff">v3 → v4</a>
+    </div>
+  </header>
+
+  <!-- =================== HERO =================== -->
+  <section class="sg-hero">
+    <div class="q-container">
+      <div class="sg-hero__kicker">Quillon v4 · синтез референсов · апрель 2026</div>
+      <h1 class="sg-hero__title">Дисциплина вместо насыщенности.</h1>
+      <p class="sg-hero__sub">
+        v4 — это дизайн-система Quillon, собранная из замеров Vercel, Linear и Raycast. Мы отказались от edtech-максимализма v3 (violet gradients, Unbounded 900, radii 36px) в пользу премиум-dev-языка: одного акцента, warm-near-black, Inter 510, радиусов 6–16&nbsp;px и border-first elevation.
+      </p>
+      <div class="sg-hero__refs">
+        <span class="q-chip q-chip--outline">vercel.com — #000 · Geist · 48/600</span>
+        <span class="q-chip q-chip--outline">linear.app — #08090A · Inter 510 · 64/510</span>
+        <span class="q-chip q-chip--outline">raycast.com — #07080A · Inter · 64/600</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== TOC =================== -->
+  <div class="q-container">
+    <nav class="sg-toc" aria-label="Разделы styleguide">
+      <a href="#palette"><span class="sg-toc__num">01</span><span>Цвет и поверхности</span></a>
+      <a href="#typography"><span class="sg-toc__num">02</span><span>Типографика</span></a>
+      <a href="#spacing"><span class="sg-toc__num">03</span><span>Spacing и радиусы</span></a>
+      <a href="#buttons"><span class="sg-toc__num">04</span><span>Кнопки</span></a>
+      <a href="#chips"><span class="sg-toc__num">05</span><span>Chips и badges</span></a>
+      <a href="#cards"><span class="sg-toc__num">06</span><span>Карточки</span></a>
+      <a href="#nav"><span class="sg-toc__num">07</span><span>Навигация</span></a>
+      <a href="#inputs"><span class="sg-toc__num">08</span><span>Поля и callout</span></a>
+      <a href="#sections"><span class="sg-toc__num">09</span><span>Section heads</span></a>
+      <a href="#dodont"><span class="sg-toc__num">10</span><span>Do / Don't</span></a>
+      <a href="#antipatterns"><span class="sg-toc__num">11</span><span>Анти-паттерны</span></a>
+      <a href="#diff"><span class="sg-toc__num">12</span><span>v3 → v4 diff</span></a>
+    </nav>
+  </div>
+
+  <!-- =================== 01 · PALETTE =================== -->
+  <section id="palette" class="q-section">
+    <div class="q-container">
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>01</em> · ЦВЕТ И ПОВЕРХНОСТИ</div>
+        <h2 class="q-section-head__title">Warm near-black, один акцент</h2>
+        <p class="q-section-head__sub">
+          База #08090A (Linear-family, зелёно-серый тон) — не чистый #000 (AI-cold). Текст в 3 уровнях иерархии. Акцент — indigo #5E6AD2, tools-brand-palette, без gradient на текст.
+        </p>
+      </header>
+
+      <div class="sg-block">
+        <div class="sg-label">Surface scale (bg-0 → bg-9)</div>
+        <div class="sg-swatches">
+          <div class="sg-swatch"><div class="sg-swatch__chip" style="background:var(--q-bg-0)"></div><div class="sg-swatch__meta"><span class="sg-swatch__name">bg-0 · page</span><span class="sg-swatch__code">#08090A</span></div></div>
+          <div class="sg-swatch"><div class="sg-swatch__chip" style="background:var(--q-bg-1)"></div><div class="sg-swatch__meta"><span class="sg-swatch__name">bg-1 · section</span><span class="sg-swatch__code">#0D0E10</span></div></div>
+          <div class="sg-swatch"><div class="sg-swatch__chip" style="background:var(--q-bg-2)"></div><div class="sg-swatch__meta"><span class="sg-swatch__name">bg-2 · card</span><span class="sg-swatch__code">#121316</span></div></div>
+          <div class="sg-swatch"><div class="sg-swatch__chip" style="background:var(--q-bg-3)"></div><div class="sg-swatch__meta"><span class="sg-swatch__name">bg-3 · nested</span><span class="sg-swatch__code">#191A1E</span></div></div>
+          <div class="sg-swatch"><div class="sg-swatch__chip" style="background:var(--q-bg-4)"></div><div class="sg-swatch__meta"><span class="sg-swatch__name">bg-4 · hover</span><span class="sg-swatch__code">#202125</span></div></div>
+          <div class="sg-swatch"><div class="sg-swatch__chip" style="background:var(--q-bg-5)"></div><div class="sg-swatch__meta"><span class="sg-swatch__name">bg-5 · high</span><span class="sg-swatch__code">#2A2B30</span></div></div>
+        </div>
+
+        <div class="sg-label">Text hierarchy (hi / mid / low / dim)</div>
+        <div class="sg-swatches">
+          <div class="sg-swatch"><div class="sg-swatch__chip" style="background:var(--q-text-hi)"></div><div class="sg-swatch__meta"><span class="sg-swatch__name">text-hi</span><span class="sg-swatch__code">#F4F4F5 · 13:1</span></div></div>
+          <div class="sg-swatch"><div class="sg-swatch__chip" style="background:var(--q-text-mid)"></div><div class="sg-swatch__meta"><span class="sg-swatch__name">text-mid</span><span class="sg-swatch__code">#A1A1AA · 7:1</span></div></div>
+          <div class="sg-swatch"><div class="sg-swatch__chip" style="background:var(--q-text-low)"></div><div class="sg-swatch__meta"><span class="sg-swatch__name">text-low</span><span class="sg-swatch__code">#70707A · 4.6:1</span></div></div>
+          <div class="sg-swatch"><div class="sg-swatch__chip" style="background:var(--q-text-dim)"></div><div class="sg-swatch__meta"><span class="sg-swatch__name">text-dim</span><span class="sg-swatch__code">#4D4D55 · placeholder</span></div></div>
+        </div>
+
+        <div class="sg-label">Accent · Indigo #5E6AD2 (Linear-family)</div>
+        <div class="sg-swatches">
+          <div class="sg-swatch"><div class="sg-swatch__chip" style="background:var(--q-accent)"></div><div class="sg-swatch__meta"><span class="sg-swatch__name">accent</span><span class="sg-swatch__code">#5E6AD2</span></div></div>
+          <div class="sg-swatch"><div class="sg-swatch__chip" style="background:var(--q-accent-hover)"></div><div class="sg-swatch__meta"><span class="sg-swatch__name">accent-hover</span><span class="sg-swatch__code">#6E7AE2 · +10% L</span></div></div>
+          <div class="sg-swatch"><div class="sg-swatch__chip" style="background:var(--q-accent-press)"></div><div class="sg-swatch__meta"><span class="sg-swatch__name">accent-press</span><span class="sg-swatch__code">#4C58BE · -10% L</span></div></div>
+          <div class="sg-swatch"><div class="sg-swatch__chip" style="background:var(--q-accent-soft)"></div><div class="sg-swatch__meta"><span class="sg-swatch__name">accent-soft</span><span class="sg-swatch__code">#2A2E52 · chip bg</span></div></div>
+        </div>
+
+        <div class="sg-label">Semantic (тонкие, не громче accent)</div>
+        <div class="sg-swatches">
+          <div class="sg-swatch"><div class="sg-swatch__chip" style="background:var(--q-ok)"></div><div class="sg-swatch__meta"><span class="sg-swatch__name">ok</span><span class="sg-swatch__code">#4ADE80</span></div></div>
+          <div class="sg-swatch"><div class="sg-swatch__chip" style="background:var(--q-warn)"></div><div class="sg-swatch__meta"><span class="sg-swatch__name">warn</span><span class="sg-swatch__code">#FACC15</span></div></div>
+          <div class="sg-swatch"><div class="sg-swatch__chip" style="background:var(--q-err)"></div><div class="sg-swatch__meta"><span class="sg-swatch__name">err</span><span class="sg-swatch__code">#F87171</span></div></div>
+          <div class="sg-swatch"><div class="sg-swatch__chip" style="background:var(--q-info)"></div><div class="sg-swatch__meta"><span class="sg-swatch__name">info</span><span class="sg-swatch__code">#60A5FA</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== 02 · TYPOGRAPHY =================== -->
+  <section id="typography" class="q-section">
+    <div class="q-container">
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>02</em> · ТИПОГРАФИКА</div>
+        <h2 class="q-section-head__title">Inter 510 как «Linear-crispness»</h2>
+        <p class="q-section-head__sub">
+          Один шрифт (Inter Variable) + один mono (Geist Mono). H1 cap = 64&nbsp;px. Вес 510 — Linear-custom между medium и semibold, даёт премиум-чёткость без жирного веса.
+        </p>
+      </header>
+
+      <div class="sg-demo">
+        <div class="sg-type">
+          <div class="sg-type__meta"><b>H1</b><br>40 → 64px<br>weight 600<br>lh 1.0 · tr -1.4→-2.2</div>
+          <div class="sg-type__specimen q-h1">Войди в IT за 12&nbsp;месяцев</div>
+        </div>
+        <div class="sg-type">
+          <div class="sg-type__meta"><b>H2</b><br>32 → 40px<br>weight 510<br>lh 1.1 · tr -0.025</div>
+          <div class="sg-type__specimen q-h2">Программа, которая платит тебе</div>
+        </div>
+        <div class="sg-type">
+          <div class="sg-type__meta"><b>H3</b><br>20 → 24px<br>weight 510<br>lh 1.2 · tr -0.015</div>
+          <div class="sg-type__specimen q-h3">Реальные заказы со второго месяца</div>
+        </div>
+        <div class="sg-type">
+          <div class="sg-type__meta"><b>H4</b><br>18px · weight 500<br>lh 1.3</div>
+          <div class="sg-type__specimen q-h4">Quillon Jobs — биржа внутри программы</div>
+        </div>
+        <div class="sg-type">
+          <div class="sg-type__meta"><b>Lead</b><br>16 → 18px<br>weight 400<br>color text-mid</div>
+          <div class="sg-type__specimen q-lead">Рассрочка закрывается твоим заработком, а не из кармана. С первым заказом на второй месяц.</div>
+        </div>
+        <div class="sg-type">
+          <div class="sg-type__meta"><b>Body</b><br>16px · 400<br>lh 1.5</div>
+          <div class="sg-type__specimen q-body">Base paragraph. 12&nbsp;месяцев программы, 3&nbsp;трека (Python, Flutter, QA), стажировка и биржа заказов. Текст читается спокойно и без напряжения.</div>
+        </div>
+        <div class="sg-type">
+          <div class="sg-type__meta"><b>Small</b><br>15px · 400<br>color text-mid</div>
+          <div class="sg-type__specimen q-small">Small — вспомогательный текст в карточках, описания, меты.</div>
+        </div>
+        <div class="sg-type">
+          <div class="sg-type__meta"><b>XS</b><br>13px · 400<br>nav, captions</div>
+          <div class="sg-type__specimen q-xs">XS используется в навигации, подписях к кнопкам, мелких метах.</div>
+        </div>
+        <div class="sg-type">
+          <div class="sg-type__meta"><b>Eyebrow</b><br>mono 12px<br>tr +0.1em · upper</div>
+          <div class="sg-type__specimen q-eyebrow">PYTHON · FLUTTER · QA · ИИ</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== 03 · SPACING + RADII =================== -->
+  <section id="spacing" class="q-section">
+    <div class="q-container">
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>03</em> · ЛЕСТНИЦЫ</div>
+        <h2 class="q-section-head__title">4&nbsp;px grid · радиусы 6 → 24</h2>
+        <p class="q-section-head__sub">
+          Кнопки 6–8&nbsp;px, карточки 12–16&nbsp;px. Pill (9999) — только для chips, navigation и status. Радиуса 28/36 в системе нет — убраны вместе с SmartClass-источниками.
+        </p>
+      </header>
+
+      <div class="sg-demo">
+        <div class="sg-label">Spacing scale</div>
+        <div class="sg-scale">
+          <div class="sg-scale__row"><b>s-1</b><span>4px</span><div class="sg-scale__bar" style="width:4px"></div></div>
+          <div class="sg-scale__row"><b>s-2</b><span>8px</span><div class="sg-scale__bar" style="width:8px"></div></div>
+          <div class="sg-scale__row"><b>s-3</b><span>12px</span><div class="sg-scale__bar" style="width:12px"></div></div>
+          <div class="sg-scale__row"><b>s-4</b><span>16px</span><div class="sg-scale__bar" style="width:16px"></div></div>
+          <div class="sg-scale__row"><b>s-5</b><span>20px</span><div class="sg-scale__bar" style="width:20px"></div></div>
+          <div class="sg-scale__row"><b>s-6</b><span>24px</span><div class="sg-scale__bar" style="width:24px"></div></div>
+          <div class="sg-scale__row"><b>s-7</b><span>32px</span><div class="sg-scale__bar" style="width:32px"></div></div>
+          <div class="sg-scale__row"><b>s-8</b><span>40px</span><div class="sg-scale__bar" style="width:40px"></div></div>
+          <div class="sg-scale__row"><b>s-9</b><span>56px</span><div class="sg-scale__bar" style="width:56px"></div></div>
+          <div class="sg-scale__row"><b>s-10</b><span>72px</span><div class="sg-scale__bar" style="width:72px"></div></div>
+          <div class="sg-scale__row"><b>s-11</b><span>96px</span><div class="sg-scale__bar" style="width:96px"></div></div>
+          <div class="sg-scale__row"><b>s-12</b><span>128px</span><div class="sg-scale__bar" style="width:128px"></div></div>
+        </div>
+      </div>
+
+      <div class="sg-demo" style="margin-top:24px">
+        <div class="sg-label">Radii scale</div>
+        <div class="sg-radii">
+          <div class="sg-radius" style="border-radius:var(--q-r-xs)">xs · 4</div>
+          <div class="sg-radius" style="border-radius:var(--q-r-sm)">sm · 6</div>
+          <div class="sg-radius" style="border-radius:var(--q-r-md)">md · 8</div>
+          <div class="sg-radius" style="border-radius:var(--q-r-lg)">lg · 12</div>
+          <div class="sg-radius" style="border-radius:var(--q-r-xl)">xl · 16</div>
+          <div class="sg-radius" style="border-radius:var(--q-r-2xl)">2xl · 20</div>
+          <div class="sg-radius" style="border-radius:var(--q-r-3xl)">3xl · 24</div>
+          <div class="sg-radius" style="border-radius:var(--q-r-pill)">pill · chip</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== 04 · BUTTONS =================== -->
+  <section id="buttons" class="q-section">
+    <div class="q-container">
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>04</em> · КНОПКИ</div>
+        <h2 class="q-section-head__title">Радиус 8&nbsp;px · вес 510</h2>
+        <p class="q-section-head__sub">
+          Primary — accent fill, one-hue gradient (Vercel-pattern, не multi-hue). Secondary — light-on-dark inversion (Raycast). Ghost — border-only. Dark — navbar-inline. Link — Vercel-minimal.
+        </p>
+      </header>
+
+      <div class="sg-demo sg-demo--row">
+        <button class="q-btn q-btn--primary">Пройти тест →</button>
+        <button class="q-btn q-btn--secondary">Смотреть треки</button>
+        <button class="q-btn q-btn--ghost">Подробнее</button>
+        <button class="q-btn q-btn--dark">Скачать программу</button>
+        <button class="q-btn q-btn--link">Войти</button>
+      </div>
+
+      <div class="sg-demo sg-demo--row" style="margin-top:24px">
+        <span class="sg-label" style="margin:0 16px 0 0">Sizes:</span>
+        <button class="q-btn q-btn--primary q-btn--sm">Small</button>
+        <button class="q-btn q-btn--primary">Default</button>
+        <button class="q-btn q-btn--primary q-btn--lg">Large</button>
+        <button class="q-btn q-btn--primary" disabled>Disabled</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== 05 · CHIPS =================== -->
+  <section id="chips" class="q-section">
+    <div class="q-container">
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>05</em> · CHIPS И BADGES</div>
+        <h2 class="q-section-head__title">Pill-форма — только здесь</h2>
+        <p class="q-section-head__sub">
+          Chips используются для мета-тегов треков, фильтров и статусов. Mono-badges — tech-signal на карточках (Python, Flutter, QA).
+        </p>
+      </header>
+
+      <div class="sg-demo sg-demo--row">
+        <span class="q-chip q-chip--outline">Python</span>
+        <span class="q-chip q-chip--outline">Flutter</span>
+        <span class="q-chip q-chip--outline">QA Automation</span>
+        <span class="q-chip q-chip--solid">12 месяцев</span>
+        <span class="q-chip q-chip--accent">Premium</span>
+        <span class="q-chip q-chip--solid q-chip--dot q-chip--ok">Набор открыт</span>
+        <span class="q-chip q-chip--solid q-chip--dot q-chip--warn">Осталось 15 мест</span>
+        <span class="q-chip q-chip--solid q-chip--dot q-chip--err">Закрыто</span>
+      </div>
+
+      <div class="sg-demo sg-demo--row" style="margin-top:24px">
+        <span class="q-badge-mono">v1.2.0</span>
+        <span class="q-badge-mono">API · FastAPI</span>
+        <span class="q-badge-mono q-badge-mono--accent">Новое</span>
+        <span class="q-badge-mono">QA · Playwright</span>
+        <span class="q-badge-mono">Flutter · Riverpod</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== 06 · CARDS =================== -->
+  <section id="cards" class="q-section">
+    <div class="q-container">
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>06</em> · КАРТОЧКИ</div>
+        <h2 class="q-section-head__title">Border-first elevation</h2>
+        <p class="q-section-head__sub">
+          Глубина через 1&nbsp;px hairline + тонкий inset-highlight. Shadow — намёк, не драма. Hover поднимает border от subtle к strong.
+        </p>
+      </header>
+
+      <div class="sg-demo sg-demo--grid">
+        <article class="q-card q-card--hover">
+          <p class="q-card__eyebrow">Трек · Python</p>
+          <h3 class="q-card__title">Python Backend + ML</h3>
+          <p class="q-card__text">12 месяцев: FastAPI, PostgreSQL, Docker, CI/CD, ML базовый. Реальные заказы с м2.</p>
+          <div class="q-card__foot">
+            <span class="q-badge-mono">premium</span>
+            <a class="q-btn q-btn--link">Открыть →</a>
+          </div>
+        </article>
+
+        <article class="q-card q-card--elevated q-card--hover">
+          <p class="q-card__eyebrow">Трек · Flutter</p>
+          <h3 class="q-card__title">Flutter Mobile</h3>
+          <p class="q-card__text">iOS и Android в одном флоу. Dart, Riverpod, Firebase, App Store deploy.</p>
+          <div class="q-card__foot">
+            <span class="q-badge-mono">premium</span>
+            <a class="q-btn q-btn--link">Открыть →</a>
+          </div>
+        </article>
+
+        <article class="q-card q-card--bordered">
+          <p class="q-card__eyebrow">Трек · QA</p>
+          <h3 class="q-card__title">QA Automation</h3>
+          <p class="q-card__text">Playwright, pytest, нагрузочное, API-тестирование. Стажировка в реальной команде.</p>
+          <div class="q-card__foot">
+            <span class="q-badge-mono">premium</span>
+            <a class="q-btn q-btn--link">Открыть →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== 07 · NAV =================== -->
+  <section id="nav" class="q-section">
+    <div class="q-container">
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>07</em> · НАВИГАЦИЯ</div>
+        <h2 class="q-section-head__title">Sticky topbar · 56&nbsp;px</h2>
+        <p class="q-section-head__sub">
+          Linear-паттерн: фиксированная тонкая полоса, backdrop-blur, hairline-divider. Brand слева, nav центр, actions справа.
+        </p>
+      </header>
+
+      <div class="sg-nav-demo">
+        <header class="q-topbar">
+          <a href="#" class="q-topbar__brand">
+            <span class="q-topbar__brand-mark">Q</span>
+            <span>Quillon</span>
+          </a>
+          <nav class="q-topbar__nav">
+            <a class="q-topbar__link" aria-current="page">Треки</a>
+            <a class="q-topbar__link">Формат</a>
+            <a class="q-topbar__link">Цена</a>
+            <a class="q-topbar__link">Jobs</a>
+            <a class="q-topbar__link">FAQ</a>
+          </nav>
+          <div class="q-topbar__actions">
+            <a class="q-btn q-btn--link">Войти</a>
+            <a class="q-btn q-btn--primary q-btn--sm">Пройти тест</a>
+          </div>
+        </header>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== 08 · INPUTS =================== -->
+  <section id="inputs" class="q-section">
+    <div class="q-container">
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>08</em> · ПОЛЯ · КОД · CALLOUT</div>
+        <h2 class="q-section-head__title">Focus-ring в акценте</h2>
+        <p class="q-section-head__sub">
+          Input — bg-2 + 1&nbsp;px strong-line. Focus: accent border + soft halo (3&nbsp;px rgba). Code — bg-3 + mono. Callout — accent-ruled left-border.
+        </p>
+      </header>
+
+      <div class="sg-demo">
+        <div style="max-width:420px">
+          <label class="q-mono q-dim" style="display:block;margin-bottom:8px">Email</label>
+          <input class="q-input" type="email" placeholder="your@email.com">
+        </div>
+
+        <div>
+          <p style="color:var(--q-text-mid);font-size:var(--q-t-small);line-height:1.6">
+            Пример использования inline-кода: вызов <code class="q-code">async def fetch(url)</code> внутри FastAPI-handler. Стандартный паттерн на первых неделях Python-трека.
+          </p>
+        </div>
+
+        <pre class="q-code-block">from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/health")
+async def health():
+    return {"status": "ok"}</pre>
+
+        <aside class="q-callout">
+          <div>
+            <strong>Стажировка со второго месяца.</strong> Quillon&nbsp;Jobs выдаёт реальные заказы от внешних заказчиков. Деньги идут на счёт студента, а не на счёт школы.
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== 09 · SECTION HEADS =================== -->
+  <section id="sections" class="q-section">
+    <div class="q-container">
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>09</em> · SECTION HEADS</div>
+        <h2 class="q-section-head__title">Нумерация вместо ornament</h2>
+        <p class="q-section-head__sub">
+          Каждый блок главной страницы начинается с monospace-номера + заголовка H2 + подзаголовка на 56&nbsp;ch. Никаких emoji-иконок, никаких gradient-text.
+        </p>
+      </header>
+
+      <div class="sg-demo">
+        <header class="q-section-head">
+          <div class="q-section-head__num"><em>04</em> · ПРОГРАММА</div>
+          <h3 class="q-section-head__title">3 трека, 12 месяцев, один результат</h3>
+          <p class="q-section-head__sub">
+            Python, Flutter, QA — выбираешь на старте. Все программы завершаются стажировкой и первыми заказами через Jobs.
+          </p>
+        </header>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== 10 · DO / DON'T =================== -->
+  <section id="dodont" class="q-section">
+    <div class="q-container">
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>10</em> · DO / DON'T</div>
+        <h2 class="q-section-head__title">Дисциплина premium-dev-языка</h2>
+        <p class="q-section-head__sub">
+          Правила, по которым мы отличаем «честный premium» от «AI-сгенерированного edtech-шума».
+        </p>
+      </header>
+
+      <div class="q-dodont">
+        <div class="q-dodont__cell q-dodont__cell--do">
+          <div class="q-dodont__label">DO · делаем так</div>
+          <ul style="margin:0;padding-left:20px;color:var(--q-text-mid);font-size:var(--q-t-small);line-height:1.7">
+            <li>H1 моноцветный, 48–64&nbsp;px, weight 600</li>
+            <li>Left-aligned hero, 2-col grid</li>
+            <li>Один акцент indigo #5E6AD2</li>
+            <li>Border-first depth (1&nbsp;px hairline)</li>
+            <li>Радиусы 6/8/12/16</li>
+            <li>Mono-eyebrow 12&nbsp;px с tracking +0.1em</li>
+            <li>Tabular-nums для цен и метрик</li>
+            <li>Inter 510 на H2/H3/cards (Linear-crisp)</li>
+          </ul>
+        </div>
+
+        <div class="q-dodont__cell q-dodont__cell--dont">
+          <div class="q-dodont__label">DON'T · этого не делаем</div>
+          <ul style="margin:0;padding-left:20px;color:var(--q-text-mid);font-size:var(--q-t-small);line-height:1.7">
+            <li>Gradient-text на H1/H2 (AI-vibe)</li>
+            <li>Centered hero с огромным CTA (Framer)</li>
+            <li>Emoji-иконки вместо SVG</li>
+            <li>Glow/blur-orbs как декор</li>
+            <li>Глассморфизм (blur + opacity)</li>
+            <li>Multi-hue gradients (violet → pink)</li>
+            <li>Радиусы 28/36 (SmartClass-splash)</li>
+            <li>Weight 900 + font-size 100&nbsp;px+</li>
+            <li>Pill-кнопки для primary-CTA</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== 11 · ANTIPATTERNS =================== -->
+  <section id="antipatterns" class="q-section">
+    <div class="q-container">
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>11</em> · АНТИ-ПАТТЕРНЫ</div>
+        <h2 class="q-section-head__title">Как выглядит «AI-lite edtech»</h2>
+        <p class="q-section-head__sub">
+          Живые примеры того, что запрещено. Показано ради сравнения — никогда не переносить в прод.
+        </p>
+      </header>
+
+      <div class="sg-demo sg-demo--grid">
+        <div>
+          <div class="sg-label">Gradient-text H1</div>
+          <div class="q-anti-gradient-text">Освой IT быстро</div>
+          <div class="sg-anti-note">
+            <b>Запрещено.</b> Мульти-hue gradient на заголовке — №1 AI-маркер. Линеар/Vercel/Raycast — все моноколор.
+          </div>
+        </div>
+
+        <div>
+          <div class="sg-label">Glow / orb как декор</div>
+          <div class="q-anti-glow">
+            <span class="q-h3">Учись эффективно</span>
+          </div>
+          <div class="sg-anti-note">
+            <b>Запрещено.</b> Большое radial-blur под текстом — Framer-template-smell. Допустим только тонкий 10%-opacity halo в углу hero.
+          </div>
+        </div>
+
+        <div>
+          <div class="sg-label">Giant H1 100&nbsp;px+ weight 900</div>
+          <div class="q-anti-giant-h1" style="font-size:clamp(3rem,7vw,5rem)">Войди в IT</div>
+          <div class="sg-anti-note">
+            <b>Запрещено.</b> Вес 900 + 100&nbsp;px+ = SmartClass-editorial-flex. Премиум-dev — 48–64&nbsp;px, weight 500–600.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== 12 · DIFF =================== -->
+  <section id="diff" class="q-section">
+    <div class="q-container">
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>12</em> · V3 → V4 DIFF</div>
+        <h2 class="q-section-head__title">Что изменилось и почему</h2>
+        <p class="q-section-head__sub">
+          v3 (SmartClass-inspired) и v4 (Vercel/Linear/Raycast-synthesis) — точечное сравнение.
+        </p>
+      </header>
+
+      <div class="sg-demo" style="padding:0">
+        <table class="sg-diff">
+          <thead>
+            <tr>
+              <th>Параметр</th>
+              <th>v3</th>
+              <th>v4</th>
+              <th>Источник решения</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>База</td>
+              <td class="sg-diff__v3">#0E0E12 (neutral)</td>
+              <td class="sg-diff__v4">#08090A (warm near-black)</td>
+              <td>Linear</td>
+            </tr>
+            <tr>
+              <td>Акцент</td>
+              <td class="sg-diff__v3">violet #6E6BFF</td>
+              <td class="sg-diff__v4">indigo #5E6AD2</td>
+              <td>Linear-family</td>
+            </tr>
+            <tr>
+              <td>Display font</td>
+              <td class="sg-diff__v3">Unbounded 900</td>
+              <td class="sg-diff__v4">Inter Variable 510/600</td>
+              <td>Linear-custom 510</td>
+            </tr>
+            <tr>
+              <td>H1 size</td>
+              <td class="sg-diff__v3">clamp 48 → 104px</td>
+              <td class="sg-diff__v4">clamp 40 → 64px</td>
+              <td>Vercel 48 · Linear/Raycast 64</td>
+            </tr>
+            <tr>
+              <td>H1 weight</td>
+              <td class="sg-diff__v3">900</td>
+              <td class="sg-diff__v4">600</td>
+              <td>Vercel/Raycast</td>
+            </tr>
+            <tr>
+              <td>Button radius</td>
+              <td class="sg-diff__v3">pill или 16px</td>
+              <td class="sg-diff__v4">8px</td>
+              <td>Vercel 6 · Raycast 8</td>
+            </tr>
+            <tr>
+              <td>Card radius</td>
+              <td class="sg-diff__v3">24–36px</td>
+              <td class="sg-diff__v4">12–20px max</td>
+              <td>Linear/Vercel</td>
+            </tr>
+            <tr>
+              <td>Hero layout</td>
+              <td class="sg-diff__v3">editorial bento + giant title</td>
+              <td class="sg-diff__v4">2-col grid: copy + product demo</td>
+              <td>Linear/Vercel hero</td>
+            </tr>
+            <tr>
+              <td>Elevation</td>
+              <td class="sg-diff__v3">shadow-heavy</td>
+              <td class="sg-diff__v4">border-first · 1px hairline</td>
+              <td>Vercel/Linear</td>
+            </tr>
+            <tr>
+              <td>Gradient на тексте</td>
+              <td class="sg-diff__v3">multi-hue на H1</td>
+              <td class="sg-diff__v4">запрещён</td>
+              <td>Все 3 референса</td>
+            </tr>
+            <tr>
+              <td>Gradient на CTA</td>
+              <td class="sg-diff__v3">multi-hue</td>
+              <td class="sg-diff__v4">one-hue (accent → accent-hover)</td>
+              <td>Vercel</td>
+            </tr>
+            <tr>
+              <td>Hero mascot</td>
+              <td class="sg-diff__v3">3D violet-character</td>
+              <td class="sg-diff__v4">product-demo (Quillon Jobs mock)</td>
+              <td>Linear/Raycast hero</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== FOOTER =================== -->
+  <footer style="padding:48px 0;border-top:1px solid var(--q-line);text-align:center">
+    <div class="q-container">
+      <p class="q-mono q-dim" style="margin-bottom:8px">Quillon v4 · Design System · kristinablee2@gmail.com</p>
+      <p class="q-small">
+        Следующий блок для сборки — <a href="blocks/01-hero.html" style="color:var(--q-accent-hover)">01 · Hero</a>.
+        После его утверждения: market → solution → products → tracks → format.
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

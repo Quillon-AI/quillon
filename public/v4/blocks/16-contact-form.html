@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quillon v4 · Contact form block (16)</title>
+
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/tokens.css?v=4">
+  <link rel="stylesheet" href="../css/base.css?v=4">
+  <link rel="stylesheet" href="../css/components.css?v=4">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+     * 16 · CONTACT FORM — записаться на разбор
+     *
+     * Тексты 1:1 с прод-content.json (`.contact_form`).
+     *
+     * Композиция:
+     *   • Section head (16 · СЛЕДУЮЩИЙ ШАГ)
+     *   • Body grid 5/7: aside-копия слева | editorial-форма справа
+     *   • 3 поля (name, phone, email) — hairline-bottom inputs
+     *   • Submit button + consent-microcopy
+     *
+     * Anti-AI:
+     *   • Никаких rounded card-boxes для inputs.
+     *   • Mono-num вместо feather-иконок в supporting list.
+     *   • Hairline-bottom только: editorial-form-эстетика.
+     *   • Focus-state — индиго border-color.
+     * ═══════════════════════════════════════════════════════════════ */
+
+    .q-cf {
+      position: relative;
+      padding: var(--q-s-10) 0 var(--q-s-11);
+      overflow: hidden;
+    }
+    .q-cf::before {
+      content: "";
+      position: absolute;
+      top: -200px;
+      right: -240px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(94, 106, 210, 0.06), transparent 62%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .q-cf .q-container { position: relative; z-index: 1; }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * BODY · grid 5/7: aside | form
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-cf-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      gap: var(--q-s-9);
+      align-items: start;
+    }
+
+    /* ─── ASIDE: copy ─── */
+    .q-cf-aside {
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-5);
+    }
+    .q-cf-aside__num {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+    .q-cf-aside__num em {
+      color: var(--q-accent-hover);
+      font-style: normal;
+      font-weight: var(--q-fw-medium);
+    }
+    .q-cf-aside__title {
+      font-family: var(--q-font-display);
+      font-size: clamp(2rem, 3.6vw, 2.875rem);
+      font-weight: var(--q-fw-linear);
+      letter-spacing: -0.022em;
+      line-height: 1.1;
+      color: var(--q-text-hi);
+      margin: 0;
+      max-width: 18ch;
+    }
+    .q-cf-aside__sub {
+      font-size: var(--q-t-base);
+      line-height: 1.55;
+      color: var(--q-text-mid);
+      margin: 0;
+      max-width: 42ch;
+    }
+
+    /* Bullets: что получишь за разбор */
+    .q-cf-aside__list {
+      list-style: none;
+      margin: var(--q-s-3) 0 0;
+      padding: var(--q-s-5) 0 0;
+      border-top: 1px solid var(--q-line);
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-4);
+    }
+    .q-cf-aside__item {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      column-gap: var(--q-s-3);
+      align-items: baseline;
+    }
+    .q-cf-aside__item-num {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      color: var(--q-text-low);
+      font-weight: var(--q-fw-medium);
+      font-feature-settings: "tnum" 1;
+    }
+    .q-cf-aside__item-text {
+      font-size: var(--q-t-base);
+      line-height: 1.5;
+      color: var(--q-text-hi);
+      margin: 0;
+      max-width: 36ch;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * FORM · editorial hairline inputs
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-cf-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-6);
+    }
+    .q-cf-field {
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-2);
+    }
+    .q-cf-label {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      column-gap: var(--q-s-3);
+      align-items: baseline;
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+    .q-cf-label__text { color: var(--q-text-mid); }
+    .q-cf-label__req {
+      color: var(--q-accent-hover);
+      margin-left: 4px;
+    }
+
+    .q-cf-input {
+      width: 100%;
+      background: transparent;
+      border: 0;
+      border-bottom: 1px solid var(--q-line);
+      padding: var(--q-s-3) 0 var(--q-s-3) 48px;
+      font-family: var(--q-font-display);
+      font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+      font-weight: var(--q-fw-linear);
+      letter-spacing: -0.012em;
+      color: var(--q-text-hi);
+      transition: border-color var(--q-dur-base) var(--q-ease);
+    }
+    .q-cf-input::placeholder {
+      color: var(--q-text-low);
+      font-weight: var(--q-fw-linear);
+      letter-spacing: -0.008em;
+    }
+    .q-cf-input:hover {
+      border-bottom-color: var(--q-line-strong);
+    }
+    .q-cf-input:focus {
+      outline: 0;
+      border-bottom-color: var(--q-accent);
+    }
+    .q-cf-input:focus::placeholder { opacity: 0.5; }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * SUBMIT · button + consent
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-cf-submit {
+      margin-top: var(--q-s-4);
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-4);
+    }
+    .q-cf-submit__btn {
+      align-self: flex-start;
+      min-width: 280px;
+    }
+    /* ─── CHECKBOX consent rows ─── */
+    .q-cf-consents {
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-3);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .q-cf-consent {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      column-gap: var(--q-s-3);
+      align-items: start;
+      cursor: pointer;
+      user-select: none;
+    }
+    /* hide native input */
+    .q-cf-consent__input {
+      position: absolute;
+      opacity: 0;
+      width: 1px;
+      height: 1px;
+      pointer-events: none;
+    }
+    /* custom box */
+    .q-cf-consent__box {
+      width: 18px;
+      height: 18px;
+      border: 1px solid var(--q-line-strong);
+      background: transparent;
+      flex-shrink: 0;
+      position: relative;
+      transition: border-color var(--q-dur-fast) var(--q-ease),
+                  background var(--q-dur-fast) var(--q-ease);
+      margin-top: 2px;
+    }
+    .q-cf-consent__box::after {
+      content: "";
+      position: absolute;
+      inset: 3px;
+      background: var(--q-accent);
+      opacity: 0;
+      transition: opacity var(--q-dur-fast) var(--q-ease);
+    }
+    .q-cf-consent:hover .q-cf-consent__box {
+      border-color: var(--q-text-mid);
+    }
+    .q-cf-consent__input:checked + .q-cf-consent__box {
+      border-color: var(--q-accent);
+    }
+    .q-cf-consent__input:checked + .q-cf-consent__box::after { opacity: 1; }
+    .q-cf-consent__input:focus-visible + .q-cf-consent__box {
+      outline: 1px dashed var(--q-accent);
+      outline-offset: 3px;
+    }
+    /* label text */
+    .q-cf-consent__text {
+      font-size: var(--q-t-small);
+      line-height: 1.5;
+      color: var(--q-text-mid);
+      margin: 0;
+    }
+    .q-cf-consent__text a {
+      color: var(--q-text-hi);
+      text-decoration: none;
+      border-bottom: 1px solid var(--q-line);
+      transition: color var(--q-dur-fast) var(--q-ease),
+                  border-color var(--q-dur-fast) var(--q-ease);
+    }
+    .q-cf-consent__text a:hover {
+      color: var(--q-accent-hover);
+      border-bottom-color: var(--q-accent);
+    }
+    .q-cf-consent__req {
+      color: var(--q-accent-hover);
+      margin-left: 2px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * RESPONSIVE
+     * ═══════════════════════════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .q-cf-grid { grid-template-columns: 1fr; gap: var(--q-s-7); }
+    }
+    @media (max-width: 720px) {
+      .q-cf { padding: var(--q-s-8) 0 var(--q-s-9); }
+      .q-cf-aside__item { grid-template-columns: 28px 1fr; }
+      .q-cf-label { grid-template-columns: 28px 1fr; }
+      .q-cf-input { padding-left: 36px; }
+      .q-cf-submit__btn { width: 100%; min-width: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       STICKY TOPBAR
+       ═══════════════════════════════════════════════════════════════ -->
+  <header class="q-topbar">
+    <a href="#" class="q-topbar__brand">
+      <span class="q-topbar__brand-mark">Q</span>
+      <span>Quillon</span>
+    </a>
+
+    <nav class="q-topbar__nav" aria-label="Главная навигация">
+      <a class="q-topbar__link" href="#tracks">Треки</a>
+      <a class="q-topbar__link" href="#format">Формат</a>
+      <a class="q-topbar__link" href="#pricing">Цена</a>
+      <a class="q-topbar__link" href="#quillon_jobs">Jobs</a>
+      <a class="q-topbar__link" href="#faq">FAQ</a>
+    </nav>
+
+    <div class="q-topbar__actions">
+      <a class="q-btn q-btn--link" href="https://lms.quillon.ru" target="_blank" rel="noopener noreferrer">Войти</a>
+      <a class="q-btn q-btn--primary q-btn--sm" href="/quiz">Пройти тест</a>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       16 · CONTACT FORM
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="q-section q-cf" id="contact">
+    <div class="q-container">
+
+      <div class="q-cf-grid">
+
+        <!-- ─── ASIDE: copy + bullets ─── -->
+        <aside class="q-cf-aside">
+          <span class="q-cf-aside__num"><em>16</em> · СЛЕДУЮЩИЙ ШАГ</span>
+          <h2 class="q-cf-aside__title">Разберём твою ситуацию за&nbsp;15&nbsp;минут</h2>
+          <p class="q-cf-aside__sub">Расскажешь, где сейчас работаешь и&nbsp;чего хочешь от&nbsp;IT. Мы&nbsp;подберём трек, покажем, сколько часов в&nbsp;неделю нужно именно тебе, и&nbsp;ответим на&nbsp;любые вопросы.</p>
+
+          <ul class="q-cf-aside__list" role="list">
+            <li class="q-cf-aside__item">
+              <span class="q-cf-aside__item-num">01</span>
+              <p class="q-cf-aside__item-text">Подберём трек под твою цель и&nbsp;бэкграунд</p>
+            </li>
+            <li class="q-cf-aside__item">
+              <span class="q-cf-aside__item-num">02</span>
+              <p class="q-cf-aside__item-text">Покажем расчёт часов, сроков и&nbsp;окупаемости</p>
+            </li>
+            <li class="q-cf-aside__item">
+              <span class="q-cf-aside__item-num">03</span>
+              <p class="q-cf-aside__item-text">Ответим на&nbsp;любые вопросы по&nbsp;программе</p>
+            </li>
+          </ul>
+        </aside>
+
+        <!-- ─── FORM: 3 fields + submit ─── -->
+        <form class="q-cf-form" action="#" method="post" novalidate>
+
+          <div class="q-cf-field">
+            <label class="q-cf-label" for="cf-name">
+              <span class="q-cf-label__num">01</span>
+              <span class="q-cf-label__text">Имя<span class="q-cf-label__req">*</span></span>
+            </label>
+            <input
+              class="q-cf-input"
+              id="cf-name"
+              name="name"
+              type="text"
+              placeholder="Как&nbsp;к&nbsp;тебе обращаться?"
+              autocomplete="name"
+              required>
+          </div>
+
+          <div class="q-cf-field">
+            <label class="q-cf-label" for="cf-phone">
+              <span class="q-cf-label__num">02</span>
+              <span class="q-cf-label__text">Телефон<span class="q-cf-label__req">*</span></span>
+            </label>
+            <input
+              class="q-cf-input"
+              id="cf-phone"
+              name="phone"
+              type="tel"
+              placeholder="+7 ___ ___ __ __"
+              autocomplete="tel"
+              required>
+          </div>
+
+          <div class="q-cf-field">
+            <label class="q-cf-label" for="cf-email">
+              <span class="q-cf-label__num">03</span>
+              <span class="q-cf-label__text">Email</span>
+            </label>
+            <input
+              class="q-cf-input"
+              id="cf-email"
+              name="email"
+              type="email"
+              placeholder="name@example.com"
+              autocomplete="email">
+          </div>
+
+          <ul class="q-cf-consents" role="list">
+            <li>
+              <label class="q-cf-consent">
+                <input class="q-cf-consent__input" type="checkbox" name="consent_pdn" required>
+                <span class="q-cf-consent__box" aria-hidden="true"></span>
+                <p class="q-cf-consent__text">Даю согласие на&nbsp;обработку <a href="/v4/docs/consent-pdn.html" target="_blank" rel="noopener">персональных данных</a><span class="q-cf-consent__req">*</span></p>
+              </label>
+            </li>
+            <li>
+              <label class="q-cf-consent">
+                <input class="q-cf-consent__input" type="checkbox" name="consent_marketing">
+                <span class="q-cf-consent__box" aria-hidden="true"></span>
+                <p class="q-cf-consent__text">Даю согласие на&nbsp;получение <a href="/v4/docs/consent-marketing.html" target="_blank" rel="noopener">рекламных материалов</a></p>
+              </label>
+            </li>
+          </ul>
+
+          <div class="q-cf-submit">
+            <button class="q-btn q-btn--primary q-btn--lg q-cf-submit__btn" type="submit">
+              Записаться на&nbsp;разбор
+              <span class="q-btn__icon" aria-hidden="true">→</span>
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

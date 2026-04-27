@@ -4,39 +4,42 @@
    ========================================================================== */
 
 :root {
-  /* ── Colors: Backgrounds ─────────────────────────────────────────────── */
-  --bg-deep:          #080B14;           /* Deepest background (body)        */
-  --bg:               #0F172A;           /* Section alternate background     */
-  --bg-card:          #141D35;           /* Card background (slightly light) */
-  --card:             #141D35;           /* Alias for bg-card (compat)       */
-  --card-elevated:    rgba(255, 255, 255, 0.04); /* Elevated surface (chips)  */
+  /* ── Colors: Backgrounds ─ Navy editorial ────────────────────────────── */
+  --bg-deep:          #0A1222;           /* Deepest background (body)        */
+  --bg:               #0F1B33;           /* Section alternate background     */
+  --bg-card:          #162747;           /* Card background (slightly light) */
+  --card:             #162747;           /* Alias for bg-card (compat)       */
+  --card-elevated:    rgba(255, 245, 230, 0.04); /* Elevated (warm tint)     */
 
-  /* ── Colors: Accent ──────────────────────────────────────────────────── */
-  --accent:           #1F4ED8;           /* Primary accent (CTA, links)      */
-  --accent-light:     #3B6FFF;           /* Hover states, gradients          */
-  --accent-glow:      rgba(31, 78, 216, 0.35);  /* Background glow spots   */
-  --accent-subtle:    rgba(31, 78, 216, 0.12);  /* Focus rings, tints      */
+  /* ── Colors: Accent ─ Monochrome cerulean (no warm secondary) ────────── */
+  --accent:           #2E86AB;           /* Primary accent (CTA, links)      */
+  --accent-light:     #4FA3C7;           /* Hover states                     */
+  --accent-deep:      #1F5E7A;           /* Pressed / deep accent            */
+  --accent-glow:      rgba(46, 134, 171, 0.28);   /* Background glow (rare) */
+  --accent-subtle:    rgba(46, 134, 171, 0.12);   /* Focus rings, tints     */
+  --accent-secondary: #1F5E7A;           /* Tonal deep (alias, compat)       */
 
-  /* ── Colors: Text ────────────────────────────────────────────────────── */
-  --text-primary:     #F0F4FF;           /* Headings, primary copy           */
-  --text-secondary:   #94A3B8;           /* Descriptions, secondary copy     */
-  --text-tertiary:    #64748B;           /* Tertiary: stats labels, notes    */
-  --text-muted:       #4A5568;           /* Disabled, placeholder            */
-  --text-blue:        #60A5FA;           /* Inline accent text               */
+  /* ── Colors: Text ─ Warm cream ──────────────────────────────────────── */
+  --text-primary:     #F5EFE3;           /* Headings, primary copy (cream)   */
+  --text-secondary:   #A8B0C0;           /* Descriptions, secondary copy     */
+  --text-tertiary:    #6B7690;           /* Tertiary: stats labels, notes    */
+  --text-muted:       #4A5468;           /* Disabled, placeholder            */
+  --text-blue:        #2E86AB;           /* Inline accent text (primary)     */
 
   /* ── Colors: Borders ─────────────────────────────────────────────────── */
-  --border:           rgba(255, 255, 255, 0.06);  /* Default card borders   */
-  --border-blue:      rgba(31, 78, 216, 0.4);     /* Hover / active borders */
-  --border-light:     rgba(255, 255, 255, 0.12);  /* Stronger subtle border */
+  --border:           rgba(245, 239, 227, 0.07);  /* Default card borders   */
+  --border-blue:      rgba(46, 134, 171, 0.4);    /* Hover / active borders */
+  --border-accent:    rgba(46, 134, 171, 0.4);    /* Semantic alias         */
+  --border-light:     rgba(245, 239, 227, 0.14);  /* Stronger subtle border */
 
   /* ── Colors: Semantic ────────────────────────────────────────────────── */
   --success:          #10B981;
   --error:            #EF4444;
   --warning:          #F59E0B;
-  --purple:           #7C3AED;
+  /* --purple removed: banned per anti-AI guidelines. Use --accent or --accent-secondary. */
 
   /* ── Typography ──────────────────────────────────────────────────────── */
-  --font-display:     'Syne', sans-serif;
+  --font-display:     'Archivo', sans-serif;
   --font-body:        'DM Sans', sans-serif;
   --font-mono:        'JetBrains Mono', monospace;
 
@@ -53,11 +56,13 @@
   --container-max:    1200px;
   --container-pad:    clamp(16px, 4vw, 48px);
   --section-pad:      clamp(64px, 10vw, 96px);
-  --card-radius:      24px;
-  --btn-radius:       12px;
+  --card-radius:      8px;     /* was 24px — anti-AI editorial tightening */
+  --btn-radius:       6px;     /* was 12px */
+  --radius-pill:      999px;   /* badges/tags keep pill shape for contrast */
+  --radius-input:     4px;     /* form fields */
 
   /* ── Effects ─────────────────────────────────────────────────────────── */
-  --glass-bg:         rgba(15, 23, 42, 0.6);
+  --glass-bg:         rgba(15, 27, 51, 0.6);
   --glass-blur:       blur(16px);
   --shadow-card:      0 1px 0 rgba(255, 255, 255, 0.04) inset,
                       0 8px 32px rgba(0, 0, 0, 0.5);
@@ -69,19 +74,20 @@
    Light Theme
    ========================================================================== */
 [data-theme="light"] {
-  --bg-deep: #F8FAFC;
-  --bg: #FFFFFF;
-  --bg-card: #F1F5F9;
-  --glass-bg: rgba(255, 255, 255, 0.8);
-  --text-primary: #0F172A;
-  --text-secondary: #475569;
-  --text-tertiary: #64748B;
-  --text-muted: #94A3B8;
-  --card: #F1F5F9;
-  --card-elevated: rgba(0, 0, 0, 0.04);
-  --border: rgba(0, 0, 0, 0.08);
-  --border-light: rgba(0, 0, 0, 0.12);
-  --border-blue: rgba(31, 78, 216, 0.3);
-  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
-  /* Accent colors stay the same */
+  --bg-deep: #FAF6ED;          /* warm cream, not pure white */
+  --bg: #FFFDF7;
+  --bg-card: #F3ECDB;          /* off-cream card */
+  --glass-bg: rgba(255, 253, 247, 0.8);
+  --text-primary: #1A1410;     /* warm near-black */
+  --text-secondary: #4A3F35;
+  --text-tertiary: #6B5E52;
+  --text-muted: #9A8E80;
+  --card: #F3ECDB;
+  --card-elevated: rgba(26, 20, 16, 0.04);
+  --border: rgba(26, 20, 16, 0.08);
+  --border-light: rgba(26, 20, 16, 0.12);
+  --border-blue: rgba(46, 134, 171, 0.3);
+  --border-accent: rgba(46, 134, 171, 0.3);
+  --shadow-card: 0 1px 3px rgba(26, 20, 16, 0.1), 0 1px 2px rgba(26, 20, 16, 0.06);
+  /* Cerulean accent stays the same in light theme (#2E86AB) */
 }

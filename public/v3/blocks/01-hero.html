@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quillon v3 — Block 01 · Hero (v2 editorial bento)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Geist (display candidate, wght 900) + DM Sans body + JetBrains Mono -->
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap&subset=cyrillic,cyrillic-ext,latin,latin-ext" rel="stylesheet">
+<link rel="stylesheet" href="/v3/css/tokens.css">
+<link rel="stylesheet" href="/v3/css/base.css">
+<link rel="stylesheet" href="/v3/css/components.css">
+<style>
+  /* ═══════════════════════════════════════════════════════════════
+   * Block 01 · Hero v2 — editorial bento
+   *   Header (sticky-ish, центральные pill-табы, уголки из bento
+   *   выглядывают слева и справа)
+   *   + 2-колоночный hero: dark ink (title, обрезанный справа)
+   *   и stack violet-CTA / paper 3-col facts.
+   * Локальный override --q-font-display: Geist 900.
+   * ═══════════════════════════════════════════════════════════════ */
+
+  /* — Локальный шрифтовой overrride —
+     Пробуем Geist 900: уже в семействе Quillon, кириллица OK, пропорции
+     более компактные и editorial чем Unbounded. */
+  .q-hero-v2, .q-hero-v2 * {
+    --q-font-display: "Geist", "Space Grotesk", -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  .q-page-pad { padding: var(--q-s-5) 0 var(--q-s-9); }
+
+  .q-sandbox-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--q-s-2);
+    padding: 6px 12px;
+    border: 1px dashed var(--q-line-strong);
+    border-radius: var(--q-r-pill);
+    font-family: var(--q-font-mono);
+    font-size: var(--q-t-micro);
+    color: var(--q-text-low);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: var(--q-s-5);
+  }
+  .q-sandbox-tag::before {
+    content: "";
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--q-violet);
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+   *   HEADER · центральная ink-pill панель с 4 табами
+   *   + выглядывающие уголки (lavender слева, muted справа) —
+   *   композиционно продолжают bento «в потолок».
+   * ═══════════════════════════════════════════════════════════════ */
+  .q-hero-v2__header {
+    position: relative;
+    height: 96px;
+    margin-bottom: var(--q-bento-gap);
+    isolation: isolate;
+  }
+  /* lavender corner slug, слева сверху — выглядывает наполовину */
+  .q-hero-v2__corner-l,
+  .q-hero-v2__corner-r {
+    position: absolute;
+    top: -24px;
+    height: 110px;
+    border-radius: var(--q-r-4);
+    z-index: 1;
+  }
+  .q-hero-v2__corner-l {
+    left: 0;
+    width: 220px;
+    background: var(--q-lavender);
+  }
+  .q-hero-v2__corner-r {
+    right: 0;
+    width: 260px;
+    background: var(--q-ink-3);
+    border: 1px solid var(--q-line);
+  }
+
+  .q-hero-v2__tabs {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+
+    display: inline-flex;
+    gap: 6px;
+    padding: 8px;
+    background: var(--q-ink-2);
+    border: 1px solid var(--q-line);
+    border-radius: var(--q-r-pill);
+    box-shadow: var(--q-el-2);
+  }
+  .q-hero-v2__tab {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 18px;
+    font-family: var(--q-font-body);
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--q-text-hi);
+    background: transparent;
+    border: 1px solid color-mix(in oklab, var(--q-paper) 16%, transparent);
+    border-radius: var(--q-r-pill);
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color var(--q-dur-fast) var(--q-ease),
+                background-color var(--q-dur-fast) var(--q-ease);
+  }
+  .q-hero-v2__tab:hover {
+    background: var(--q-ink-3);
+    border-color: var(--q-line-strong);
+  }
+  .q-hero-v2__tab--ai {
+    /* длинное слово — чуть расслабленный padding */
+    padding: 10px 16px;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+   *   HERO GRID · 2fr / 1fr (≈ 62/38)
+   * ═══════════════════════════════════════════════════════════════ */
+  .q-hero-v2__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.62fr) minmax(0, 1fr);
+    gap: var(--q-bento-gap);
+    align-items: stretch;
+  }
+
+  /* — Left: DARK INK карточка с огромным обрезанным title — */
+  .q-hero-v2__stage {
+    position: relative;
+    overflow: hidden;
+    background: var(--q-ink-2);
+    border: 1px solid var(--q-line);
+    border-radius: var(--q-r-5);
+    padding: var(--q-s-6) 0 var(--q-s-6) var(--q-s-7);
+    min-height: 620px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--q-s-6);
+  }
+  .q-hero-v2__stage-cross {
+    position: absolute;
+    top: var(--q-s-5);
+    left: var(--q-s-7);
+    font-family: var(--q-font-mono);
+    font-size: 20px;
+    line-height: 1;
+    color: var(--q-text-low);
+    opacity: 0.7;
+    letter-spacing: 0;
+  }
+  .q-hero-v2__stage-shape {
+    position: absolute;
+    right: -140px;
+    top: 52%;
+    transform: translateY(-50%);
+    width: 260px;
+    height: 260px;
+    color: var(--q-lavender);
+    opacity: 0.22;
+    pointer-events: none;
+  }
+
+  .q-hero-v2__display {
+    font-family: var(--q-font-display);
+    font-weight: 900;
+    /* Фиксируем большой размер на desktop + clamp вниз для адаптива.
+       На 1440 viewport → ~200px, что достаточно чтобы «доходом» не влезло. */
+    font-size: clamp(4rem, 15vw, 14rem);
+    line-height: 0.88;
+    letter-spacing: -0.045em;
+    margin: var(--q-s-7) 0 0 0;
+    color: var(--q-text-hi);
+    /* ширина шире контейнера — title режется справа */
+    white-space: normal;
+    word-spacing: -0.04em;
+    text-wrap: balance;
+  }
+  .q-hero-v2__display .q-w-muted { color: var(--q-text-low); }
+  .q-hero-v2__display .q-w-violet { color: var(--q-violet); }
+  .q-hero-v2__display .q-w-dash { color: var(--q-violet); }
+
+  .q-hero-v2__subtitle {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    max-width: 56ch;
+    padding-right: var(--q-s-7);
+    font-family: var(--q-font-body);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    color: var(--q-text-mid);
+  }
+  .q-hero-v2__subtitle strong {
+    color: var(--q-text-hi);
+    font-weight: 700;
+  }
+
+  /* — Right column: stack — */
+  .q-hero-v2__right {
+    display: grid;
+    grid-template-rows: 1.62fr 1fr;
+    gap: var(--q-bento-gap);
+    min-height: 620px;
+  }
+
+  /* Violet CTA card */
+  .q-hero-v2__cta {
+    position: relative;
+    overflow: hidden;
+    background: var(--q-violet);
+    color: var(--q-ink);
+    border-radius: var(--q-r-5);
+    padding: var(--q-s-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--q-s-5);
+  }
+  .q-hero-v2__cta-eyebrow {
+    margin: 0;
+    font-family: var(--q-font-mono);
+    font-size: var(--q-t-micro);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--q-ink);
+    opacity: 0.75;
+  }
+  .q-hero-v2__cta-title {
+    margin: 0;
+    font-family: var(--q-font-display);
+    font-weight: 800;
+    font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    color: var(--q-ink);
+    max-width: 18ch;
+  }
+  .q-hero-v2__cta-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: auto;
+  }
+  .q-hero-v2__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 22px;
+    font-family: var(--q-font-body);
+    font-weight: 500;
+    font-size: 0.95rem;
+    line-height: 1;
+    border-radius: var(--q-r-pill);
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform var(--q-dur-fast) var(--q-ease),
+                background-color var(--q-dur-fast) var(--q-ease),
+                color var(--q-dur-fast) var(--q-ease),
+                border-color var(--q-dur-fast) var(--q-ease);
+    border: 1px solid transparent;
+    white-space: nowrap;
+  }
+  .q-hero-v2__btn--ink {
+    background: var(--q-ink);
+    color: var(--q-paper);
+  }
+  .q-hero-v2__btn--ink:hover { background: var(--q-ink-3); transform: translateY(-1px); }
+  .q-hero-v2__btn--outline {
+    background: transparent;
+    color: var(--q-ink);
+    border-color: var(--q-ink);
+  }
+  .q-hero-v2__btn--outline:hover {
+    background: color-mix(in oklab, var(--q-ink) 10%, transparent);
+  }
+  .q-hero-v2__cta-micro {
+    margin: 0;
+    font-family: var(--q-font-body);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--q-ink);
+    opacity: 0.65;
+  }
+
+  /* Paper facts card — 3 колонки */
+  .q-hero-v2__facts {
+    background: var(--q-paper);
+    color: var(--q-text-dark-hi);
+    border-radius: var(--q-r-5);
+    padding: var(--q-s-5) var(--q-s-6);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--q-s-5);
+    align-items: center;
+  }
+  .q-hero-v2__fact {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-family: var(--q-font-body);
+    font-weight: 500;
+    font-size: 0.9375rem;
+    line-height: 1.3;
+    color: var(--q-text-dark-hi);
+  }
+  .q-hero-v2__fact::before {
+    content: "";
+    flex: 0 0 9px;
+    width: 9px;
+    height: 9px;
+    margin-top: 6px;
+    border-radius: 50%;
+    background: var(--q-violet);
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+   *   TABLET (≤ 1080px)
+   * ═══════════════════════════════════════════════════════════════ */
+  @media (max-width: 1080px) {
+    .q-hero-v2__grid {
+      grid-template-columns: 1fr;
+    }
+    .q-hero-v2__stage {
+      min-height: auto;
+      padding: var(--q-s-6) 0 var(--q-s-6) var(--q-s-6);
+    }
+    .q-hero-v2__stage-cross { left: var(--q-s-6); }
+    .q-hero-v2__display { font-size: clamp(3.25rem, 11vw, 7rem); line-height: 0.92; }
+    .q-hero-v2__right { min-height: auto; grid-template-rows: auto auto; }
+    .q-hero-v2__corner-l { width: 140px; }
+    .q-hero-v2__corner-r { width: 180px; }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+   *   MOBILE (≤ 768px)
+   * ═══════════════════════════════════════════════════════════════ */
+  @media (max-width: 768px) {
+    .q-page-pad { padding: var(--q-s-4) 0 var(--q-s-7); }
+
+    .q-hero-v2__header {
+      height: auto;
+      padding: var(--q-s-3) 0;
+      margin-bottom: var(--q-bento-gap);
+    }
+    .q-hero-v2__corner-l,
+    .q-hero-v2__corner-r {
+      display: none; /* на mobile корнеры визуально мешают */
+    }
+    .q-hero-v2__tabs {
+      position: static;
+      transform: none;
+      display: flex;
+      gap: 6px;
+      padding: 6px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: nowrap;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .q-hero-v2__tabs::-webkit-scrollbar { display: none; }
+    .q-hero-v2__tab { flex: 0 0 auto; font-size: 0.85rem; padding: 9px 14px; }
+
+    .q-hero-v2__stage {
+      padding: var(--q-s-5) var(--q-s-5) var(--q-s-5);
+      gap: var(--q-s-5);
+      border-radius: var(--q-r-4);
+    }
+    .q-hero-v2__stage-cross { left: var(--q-s-5); top: var(--q-s-4); }
+    .q-hero-v2__display {
+      margin-top: var(--q-s-6);
+      font-size: clamp(2.75rem, 14vw, 5rem);
+      letter-spacing: -0.035em;
+    }
+    .q-hero-v2__subtitle {
+      padding-right: 0;
+      font-size: 1rem;
+    }
+
+    .q-hero-v2__cta { padding: var(--q-s-5); border-radius: var(--q-r-4); }
+    .q-hero-v2__cta-title { font-size: 1.375rem; max-width: 100%; }
+    .q-hero-v2__btn { width: 100%; }
+
+    .q-hero-v2__facts {
+      grid-template-columns: 1fr;
+      gap: var(--q-s-3);
+      padding: var(--q-s-5);
+      border-radius: var(--q-r-4);
+    }
+  }
+
+  @media (max-width: 420px) {
+    .q-hero-v2__display { font-size: 2.5rem; }
+    .q-hero-v2__cta-title { font-size: 1.25rem; }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+   *   DESIGN-REVIEW OVERRIDES · ROUND 2
+   *   Фикс: subtitle больше не overlap'ится с title (чистый flow
+   *   через flex-zone), orb тише и дальше, em-dash → editorial полоса,
+   *   facts 3-col не ломаются в 4 строки.
+   * ═══════════════════════════════════════════════════════════════ */
+
+  /* 1. Stage — чистый flex flow, title-zone разливается за правую кромку */
+  .q-hero-v2__stage {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: var(--q-s-7) 0 var(--q-s-6) var(--q-s-7);
+    min-height: clamp(640px, 78vh, 820px);
+    max-height: min(80vh, 820px);
+    overflow: hidden;
+    gap: 0;
+    justify-content: flex-start;
+  }
+
+  /* 2. Title-zone — flex grow, clips title справа */
+  .q-hero-v2__stage-title-zone {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  /* 3. Title — auto-width, выезжает за правую кромку stage */
+  .q-hero-v2__display {
+    position: relative;
+    z-index: 1;
+    margin: 0 calc(var(--q-s-7) * -1) 0 0;
+    width: auto;
+    font-size: clamp(3rem, 8.4vw, 7.5rem);
+    line-height: 0.9;
+    align-self: auto;
+  }
+
+  /* 4. Subtitle — static flow, sibling title-zone, прибит снизу через flex order */
+  .q-hero-v2__subtitle {
+    position: static;
+    flex: 0 0 auto;
+    max-width: 46ch;
+    margin: var(--q-s-5) var(--q-s-7) 0 0;
+    padding: 0;
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    z-index: 2;
+  }
+
+  /* 5. Muted слово «за» — чуть заметнее */
+  .q-hero-v2__display .q-w-muted {
+    color: color-mix(in oklab, var(--q-paper) 32%, transparent);
+  }
+
+  /* 6. Right column — согласование высот */
+  .q-hero-v2__right {
+    grid-template-rows: 1.55fr 1fr;
+    min-height: 0;
+  }
+
+  /* 7. Corner-slots — глубже + контраст справа */
+  .q-hero-v2__corner-l,
+  .q-hero-v2__corner-r {
+    top: -40px;
+    height: 130px;
+    border-radius: var(--q-r-5);
+  }
+  .q-hero-v2__corner-r {
+    background: var(--q-ink-2);
+    border: 1px solid rgba(244, 241, 234, 0.08);
+  }
+
+  /* 8. Facts — 3-col tighter padding + меньше шрифт, чтобы не переносилось в 4 строки */
+  .q-hero-v2__facts {
+    align-items: start;
+    padding: var(--q-s-5);
+    gap: var(--q-s-4);
+  }
+  .q-hero-v2__fact {
+    font-size: 0.875rem;
+    line-height: 1.35;
+  }
+  .q-hero-v2__fact::before {
+    flex: 0 0 8px;
+    width: 8px;
+    height: 8px;
+    margin-top: 7px;
+  }
+
+  /* 9. Stage-shape — почти невидимый */
+  .q-hero-v2__stage-shape {
+    opacity: 0.14;
+  }
+
+  /* 10. Solid dark orb — тише и дальше */
+  .q-hero-v2__stage-orb {
+    position: absolute;
+    right: -180px;
+    top: 38%;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: var(--q-ink);
+    opacity: 0.28;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* 11. Em-dash editorial полоса (визуальная) */
+  .q-w-dash {
+    display: inline-block;
+    width: 0.62em;
+    height: 0.11em;
+    background: var(--q-violet);
+    vertical-align: 0.32em;
+    margin: 0 0.08em;
+  }
+
+  /* a11y: визуально скрытый текст для screen readers */
+  .visually-hidden {
+    position: absolute;
+    width: 1px; height: 1px;
+    margin: -1px; padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* 12. CTA-title — мельче */
+  .q-hero-v2__cta-title {
+    font-size: clamp(1.5rem, 2.2vw, 1.875rem);
+  }
+
+  /* 13. Кнопки в CTA — full-width на desktop */
+  @media (min-width: 768px) {
+    .q-hero-v2__cta-actions {
+      align-items: stretch;
+    }
+    .q-hero-v2__btn--ink,
+    .q-hero-v2__btn--outline {
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Inline shape sprite — нужен только organic lavender shape для stage -->
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0" aria-hidden="true">
+  <symbol id="q-shape-blob" viewBox="0 0 120 120">
+    <path d="M60 8 C92 8 112 30 112 58 C112 86 96 112 64 112 C34 112 10 94 10 62 C10 32 28 8 60 8 Z" fill="currentColor"/>
+  </symbol>
+</svg>
+
+<main class="q-container q-page-pad">
+
+  <span class="q-sandbox-tag">block 01 · hero · v2 editorial</span>
+
+  <section class="q-hero-v2" aria-label="Hero">
+
+    <!-- ━━━━━━━━━━━━━━━━━━━━ HEADER ━━━━━━━━━━━━━━━━━━━━ -->
+    <header class="q-hero-v2__header" aria-label="Направления">
+      <div class="q-hero-v2__corner-l" aria-hidden="true"></div>
+      <div class="q-hero-v2__corner-r" aria-hidden="true"></div>
+
+      <nav class="q-hero-v2__tabs" role="tablist" aria-label="Выбор направления">
+        <a class="q-hero-v2__tab" role="tab" href="#python">Python</a>
+        <a class="q-hero-v2__tab" role="tab" href="#flutter">Flutter</a>
+        <a class="q-hero-v2__tab" role="tab" href="#qa">QA</a>
+        <a class="q-hero-v2__tab q-hero-v2__tab--ai" role="tab" href="#ai">Искусственный интеллект</a>
+      </nav>
+    </header>
+
+    <!-- ━━━━━━━━━━━━━━━━━━━━ HERO GRID ━━━━━━━━━━━━━━━━━━━━ -->
+    <div class="q-hero-v2__grid">
+
+      <!-- LEFT · Dark ink stage with massive clipped title -->
+      <article class="q-hero-v2__stage">
+        <span class="q-hero-v2__stage-cross" aria-hidden="true">⌐</span>
+        <div class="q-hero-v2__stage-orb" aria-hidden="true"></div>
+        <svg class="q-hero-v2__stage-shape" aria-hidden="true"><use href="#q-shape-blob"/></svg>
+
+        <div class="q-hero-v2__stage-title-zone">
+          <h1 class="q-hero-v2__display">Войди в IT <span class="q-w-muted">за</span> <span class="q-w-violet">12&nbsp;месяцев</span> <span class="q-w-dash" aria-hidden="true"></span><span class="visually-hidden">—</span> со стажировкой и первым доходом</h1>
+        </div>
+
+        <p class="q-hero-v2__subtitle">
+          <strong>Со второго месяца</strong> — реальный заказ от внешнего заказчика, деньги на счёт. Рассрочка закрывается твоим заработком, а не из кармана.
+        </p>
+      </article>
+
+      <!-- RIGHT · stack: violet CTA + paper 3-facts -->
+      <div class="q-hero-v2__right">
+
+        <article class="q-hero-v2__cta">
+          <p class="q-hero-v2__cta-eyebrow">/ START · 5 МИНУТ</p>
+          <h2 class="q-hero-v2__cta-title">Узнай, сколько&nbsp;заработаешь уже на стажировке.</h2>
+
+          <div class="q-hero-v2__cta-actions">
+            <a class="q-hero-v2__btn q-hero-v2__btn--ink" href="/quiz">
+              Пройти тест — узнать, сколько заработаешь →
+            </a>
+            <a class="q-hero-v2__btn q-hero-v2__btn--outline" href="#products">
+              Смотреть треки →
+            </a>
+          </div>
+
+          <p class="q-hero-v2__cta-micro">5 минут · Персональный разбор с прогнозом заработка · Бесплатно</p>
+        </article>
+
+        <article class="q-hero-v2__facts" aria-label="Ключевые факты">
+          <span class="q-hero-v2__fact">Первый заработок со&nbsp;2-го месяца</span>
+          <span class="q-hero-v2__fact">Quillon&nbsp;Jobs находит заказы за&nbsp;тебя</span>
+          <span class="q-hero-v2__fact">Рассрочка окупается заказами</span>
+        </article>
+
+      </div>
+
+    </div>
+
+  </section>
+</main>
+
+</body>
+</html>

@@ -696,6 +696,116 @@ function initInteractions() {
     visObserver.observe(showcase);
   }
 
+  /* ── 10. Hero live ticker — horizontal scroll of code fragments ──────── */
+  initHeroTicker();
+
+  /* ── 11. Hero code typewriter — char-by-char reveal preserving tokens ── */
+  initHeroTypewriter();
+
+  function initHeroTicker() {
+    var track = document.getElementById('hero-ticker-track');
+    if (!track) return;
+
+    // Pre-highlighted code fragments — atmospheric, not runnable narrative
+    var FRAGMENTS = [
+      '<span class="tk-k">from</span> quillon.agency <span class="tk-k">import</span> Brief, Payout',
+      '<span class="tk-k">async def</span> <span class="tk-fn">claim</span>(brief: Brief) -&gt; Payout',
+      '@router.<span class="tk-fn">post</span>(<span class="tk-s">&quot;/deliver&quot;</span>)',
+      'payout = <span class="tk-k">await</span> Payout.<span class="tk-fn">create</span>(amount=brief.price)',
+      '<span class="tk-k">await</span> session.<span class="tk-fn">commit</span>()',
+      '<span class="tk-k">return</span> Response(status_code=<span class="tk-s">201</span>)',
+      '<span class="tk-k">class</span> <span class="tk-fn">Student</span>(BaseModel)',
+      'agency = <span class="tk-fn">Quillon</span>(env=<span class="tk-s">&quot;production&quot;</span>)',
+      'brief = <span class="tk-k">await</span> agency.<span class="tk-fn">next_brief</span>()',
+      'pytest tests/ — <span class="tk-s">23 passed</span>',
+      'mypy quillon/ — <span class="tk-s">success</span>',
+      '<span class="tk-k">if</span> brief.status == <span class="tk-s">&quot;delivered&quot;</span>:',
+      'docker compose up —build',
+      '<span class="tk-k">async with</span> aiohttp.<span class="tk-fn">ClientSession</span>() <span class="tk-k">as</span> s'
+    ];
+
+    function itemHtml(frag) {
+      return (
+        '<span class="hero-ticker-item">' + frag + '</span>' +
+        '<span class="hero-ticker-item-sep"></span>'
+      );
+    }
+
+    // Build track with 2x duplicates → seamless loop via translateX(-50%)
+    var single = FRAGMENTS.map(itemHtml).join('');
+    track.innerHTML = single + single;
+  }
+
+  function initHeroTypewriter() {
+    var code = document.querySelector('.hero-code-body code[data-typewriter]');
+    if (!code) return;
+
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Parse existing markup into {text, cls} segments
+    var segments = [];
+    for (var i = 0; i < code.childNodes.length; i++) {
+      var n = code.childNodes[i];
+      if (n.nodeType === 3) {
+        segments.push({ text: n.nodeValue, cls: null });
+      } else if (n.nodeType === 1) {
+        segments.push({ text: n.textContent, cls: n.className || null });
+      }
+    }
+
+    if (reduceMotion) return; // leave static content intact
+
+    // Clear and add caret
+    code.textContent = '';
+    var caret = document.createElement('span');
+    caret.className = 'hero-code-caret';
+    code.appendChild(caret);
+
+    var segIdx = 0;
+    var charIdx = 0;
+    var currentSpan = null;
+
+    function typeStep() {
+      if (segIdx >= segments.length) return;
+
+      var seg = segments[segIdx];
+
+      if (charIdx === 0) {
+        currentSpan = document.createElement('span');
+        if (seg.cls) currentSpan.className = seg.cls;
+        code.insertBefore(currentSpan, caret);
+      }
+
+      var ch = seg.text.charAt(charIdx);
+      currentSpan.appendChild(document.createTextNode(ch));
+
+      charIdx++;
+      if (charIdx >= seg.text.length) {
+        segIdx++;
+        charIdx = 0;
+      }
+
+      var delay;
+      if (ch === '\n')      delay = 30 + Math.random() * 20;
+      else if (ch === ' ')  delay = 3 + Math.random() * 5;
+      else                  delay = 6 + Math.random() * 10;
+
+      setTimeout(typeStep, delay);
+    }
+
+    // Kick off when card enters viewport
+    var io = new IntersectionObserver(function (entries) {
+      for (var j = 0; j < entries.length; j++) {
+        if (entries[j].isIntersecting) {
+          io.unobserve(code);
+          setTimeout(typeStep, 200);
+          break;
+        }
+      }
+    }, { threshold: 0.25 });
+    io.observe(code);
+  }
+
   /* ── Lesson-demo iframe — moved to renderer.js for reliable DOM timing ── */
 }
 

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark" class="no-transition">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <title>Публичная оферта — Quillon Tech</title>
+  <meta name="description" content="Публичная оферта на оказание услуг IT-разработки Quillon Tech. Условия сотрудничества.">
+  <meta name="robots" content="noindex, follow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .legal-page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 24px 80px;
+      min-height: 100vh;
+    }
+    .legal-page__back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      color: var(--accent);
+      text-decoration: none;
+      margin-bottom: 24px;
+    }
+    .legal-page__back:hover { opacity: 0.8; }
+    .legal-page__title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .legal-page__updated {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+    .legal-page__pdf {
+      width: 100%;
+      height: 80vh;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg-card);
+    }
+    .legal-page__fallback {
+      margin-top: 16px;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+    .legal-page__fallback a {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Minimal navbar -->
+  <nav class="navbar" id="navbar" style="position:sticky;top:0;width:100%;z-index:1000;background:var(--bg);">
+    <div class="navbar__inner">
+      <a href="/" class="navbar__brand">
+        <svg class="navbar__logo-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="q-grad" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#2563EB"/><stop offset="100%" stop-color="#7C3AED"/></linearGradient></defs>
+          <rect x="2" y="2" width="28" height="28" rx="8" fill="url(#q-grad)"/>
+          <text x="16" y="23" text-anchor="middle" font-family="Syne, sans-serif" font-weight="800" font-size="20" fill="#fff">Q</text>
+        </svg>
+        <span class="navbar__logo-text">
+          <span class="navbar__logo-name">Quillon</span>
+          <span class="navbar__logo-suffix">.tech</span>
+        </span>
+      </a>
+      <div class="navbar__right">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Переключить тему">
+          <i data-lucide="sun" class="icon-sun"></i>
+          <i data-lucide="moon" class="icon-moon"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="legal-page">
+    <a href="/" class="legal-page__back">&larr; На главную</a>
+    <h1 class="legal-page__title">Публичная оферта</h1>
+    <p class="legal-page__updated">Последнее обновление: <span id="doc-date">—</span></p>
+
+    <!-- PDF Embed: замените файл /docs/offer.pdf для обновления -->
+    <iframe class="legal-page__pdf" src="/docs/offer.pdf" title="Публичная оферта"></iframe>
+
+    <p class="legal-page__fallback">
+      Если документ не отображается, <a href="/docs/offer.pdf" target="_blank" rel="noopener">скачайте PDF</a>.
+    </p>
+  </div>
+
+  <script src="/vendor/lucide.min.js" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+
+      var toggle = document.getElementById('theme-toggle');
+      var stored = localStorage.getItem('quillon-tech-theme');
+      document.documentElement.setAttribute('data-theme', stored || 'dark');
+      document.documentElement.classList.remove('no-transition');
+      if (toggle) {
+        toggle.addEventListener('click', function() {
+          var current = document.documentElement.getAttribute('data-theme');
+          var next = current === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem('quillon-tech-theme', next);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

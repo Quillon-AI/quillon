@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Recraft probes · original vs recolored</title>
+<style>
+  body{margin:0;padding:32px;font:14px/1.4 system-ui,sans-serif;background:#08090A;color:#E6E4DF}
+  h1{font-size:18px;font-weight:510;margin:0 0 8px}
+  .lead{font-size:13px;color:#A4A2A0;max-width:720px;margin:0 0 32px}
+  h2{font-size:13px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:#A4A2A0;margin:0 0 8px}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;border-bottom:1px solid #1F2024;padding-bottom:24px}
+  .card{border:1px solid #1F2024;border-radius:12px;overflow:hidden;background:#0E0F12}
+  .card img{width:100%;display:block}
+  .card .meta{padding:10px 14px;border-top:1px solid #1F2024;font-size:11px}
+  .meta .tag{display:inline-block;padding:2px 6px;border:1px solid #1F2024;border-radius:4px;color:#5E6AD2;font-family:ui-monospace,monospace;font-size:10px;margin-right:4px}
+  .meta p{margin:6px 0 0;color:#A4A2A0;font-size:11px}
+  code{font-family:ui-monospace,monospace;color:#5E6AD2}
+</style>
+</head>
+<body>
+<h1>Recraft → автоматический recolor в палитру v4</h1>
+<p class="lead">Слева — что вернул Recraft API. Справа — после прогонки через <code>recolor.sh</code> (sed-замена по карте RGB → v4-токены). Без новых генераций. Это и есть workflow «генерируем форму, сами красим».</p>
+
+<div class="row">
+  <div class="card">
+    <img src="images/recraft-test1.svg" alt="">
+    <div class="meta">
+      <span class="tag">original</span>
+      <p>test1 · default vector. Cartoon-человек — композиция плохая, recolor не спасёт.</p>
+    </div>
+  </div>
+  <div class="card">
+    <img src="images/recolored/test1.svg" alt="">
+    <div class="meta">
+      <span class="tag">recolored</span>
+      <p>В палитре v4. Цвета попадают, но человек остался — композиция нужна другая (negative_prompt в новой генерации).</p>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="card">
+    <img src="images/probe-negprompt.svg" alt="">
+    <div class="meta">
+      <span class="tag">original</span>
+      <p>probe-negprompt · <code>line_art + negative_prompt</code>. Чистый black/white линеарт без человека.</p>
+    </div>
+  </div>
+  <div class="card">
+    <img src="images/recolored/probe-negprompt.svg" alt="">
+    <div class="meta">
+      <span class="tag">recolored</span>
+      <p>Те же линии — в палитре v4. Нулевая стоимость в кредитах. Это направление, в котором надо генерировать.</p>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="card">
+    <img src="images/probe-colors.svg" alt="">
+    <div class="meta">
+      <span class="tag">original</span>
+      <p>probe-colors · <code>controls.colors:[indigo]</code>. Recraft принудительно использовал только indigo.</p>
+    </div>
+  </div>
+  <div class="card">
+    <img src="images/recolored/probe-colors.svg" alt="">
+    <div class="meta">
+      <span class="tag">recolored</span>
+      <p>Recolor мало что меняет — палитра уже была monochromatic indigo. Подтверждает что <code>controls.colors</code> работает.</p>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="card">
+    <img src="images/probe-v4.svg" alt="">
+    <div class="meta">
+      <span class="tag">original</span>
+      <p>probe-v4 · <code>model:"recraftv4"</code>. 32 цвета, painterly. Не наш стиль.</p>
+    </div>
+  </div>
+  <div class="card">
+    <img src="images/recolored/probe-v4.svg" alt="">
+    <div class="meta">
+      <span class="tag">recolored</span>
+      <p>Те же 32 цвета — recolor map покрывает только базовые серые. Многоцветный SVG плохо нормализуется. Доказывает: лучше генерить в 2–3 цветах изначально.</p>
+    </div>
+  </div>
+</div>
+
+<p class="lead" style="margin-top:32px">
+  <strong style="color:#E6E4DF">Вывод:</strong> Recolor отлично работает на SVG с 2–4 цветами (как probe-negprompt).
+  Многоцветные результаты (как probe-v4) бесполезны.
+  → Стратегия: генерим с <code>substyle:"line_art" + negative_prompt</code> (чистый линеарт),
+  потом sed-карта переводит в палитру v4.
+  Бюджет на одну итерацию = только стоимость генерации, recolor бесплатно.
+</p>
+</body>
+</html>

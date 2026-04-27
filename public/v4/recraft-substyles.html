@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Recraft v2 — abstract dataviz prompts</title>
+<style>
+  body{margin:0;padding:32px;font:14px/1.5 'Inter','Geist',system-ui,sans-serif;background:#08090A;color:#E6E4DF}
+  h1{font-size:18px;font-weight:510;margin:0 0 8px}
+  .lead{font-size:13px;color:#A4A2A0;max-width:820px;margin:0 0 32px}
+  h2{font-size:13px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:#A4A2A0;margin:0 0 8px}
+  .grid{display:grid;grid-template-columns:1fr;gap:24px}
+  .card{border:1px solid #1F2024;border-radius:12px;overflow:hidden;background:#0E0F12}
+  .card.pick{border-color:#5E6AD2}
+  .card img{width:100%;display:block;background:#08090A;max-height:520px;object-fit:contain}
+  .card .meta{padding:14px 18px;border-top:1px solid #1F2024}
+  .meta .tag{display:inline-block;padding:2px 8px;border:1px solid #1F2024;border-radius:4px;color:#5E6AD2;font-family:ui-monospace,monospace;font-size:11px;margin-right:6px}
+  .meta .tag.b{color:#E6E4DF;background:#1F2024}
+  .meta p{margin:8px 0 0;color:#A4A2A0;font-size:12px;max-width:680px}
+  code{font-family:ui-monospace,monospace;color:#5E6AD2;font-size:11px}
+</style>
+</head>
+<body>
+<h1>Recraft v2 · абстрактные dataviz-промпты</h1>
+<p class="lead">substyle: <code>line_art</code>, обновлённый <code>negative_prompt</code> (заблокированы 3D / pipes / engraving / hatching / decorative ornament). Промпты — короткие, dataviz/math язык, никаких pipelines/blueprint/architectural.</p>
+
+<div class="grid">
+  <div class="card pick">
+    <img src="images/recolored/probe-colors.svg" alt="">
+    <div class="meta">
+      <h2><span class="tag b">benchmark</span> probe-colors · «abstract geometric line topology»</h2>
+      <p>Тот, что ты одобрил ранее. Хаотичные индиго-линии. Это эталон, к чему стремимся.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="images/recolored/probe-A.svg" alt="">
+    <div class="meta">
+      <h2><span class="tag">probe-A</span> network graph</h2>
+      <p>Промпт: <em>«abstract network graph, scattered nodes connected by thin straight lines, force-directed layout»</em></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="images/recolored/probe-B.svg" alt="">
+    <div class="meta">
+      <h2><span class="tag">probe-B</span> data lattice</h2>
+      <p>Промпт: <em>«abstract data lattice, parallel horizontal lines crossing thin verticals, asymmetric grid pattern»</em></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="images/recolored/probe-C.svg" alt="">
+    <div class="meta">
+      <h2><span class="tag">probe-C</span> waveform plot</h2>
+      <p>Промпт: <em>«abstract waveform plot, flowing horizontal curves with measurement ticks, monochrome chart»</em></p>
+    </div>
+  </div>
+
+</div>
+
+<p class="lead" style="margin-top:32px"><strong style="color:#D78875">Кредиты Recraft закончились</strong> (probe-D упал на <code>not_enough_credits</code>). 3 из 4 успели до лимита. Если нравится один из A/B/C — буду масштабировать в нём после top-up. Если нет — скажи в каком направлении ещё попробовать (другие dataviz-метафоры) или оставляем то что было.</p>
+</body>
+</html>

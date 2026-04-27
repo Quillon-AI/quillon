@@ -22,7 +22,7 @@
   if (pageType === 'track' && trackSlug) {
     const [mainContent, mainSettings, track] = await Promise.all([
       ...sharedFetches,
-      fetch(`/content/tracks/${trackSlug}.json`).then(r => r.json())
+      fetch(`/content/tracks/${trackSlug}.json?v=20260422t02`).then(r => r.json())
     ]);
     content = mainContent;
     settings = mainSettings;
@@ -347,161 +347,181 @@ claude = Anthropic()
         </div>`,
 
     flutter: () => `
-      <!-- Decorative layers -->
-      <div class="fl-decor fl-decor-grid" aria-hidden="true"></div>
-      <div class="fl-decor fl-blob fl-blob--a" aria-hidden="true"></div>
-      <div class="fl-decor fl-blob fl-blob--b" aria-hidden="true"></div>
-      <div class="fl-decor fl-blob fl-blob--c" aria-hidden="true"></div>
+      <!-- Dart Forge v4 · Blueprint: one source, three builds -->
+      <div class="fl-forge fl-forge--v4" aria-hidden="true">
 
-      <!-- SVG beam layer connecting code-card to each device -->
-      <svg class="fl-beams" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-        <defs>
-          <linearGradient id="fl-beam-ios" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stop-color="#3B6FFF" stop-opacity="0"/>
-            <stop offset="0.4" stop-color="#3B6FFF" stop-opacity="0.7"/>
-            <stop offset="1" stop-color="#3B6FFF" stop-opacity="0.9"/>
-          </linearGradient>
-          <linearGradient id="fl-beam-android" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#7C3AED" stop-opacity="0"/>
-            <stop offset="0.5" stop-color="#A78BFA" stop-opacity="0.7"/>
-            <stop offset="1" stop-color="#A78BFA" stop-opacity="0.9"/>
-          </linearGradient>
-          <linearGradient id="fl-beam-web" x1="1" y1="1" x2="0" y2="0">
-            <stop offset="0" stop-color="#10B981" stop-opacity="0.9"/>
-            <stop offset="0.5" stop-color="#10B981" stop-opacity="0.7"/>
-            <stop offset="1" stop-color="#10B981" stop-opacity="0"/>
-          </linearGradient>
-        </defs>
-        <!-- code (~38,72) → iPhone (~62,52) -->
-        <path class="fl-beam fl-beam--ios"
-              d="M 38 72 C 50 72 56 62 62 52"
-              stroke="url(#fl-beam-ios)" stroke-width="0.45" fill="none"
-              stroke-linecap="round" stroke-dasharray="1.4 2.6"/>
-        <!-- code (~30,68) → Android (~22,28) -->
-        <path class="fl-beam fl-beam--android"
-              d="M 30 68 C 22 56 20 42 22 28"
-              stroke="url(#fl-beam-android)" stroke-width="0.45" fill="none"
-              stroke-linecap="round" stroke-dasharray="1.4 2.6"/>
-        <!-- code (~46,68) → Browser (~78,28) -->
-        <path class="fl-beam fl-beam--web"
-              d="M 46 68 C 60 60 70 42 78 28"
-              stroke="url(#fl-beam-web)" stroke-width="0.45" fill="none"
-              stroke-linecap="round" stroke-dasharray="1.4 2.6"/>
+        <!-- Blueprint grid + watermark stack (decorative) -->
+        <div class="fl-bp-grid"></div>
+        <svg class="fl-wm" viewBox="0 0 48 56" fill="none" aria-hidden="true">
+          <path d="M30 2 L46 2 L18 54 L2 54 L12 35 L2 35 L18 2 Z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+          <path d="M18 35 L12 35 L18 2 Z" fill="currentColor" fill-opacity="0.35"/>
+        </svg>
 
-        <!-- Idle particles (animated via CSS offset-path inside hidden tracks) -->
-      </svg>
+        <!-- Plate · lib/main.dart -->
+        <article class="fl-plate fl-source">
+          <header class="fl-plate-head">
+            <span class="fl-tick-mark" aria-hidden="true">▸</span>
+            <span class="fl-path">lib/main.dart</span>
+            <span class="fl-meta">dart 3.6 · null-safe</span>
+            <span class="fl-saved" title="hot reloaded"><i></i> saved</span>
+          </header>
+          <pre class="fl-code"><code><span class="fl-ln" data-n="01"><span class="k">class</span> <span class="t">CounterApp</span> <span class="k">extends</span> <span class="t">StatefulWidget</span> {</span>
+<span class="fl-ln" data-n="02">  <span class="d">@override</span> _S <span class="f">createState</span>() =&gt; _S();</span>
+<span class="fl-ln" data-n="03">}</span>
+<span class="fl-ln" data-n="04"></span>
+<span class="fl-ln" data-n="05"><span class="k">class</span> _S <span class="k">extends</span> <span class="t">State</span>&lt;<span class="t">CounterApp</span>&gt; {</span>
+<span class="fl-ln" data-n="06">  <span class="t">int</span> count = <span class="n">42</span>;</span>
+<span class="fl-ln" data-n="07"></span>
+<span class="fl-ln fl-ln--hot" data-n="08">  <span class="t">Widget</span> <span class="f">build</span>(_) =&gt; <span class="t">Scaffold</span>(</span>
+<span class="fl-ln" data-n="09">    body: <span class="t">Center</span>(child: <span class="t">Text</span>(<span class="s">'$count'</span>)),</span>
+<span class="fl-ln" data-n="10">    floatingActionButton: <span class="t">FAB</span>(</span>
+<span class="fl-ln" data-n="11">      onPressed: () =&gt; setState(() =&gt; count++),</span>
+<span class="fl-ln" data-n="12">    ),</span>
+<span class="fl-ln" data-n="13">  );</span>
+<span class="fl-ln" data-n="14">}</span></code></pre>
+        </article>
 
-      <!-- Code card -->
-      <div class="fl-code-card" data-fl="code">
-        <div class="fl-code-header">
-          <span class="fl-code-dot" style="background:#EF4444"></span>
-          <span class="fl-code-dot" style="background:#F59E0B"></span>
-          <span class="fl-code-dot" style="background:#10B981"></span>
-          <span class="fl-code-file">lib/main.dart</span>
-          <span class="fl-hot-reload" aria-hidden="true">
-            <svg width="10" height="12" viewBox="0 0 10 12" fill="none">
-              <path d="M6 0L0 7h3l-1 5 6-7H5l1-5z" fill="currentColor"/>
-            </svg>
-            <span>Hot Reload</span>
-          </span>
-        </div>
-        <pre class="fl-code-body"><code><span class="c-kw">class</span> <span class="c-tp">CounterApp</span> <span class="c-kw">extends</span> <span class="c-tp">StatefulWidget</span> {
-  <span class="c-dec">@override</span> _S createState() =&gt; _S();
-}
-
-<span class="c-kw">class</span> _S <span class="c-kw">extends</span> <span class="c-tp">State</span>&lt;<span class="c-tp">CounterApp</span>&gt; {
-  <span class="c-tp">int</span> count = <span class="c-num" data-fl="count-src">42</span>;
-
-  <span class="c-dec">@override</span>
-  <span class="c-tp">Widget</span> <span class="c-fn">build</span>(_) =&gt; <span class="c-tp">Scaffold</span>(
-    body: <span class="c-tp">Center</span>(child: <span class="c-tp">Text</span>(<span class="c-str">'$count'</span>)),
-    floatingActionButton: <span class="c-tp">FAB</span>(
-      onPressed: () =&gt; setState(() =&gt; count++),
-      child: <span class="c-tp">Icon</span>(<span class="c-tp">Icons</span>.add),
-    ),
-  );
-}</code></pre>
-        <span class="fl-code-caret" aria-hidden="true"></span>
-      </div>
-
-      <!-- iPhone (foreground) — Cupertino counter -->
-      <div class="fl-device fl-device--ios" data-fl="ios">
-        <div class="fl-iphone">
-          <span class="fl-iphone-notch"></span>
-          <div class="fl-iphone-screen">
-            <div class="fl-status">
-              <span>9:41</span>
-              <span class="fl-status-icons"><i></i><i></i><i></i></span>
-            </div>
-            <div class="fl-ios-title">Counter</div>
-            <div class="fl-ios-sub">Press the button to increment</div>
-            <div class="fl-ios-count" data-fl="ios-count">42</div>
-            <div class="fl-fab" aria-hidden="true">+</div>
+        <!-- Caliper + Junction-splitter bench -->
+        <div class="fl-bench">
+          <div class="fl-caliper">
+            <span class="fl-caliper-mark fl-caliper-mark--l">
+              <i class="fl-caliper-tick"></i><em>1 source</em>
+            </span>
+            <span class="fl-caliper-metric">
+              <span class="fl-caliper-metric-label">hot reload</span>
+              <span class="fl-caliper-metric-val"><i class="fl-caliper-pulse"></i><b>237</b><u>ms</u></span>
+            </span>
+            <span class="fl-caliper-mark fl-caliper-mark--r">
+              <em>3 builds</em><i class="fl-caliper-tick"></i>
+            </span>
           </div>
+          <svg class="fl-junction" viewBox="0 0 300 32" preserveAspectRatio="none" aria-hidden="true">
+            <!-- hairline measurement track -->
+            <path class="fl-j-track" d="M10 6 H290" />
+            <path class="fl-j-track fl-j-track--ticks" d="M10 4 V8 M150 4 V8 M290 4 V8"/>
+            <!-- main trunk -->
+            <path class="fl-j-line" d="M150 6 V16"/>
+            <!-- horizontal distribution -->
+            <path class="fl-j-line" d="M50 16 H250"/>
+            <!-- 3 drops -->
+            <path class="fl-j-line" d="M50 16 V30"/>
+            <path class="fl-j-line" d="M150 16 V30"/>
+            <path class="fl-j-line" d="M250 16 V30"/>
+            <!-- junction node -->
+            <circle class="fl-j-node" cx="150" cy="16" r="2.2"/>
+            <!-- traveling packets: trunk + 3 rays -->
+            <path class="fl-j-flow fl-j-flow--trunk" d="M150 6 V16"/>
+            <path class="fl-j-flow fl-j-flow--ray" d="M150 16 H50 V30"/>
+            <path class="fl-j-flow fl-j-flow--ray" d="M150 16 V30"/>
+            <path class="fl-j-flow fl-j-flow--ray" d="M150 16 H250 V30"/>
+            <!-- drop pins -->
+            <circle class="fl-j-pin" cx="50"  cy="30" r="1.4"/>
+            <circle class="fl-j-pin" cx="150" cy="30" r="1.4"/>
+            <circle class="fl-j-pin" cx="250" cy="30" r="1.4"/>
+          </svg>
         </div>
-        <span class="fl-device-label fl-device-label--ios">iOS</span>
-      </div>
 
-      <!-- Android (background-left, tilted) — Material 3 tasks -->
-      <div class="fl-device fl-device--android" data-fl="android">
-        <div class="fl-android">
-          <span class="fl-android-punch"></span>
-          <div class="fl-android-screen">
-            <div class="fl-mat-bar">
-              <span class="fl-mat-bar-icon">≡</span>
-              <span>Tasks</span>
-              <span class="fl-mat-bar-add">+</span>
-            </div>
-            <ul class="fl-mat-list">
-              <li><span class="fl-check fl-check--on" data-fl="android-check"></span>Build app</li>
-              <li><span class="fl-check fl-check--on"></span>Hot reload</li>
-              <li><span class="fl-check"></span>Ship to stores</li>
-              <li><span class="fl-check"></span>Profit</li>
-            </ul>
-            <div class="fl-mat-nav">
-              <i class="active"></i><i></i><i></i>
-            </div>
-          </div>
-        </div>
-        <span class="fl-device-label fl-device-label--android">Android</span>
-      </div>
+        <!-- Canvases: same 42 on iOS · Android · Web -->
+        <div class="fl-canvases">
 
-      <!-- Web (background-right, tilted) — Dashboard -->
-      <div class="fl-device fl-device--web" data-fl="web">
-        <div class="fl-browser">
-          <div class="fl-browser-bar">
-            <span class="fl-browser-dot" style="background:#EF4444"></span>
-            <span class="fl-browser-dot" style="background:#F59E0B"></span>
-            <span class="fl-browser-dot" style="background:#10B981"></span>
-            <span class="fl-browser-url">localhost:8080</span>
-          </div>
-          <div class="fl-browser-screen">
-            <div class="fl-web-title">Dashboard</div>
-            <div class="fl-web-stats">
-              <div class="fl-web-stat">
-                <span class="fl-web-stat-value" data-fl="web-users">1.2k</span>
-                <span class="fl-web-stat-label">users</span>
-              </div>
-              <div class="fl-web-stat">
-                <span class="fl-web-stat-value" data-fl="web-growth">42%</span>
-                <span class="fl-web-stat-label">growth</span>
-              </div>
-              <div class="fl-web-stat">
-                <span class="fl-web-stat-value" data-fl="web-mrr">$8.4k</span>
-                <span class="fl-web-stat-label">MRR</span>
-              </div>
+          <!-- iOS · Cupertino -->
+          <article class="fl-canvas fl-canvas--ios" data-fl-cv="ios">
+            <span class="fl-cv-corner fl-cv-corner--tl" aria-hidden="true"></span>
+            <span class="fl-cv-corner fl-cv-corner--tr" aria-hidden="true"></span>
+            <span class="fl-cv-spec">iOS · arm64</span>
+            <div class="fl-cv-chrome fl-cv-chrome--ios">
+              <span class="fl-cv-time">9:41</span>
+              <span class="fl-cv-notch"></span>
+              <span class="fl-cv-sys">
+                <svg width="22" height="9" viewBox="0 0 22 9" fill="currentColor" aria-hidden="true">
+                  <rect x="0"  y="5" width="2.5" height="3" rx="0.3"/>
+                  <rect x="3.5" y="3.5" width="2.5" height="4.5" rx="0.3"/>
+                  <rect x="7"  y="2" width="2.5" height="6" rx="0.3"/>
+                  <rect x="10.5" y="0.5" width="2.5" height="7.5" rx="0.3"/>
+                  <rect x="14.5" y="0" width="6" height="4" rx="1"/>
+                  <rect x="15.5" y="1" width="4" height="2" rx="0.5" fill="currentColor" opacity="0.35"/>
+                </svg>
+              </span>
             </div>
-            <div class="fl-web-chart" aria-hidden="true">
-              <span style="--h:30%"></span><span style="--h:55%"></span>
-              <span style="--h:75%"></span><span style="--h:90%"></span>
-              <span style="--h:80%"></span><span style="--h:65%"></span>
-              <span style="--h:50%"></span><span style="--h:70%"></span>
-              <span style="--h:85%"></span><span style="--h:95%"></span>
-              <span style="--h:80%"></span><span style="--h:65%"></span>
+            <div class="fl-cv-screen">
+              <span class="fl-cv-gleam" aria-hidden="true"></span>
+              <span class="fl-cv-label">COUNTER</span>
+              <span class="fl-cv-number" data-fl-num>42</span>
+              <span class="fl-cv-state">state · synced</span>
+              <button class="fl-cv-fab fl-cv-fab--ios" aria-label="Increment">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg>
+              </button>
+              <span class="fl-cv-homebar"></span>
             </div>
-          </div>
+            <div class="fl-cv-tag">
+              <span class="fl-cv-os">Cupertino</span>
+              <span class="fl-cv-size">8.4 MB</span>
+            </div>
+          </article>
+
+          <!-- Android · Material -->
+          <article class="fl-canvas fl-canvas--android" data-fl-cv="android">
+            <span class="fl-cv-corner fl-cv-corner--tl" aria-hidden="true"></span>
+            <span class="fl-cv-corner fl-cv-corner--tr" aria-hidden="true"></span>
+            <span class="fl-cv-spec">Android · arm64-v8a</span>
+            <div class="fl-cv-chrome fl-cv-chrome--android">
+              <span class="fl-cv-cam"></span>
+              <span class="fl-cv-time">9:41</span>
+              <span class="fl-cv-sys">
+                <svg width="20" height="9" viewBox="0 0 20 9" fill="currentColor" aria-hidden="true">
+                  <path d="M1 7 Q4 3 7 7" fill="none" stroke="currentColor" stroke-width="1"/>
+                  <path d="M3 7 Q5 5 7 7" fill="none" stroke="currentColor" stroke-width="1"/>
+                  <circle cx="5" cy="7" r="0.6"/>
+                  <rect x="12" y="2" width="7" height="4" rx="0.6" fill="none" stroke="currentColor" stroke-width="0.8"/>
+                  <rect x="13" y="3" width="4" height="2" rx="0.3"/>
+                  <rect x="19" y="3" width="0.8" height="2" rx="0.3"/>
+                </svg>
+              </span>
+            </div>
+            <div class="fl-cv-screen">
+              <span class="fl-cv-gleam fl-cv-gleam--android" aria-hidden="true"></span>
+              <span class="fl-cv-label">COUNTER</span>
+              <span class="fl-cv-number" data-fl-num>42</span>
+              <span class="fl-cv-state">state · synced</span>
+              <button class="fl-cv-fab fl-cv-fab--android" aria-label="Increment">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg>
+              </button>
+              <span class="fl-cv-navbar"><i></i><i></i><i></i></span>
+            </div>
+            <div class="fl-cv-tag">
+              <span class="fl-cv-os">Material&nbsp;3</span>
+              <span class="fl-cv-size">9.1 MB</span>
+            </div>
+          </article>
+
+          <!-- Web · CanvasKit -->
+          <article class="fl-canvas fl-canvas--web" data-fl-cv="web">
+            <span class="fl-cv-corner fl-cv-corner--tl" aria-hidden="true"></span>
+            <span class="fl-cv-corner fl-cv-corner--tr" aria-hidden="true"></span>
+            <span class="fl-cv-spec">Web · dpr 2.0</span>
+            <div class="fl-cv-chrome fl-cv-chrome--web">
+              <span class="fl-cv-dots"><i></i><i></i><i></i></span>
+              <span class="fl-cv-url">
+                <svg viewBox="0 0 10 10" width="7" height="7" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><rect x="2" y="4" width="6" height="4.5" rx="1"/><path d="M3.5 4 V3 a1.5 1.5 0 0 1 3 0 V4"/></svg>
+                localhost:8080
+              </span>
+            </div>
+            <div class="fl-cv-screen fl-cv-screen--web">
+              <span class="fl-cv-gleam fl-cv-gleam--web" aria-hidden="true"></span>
+              <span class="fl-cv-label">COUNTER</span>
+              <span class="fl-cv-number" data-fl-num>42</span>
+              <span class="fl-cv-state">state · synced</span>
+              <button class="fl-cv-fab fl-cv-fab--web" aria-label="Increment">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg>
+              </button>
+            </div>
+            <div class="fl-cv-tag">
+              <span class="fl-cv-os">CanvasKit</span>
+              <span class="fl-cv-size">412 KB</span>
+            </div>
+          </article>
+
         </div>
-        <span class="fl-device-label fl-device-label--web">Web</span>
       </div>`,
 
     /* ── QA Automation: "Bug Catcher Pipeline" ─────────────────────────── */
@@ -671,6 +691,7 @@ claude = Anthropic()
               <h1>${data.title}</h1>
               <p class="hero-sub">${data.subtitle}</p>
               <p class="hero-tagline">${data.tagline}</p>
+
               <div class="hero-ctas">
                 <a href="${data.cta_primary.href}" class="btn btn-primary btn-big btn-hero-cta">
                   <span class="btn-hero-title">Пройти тест →</span>
@@ -678,96 +699,53 @@ claude = Anthropic()
                 </a>
                 <a href="${data.cta_secondary.href}" class="btn btn-secondary">${data.cta_secondary.text}</a>
               </div>
+            </div>
+
+            <!-- Right aside: code-snippet card in the empty right space -->
+            <aside class="hero-aside" aria-hidden="true">
+              <figure class="hero-code">
+                <figcaption class="hero-code-meta">
+                  <span class="hero-code-dots"><i></i><i></i><i></i></span>
+                  <span class="hero-code-file">agency.py · Quillon Jobs</span>
+                </figcaption>
+                <div class="hero-code-body">
+                  <div class="hero-code-gutter" aria-hidden="true"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span></div>
+                  <pre class="hero-code-pre"><code data-typewriter><span class="tk-com"># Quillon Jobs — оплачиваемый заказ</span>
+<span class="tk-k">from</span> quillon <span class="tk-k">import</span> agency, student
+
+brief = <span class="tk-k">await</span> agency.<span class="tk-fn">next_brief</span>(
+    skill=<span class="tk-s">"python"</span>,
+    level=<span class="tk-s">"junior"</span>,
+    payout_min=<span class="tk-s">25_000</span>,
+)
+
+student.<span class="tk-fn">claim</span>(brief)
+
+<span class="tk-k">async with</span> brief.<span class="tk-fn">session</span>() <span class="tk-k">as</span> task:
+    result = <span class="tk-k">await</span> task.<span class="tk-fn">deliver</span>()
+    <span class="tk-k">assert</span> result.status == <span class="tk-s">"accepted"</span>
+
+payout = <span class="tk-k">await</span> student.<span class="tk-fn">receive_payout</span>()
+log.<span class="tk-fn">info</span>(<span class="tk-s">f"+{payout} ₽ → на счёт"</span>)
+
+<span class="tk-com"># Первый доход — на 2-м месяце обучения</span></code></pre>
+                </div>
+              </figure>
+            </aside>
+
+            <!-- Postscript: micro + badge + ticker span full width below -->
+            <div class="hero-postscript">
               <p class="hero-micro">${data.micro}</p>
               ${data.badge ? `
               <div class="live-badge hero-live-badge">
                 <span class="live-dot"></span>
                 ${data.badge.text}
               </div>` : ''}
-            </div>
-            <div class="hero-visual" aria-hidden="true">
-              <svg class="hero-orbit" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img">
-                <defs>
-                  <radialGradient id="orbCore" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stop-color="#3B6FFF" stop-opacity="0.9"/>
-                    <stop offset="55%" stop-color="#1F4ED8" stop-opacity="0.55"/>
-                    <stop offset="100%" stop-color="#1F4ED8" stop-opacity="0"/>
-                  </radialGradient>
-                  <radialGradient id="orbHalo" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stop-color="#7C3AED" stop-opacity="0.35"/>
-                    <stop offset="100%" stop-color="#7C3AED" stop-opacity="0"/>
-                  </radialGradient>
-                  <radialGradient id="coreBright" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stop-color="#F0F4FF" stop-opacity="1"/>
-                    <stop offset="40%" stop-color="#3B6FFF" stop-opacity="0.95"/>
-                    <stop offset="100%" stop-color="#1F4ED8" stop-opacity="0.8"/>
-                  </radialGradient>
-                  <linearGradient id="orbStroke" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stop-color="#3B6FFF" stop-opacity="0.55"/>
-                    <stop offset="50%" stop-color="#7C3AED" stop-opacity="0.2"/>
-                    <stop offset="100%" stop-color="#3B6FFF" stop-opacity="0"/>
-                  </linearGradient>
-                  <filter id="nodeGlow" x="-80%" y="-80%" width="260%" height="260%">
-                    <feGaussianBlur in="SourceGraphic" stdDeviation="3"/>
-                  </filter>
-                </defs>
 
-                <!-- soft purple halo -->
-                <circle class="hero-orbit-halo" cx="200" cy="200" r="200" fill="url(#orbHalo)"/>
-
-                <!-- core glow -->
-                <circle class="hero-orbit-coreglow" cx="200" cy="200" r="60" fill="url(#orbCore)"/>
-
-                <!-- Centerpiece — luminous core (reactor/star) -->
-                <g class="hero-orbit-core">
-                  <!-- thin dashed boundary ring -->
-                  <circle cx="200" cy="200" r="38" fill="none" stroke="#3B6FFF" stroke-opacity="0.3" stroke-width="1" stroke-dasharray="1.5 5"/>
-                  <!-- soft bright halo -->
-                  <circle cx="200" cy="200" r="20" fill="#3B6FFF" fill-opacity="0.3" filter="url(#nodeGlow)"/>
-                  <!-- bright core disc with radial gradient -->
-                  <circle cx="200" cy="200" r="10" fill="url(#coreBright)"/>
-                </g>
-
-                <!-- orbit rings -->
-                <g class="hero-orbit-ring hero-orbit-ring--1">
-                  <circle cx="200" cy="200" r="90" fill="none" stroke="url(#orbStroke)" stroke-width="1" stroke-dasharray="2 6"/>
-                  <circle cx="290" cy="200" r="4" fill="#3B6FFF"/>
-                  <circle cx="290" cy="200" r="9" fill="#3B6FFF" fill-opacity="0.25" filter="url(#nodeGlow)"/>
-                </g>
-
-                <g class="hero-orbit-ring hero-orbit-ring--2">
-                  <circle cx="200" cy="200" r="135" fill="none" stroke="url(#orbStroke)" stroke-width="1"/>
-                  <g transform="translate(65 200)">
-                    <circle r="5" fill="#7C3AED"/>
-                    <circle r="11" fill="#7C3AED" fill-opacity="0.22" filter="url(#nodeGlow)"/>
-                  </g>
-                  <g transform="translate(335 200)">
-                    <circle r="3.5" fill="#F0F4FF" fill-opacity="0.8"/>
-                  </g>
-                </g>
-
-                <g class="hero-orbit-ring hero-orbit-ring--3">
-                  <circle cx="200" cy="200" r="175" fill="none" stroke="url(#orbStroke)" stroke-width="1" stroke-dasharray="1 4"/>
-                  <g transform="translate(200 25)">
-                    <circle r="4" fill="#3B6FFF"/>
-                    <circle r="10" fill="#3B6FFF" fill-opacity="0.2" filter="url(#nodeGlow)"/>
-                  </g>
-                  <g transform="translate(200 375)">
-                    <circle r="3" fill="#F0F4FF" fill-opacity="0.55"/>
-                  </g>
-                  <g transform="translate(50 90)">
-                    <circle r="2.5" fill="#F0F4FF" fill-opacity="0.4"/>
-                  </g>
-                </g>
-
-                <!-- tech labels floating -->
-                <g class="hero-orbit-labels" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="0.1em">
-                  <text x="60" y="70" font-weight="500">PYTHON</text>
-                  <text x="310" y="85" font-weight="500">FLUTTER</text>
-                  <text x="30" y="330" font-weight="500">AI · ML</text>
-                  <text x="300" y="340" font-weight="500">FASTAPI</text>
-                </g>
-              </svg>
+              <!-- Live ticker: code fragments rhythm, sits below CTA as editorial divider -->
+              <div class="hero-ticker" aria-hidden="true">
+                <div class="hero-ticker-track" id="hero-ticker-track"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -822,15 +800,17 @@ claude = Anthropic()
       <section id="solution" class="${sectionBgClass()}">
         <div class="container">
           ${sectionHeader(data)}
-          <div class="grid-2 solution-cards" data-stagger="true">
-            ${data.cards.map(c => `
-              <div class="card solution-card">
-                <div class="solution-icon">${icon(c.icon, c.icon)}</div>
-                <h3>${c.title}</h3>
-                <p class="solution-text">${c.text}</p>
-              </div>
+          <ol class="sol-list" data-stagger="true">
+            ${data.cards.map((c, i) => `
+              <li class="sol-item">
+                <span class="sol-num" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span>
+                <div class="sol-body">
+                  <h3 class="sol-title">${c.title}</h3>
+                  <p class="sol-text">${c.text}</p>
+                </div>
+              </li>
             `).join('')}
-          </div>
+          </ol>
           <p class="solution-tech-link">Подробнее о продуктах, стеке и команде — <a href="https://tech.quillon.ru" target="_blank" rel="noopener">tech.quillon.ru</a></p>
         </div>
       </section>`,
@@ -999,7 +979,7 @@ claude = Anthropic()
         <div class="container">
           <div class="ai-answer-layout">
             <div class="ai-answer-question">
-              <span class="section-label">${data.label}</span>
+              ${data.label ? `<span class="section-label">${data.label}</span>` : ''}
               <h2 class="ai-answer-h2">${data.title}</h2>
               <p class="ai-answer-short">Нет. Но программисты с ИИ заменят программистов без ИИ.</p>
             </div>
@@ -1085,41 +1065,38 @@ claude = Anthropic()
     /*  AUDIENCE                                                           */
     /* ------------------------------------------------------------------ */
     audience: (data) => {
-      const audienceCard = (p, accentIdx) => `
-        <article class="card audience-card" style="--audience-accent: var(--audience-accent-${accentIdx % 6});">
-          <div class="audience-card-head">
-            <span class="audience-emoji">${icon(p.emoji, p.emoji)}</span>
-            ${p.tag ? `<span class="audience-tag">${p.tag}</span>` : ''}
+      const audItem = (p, i) => `
+        <li class="aud-item">
+          <span class="aud-num" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span>
+          <div class="aud-body">
+            <h4 class="aud-title">${p.title}</h4>
+            ${p.pain ? `<p class="aud-pain">${p.pain}</p>` : (p.text ? `<p class="aud-pain">${p.text}</p>` : '')}
+            ${p.solution ? `<p class="aud-sol"><span class="aud-sol-mark" aria-hidden="true">→</span>${p.solution}</p>` : ''}
           </div>
-          <h3 class="audience-title">${p.title}</h3>
-          ${p.pain ? `<p class="audience-pain">${p.pain}</p>` : ''}
-          ${p.solution ? `
-            <div class="audience-solution">
-              <span class="audience-solution-mark" aria-hidden="true">→</span>
-              <p>${p.solution}</p>
-            </div>
-          ` : (p.text ? `<p class="audience-pain">${p.text}</p>` : '')}
-        </article>`;
+        </li>`;
+      const totalGroups = data.groups ? data.groups.length : 0;
       const groupsHtml = data.groups ? data.groups.map((g, gi) => `
-        <div class="audience-group">
-          <div class="audience-group-header">
-            <span class="audience-group-index">${String(gi + 1).padStart(2, '0')} / ${String(data.groups.length).padStart(2, '0')}</span>
-            <h3 class="audience-group-title">${g.title}</h3>
-            ${g.subtitle ? `<p class="audience-group-subtitle">${g.subtitle}</p>` : ''}
-          </div>
-          <div class="audience-grid" data-stagger="true">
-            ${g.personas.map((p, i) => audienceCard(p, gi * g.personas.length + i)).join('')}
-          </div>
+        <div class="aud-group">
+          <header class="aud-group-head">
+            <span class="aud-group-count">${String(gi + 1).padStart(2, '0')} <span class="aud-group-count-slash">/</span> ${String(totalGroups).padStart(2, '0')}</span>
+            <h3 class="aud-group-title">${g.title}</h3>
+            ${g.subtitle ? `<p class="aud-group-sub">${g.subtitle}</p>` : ''}
+          </header>
+          <ol class="aud-list">
+            ${g.personas.map((p, i) => audItem(p, i)).join('')}
+          </ol>
         </div>
       `).join('') : `
-        <div class="audience-grid" data-stagger="true">
-          ${data.personas.map((p, i) => audienceCard(p, i)).join('')}
-        </div>`;
+        <ol class="aud-list aud-list--flat">
+          ${data.personas.map((p, i) => audItem(p, i)).join('')}
+        </ol>`;
       return `
       <section id="audience" class="${sectionBgClass()}">
         <div class="container">
           ${sectionHeader(data)}
-          ${groupsHtml}
+          <div class="aud-groups">
+            ${groupsHtml}
+          </div>
         </div>
       </section>`;
     },
@@ -1255,18 +1232,18 @@ claude = Anthropic()
               <defs>
                 <radialGradient id="qfCore" cx="50%" cy="50%" r="50%">
                   <stop offset="0%" stop-color="#F0F4FF"/>
-                  <stop offset="45%" stop-color="#3B6FFF"/>
-                  <stop offset="100%" stop-color="#1F4ED8"/>
+                  <stop offset="45%" stop-color="#2E86AB"/>
+                  <stop offset="100%" stop-color="#1F5E7A"/>
                 </radialGradient>
                 <linearGradient id="qfLine" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%"  stop-color="#3B6FFF" stop-opacity="0"/>
-                  <stop offset="50%" stop-color="#3B6FFF" stop-opacity="0.7"/>
-                  <stop offset="100%" stop-color="#3B6FFF" stop-opacity="0"/>
+                  <stop offset="0%"  stop-color="#2E86AB" stop-opacity="0"/>
+                  <stop offset="50%" stop-color="#2E86AB" stop-opacity="0.7"/>
+                  <stop offset="100%" stop-color="#2E86AB" stop-opacity="0"/>
                 </linearGradient>
                 <linearGradient id="qfLine2" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%"  stop-color="#7C3AED" stop-opacity="0"/>
-                  <stop offset="50%" stop-color="#7C3AED" stop-opacity="0.7"/>
-                  <stop offset="100%" stop-color="#7C3AED" stop-opacity="0"/>
+                  <stop offset="0%"  stop-color="#1F5E7A" stop-opacity="0"/>
+                  <stop offset="50%" stop-color="#1F5E7A" stop-opacity="0.7"/>
+                  <stop offset="100%" stop-color="#1F5E7A" stop-opacity="0"/>
                 </linearGradient>
                 <filter id="qfGlow" x="-80%" y="-80%" width="260%" height="260%">
                   <feGaussianBlur in="SourceGraphic" stdDeviation="3"/>
@@ -1278,46 +1255,52 @@ claude = Anthropic()
               <line x1="520" y1="110" x2="740" y2="110" stroke="url(#qfLine2)" stroke-width="1.5"/>
 
               <!-- Animated data packets travelling along lines -->
-              <circle class="qf-packet qf-packet--1" r="3" fill="#3B6FFF"/>
-              <circle class="qf-packet qf-packet--2" r="3" fill="#7C3AED"/>
+              <circle class="qf-packet qf-packet--1" r="3" fill="#2E86AB"/>
+              <circle class="qf-packet qf-packet--2" r="3" fill="#1F5E7A"/>
 
               <!-- Node 1: QUESTION bubble -->
               <g class="qf-node qf-node--question">
-                <circle cx="100" cy="110" r="42" fill="#0F172A" stroke="rgba(59,111,255,0.3)" stroke-width="1"/>
-                <circle cx="100" cy="110" r="48" fill="none" stroke="rgba(59,111,255,0.18)" stroke-width="1" stroke-dasharray="2 5"/>
-                <text x="100" y="120" text-anchor="middle" font-family="Syne, sans-serif" font-size="28" font-weight="700" fill="#3B6FFF">?</text>
+                <circle cx="100" cy="110" r="42" fill="#0F172A" stroke="rgba(46, 134, 171,0.3)" stroke-width="1"/>
+                <circle cx="100" cy="110" r="48" fill="none" stroke="rgba(46, 134, 171,0.18)" stroke-width="1" stroke-dasharray="2 5"/>
+                <text x="100" y="120" text-anchor="middle" font-family="Onest, sans-serif" font-size="28" font-weight="700" fill="#2E86AB">?</text>
               </g>
               <text class="qf-label" x="100" y="185" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="500" letter-spacing="0.12em">ВОПРОС</text>
 
               <!-- Node 2: AI core (orbit-style, matches hero) -->
               <g class="qf-node qf-node--ai">
-                <circle cx="450" cy="110" r="58" fill="none" stroke="rgba(59,111,255,0.22)" stroke-width="1" stroke-dasharray="1.5 5"/>
-                <circle cx="450" cy="110" r="44" fill="none" stroke="rgba(59,111,255,0.35)" stroke-width="1"/>
-                <circle class="qf-core-glow" cx="450" cy="110" r="26" fill="#3B6FFF" fill-opacity="0.3" filter="url(#qfGlow)"/>
+                <circle cx="450" cy="110" r="58" fill="none" stroke="rgba(46, 134, 171,0.22)" stroke-width="1" stroke-dasharray="1.5 5"/>
+                <circle cx="450" cy="110" r="44" fill="none" stroke="rgba(46, 134, 171,0.35)" stroke-width="1"/>
+                <circle class="qf-core-glow" cx="450" cy="110" r="26" fill="#2E86AB" fill-opacity="0.3" filter="url(#qfGlow)"/>
                 <circle cx="450" cy="110" r="14" fill="url(#qfCore)"/>
               </g>
               <text class="qf-label qf-label--ai" x="450" y="195" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600" letter-spacing="0.14em">QUILLY AI</text>
 
               <!-- Node 3: ANSWER bubble (checkmark) -->
               <g class="qf-node qf-node--answer">
-                <circle cx="800" cy="110" r="42" fill="#0F172A" stroke="rgba(124,58,237,0.3)" stroke-width="1"/>
-                <circle cx="800" cy="110" r="48" fill="none" stroke="rgba(124,58,237,0.18)" stroke-width="1" stroke-dasharray="2 5"/>
-                <path d="M 785 110 L 797 122 L 815 100" stroke="#7C3AED" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                <circle cx="800" cy="110" r="42" fill="#0F172A" stroke="rgba(46, 134, 171,0.3)" stroke-width="1"/>
+                <circle cx="800" cy="110" r="48" fill="none" stroke="rgba(46, 134, 171,0.18)" stroke-width="1" stroke-dasharray="2 5"/>
+                <path d="M 785 110 L 797 122 L 815 100" stroke="#1F5E7A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
               </g>
               <text class="qf-label" x="800" y="185" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="500" letter-spacing="0.12em">ОТВЕТ · КОД · РАЗБОР</text>
             </svg>
           </div>
 
-          <!-- Features grid -->
-          <div class="grid-3 quilly-features" data-stagger="true">
-            ${data.features.map(f => `
-              <div class="card quilly-feature-card">
-                <div class="quilly-feature-icon">${icon(f.icon, f.icon)}</div>
-                <h3 class="quilly-feature-title">${f.title}</h3>
-                <p class="quilly-feature-text">${f.text}</p>
-              </div>
+          <!-- Editorial 2-col list (Manual iii,v: hairline, mono-метки вместо иконок) -->
+          <ul class="qai-list" data-stagger="true">
+            ${data.features.map((f, i) => `
+              <li class="qai-item">
+                <div class="qai-meta">
+                  <b>${f.meta}</b>
+                  ${f.was ? `<s>${f.was}</s>` : ''}
+                  <span class="qai-idx">${String(i + 1).padStart(2, '0')}</span>
+                </div>
+                <div class="qai-body">
+                  <h3 class="qai-title">${f.title}</h3>
+                  <p class="qai-text">${f.text}</p>
+                </div>
+              </li>
             `).join('')}
-          </div>
+          </ul>
 
           <!-- Benefit card -->
           <div class="card card-highlight quilly-benefit">
@@ -1338,7 +1321,7 @@ claude = Anthropic()
         <div class="container">
           <div class="contact-form-layout">
             <div class="contact-form-info">
-              <span class="section-label">${data.label}</span>
+              ${data.label ? `<span class="section-label">${data.label}</span>` : ''}
               <h2>${data.title}</h2>
               <p class="contact-form-desc">${data.subtitle}</p>
               <div class="contact-form-points">
@@ -1421,14 +1404,14 @@ claude = Anthropic()
                 <feGaussianBlur in="SourceGraphic" stdDeviation="2.5"/>
               </filter>
               <linearGradient id="lineFade" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stop-color="#3B6FFF" stop-opacity="0"/>
-                <stop offset="50%" stop-color="#3B6FFF" stop-opacity="0.45"/>
-                <stop offset="100%" stop-color="#3B6FFF" stop-opacity="0"/>
+                <stop offset="0%" stop-color="#2E86AB" stop-opacity="0"/>
+                <stop offset="50%" stop-color="#2E86AB" stop-opacity="0.45"/>
+                <stop offset="100%" stop-color="#2E86AB" stop-opacity="0"/>
               </linearGradient>
               <linearGradient id="shootingStar" x1="0" y1="0" x2="1" y2="0.2">
                 <stop offset="0%" stop-color="#F0F4FF" stop-opacity="0"/>
                 <stop offset="70%" stop-color="#F0F4FF" stop-opacity="0.6"/>
-                <stop offset="100%" stop-color="#3B6FFF" stop-opacity="0"/>
+                <stop offset="100%" stop-color="#2E86AB" stop-opacity="0"/>
               </linearGradient>
             </defs>
 
@@ -1442,11 +1425,11 @@ claude = Anthropic()
               <line x1="280" y1="260" x2="210" y2="180" stroke="url(#lineFade)" stroke-width="1"/>
 
               <!-- Accent stars with glow -->
-              <circle cx="210" cy="180" r="3" fill="#3B6FFF"/>
-              <circle cx="210" cy="180" r="7" fill="#3B6FFF" fill-opacity="0.3" filter="url(#starGlow)"/>
+              <circle cx="210" cy="180" r="3" fill="#2E86AB"/>
+              <circle cx="210" cy="180" r="7" fill="#2E86AB" fill-opacity="0.3" filter="url(#starGlow)"/>
 
-              <circle cx="310" cy="420" r="2.5" fill="#7C3AED"/>
-              <circle cx="310" cy="420" r="6" fill="#7C3AED" fill-opacity="0.25" filter="url(#starGlow)"/>
+              <circle cx="310" cy="420" r="2.5" fill="#1F5E7A"/>
+              <circle cx="310" cy="420" r="6" fill="#1F5E7A" fill-opacity="0.25" filter="url(#starGlow)"/>
 
               <!-- Small stars -->
               <circle cx="90"  cy="120" r="1.5" fill="#F0F4FF" fill-opacity="0.6"/>
@@ -1465,11 +1448,11 @@ claude = Anthropic()
               <line x1="1100" y1="450" x2="1130" y2="280" stroke="url(#lineFade)" stroke-width="1"/>
               <line x1="1130" y1="280" x2="1010" y2="240" stroke="url(#lineFade)" stroke-width="1"/>
 
-              <circle cx="1010" cy="240" r="3" fill="#7C3AED"/>
-              <circle cx="1010" cy="240" r="7" fill="#7C3AED" fill-opacity="0.3" filter="url(#starGlow)"/>
+              <circle cx="1010" cy="240" r="3" fill="#1F5E7A"/>
+              <circle cx="1010" cy="240" r="7" fill="#1F5E7A" fill-opacity="0.3" filter="url(#starGlow)"/>
 
-              <circle cx="1100" cy="450" r="2.5" fill="#3B6FFF"/>
-              <circle cx="1100" cy="450" r="6" fill="#3B6FFF" fill-opacity="0.25" filter="url(#starGlow)"/>
+              <circle cx="1100" cy="450" r="2.5" fill="#2E86AB"/>
+              <circle cx="1100" cy="450" r="6" fill="#2E86AB" fill-opacity="0.25" filter="url(#starGlow)"/>
 
               <circle cx="890"  cy="150" r="1.5" fill="#F0F4FF" fill-opacity="0.6"/>
               <circle cx="960"  cy="400" r="1.8" fill="#F0F4FF" fill-opacity="0.5"/>
@@ -1555,19 +1538,22 @@ claude = Anthropic()
     /*  TRACK_DEMAND — market demand & why this stack                     */
     /* ------------------------------------------------------------------ */
     trackDemand: (data) => {
-      const demandColors = ['#3B6FFF', '#10B981', '#F59E0B', '#7C3AED'];
+      const isFlutter = trackSlug === 'flutter';
+      const demandColors = ['#2E86AB', '#10B981', '#F59E0B', '#7C3AED'];
       return `
       <section id="demand" class="animate-on-scroll ${sectionBgClass()}">
         <div class="container">
           ${sectionHeader(data)}
           <div class="grid-4 demand-grid" data-stagger="true">
-            ${data.points.map((p, i) => `
-              <div class="card demand-card" style="--demand-accent:${demandColors[i % demandColors.length]}">
+            ${data.points.map((p, i) => {
+              const styleAttr = isFlutter ? '' : ` style="--demand-accent:${demandColors[i % demandColors.length]}"`;
+              return `
+              <div class="card demand-card"${styleAttr}>
                 <div class="demand-icon">${icon(p.icon, '')}</div>
                 <h3 class="demand-title">${p.title}</h3>
                 <p class="demand-text">${p.text}</p>
-              </div>
-            `).join('')}
+              </div>`;
+            }).join('')}
           </div>
         </div>
       </section>`;
@@ -1607,7 +1593,8 @@ claude = Anthropic()
     /*  TRACK_PROGRAM — weekly module breakdown                            */
     /* ------------------------------------------------------------------ */
     trackProgram: (data) => {
-      const moduleColors = ['#3B6FFF', '#7C3AED', '#10B981', '#F59E0B', '#EC4899'];
+      const isFlutter = trackSlug === 'flutter';
+      const moduleColors = ['#2E86AB', '#7C3AED', '#10B981', '#F59E0B', '#EC4899'];
       return `
       <section id="program" class="animate-on-scroll ${sectionBgClass()}">
         <div class="container">
@@ -1615,9 +1602,9 @@ claude = Anthropic()
           <div class="program-timeline">
             <div class="program-timeline-line" aria-hidden="true"></div>
             ${data.modules.map((m, i) => {
-              const color = moduleColors[i % moduleColors.length];
+              const styleAttr = isFlutter ? '' : ` style="--module-accent:${moduleColors[i % moduleColors.length]}"`;
               return `
-              <article class="program-module" style="--module-accent:${color}">
+              <article class="program-module"${styleAttr}>
                 <div class="program-module-marker" aria-hidden="true">
                   <span class="program-module-step">${String(i + 1).padStart(2, '0')}</span>
                 </div>
@@ -1671,14 +1658,17 @@ claude = Anthropic()
     /*  TRACK_PROJECTS — portfolio projects                                */
     /* ------------------------------------------------------------------ */
     trackProjects: (data) => {
-      const projColors = ['#3B6FFF', '#7C3AED', '#10B981', '#F59E0B', '#EC4899'];
+      const isFlutter = trackSlug === 'flutter';
+      const projColors = ['#2E86AB', '#7C3AED', '#10B981', '#F59E0B', '#EC4899'];
       return `
       <section id="projects" class="animate-on-scroll ${sectionBgClass()}">
         <div class="container">
           ${sectionHeader(data)}
           <div class="projects-layout" data-stagger="true">
-            ${data.items.map((p, i) => `
-              <article class="card project-card ${i === 0 ? 'project-card-featured' : ''}" style="--proj-accent:${projColors[i % projColors.length]}">
+            ${data.items.map((p, i) => {
+              const styleAttr = isFlutter ? '' : ` style="--proj-accent:${projColors[i % projColors.length]}"`;
+              return `
+              <article class="card project-card ${i === 0 ? 'project-card-featured' : ''}"${styleAttr}>
                 <span class="project-emoji">${icon(p.emoji, '')}</span>
                 <div class="project-body">
                   <h3 class="project-title">${p.title}</h3>
@@ -1687,8 +1677,8 @@ claude = Anthropic()
                     ${p.tech.map(t => `<span class="project-tech-chip">${t}</span>`).join('')}
                   </div>
                 </div>
-              </article>
-            `).join('')}
+              </article>`;
+            }).join('')}
           </div>
         </div>
       </section>`;
@@ -1786,6 +1776,18 @@ claude = Anthropic()
               </div>
             </div>
             <div class="quilly-features-wrap">
+              ${trackSlug === 'flutter' ? `
+              <ul class="ns-quilly-caps" data-stagger="true">
+                ${data.use_cases.map(u => `
+                  <li class="ns-quilly-cap">
+                    <div class="ns-quilly-cap-head">
+                      <span class="ns-quilly-cap-icon" aria-hidden="true">${icon(u.icon, '')}</span>
+                      <h3 class="ns-quilly-cap-title">${u.title}</h3>
+                    </div>
+                    <p class="ns-quilly-cap-text">${u.text}</p>
+                  </li>
+                `).join('')}
+              </ul>` : `
               <div class="grid-2 track-quilly-grid" data-stagger="true">
                 ${data.use_cases.map(u => `
                   <div class="card track-quilly-card">
@@ -1794,7 +1796,7 @@ claude = Anthropic()
                     <p>${u.text}</p>
                   </div>
                 `).join('')}
-              </div>
+              </div>`}
               ${inlineCta(data.cta)}
             </div>
           </div>
@@ -1806,9 +1808,60 @@ claude = Anthropic()
     /*  TRACK_MENTORS                                                      */
     /* ------------------------------------------------------------------ */
     trackMentors: (data) => {
+      // Flutter track — Night Studio editorial ledger (no initials avatars)
+      if (trackSlug === 'flutter') {
+        const companies = [];
+        data.items.forEach(m => {
+          (m.company || '').split(/\s*,\s*(?:ex-)?/).filter(Boolean).forEach(c => {
+            if (!companies.includes(c)) companies.push(c);
+          });
+        });
+        const shortYears = (y) => {
+          const match = (y || '').match(/^\s*(\d+[+]?\s+(?:лет|год[а]?|years?))/i);
+          return match ? match[1] : (y || '');
+        };
+        return `
+        <section id="mentors" class="animate-on-scroll ${sectionBgClass()}">
+          <div class="container">
+            ${sectionHeader(data)}
+            <ol class="ns-mentors-ledger">
+              ${data.items.map((m, i) => {
+                const num = String(i + 1).padStart(2, '0');
+                const tags = (m.expertise || '').split(/\s*,\s*/).filter(Boolean);
+                return `
+                <li class="ns-mentor-row">
+                  <span class="ns-mentor-num" aria-hidden="true">${num}</span>
+                  <div class="ns-mentor-col">
+                    <div class="ns-mentor-head">
+                      <div class="ns-mentor-head-main">
+                        <h3 class="ns-mentor-name">${m.name}</h3>
+                        <p class="ns-mentor-meta">${m.role} · <span class="ns-mentor-company">${m.company}</span></p>
+                      </div>
+                      <span class="ns-mentor-years" aria-label="Опыт">${shortYears(m.years)}</span>
+                    </div>
+                    <p class="ns-mentor-bio">${m.bio}</p>
+                    <div class="ns-mentor-tags" aria-hidden="true">
+                      ${tags.map(t => `<span class="ns-mentor-tag">${t}</span>`).join('')}
+                    </div>
+                  </div>
+                </li>`;
+              }).join('')}
+            </ol>
+            <div class="ns-mentors-companies">
+              <span class="ns-mentors-companies-label">Работают в командах</span>
+              <div class="ns-mentors-companies-strip">
+                ${companies.map(c => `<span>${c}</span>`).join('')}
+              </div>
+            </div>
+            <p class="mentors-disclaimer">* Полный список преподавателей показываем после прохождения теста.</p>
+          </div>
+        </section>`;
+      }
+
+      // Legacy — Python+ML / QA tracks
       const avatarGradients = [
-        ['#3B6FFF', '#7C3AED'],
-        ['#10B981', '#3B6FFF'],
+        ['#2E86AB', '#7C3AED'],
+        ['#10B981', '#2E86AB'],
         ['#F59E0B', '#EC4899'],
         ['#7C3AED', '#EC4899']
       ];

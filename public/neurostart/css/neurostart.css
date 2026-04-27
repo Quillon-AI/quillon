@@ -35,7 +35,9 @@ button { cursor: pointer; font-family: inherit; }
 
 /* === NAV === */
 .nav { position:fixed; top:0; left:0; right:0; height:60px; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:0 clamp(16px,4vw,48px); background:rgba(8,11,20,.85); backdrop-filter:blur(20px); border-bottom:1px solid var(--brd); }
-.nav-logo { font-family:var(--fd); font-weight:800; font-size:1.4rem; color:var(--qb); letter-spacing:-.5px; }
+.nav-logo { display:inline-flex; align-items:center; height:32px; transition: opacity .2s ease; }
+.nav-logo:hover { opacity:.85; }
+.nav-logo-svg { height:100%; width:auto; display:block; }
 .ns-nav-cta { padding: 10px 22px; border-radius: 10px; background: var(--qb); color:#fff; font-weight:600; font-size:.85rem; border:none; transition:all .2s var(--ease); }
 .ns-nav-cta:hover { background: var(--qbd); box-shadow: 0 0 24px var(--qbg); }
 
@@ -74,16 +76,10 @@ button { cursor: pointer; font-family: inherit; }
 */
 .ns-hero-forge { position:relative; width:100%; aspect-ratio: 1 / 1; max-width:560px; justify-self:end; isolation:isolate; opacity:0; animation: fadeUp 1s var(--ease) .4s forwards; }
 
-.ns-forge-deck { position:absolute; inset:0; border-radius:28px; background: linear-gradient(135deg, rgba(15,22,41,0.95) 0%, rgba(20,29,53,0.85) 100%); border:1px solid rgba(59,130,246,0.18); box-shadow: 0 40px 80px -20px rgba(8,11,20,0.6), 0 0 0 1px rgba(255,255,255,0.03) inset, 0 0 80px -20px rgba(59,130,246,0.28); overflow:hidden; }
+.ns-forge-deck { position:absolute; inset:0; background: linear-gradient(135deg, rgba(15,22,41,0.95) 0%, rgba(20,29,53,0.85) 100%); border:1px solid rgba(59,130,246,0.18); box-shadow: 0 40px 80px -20px rgba(8,11,20,0.6), 0 0 0 1px rgba(255,255,255,0.03) inset, 0 0 80px -20px rgba(59,130,246,0.28); overflow:hidden; }
 .ns-forge-deck::before { content:''; position:absolute; inset:-60%; background: conic-gradient(from 0deg, transparent 0deg, rgba(59,130,246,0.22) 45deg, rgba(124,58,237,0.18) 90deg, transparent 135deg, transparent 360deg); animation: ns-forge-conic 12s linear infinite; z-index:0; pointer-events:none; }
-.ns-forge-deck::after { content:''; position:absolute; inset:1.5px; border-radius:27px; background: linear-gradient(135deg, rgba(15,22,41,0.95), rgba(12,18,35,0.92)); z-index:1; pointer-events:none; }
+.ns-forge-deck::after { content:''; position:absolute; inset:1.5px; background: linear-gradient(135deg, rgba(15,22,41,0.95), rgba(12,18,35,0.92)); z-index:1; pointer-events:none; }
 .ns-forge-deck > * { position:relative; z-index:2; }
-
-.ns-forge-deck-corner { position:absolute; width:18px; height:18px; border:1.5px solid rgba(59,130,246,0.45); z-index:3; }
-.ns-forge-deck-corner--tl { top:10px; left:10px; border-right:none; border-bottom:none; }
-.ns-forge-deck-corner--tr { top:10px; right:10px; border-left:none; border-bottom:none; }
-.ns-forge-deck-corner--bl { bottom:10px; left:10px; border-right:none; border-top:none; }
-.ns-forge-deck-corner--br { bottom:10px; right:10px; border-left:none; border-top:none; }
 
 @keyframes ns-forge-conic {
   to { transform: rotate(360deg); }
@@ -134,7 +130,7 @@ button { cursor: pointer; font-family: inherit; }
 @keyframes ns-forge-ring-rot-b { to { transform: rotate(360deg); } }
 
 .ns-forge-core-halo { position:absolute; inset:18%; border-radius:28%; background: radial-gradient(circle at 50% 50%, rgba(59,130,246,0.45) 0%, rgba(124,58,237,0.25) 45%, transparent 70%); filter: blur(16px); z-index:1; animation: ns-forge-core-pulse 6s ease-in-out infinite; pointer-events:none; }
-.ns-forge-core-logo { position:absolute; inset:26%; width:48%; height:48%; z-index:2; border-radius:22%; box-shadow: 0 12px 32px -8px rgba(8,11,20,0.65), 0 0 0 1px rgba(96,165,250,0.18), 0 0 40px -10px rgba(59,130,246,0.45); animation: ns-forge-core-pulse 6s ease-in-out infinite; }
+.ns-forge-core-logo { position:absolute; inset:22%; width:56%; height:56%; z-index:2; filter: drop-shadow(0 12px 32px rgba(8,11,20,0.55)) drop-shadow(0 0 28px rgba(59,130,246,0.4)); animation: ns-forge-core-pulse 6s ease-in-out infinite; }
 @keyframes ns-forge-core-pulse {
   0%, 30% { opacity:0.85; transform: scale(1); }
   55%, 75% { opacity:1; transform: scale(1.06); }

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quillon v4 · Final CTA block (17)</title>
+
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/tokens.css?v=4">
+  <link rel="stylesheet" href="../css/base.css?v=4">
+  <link rel="stylesheet" href="../css/components.css?v=4">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+     * 17 · FINAL CTA — финальный конверсионный блок
+     *
+     * Тексты 1:1 с прод-content.json (`.final_cta`).
+     * Согласованная правка: «Вы узнаете» → «Ты узнаешь» (тон ты-форма).
+     *
+     * Композиция:
+     *   • Section head (17 · НАЧАЛО)
+     *   • Body grid 7/5: manifesto-headline + кнопка слева | live-badge справа
+     *   • Manifesto-headline = display-якорь (clamp 3rem-5rem)
+     *   • Live-badge: indicator-dot с pulse-animation + tnum цифры
+     *
+     * Anti-AI:
+     *   • Никаких glow-orb'ов, gradient-text, decorative dots.
+     *   • Headline — чистая display, без spans-индиго (хватает живой кнопки).
+     *   • Pulse — единственное движение, и только на «·» live-индикаторе.
+     * ═══════════════════════════════════════════════════════════════ */
+
+    .q-fc {
+      position: relative;
+      padding: var(--q-s-11) 0 var(--q-s-12, var(--q-s-11));
+      /* Картинка обрезается ровно по границе блока. Горизонтальный bleed (−100vw)
+         сохранён, чтобы фон/градиент текли до краёв страницы. */
+      clip-path: inset(-1px -100vw 0 -100vw);
+    }
+    .q-fc::before {
+      content: "";
+      position: absolute;
+      bottom: -260px;
+      left: -240px;
+      width: 720px;
+      height: 720px;
+      background: radial-gradient(circle, rgba(94, 106, 210, 0.08), transparent 62%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .q-fc::after {
+      content: "";
+      position: absolute;
+      top: -200px;
+      right: -180px;
+      width: 480px;
+      height: 480px;
+      background: radial-gradient(circle, rgba(94, 106, 210, 0.05), transparent 62%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .q-fc .q-container { position: relative; z-index: 1; }
+
+    .q-fc .q-section-head { margin-bottom: var(--q-s-9); }
+
+    /* Decorative tech-schematic backplate — заполняет правую половину секции;
+       обрезается строго по нижней границе блока (через .q-fc { clip-path }). */
+    .q-fc__deco {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 45%;
+      right: 0;
+      width: auto;
+      height: auto;
+      object-fit: cover;
+      object-position: center right;
+      opacity: 0.10;
+      mix-blend-mode: screen;
+      filter: hue-rotate(220deg) saturate(2) brightness(1.1);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.7) 22%, #000 50%, #000 100%);
+      mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.7) 22%, #000 50%, #000 100%);
+      pointer-events: none;
+      z-index: 0;
+      user-select: none;
+    }
+    @media (max-width: 1024px) { .q-fc__deco { left: 30%; opacity: 0.08; } }
+    @media (max-width: 720px)  { .q-fc__deco { display: none; } }
+    @media (prefers-reduced-motion: reduce), (prefers-contrast: more) { .q-fc__deco { display: none; } }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * BODY · grid 7/5: headline-stack | aside-badge
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-fc-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      gap: var(--q-s-9);
+      align-items: end;
+    }
+
+    /* ─── HEADLINE STACK ─── */
+    .q-fc-stack {
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-7);
+    }
+    .q-fc-headline {
+      font-family: var(--q-font-display);
+      font-size: clamp(2.5rem, 5.6vw, 4.75rem);
+      font-weight: var(--q-fw-linear);
+      letter-spacing: -0.034em;
+      line-height: 0.98;
+      color: var(--q-text-hi);
+      margin: 0;
+      max-width: 16ch;
+    }
+    .q-fc-headline em {
+      color: var(--q-accent-hover);
+      font-style: normal;
+      font-weight: var(--q-fw-medium);
+    }
+    .q-fc-sub {
+      font-size: clamp(1rem, 1.3vw, 1.125rem);
+      line-height: 1.6;
+      color: var(--q-text-mid);
+      margin: 0;
+      max-width: 56ch;
+    }
+    .q-fc-sub b {
+      color: var(--q-text-hi);
+      font-weight: var(--q-fw-medium);
+    }
+
+    /* ─── CTA cluster: button + micro-strip ─── */
+    .q-fc-cta {
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-4);
+      padding-top: var(--q-s-3);
+    }
+    .q-fc-cta__btn {
+      align-self: flex-start;
+      min-width: 320px;
+    }
+    .q-fc-cta__micro {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-text-low);
+      margin: 0;
+      font-feature-settings: "tnum" 1;
+    }
+    .q-fc-cta__micro b {
+      color: var(--q-text-mid);
+      font-weight: var(--q-fw-medium);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * ASIDE · live-badge
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-fc-aside {
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-5);
+      padding-left: var(--q-s-7);
+      border-left: 1px solid var(--q-line);
+    }
+    .q-fc-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--q-s-2);
+      padding: var(--q-s-2) var(--q-s-4);
+      background: rgba(94, 106, 210, 0.08);
+      border: 1px solid var(--q-line);
+      border-radius: 999px;
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-accent-hover);
+      align-self: flex-start;
+    }
+    .q-fc-badge__dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--q-accent);
+    }
+
+    .q-fc-aside__title {
+      font-family: var(--q-font-display);
+      font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.014em;
+      line-height: 1.3;
+      color: var(--q-text-hi);
+      margin: 0;
+      max-width: 22ch;
+    }
+    .q-fc-aside__title b {
+      color: var(--q-accent-hover);
+      font-weight: var(--q-fw-medium);
+    }
+    .q-fc-aside__meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--q-s-4);
+      margin-top: var(--q-s-3);
+      padding-top: var(--q-s-5);
+      border-top: 1px solid var(--q-line);
+    }
+    .q-fc-aside__meta-cell {
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-1);
+    }
+    .q-fc-aside__meta-num {
+      font-family: var(--q-font-display);
+      font-size: clamp(1.25rem, 1.6vw, 1.5rem);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.014em;
+      color: var(--q-text-hi);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .q-fc-aside__meta-label {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * RESPONSIVE
+     * ═══════════════════════════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .q-fc-grid { grid-template-columns: 1fr; gap: var(--q-s-7); align-items: start; }
+      .q-fc-aside {
+        padding-left: 0;
+        padding-top: var(--q-s-6);
+        border-left: 0;
+        border-top: 1px solid var(--q-line);
+      }
+    }
+    @media (max-width: 720px) {
+      .q-fc { padding: var(--q-s-9) 0 var(--q-s-10); }
+      .q-fc-cta__btn { width: 100%; min-width: 0; }
+      .q-fc-aside__meta { grid-template-columns: 1fr; gap: var(--q-s-3); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       STICKY TOPBAR
+       ═══════════════════════════════════════════════════════════════ -->
+  <header class="q-topbar">
+    <a href="#" class="q-topbar__brand">
+      <span class="q-topbar__brand-mark">Q</span>
+      <span>Quillon</span>
+    </a>
+
+    <nav class="q-topbar__nav" aria-label="Главная навигация">
+      <a class="q-topbar__link" href="#tracks">Треки</a>
+      <a class="q-topbar__link" href="#format">Формат</a>
+      <a class="q-topbar__link" href="#pricing">Цена</a>
+      <a class="q-topbar__link" href="#quillon_jobs">Jobs</a>
+      <a class="q-topbar__link" href="#faq">FAQ</a>
+    </nav>
+
+    <div class="q-topbar__actions">
+      <a class="q-btn q-btn--link" href="https://lms.quillon.ru" target="_blank" rel="noopener noreferrer">Войти</a>
+      <a class="q-btn q-btn--primary q-btn--sm" href="/quiz">Пройти тест</a>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       17 · FINAL CTA
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="q-section q-fc" id="final_cta">
+
+    <!-- Decorative tech-schematic backplate (Recraft line_art) — без смысловой нагрузки -->
+    <img class="q-fc__deco"
+         src="../images/recolored/cta-horizon.svg?v=2"
+         alt=""
+         aria-hidden="true"
+         loading="lazy">
+
+    <div class="q-container">
+
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>17</em> · НАЧАЛО</div>
+      </header>
+
+      <div class="q-fc-grid">
+
+        <!-- ─── LEFT: headline + sub + CTA ─── -->
+        <div class="q-fc-stack">
+
+          <h2 class="q-fc-headline">Production-портфолио через&nbsp;<em>12&nbsp;месяцев</em></h2>
+
+          <p class="q-fc-sub">Тест занимает <b>5&nbsp;минут</b>. Ты&nbsp;узнаешь свой трек, продукт и&nbsp;персональный план. Без оплаты, без обязательств. Через 5&nbsp;минут&nbsp;— <b>персональный видеоразбор</b>.</p>
+
+          <div class="q-fc-cta">
+            <a class="q-btn q-btn--primary q-btn--lg q-fc-cta__btn" href="/quiz">
+              Пройти тест и&nbsp;узнать свой трек
+              <span class="q-btn__icon" aria-hidden="true">→</span>
+            </a>
+            <p class="q-fc-cta__micro"><b>5&nbsp;минут</b> · <b>25&nbsp;вопросов</b> · <b>бесплатно</b></p>
+          </div>
+
+        </div>
+
+        <!-- ─── RIGHT: meta-grid ─── -->
+        <aside class="q-fc-aside">
+
+          <h3 class="q-fc-aside__title"><b>8&nbsp;250&nbsp;₽/мес</b> в&nbsp;рассрочку. 7&nbsp;дней с&nbsp;полным возвратом.</h3>
+
+          <div class="q-fc-aside__meta">
+            <div class="q-fc-aside__meta-cell">
+              <span class="q-fc-aside__meta-num">0%</span>
+              <span class="q-fc-aside__meta-label">Переплат</span>
+            </div>
+            <div class="q-fc-aside__meta-cell">
+              <span class="q-fc-aside__meta-num">100%</span>
+              <span class="q-fc-aside__meta-label">Возврат · 7&nbsp;дней</span>
+            </div>
+          </div>
+
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

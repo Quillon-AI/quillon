@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quillon v4 · LaunchPad block (10)</title>
+
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/tokens.css?v=4">
+  <link rel="stylesheet" href="../css/base.css?v=4">
+  <link rel="stylesheet" href="../css/components.css?v=4">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+     * 10 · LAUNCHPAD — карьерный центр
+     *
+     * Тексты 1:1 с прод-content.json (`.launchpad`).
+     *
+     * Композиция:
+     *   • Section head
+     *   • Hero stat (80%) + полный текст из `.stat`
+     *   • 2-stage cards (Soft Skills · нед. 33-40 / Hard Skills · нед. 41-48)
+     *   • 4-asset ledger (advantages — горизонтальный ряд)
+     *   • After-quote panel (subtle bottom summary из `.after`)
+     *
+     * Anti-AI:
+     *   • Иконки (.icon: globe/git-branch/badge-dollar-sign/building) — игнорируем,
+     *     заменены mono-номерами 01–04.
+     *   • Никакого 2×2 grid'а для advantages — горизонтальный 4-col ряд.
+     *   • Числа в tabular-nums.
+     * ═══════════════════════════════════════════════════════════════ */
+
+    .q-lp {
+      position: relative;
+      padding: var(--q-s-10) 0 var(--q-s-11);
+      overflow: hidden;
+    }
+    .q-lp::before {
+      content: "";
+      position: absolute;
+      bottom: -240px;
+      left: -240px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(94, 106, 210, 0.06), transparent 62%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .q-lp .q-container { position: relative; z-index: 1; }
+    .q-lp .q-section-head { max-width: 800px; margin-bottom: var(--q-s-9); }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * HERO STAT — 80% + текст из `.stat`
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-lp-stat {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: var(--q-s-7);
+      align-items: end;
+      padding: var(--q-s-8) 0;
+      border-top: 1px solid var(--q-line-strong);
+      border-bottom: 1px solid var(--q-line-strong);
+      margin-bottom: var(--q-s-9);
+    }
+    .q-lp-stat__num {
+      grid-column: 1 / span 4;
+      font-family: var(--q-font-display);
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: var(--q-fw-linear);
+      line-height: 1;
+      letter-spacing: -0.028em;
+      color: var(--q-text-hi);
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+    }
+    .q-lp-stat__num span { color: var(--q-accent-hover); }
+    .q-lp-stat__num em {
+      font-style: normal;
+      color: var(--q-text-mid);
+      font-size: 0.45em;
+      letter-spacing: -0.01em;
+    }
+    .q-lp-stat__copy {
+      grid-column: 5 / span 8;
+      font-size: var(--q-t-base);
+      line-height: 1.55;
+      color: var(--q-text-mid);
+      margin: 0;
+      max-width: 64ch;
+    }
+    .q-lp-stat__copy b {
+      color: var(--q-text-hi);
+      font-weight: var(--q-fw-medium);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * STAGES — 2 фазы подготовки (Soft + Hard Skills)
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-lp-stages-head {
+      padding-bottom: var(--q-s-5);
+    }
+    .q-lp-stages-head__title {
+      font-family: var(--q-font-display);
+      font-size: clamp(1.5rem, 2.2vw, 1.875rem);
+      font-weight: var(--q-fw-linear);
+      letter-spacing: -0.02em;
+      color: var(--q-text-hi);
+      line-height: 1.1;
+      margin: 0;
+    }
+
+    .q-lp-stages {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      border-top: 1px solid var(--q-line-strong);
+      border-bottom: 1px solid var(--q-line-strong);
+      margin-bottom: var(--q-s-9);
+    }
+    .q-lp-stage {
+      padding: var(--q-s-7);
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-3);
+      border-right: 1px solid var(--q-line);
+      transition: background var(--q-dur-fast) var(--q-ease);
+    }
+    .q-lp-stage:last-child { border-right: 0; }
+    .q-lp-stage:hover { background: rgba(94, 106, 210, 0.025); }
+
+    .q-lp-stage__head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--q-s-3);
+      margin-bottom: var(--q-s-3);
+    }
+    .q-lp-stage__num {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      color: var(--q-accent-hover);
+      font-weight: var(--q-fw-medium);
+      font-feature-settings: "tnum" 1;
+    }
+    .q-lp-stage__period {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      color: var(--q-text-low);
+      font-feature-settings: "tnum" 1;
+      text-transform: uppercase;
+    }
+    .q-lp-stage__title {
+      font-family: var(--q-font-display);
+      font-size: var(--q-t-h5);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.014em;
+      color: var(--q-text-hi);
+      line-height: 1.2;
+      margin: 0;
+    }
+    .q-lp-stage__text {
+      font-size: var(--q-t-small);
+      line-height: 1.5;
+      color: var(--q-text-mid);
+      margin: 0;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * ADVANTAGES — 4-col asset ledger
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-lp-adv-head {
+      padding-bottom: var(--q-s-5);
+    }
+    .q-lp-adv-head__title {
+      font-family: var(--q-font-display);
+      font-size: clamp(1.5rem, 2.2vw, 1.875rem);
+      font-weight: var(--q-fw-linear);
+      letter-spacing: -0.02em;
+      color: var(--q-text-hi);
+      line-height: 1.1;
+      margin: 0;
+    }
+
+    .q-lp-adv {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border-top: 1px solid var(--q-line-strong);
+      border-bottom: 1px solid var(--q-line-strong);
+    }
+    .q-lp-adv-item {
+      padding: var(--q-s-7) var(--q-s-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-3);
+      border-right: 1px solid var(--q-line);
+      transition: background var(--q-dur-fast) var(--q-ease);
+    }
+    .q-lp-adv-item:last-child { border-right: 0; }
+    .q-lp-adv-item:hover { background: rgba(94, 106, 210, 0.025); }
+
+    .q-lp-adv-item__num {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      color: var(--q-accent-hover);
+      font-weight: var(--q-fw-medium);
+      font-feature-settings: "tnum" 1;
+      margin-bottom: var(--q-s-3);
+    }
+    .q-lp-adv-item__title {
+      font-family: var(--q-font-display);
+      font-size: 1.0625rem;        /* 17px */
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.012em;
+      color: var(--q-text-hi);
+      line-height: 1.25;
+      margin: 0;
+      /* Резервируем 2 строки, чтобы sub-text у всех 4 карточек
+         начинался с одного y-baseline (часть title'ов однострочные). */
+      min-height: 2.5em;
+    }
+    .q-lp-adv-item__text {
+      font-size: var(--q-t-small);
+      line-height: 1.5;
+      color: var(--q-text-mid);
+      margin: 0;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * AFTER — нижняя summary-плашка из `.after`
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-lp-after {
+      margin-top: var(--q-s-9);
+      padding: var(--q-s-7) var(--q-s-7);
+      background: var(--q-bg-2);
+      border: 1px solid var(--q-line);
+      border-radius: var(--q-r-md);
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: var(--q-s-6);
+      align-items: start;
+    }
+    .q-lp-after__kicker {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-text-low);
+      padding-top: 4px;
+    }
+    .q-lp-after__kicker b {
+      color: var(--q-accent-hover);
+      font-weight: var(--q-fw-medium);
+    }
+    .q-lp-after__text {
+      font-size: var(--q-t-base);
+      line-height: 1.6;
+      color: var(--q-text-mid);
+      margin: 0;
+      max-width: 70ch;
+    }
+    .q-lp-after__text b {
+      color: var(--q-text-hi);
+      font-weight: var(--q-fw-medium);
+    }
+
+    /* ─── Inline citation link ─────────────────────────────────────
+       Маленькая mono-метка в скобках со стрелкой ↗ — открывает
+       источник в новой вкладке. */
+    .q-lp-cite {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 3px;
+      margin-left: 6px;
+      padding: 1px 6px;
+      font-family: var(--q-font-mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--q-text-low);
+      text-decoration: none;
+      border: 1px solid var(--q-line);
+      border-radius: var(--q-r-sm);
+      background: transparent;
+      vertical-align: baseline;
+      transition: color var(--q-dur-fast) var(--q-ease),
+                  border-color var(--q-dur-fast) var(--q-ease);
+      white-space: nowrap;
+    }
+    .q-lp-cite:hover {
+      color: var(--q-accent-hover);
+      border-color: var(--q-accent);
+    }
+
+
+    /* ═══════════════════════════════════════════════════════════════
+     * RESPONSIVE
+     * ═══════════════════════════════════════════════════════════════ */
+    @media (max-width: 1100px) {
+      .q-lp-adv { grid-template-columns: repeat(2, 1fr); }
+      .q-lp-adv-item:nth-child(2) { border-right: 0; }
+      .q-lp-adv-item:nth-child(1),
+      .q-lp-adv-item:nth-child(2) { border-bottom: 1px solid var(--q-line); }
+    }
+    @media (max-width: 900px) {
+      .q-lp-stat { grid-template-columns: 1fr; gap: var(--q-s-5); align-items: start; }
+      .q-lp-stat__num,
+      .q-lp-stat__copy { grid-column: 1 / -1; }
+      .q-lp-stages { grid-template-columns: 1fr; }
+      .q-lp-stage {
+        border-right: 0;
+        border-bottom: 1px solid var(--q-line);
+      }
+      .q-lp-stage:last-child { border-bottom: 0; }
+      .q-lp-after {
+        grid-template-columns: 1fr;
+        gap: var(--q-s-3);
+        padding: var(--q-s-6);
+      }
+    }
+    @media (max-width: 720px) {
+      .q-lp { padding: var(--q-s-8) 0 var(--q-s-9); }
+      .q-lp-adv { grid-template-columns: 1fr; }
+      .q-lp-adv-item {
+        border-right: 0;
+        border-bottom: 1px solid var(--q-line);
+      }
+      .q-lp-adv-item:last-child { border-bottom: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       STICKY TOPBAR
+       ═══════════════════════════════════════════════════════════════ -->
+  <header class="q-topbar">
+    <a href="#" class="q-topbar__brand">
+      <span class="q-topbar__brand-mark">Q</span>
+      <span>Quillon</span>
+    </a>
+
+    <nav class="q-topbar__nav" aria-label="Главная навигация">
+      <a class="q-topbar__link" href="#tracks">Треки</a>
+      <a class="q-topbar__link" href="#format">Формат</a>
+      <a class="q-topbar__link" href="#pricing">Цена</a>
+      <a class="q-topbar__link" href="#quillon_jobs">Jobs</a>
+      <a class="q-topbar__link" href="#faq">FAQ</a>
+    </nav>
+
+    <div class="q-topbar__actions">
+      <a class="q-btn q-btn--link" href="#">Войти</a>
+      <a class="q-btn q-btn--primary q-btn--sm" href="/quiz">Пройти тест</a>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       10 · LAUNCHPAD
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="q-section q-lp" id="launchpad">
+    <div class="q-container">
+
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>10</em> · КАРЬЕРНЫЙ ЦЕНТР</div>
+        <h2 class="q-section-head__title">LaunchPad: от&nbsp;портфолио до&nbsp;оффера</h2>
+        <p class="q-section-head__sub">
+          Не&nbsp;«список вакансий на&nbsp;почту». Системная подготовка к&nbsp;собеседованиям и&nbsp;помощь до&nbsp;первого оффера&nbsp;— без ограничения по&nbsp;времени.
+        </p>
+      </header>
+
+      <!-- ═══════════════ HERO STAT · 75% (hh.ru research) ═══════════════ -->
+      <div class="q-lp-stat">
+        <div class="q-lp-stat__num"><span>75</span><em>&nbsp;%</em></div>
+        <p class="q-lp-stat__copy">
+          <b>рекрутеров</b> считают, что навыки и&nbsp;реальные кейсы, а&nbsp;не&nbsp;диплом, станут ключевым фактором при&nbsp;найме<a class="q-lp-cite" href="https://hh.ru/article/trendy-v-naime-na-2025-god" target="_blank" rel="noopener">↗ hh.ru, 2025</a>. LaunchPad готовит вас именно к&nbsp;этому.
+        </p>
+      </div>
+
+      <!-- ═══════════════ STAGES · 2 фазы подготовки ═══════════════ -->
+      <header class="q-lp-stages-head">
+        <h3 class="q-lp-stages-head__title">Программа подготовки</h3>
+      </header>
+
+      <div class="q-lp-stages" role="list" aria-label="Этапы подготовки">
+
+        <article class="q-lp-stage" role="listitem">
+          <div class="q-lp-stage__head">
+            <span class="q-lp-stage__num">01</span>
+            <span class="q-lp-stage__period">Нед. 33—40</span>
+          </div>
+          <h4 class="q-lp-stage__title">Этап 1: Soft Skills</h4>
+          <p class="q-lp-stage__text">Вебинары с&nbsp;HR, индивидуальное резюме под ваш стек, сопроводительные письма, рекомендательные письма от&nbsp;наставников, практика самопрезентации и&nbsp;мок-скрининги.</p>
+        </article>
+
+        <article class="q-lp-stage" role="listitem">
+          <div class="q-lp-stage__head">
+            <span class="q-lp-stage__num">02</span>
+            <span class="q-lp-stage__period">Нед. 41—48</span>
+          </div>
+          <h4 class="q-lp-stage__title">Этап 2: Hard Skills</h4>
+          <p class="q-lp-stage__text">Мок-технические интервью 1-на-1 с&nbsp;видеозаписью и&nbsp;детальным разбором. Проработка слабых мест до&nbsp;уверенного прохождения&nbsp;— без ограничений по&nbsp;попыткам.</p>
+        </article>
+
+      </div>
+
+      <!-- ═══════════════ ADVANTAGES · 4-asset ledger ═══════════════ -->
+      <header class="q-lp-adv-head">
+        <h3 class="q-lp-adv-head__title">Активы на&nbsp;собеседовании</h3>
+      </header>
+
+      <div class="q-lp-adv" role="list" aria-label="Что вы получаете для трудоустройства">
+
+        <article class="q-lp-adv-item" role="listitem">
+          <span class="q-lp-adv-item__num">01</span>
+          <h4 class="q-lp-adv-item__title">Портфолио на&nbsp;quillon.dev</h4>
+          <p class="q-lp-adv-item__text">3–5&nbsp;командных проектов + MVP стартапа. Живой сайт, а&nbsp;не&nbsp;скриншоты.</p>
+        </article>
+
+        <article class="q-lp-adv-item" role="listitem">
+          <span class="q-lp-adv-item__num">02</span>
+          <h4 class="q-lp-adv-item__title">GitHub с&nbsp;production-коммитами</h4>
+          <p class="q-lp-adv-item__text">Работодатель видит историю коммитов в&nbsp;реальный продукт. Это не&nbsp;учебный проект.</p>
+        </article>
+
+        <article class="q-lp-adv-item" role="listitem">
+          <span class="q-lp-adv-item__num">03</span>
+          <h4 class="q-lp-adv-item__title">Коммерческие проекты в&nbsp;резюме</h4>
+          <p class="q-lp-adv-item__text">Строчка «оплачиваемые задачи, от&nbsp;5&nbsp;000 до&nbsp;80&nbsp;000&nbsp;руб за&nbsp;проект»&nbsp;— то, чего нет у&nbsp;95%&nbsp;Junior-специалистов после онлайн-программ.</p>
+        </article>
+
+        <article class="q-lp-adv-item" role="listitem">
+          <span class="q-lp-adv-item__num">04</span>
+          <h4 class="q-lp-adv-item__title">Стажировка в&nbsp;IT-компании</h4>
+          <p class="q-lp-adv-item__text">Официальная запись о&nbsp;стажировке в&nbsp;Quillon. Реальный опыт работы на&nbsp;production-продуктах.</p>
+        </article>
+
+      </div>
+
+      <!-- ═══════════════ AFTER · summary panel ═══════════════ -->
+      <div class="q-lp-after">
+        <span class="q-lp-after__kicker"><b>После выпуска</b></span>
+        <p class="q-lp-after__text">После выпуска&nbsp;— помощь до&nbsp;первого оффера, без ограничения по&nbsp;времени. Российский IT-рынок дефицитен&nbsp;— но&nbsp;дефицит в&nbsp;Senior, не&nbsp;в&nbsp;Junior: <b>на&nbsp;одну Junior-вакансию до&nbsp;32 резюме, на&nbsp;Senior&nbsp;— лишь 2–3</b><a class="q-lp-cite" href="https://hh.ru/article/trendy-v-naime-na-2025-god" target="_blank" rel="noopener">↗ hh.ru, 2025</a>. Кандидат с&nbsp;production-портфолио, стажировкой и&nbsp;коммерческим опытом из&nbsp;этой Junior-очереди выходит.</p>
+      </div>
+
+
+    </div>
+  </section>
+
+</body>
+</html>

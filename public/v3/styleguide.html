@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quillon v3 — Styleguide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap&subset=cyrillic,cyrillic-ext,latin,latin-ext" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components.css">
+<style>
+  /* styleguide-only layout helpers */
+  .sg-grid-colors {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--q-s-3);
+  }
+  .sg-swatch {
+    border-radius: var(--q-r-3);
+    padding: var(--q-s-5);
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid var(--q-line);
+    font-family: var(--q-font-mono);
+    font-size: var(--q-t-micro);
+  }
+  .sg-swatch__name { font-family: var(--q-font-body); font-size: 0.875rem; font-weight: 600; margin-bottom: 4px; }
+  .sg-swatch__hex { letter-spacing: 0.04em; }
+  .sg-swatch__role { opacity: 0.6; margin-top: var(--q-s-3); line-height: 1.4; }
+
+  .sg-type-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: var(--q-s-5);
+    padding: var(--q-s-4) 0;
+    border-bottom: 1px dashed var(--q-line);
+    align-items: baseline;
+  }
+  .sg-type-row:last-child { border-bottom: 0; }
+  .sg-type-meta { color: var(--q-text-mid); font-family: var(--q-font-mono); font-size: var(--q-t-micro); letter-spacing: 0.05em; text-transform: uppercase; }
+
+  .sg-spacing-demo {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--q-s-3);
+    flex-wrap: wrap;
+  }
+  .sg-spacing-demo__cell {
+    background: var(--q-violet);
+    border-radius: 4px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 6px;
+    font-family: var(--q-font-mono);
+    font-size: 0.65rem;
+    color: var(--q-ink);
+    min-width: 32px;
+  }
+
+  .sg-radii {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--q-s-4);
+  }
+  .sg-radii__demo {
+    background: var(--q-ink-2);
+    border: 1px solid var(--q-line);
+    aspect-ratio: 1;
+    display: flex;
+    align-items: flex-end;
+    padding: var(--q-s-3);
+    font-family: var(--q-font-mono);
+    font-size: var(--q-t-micro);
+    color: var(--q-text-mid);
+  }
+
+  .sg-btn-matrix {
+    display: grid;
+    gap: var(--q-s-4);
+    grid-template-columns: 140px 1fr;
+    align-items: center;
+  }
+  .sg-btn-matrix__label {
+    font-family: var(--q-font-mono);
+    font-size: var(--q-t-micro);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--q-text-mid);
+  }
+
+  .sg-cards-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--q-s-4); }
+
+  .sg-shapes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--q-s-4);
+  }
+  .sg-shapes-grid__cell {
+    background: var(--q-ink-2);
+    border: 1px solid var(--q-line);
+    border-radius: var(--q-r-3);
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--q-s-3);
+    color: var(--q-violet);
+    padding: var(--q-s-3);
+  }
+  .sg-shapes-grid__cell svg { width: 56px; height: 56px; }
+  .sg-shapes-grid__cell span {
+    font-family: var(--q-font-mono);
+    font-size: 0.625rem;
+    color: var(--q-text-mid);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .sg-footer {
+    padding: var(--q-s-9) 0 var(--q-s-8);
+    color: var(--q-text-low);
+    font-family: var(--q-font-mono);
+    font-size: var(--q-t-micro);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-top: 1px solid var(--q-line);
+    margin-top: var(--q-s-9);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--q-s-4);
+  }
+
+  /* HERO SAMPLE BLOCK */
+  .sg-hero {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--q-bento-gap);
+    margin-top: var(--q-s-7);
+  }
+  .sg-hero__title-card {
+    grid-column: span 8;
+    background: var(--q-ink-2);
+    border: 1px solid var(--q-line);
+    border-radius: var(--q-r-5);
+    padding: var(--q-s-8) var(--q-s-7);
+    position: relative;
+    overflow: hidden;
+  }
+  .sg-hero__title-card h1 {
+    font-family: var(--q-font-display);
+    font-size: clamp(2.5rem, 6vw, 5.25rem);
+    line-height: 0.92;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    margin: 0;
+  }
+  .sg-hero__title-card h1 .accent { color: var(--q-violet); }
+  .sg-hero__title-card h1 em { font-style: normal; color: var(--q-text-mid); font-weight: 500; }
+  .sg-hero__meta-card {
+    grid-column: span 4;
+    background: var(--q-lavender);
+    border-radius: var(--q-r-5);
+    padding: var(--q-s-6);
+    display: flex; flex-direction: column; justify-content: space-between;
+    color: var(--q-ink);
+    position: relative;
+    overflow: hidden;
+    min-height: 320px;
+  }
+  .sg-hero__side {
+    grid-column: span 4;
+    background: var(--q-violet);
+    border-radius: var(--q-r-5);
+    padding: var(--q-s-6);
+    color: var(--q-ink);
+    display: flex; flex-direction: column; justify-content: space-between;
+    min-height: 260px;
+  }
+  .sg-hero__tracks {
+    grid-column: span 8;
+    background: var(--q-ink-2);
+    border: 1px solid var(--q-line);
+    border-radius: var(--q-r-5);
+    padding: var(--q-s-6);
+    display: grid;
+    gap: var(--q-s-3);
+  }
+  .sg-track-row {
+    display: grid;
+    grid-template-columns: 48px 1fr auto auto;
+    align-items: center;
+    gap: var(--q-s-4);
+    padding: var(--q-s-4);
+    border-radius: var(--q-r-3);
+    background: var(--q-ink);
+    border: 1px solid var(--q-line);
+    transition: border-color var(--q-dur-fast) var(--q-ease), transform var(--q-dur-fast) var(--q-ease);
+  }
+  .sg-track-row:hover { border-color: var(--q-violet); transform: translateX(4px); }
+  .sg-track-row__num {
+    font-family: var(--q-font-mono);
+    font-size: 0.875rem;
+    color: var(--q-text-low);
+  }
+  .sg-track-row__name {
+    font-family: var(--q-font-display);
+    font-weight: 500;
+    font-size: 1.25rem;
+    letter-spacing: -0.01em;
+  }
+  .sg-track-row__tags { display: flex; gap: 6px; }
+
+  /* TRACK CARD SAMPLE */
+  .sg-track-card {
+    background: var(--q-ink-2);
+    border: 1px solid var(--q-line);
+    border-radius: var(--q-r-5);
+    padding: var(--q-s-7);
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: var(--q-s-7);
+    align-items: stretch;
+    position: relative;
+    overflow: hidden;
+  }
+  .sg-track-card__stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--q-s-5);
+    border-top: 1px solid var(--q-line);
+    padding-top: var(--q-s-5);
+    margin-top: var(--q-s-6);
+  }
+  .sg-track-card__aside {
+    background: var(--q-lavender);
+    border-radius: var(--q-r-4);
+    padding: var(--q-s-6);
+    color: var(--q-ink);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .sg-track-card__tools { display: flex; gap: 6px; flex-wrap: wrap; }
+
+  /* DECO helpers */
+  .deco-sparkle { color: var(--q-violet); }
+  .deco-sparkle-paper { color: var(--q-ink); }
+
+  @media (max-width: 900px) {
+    .sg-hero__title-card, .sg-hero__meta-card, .sg-hero__side, .sg-hero__tracks { grid-column: span 12; }
+    .sg-track-card { grid-template-columns: 1fr; }
+    .sg-track-row { grid-template-columns: 32px 1fr; grid-template-areas: "num name" "tags tags" "cta cta"; }
+    .sg-track-row__tags { grid-area: tags; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Inline shapes library -->
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0">
+  <symbol id="q-shape-blob" viewBox="0 0 120 120">
+    <path d="M60 8 C92 8 112 30 112 58 C112 86 96 112 64 112 C34 112 10 94 10 62 C10 32 28 8 60 8 Z" fill="currentColor"/>
+  </symbol>
+  <symbol id="q-shape-sparkle" viewBox="0 0 40 40">
+    <path d="M20 0 C21 11 28 17 40 20 C28 23 21 29 20 40 C19 29 12 23 0 20 C12 17 19 11 20 0 Z" fill="currentColor"/>
+  </symbol>
+  <symbol id="q-shape-squiggle" viewBox="0 0 120 24">
+    <path d="M2 12 Q 15 2 30 12 T 60 12 T 90 12 T 118 12" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="q-shape-moon" viewBox="0 0 100 100">
+    <path d="M50 8 A42 42 0 1 0 50 92 A30 42 0 1 1 50 8 Z" fill="currentColor"/>
+  </symbol>
+  <symbol id="q-shape-pill" viewBox="0 0 120 50">
+    <rect x="2" y="2" width="116" height="46" rx="23" fill="currentColor"/>
+  </symbol>
+  <symbol id="q-shape-plus" viewBox="0 0 40 40">
+    <path d="M16 2 H24 V16 H38 V24 H24 V38 H16 V24 H2 V16 H16 Z" fill="currentColor"/>
+  </symbol>
+  <symbol id="q-shape-arc" viewBox="0 0 120 120">
+    <path d="M60 12 A48 48 0 1 1 12 60" stroke="currentColor" stroke-width="14" fill="none" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="q-shape-leaf" viewBox="0 0 80 120">
+    <path d="M40 4 C70 30 76 70 40 116 C4 70 10 30 40 4 Z" fill="currentColor"/>
+  </symbol>
+  <symbol id="q-shape-bracket" viewBox="0 0 60 60">
+    <path d="M4 4 H26 M4 4 V26 M56 56 H34 M56 56 V34" stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="q-shape-arrow-ne" viewBox="0 0 24 24">
+    <path d="M6 18 L18 6 M10 6 H18 V14" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+</svg>
+
+<!-- TOP BAR -->
+<div class="q-container">
+  <header class="q-topbar">
+    <div class="q-topbar__brand">
+      <span class="q-topbar__brand-mark">Q</span>
+      <span>Quillon</span>
+      <span class="q-mono q-dim" style="margin-left:8px;">v3 / styleguide</span>
+    </div>
+    <nav class="q-topbar__nav">
+      <a href="#palette">Palette</a>
+      <a href="#typography">Type</a>
+      <a href="#components">Components</a>
+      <a href="#bento">Bento</a>
+      <a href="#shapes">Shapes</a>
+      <a href="#hero">Hero</a>
+      <a href="#principles">DO / DON'T</a>
+    </nav>
+    <a class="q-btn q-btn--primary q-btn--pill" href="#hero">Open hero
+      <svg width="14" height="14"><use href="#q-shape-arrow-ne"/></svg>
+    </a>
+  </header>
+</div>
+
+<main class="q-container">
+
+  <!-- ═══════════════════════ SECTION 00 / INTRO ═══════════════════════ -->
+  <section style="padding: var(--q-s-9) 0 var(--q-s-7);">
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: var(--q-s-7); align-items:end;">
+      <div>
+        <p class="q-mono q-dim" style="margin:0 0 var(--q-s-4);">/ quillon design system — rev.03 — 2026</p>
+        <h1 class="q-display-xl">
+          Не школа.<br>
+          <span style="color:var(--q-violet);">IT-компания</span>,<br>
+          которая учит <em style="font-style:italic; color:var(--q-text-mid); font-weight:300;">вживую</em>
+          <span class="q-quote-mark">«&nbsp;»</span>
+        </h1>
+      </div>
+      <div>
+        <p class="q-body-l q-muted" style="max-width:46ch; margin:0 0 var(--q-s-5);">
+          Дизайн-язык Quillon v3 собран заново. Без градиентных заголовков, без glow-пятен,
+          без типичных 2024-AI паттернов. Тёплый off-white, индиго-violet, unbounded-заголовки
+          и bento-композиции, которые живут как редакторский разворот, а не шаблон лендинга.
+        </p>
+        <div class="q-row">
+          <span class="q-chip q-chip--violet">12 месяцев</span>
+          <span class="q-chip q-chip--stroke-dark">3 трека</span>
+          <span class="q-chip q-chip--stroke-dark">576–720 часов</span>
+          <span class="q-chip q-chip--lavender">Junior с портфолио</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ SECTION 01 / PALETTE ═══════════════════════ -->
+  <section id="palette">
+    <header class="q-section-head">
+      <div class="q-section-head__num"><em>01</em> / palette</div>
+      <div>
+        <h2 class="q-section-head__title">Цвета как пространство, а не акцент</h2>
+        <p class="q-section-head__sub">Тёплый дарк (#0E0E12) отстраивает нас от холодного navy. Indigo-violet (#6E6BFF) — единственный акцент-заряд. Off-white и лавандовый тянут «бумажные» карточки в bento. Всё плоско. Градиентов на тексте и glow-пятен здесь нет.</p>
+      </div>
+    </header>
+
+    <div class="q-stack-lg" style="margin-top: var(--q-s-6);">
+      <div>
+        <p class="q-mono q-dim">surface — dark</p>
+        <div class="sg-grid-colors" style="margin-top: var(--q-s-3);">
+          <div class="sg-swatch" style="background:var(--q-ink); color:var(--q-text-hi);">
+            <div><div class="sg-swatch__name">Ink</div><div class="sg-swatch__hex">#0E0E12</div></div>
+            <div class="sg-swatch__role">page background</div>
+          </div>
+          <div class="sg-swatch" style="background:var(--q-ink-2); color:var(--q-text-hi);">
+            <div><div class="sg-swatch__name">Ink 2</div><div class="sg-swatch__hex">#16161C</div></div>
+            <div class="sg-swatch__role">dark card surface</div>
+          </div>
+          <div class="sg-swatch" style="background:var(--q-ink-3); color:var(--q-text-hi);">
+            <div><div class="sg-swatch__name">Ink 3</div><div class="sg-swatch__hex">#1D1D24</div></div>
+            <div class="sg-swatch__role">nested surface</div>
+          </div>
+          <div class="sg-swatch" style="background:var(--q-line); color:var(--q-text-hi);">
+            <div><div class="sg-swatch__name">Line</div><div class="sg-swatch__hex">#262630</div></div>
+            <div class="sg-swatch__role">hairline borders</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <p class="q-mono q-dim">surface — paper</p>
+        <div class="sg-grid-colors" style="margin-top: var(--q-s-3);">
+          <div class="sg-swatch" style="background:var(--q-paper); color:var(--q-ink); border-color:var(--q-bone);">
+            <div><div class="sg-swatch__name">Paper</div><div class="sg-swatch__hex">#F4F1EA</div></div>
+            <div class="sg-swatch__role">splash / light cards — warm off-white</div>
+          </div>
+          <div class="sg-swatch" style="background:var(--q-paper-2); color:var(--q-ink); border-color:var(--q-bone);">
+            <div><div class="sg-swatch__name">Paper 2</div><div class="sg-swatch__hex">#EAE6DC</div></div>
+            <div class="sg-swatch__role">hover / layered</div>
+          </div>
+          <div class="sg-swatch" style="background:var(--q-bone); color:var(--q-ink); border-color:transparent;">
+            <div><div class="sg-swatch__name">Bone</div><div class="sg-swatch__hex">#DCD7CB</div></div>
+            <div class="sg-swatch__role">paper borders / strokes</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <p class="q-mono q-dim">accent — violet (flat, never gradient)</p>
+        <div class="sg-grid-colors" style="margin-top: var(--q-s-3);">
+          <div class="sg-swatch" style="background:var(--q-violet); color:var(--q-ink); border-color:transparent;">
+            <div><div class="sg-swatch__name">Violet</div><div class="sg-swatch__hex">#6E6BFF</div></div>
+            <div class="sg-swatch__role">primary accent. hsl(245 95% 72%). Contrast on Ink: 6.3:1.</div>
+          </div>
+          <div class="sg-swatch" style="background:var(--q-violet-bright); color:var(--q-ink); border-color:transparent;">
+            <div><div class="sg-swatch__name">Violet Bright</div><div class="sg-swatch__hex">#8A88FF</div></div>
+            <div class="sg-swatch__role">hover lift — сдвиг по lightness, не градиент</div>
+          </div>
+          <div class="sg-swatch" style="background:var(--q-violet-ink); color:var(--q-paper); border-color:transparent;">
+            <div><div class="sg-swatch__name">Violet Ink</div><div class="sg-swatch__hex">#5350D6</div></div>
+            <div class="sg-swatch__role">pressed / active state</div>
+          </div>
+          <div class="sg-swatch" style="background:var(--q-lavender); color:var(--q-ink); border-color:transparent;">
+            <div><div class="sg-swatch__name">Lavender</div><div class="sg-swatch__hex">#C9C6FF</div></div>
+            <div class="sg-swatch__role">splash / full-bleed soft fills</div>
+          </div>
+          <div class="sg-swatch" style="background:var(--q-lavender-2); color:var(--q-ink); border-color:transparent;">
+            <div><div class="sg-swatch__name">Lavender 2</div><div class="sg-swatch__hex">#DEDCFF</div></div>
+            <div class="sg-swatch__role">largest soft surfaces</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <p class="q-mono q-dim">semantic — не трогают violet</p>
+        <div class="sg-grid-colors" style="margin-top: var(--q-s-3);">
+          <div class="sg-swatch" style="background:var(--q-ok); color:var(--q-ink); border-color:transparent;">
+            <div><div class="sg-swatch__name">OK</div><div class="sg-swatch__hex">#6FD28A</div></div>
+            <div class="sg-swatch__role">success — soft green</div>
+          </div>
+          <div class="sg-swatch" style="background:var(--q-warn); color:var(--q-ink); border-color:transparent;">
+            <div><div class="sg-swatch__name">Warn</div><div class="sg-swatch__hex">#F0B84A</div></div>
+            <div class="sg-swatch__role">attention — amber</div>
+          </div>
+          <div class="sg-swatch" style="background:var(--q-err); color:var(--q-ink); border-color:transparent;">
+            <div><div class="sg-swatch__name">Err</div><div class="sg-swatch__hex">#E56A6A</div></div>
+            <div class="sg-swatch__role">error — coral, не «красный»</div>
+          </div>
+          <div class="sg-swatch" style="background:var(--q-info); color:var(--q-ink); border-color:transparent;">
+            <div><div class="sg-swatch__name">Info</div><div class="sg-swatch__hex">#7FB8E8</div></div>
+            <div class="sg-swatch__role">informational</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ SECTION 02 / TYPOGRAPHY ═══════════════════════ -->
+  <section id="typography">
+    <header class="q-section-head">
+      <div class="q-section-head__num"><em>02</em> / typography</div>
+      <div>
+        <h2 class="q-section-head__title">Unbounded × DM Sans × JetBrains Mono</h2>
+        <p class="q-section-head__sub">Display — Unbounded (Cyrillic + Cyrillic-Ext, 300–800). Широкие пропорции, отстройка от Inter/Manrope. Body — DM Sans. Mono — JetBrains Mono. Все три поддерживают кириллицу полностью.</p>
+      </div>
+    </header>
+
+    <div style="margin-top: var(--q-s-6);">
+      <div class="sg-type-row">
+        <div class="sg-type-meta">display / xl · 700</div>
+        <div class="q-display-xl">Junior с портфолио. <span style="color:var(--q-violet);">За 12 месяцев.</span></div>
+      </div>
+      <div class="sg-type-row">
+        <div class="sg-type-meta">display / l · 600</div>
+        <div class="q-display-l">Стартап как диплом — 500 000 ₽ на запуск</div>
+      </div>
+      <div class="sg-type-row">
+        <div class="sg-type-meta">h1 · 600</div>
+        <div class="q-h1">Python Backend + Machine Learning</div>
+      </div>
+      <div class="sg-type-row">
+        <div class="sg-type-meta">h2 · 600</div>
+        <div class="q-h2">Кросс-функциональные команды с 21 недели</div>
+      </div>
+      <div class="sg-type-row">
+        <div class="sg-type-meta">h3 · 500</div>
+        <div class="q-h3">LaunchPad — карьерный центр в два этапа</div>
+      </div>
+      <div class="sg-type-row">
+        <div class="sg-type-meta">body-l · 400</div>
+        <div class="q-body-l">Ты не делаешь «учебные задачи». С 21-й недели ты собираешь Scrum-команду с Flutter и QA и берёшь реальный коммерческий заказ — Python-бота, мобильное приложение, автоматизацию.</div>
+      </div>
+      <div class="sg-type-row">
+        <div class="sg-type-meta">body · 400</div>
+        <div class="q-body">FastAPI, SQLAlchemy, Docker, Scikit-learn, NLP — стек, с которым на hh.ru нанимают Junior-разработчика. Нет отдельных «курсов-брошюр», есть один маршрут.</div>
+      </div>
+      <div class="sg-type-row">
+        <div class="sg-type-meta">small · 400</div>
+        <div class="q-small">* 2 платежа по 99 000 ₽. Первый — при старте обучения, второй — после 6-го месяца.</div>
+      </div>
+      <div class="sg-type-row">
+        <div class="sg-type-meta">mono · 500</div>
+        <div class="q-mono">/ track · python · backend · ml · 720h</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ SECTION 03 / SPACING & GRID ═══════════════════════ -->
+  <section id="spacing">
+    <header class="q-section-head">
+      <div class="q-section-head__num"><em>03</em> / spacing &amp; grid</div>
+      <div>
+        <h2 class="q-section-head__title">Шкала 4 / 8 / 12 / 16 / 24 / 32 / 40 / 64 / 96</h2>
+        <p class="q-section-head__sub">Смешанная 4/8-сетка вместо чистой 8-ки. Маленькие расстояния (4, 12) дают editorial-дыхание между chip-ами и аватарами; большие (64, 96) — между секциями. Контейнер 1240, gutter 16, bento-gap 12.</p>
+      </div>
+    </header>
+
+    <div class="sg-spacing-demo" style="margin-top: var(--q-s-6);">
+      <div class="sg-spacing-demo__cell" style="height:4px;  width:32px;">4</div>
+      <div class="sg-spacing-demo__cell" style="height:8px;  width:32px;">8</div>
+      <div class="sg-spacing-demo__cell" style="height:12px; width:40px;">12</div>
+      <div class="sg-spacing-demo__cell" style="height:16px; width:48px;">16</div>
+      <div class="sg-spacing-demo__cell" style="height:24px; width:56px;">24</div>
+      <div class="sg-spacing-demo__cell" style="height:32px; width:64px;">32</div>
+      <div class="sg-spacing-demo__cell" style="height:40px; width:80px;">40</div>
+      <div class="sg-spacing-demo__cell" style="height:64px; width:96px;">64</div>
+      <div class="sg-spacing-demo__cell" style="height:96px; width:120px;">96</div>
+      <div class="sg-spacing-demo__cell" style="height:128px; width:140px;">128</div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ SECTION 04 / RADII ═══════════════════════ -->
+  <section id="radii">
+    <header class="q-section-head">
+      <div class="q-section-head__num"><em>04</em> / radii</div>
+      <div>
+        <h2 class="q-section-head__title">Очень щедрые радиусы у крупных поверхностей</h2>
+        <p class="q-section-head__sub">6 / 12 / 20 / 28 / 36 px + полный pill. Большие surfaces (hero-карточка, splash) — 36px, это «SmartClass-подпись». Чипы и бейджи — 6px или pill. Никакого neumorphism, никакой soft UI.</p>
+      </div>
+    </header>
+
+    <div class="sg-radii" style="margin-top: var(--q-s-6);">
+      <div class="sg-radii__demo" style="border-radius: var(--q-r-1);">r · 6 chip</div>
+      <div class="sg-radii__demo" style="border-radius: var(--q-r-2);">r · 12 btn</div>
+      <div class="sg-radii__demo" style="border-radius: var(--q-r-3);">r · 20 card</div>
+      <div class="sg-radii__demo" style="border-radius: var(--q-r-4);">r · 28 feat</div>
+      <div class="sg-radii__demo" style="border-radius: var(--q-r-5);">r · 36 hero</div>
+      <div class="sg-radii__demo" style="border-radius: var(--q-r-pill); aspect-ratio:auto; height: 60px;">pill</div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ SECTION 05 / BUTTONS ═══════════════════════ -->
+  <section id="buttons">
+    <header class="q-section-head">
+      <div class="q-section-head__num"><em>05</em> / buttons</div>
+      <div>
+        <h2 class="q-section-head__title">Flat violet primary. Без gradient. Без drop-shadow glow.</h2>
+        <p class="q-section-head__sub">Два силуэта: rounded-12 (rectangular) и full pill. Три variant × 4 state. Hover — сдвиг по lightness на 10%, не тень.</p>
+      </div>
+    </header>
+
+    <div id="components" style="margin-top: var(--q-s-6); display:grid; gap: var(--q-s-6);">
+      <div class="sg-btn-matrix">
+        <div class="sg-btn-matrix__label">primary · rect</div>
+        <div class="q-row">
+          <button class="q-btn q-btn--primary">Получить программу</button>
+          <button class="q-btn q-btn--primary">Записаться<svg width="14" height="14" style="margin-left:4px;"><use href="#q-shape-arrow-ne"/></svg></button>
+          <button class="q-btn q-btn--primary" disabled>Disabled</button>
+        </div>
+      </div>
+      <div class="sg-btn-matrix">
+        <div class="sg-btn-matrix__label">primary · pill</div>
+        <div class="q-row">
+          <button class="q-btn q-btn--primary q-btn--pill">Старт 5 мая</button>
+          <button class="q-btn q-btn--primary q-btn--pill">Смотреть программу<svg width="14" height="14" style="margin-left:4px;"><use href="#q-shape-arrow-ne"/></svg></button>
+        </div>
+      </div>
+      <div class="sg-btn-matrix">
+        <div class="sg-btn-matrix__label">secondary · paper</div>
+        <div class="q-row">
+          <button class="q-btn q-btn--secondary">Скачать PDF</button>
+          <button class="q-btn q-btn--secondary q-btn--pill">Скачать PDF</button>
+        </div>
+      </div>
+      <div class="sg-btn-matrix">
+        <div class="sg-btn-matrix__label">ghost</div>
+        <div class="q-row">
+          <button class="q-btn q-btn--ghost">Узнать больше</button>
+          <button class="q-btn q-btn--ghost q-btn--pill">О школе</button>
+        </div>
+      </div>
+      <div class="sg-btn-matrix">
+        <div class="sg-btn-matrix__label">dark / nested</div>
+        <div class="q-row">
+          <button class="q-btn q-btn--dark">Написать куратору</button>
+          <button class="q-btn q-btn--dark q-btn--pill">Задать вопрос</button>
+        </div>
+      </div>
+      <div class="sg-btn-matrix">
+        <div class="sg-btn-matrix__label">round · arrow</div>
+        <div class="q-row">
+          <button class="q-btn-round" aria-label="next"><svg width="16" height="16"><use href="#q-shape-arrow-ne"/></svg></button>
+          <button class="q-btn-round q-btn-round--dark" aria-label="next"><svg width="16" height="16"><use href="#q-shape-arrow-ne"/></svg></button>
+          <button class="q-btn-round q-btn-round--violet" aria-label="next"><svg width="16" height="16"><use href="#q-shape-arrow-ne"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ SECTION 06 / CARDS ═══════════════════════ -->
+  <section id="cards">
+    <header class="q-section-head">
+      <div class="q-section-head__num"><em>06</em> / cards</div>
+      <div>
+        <h2 class="q-section-head__title">Пять «характеров» поверхностей</h2>
+        <p class="q-section-head__sub">Dark с hairline, lavender splash, violet feature, paper, photo. Каждая живёт ради своего контента. Не смешивай glass-blur на разных — у нас его вообще нет.</p>
+      </div>
+    </header>
+
+    <div class="sg-cards-row" style="margin-top: var(--q-s-6);">
+      <article class="q-card q-card--dark">
+        <p class="q-card__eyebrow">/ dark card</p>
+        <h3 class="q-card__title">Python Backend + ML</h3>
+        <p class="q-card__text">FastAPI, SQLAlchemy, Docker, Scikit-learn, NLP. 720 часов, 12 месяцев.</p>
+        <div class="q-card__foot">
+          <span class="q-chip q-chip--ink">720ч</span>
+          <button class="q-btn-round q-btn-round--dark" aria-label="open"><svg width="16" height="16"><use href="#q-shape-arrow-ne"/></svg></button>
+        </div>
+        <svg class="q-card__deco q-card__deco--br deco-sparkle" width="80" height="80" style="opacity:0.15;"><use href="#q-shape-blob"/></svg>
+      </article>
+
+      <article class="q-card q-card--lavender q-card--lg">
+        <p class="q-card__eyebrow">/ lavender splash</p>
+        <h3 class="q-card__title">Стартап как диплом</h3>
+        <p class="q-card__text">Лучший проект получает 500 000 ₽ на запуск и менторскую поддержку KickStarter-кампании.</p>
+        <div class="q-card__foot">
+          <span class="q-chip q-chip--paper">12 команд в потоке</span>
+          <button class="q-btn-round" aria-label="open"><svg width="16" height="16"><use href="#q-shape-arrow-ne"/></svg></button>
+        </div>
+        <svg class="q-card__deco q-card__deco--tr deco-sparkle-paper" width="48" height="48" style="opacity:0.5;"><use href="#q-shape-sparkle"/></svg>
+        <svg class="q-card__deco q-card__deco--br deco-sparkle-paper" width="160" height="160" style="opacity:0.25;"><use href="#q-shape-moon"/></svg>
+      </article>
+
+      <article class="q-card q-card--violet">
+        <p class="q-card__eyebrow" style="color:var(--q-ink); opacity:0.55;">/ violet feature</p>
+        <h3 class="q-card__title">IT-агентство Quillon</h3>
+        <p class="q-card__text">С 21 недели ты берёшь реальные коммерческие заказы — и получаешь оплату.</p>
+        <div class="q-card__foot">
+          <span class="q-chip q-chip--ink">5 — 100 k ₽</span>
+          <button class="q-btn-round q-btn-round--dark" aria-label="open"><svg width="16" height="16"><use href="#q-shape-arrow-ne"/></svg></button>
+        </div>
+        <svg class="q-card__deco q-card__deco--tr deco-sparkle-paper" width="36" height="36" style="color:var(--q-ink); opacity:0.4;"><use href="#q-shape-plus"/></svg>
+      </article>
+
+      <article class="q-card q-card--paper">
+        <p class="q-card__eyebrow">/ paper</p>
+        <h3 class="q-card__title">Dev English, 20ч</h3>
+        <p class="q-card__text" style="color:var(--q-text-dark-mid);">Читаешь документацию в оригинале, пишешь commit-messages без Google Translate.</p>
+        <div class="q-card__foot">
+          <span class="q-badge-slash">bonus</span>
+          <button class="q-btn-round q-btn-round--violet" aria-label="open"><svg width="16" height="16"><use href="#q-shape-arrow-ne"/></svg></button>
+        </div>
+      </article>
+
+      <article class="q-card q-card--dark" style="display:flex; flex-direction:column; justify-content:space-between; min-height: 220px;">
+        <p class="q-card__eyebrow">/ stat</p>
+        <div class="q-stat">
+          <div class="q-stat__num">6<span style="color:var(--q-violet);">.</span></div>
+          <div class="q-stat__label">месяц первого заработка</div>
+        </div>
+      </article>
+
+      <article class="q-card q-card--photo" style="min-height: 220px; background-image: linear-gradient(135deg, #2a1f4a 0%, #1d1d24 100%);">
+        <div class="q-card__body" style="display:flex; flex-direction:column; justify-content:flex-end; height:100%;">
+          <p class="q-card__eyebrow">/ photo card (placeholder gradient)</p>
+          <h3 class="q-card__title" style="font-size: var(--q-t-h3);">История выпускника Артёма</h3>
+          <p class="q-card__text q-small">Раньше — менеджер по продажам. Сейчас — Python-разработчик в продуктовой компании.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ SECTION 07 / CHIPS ═══════════════════════ -->
+  <section id="chips">
+    <header class="q-section-head">
+      <div class="q-section-head__num"><em>07</em> / chips &amp; badges</div>
+      <div>
+        <h2 class="q-section-head__title">Pill-чипы с stroke и fill</h2>
+        <p class="q-section-head__sub">Короткие метки. Используй 2–4 чипа в ряду, не больше. Mono-бейдж с «/» — editorial-маркер, навеянный SmartClass.</p>
+      </div>
+    </header>
+
+    <div class="q-stack-lg" style="margin-top: var(--q-s-6);">
+      <div>
+        <p class="q-mono q-dim">stroke</p>
+        <div class="q-row" style="margin-top: var(--q-s-3);">
+          <span class="q-chip q-chip--stroke-dark">connect with us</span>
+          <span class="q-chip q-chip--stroke-dark">intuitive</span>
+          <span class="q-chip q-chip--stroke-dark">happy users</span>
+          <span class="q-chip q-chip--stroke-dark">online course</span>
+        </div>
+      </div>
+      <div>
+        <p class="q-mono q-dim">fill</p>
+        <div class="q-row" style="margin-top: var(--q-s-3);">
+          <span class="q-chip q-chip--violet">Python</span>
+          <span class="q-chip q-chip--lavender">Flutter</span>
+          <span class="q-chip q-chip--paper">QA Automation</span>
+          <span class="q-chip q-chip--ink">Dev English</span>
+        </div>
+      </div>
+      <div>
+        <p class="q-mono q-dim">editorial / slash-badge</p>
+        <div class="q-row" style="margin-top: var(--q-s-3);">
+          <span class="q-badge-slash">opportunities</span>
+          <span class="q-badge-slash">launchpad</span>
+          <span class="q-badge-slash">agency</span>
+          <span class="q-badge-new">new</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ SECTION 08 / AVATARS & MASCOT ═══════════════════════ -->
+  <section id="avatars">
+    <header class="q-section-head">
+      <div class="q-section-head__num"><em>08</em> / avatars &amp; mascot</div>
+      <div>
+        <h2 class="q-section-head__title">Серьёзный компаньон, не стикер</h2>
+        <p class="q-section-head__sub">Маскот — абстрактный «конструкт-наставник». Flat-вектор с одним глазом-экраном, напоминает ладью. 3D-финал от иллюстратора — следующая итерация.</p>
+      </div>
+    </header>
+
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: var(--q-s-6); margin-top: var(--q-s-6);">
+      <div>
+        <p class="q-mono q-dim">avatar stack — on dark</p>
+        <div class="q-row" style="margin-top: var(--q-s-3);">
+          <div class="q-avatar-stack">
+            <span class="q-avatar" style="background:#5a4b8a;">А</span>
+            <span class="q-avatar" style="background:#7a5c3d;">М</span>
+            <span class="q-avatar" style="background:#4b7a5c;">К</span>
+            <span class="q-avatar" style="background:var(--q-violet); color:var(--q-ink);">+</span>
+            <span class="q-avatar-stack__count">350+ студентов</span>
+          </div>
+        </div>
+
+        <p class="q-mono q-dim" style="margin-top: var(--q-s-6);">on lavender</p>
+        <div class="q-card q-card--lavender" style="padding: var(--q-s-5); margin-top: var(--q-s-3);">
+          <div class="q-avatar-stack">
+            <span class="q-avatar q-avatar--on-lavender q-avatar--lg" style="background:#5a4b8a;">А</span>
+            <span class="q-avatar q-avatar--on-lavender q-avatar--lg" style="background:#7a5c3d;">М</span>
+            <span class="q-avatar q-avatar--on-lavender q-avatar--lg" style="background:#4b7a5c;">К</span>
+          </div>
+          <p class="q-small" style="color:var(--q-text-dark-mid); margin: var(--q-s-4) 0 0;">С тобой в потоке — 12 команд по 5–6 человек. Scrum, sprints, daily stand-ups.</p>
+        </div>
+      </div>
+
+      <div>
+        <p class="q-mono q-dim">mascot — v0 flat placeholder</p>
+        <div class="q-card q-card--dark" style="margin-top: var(--q-s-3); display:flex; align-items:center; justify-content:center; padding: var(--q-s-7);">
+          <img src="assets/mascot/mascot-placeholder.svg" alt="Quillon mascot (placeholder)" width="200" height="200" style="filter: drop-shadow(0 20px 40px rgba(110,107,255,0.18));">
+        </div>
+        <p class="q-small q-dim" style="margin-top: var(--q-s-3);">v0 — plain flat vector. В финальной итерации будет 3D-render с матовым violet-корпусом и глянцевым глазом-экраном.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ SECTION 09 / BENTO ═══════════════════════ -->
+  <section id="bento">
+    <header class="q-section-head">
+      <div class="q-section-head__num"><em>09</em> / bento</div>
+      <div>
+        <h2 class="q-section-head__title">Асимметрия как правило, не исключение</h2>
+        <p class="q-section-head__sub">Bento Quillon — 12-колоночный grid с разноразмерными карточками и смешанными характерами (dark + lavender + violet + paper). Никогда не делай 3×3 равных ячеек.</p>
+      </div>
+    </header>
+
+    <p class="q-mono q-dim" style="margin-top: var(--q-s-6);">composition · 01 — «hero + side + stat row»</p>
+    <div class="q-bento" style="margin-top: var(--q-s-3);">
+      <article class="q-card q-card--dark q-card--lg q-b-8 q-r-2s" style="display:flex; flex-direction:column; justify-content:space-between;">
+        <div>
+          <p class="q-card__eyebrow">/ главный трек</p>
+          <h3 class="q-card__title" style="font-size: var(--q-t-display-l); line-height: 0.98;">
+            Python Backend<br>
+            <span style="color:var(--q-violet);">+ Machine Learning</span>
+          </h3>
+          <p class="q-card__text" style="margin-top: var(--q-s-4); max-width: 48ch;">FastAPI, SQLAlchemy, Docker, Scikit-learn, NLP. Стек, с которым на hh.ru нанимают Junior-разработчика — без «10 лет опыта в 22 года».</p>
+        </div>
+        <div class="q-card__foot">
+          <div class="q-row-sm">
+            <span class="q-chip q-chip--ink">720 часов</span>
+            <span class="q-chip q-chip--ink">12 месяцев</span>
+            <span class="q-chip q-chip--violet">Junior в 2 платежа</span>
+          </div>
+          <button class="q-btn-round q-btn-round--violet" aria-label="open"><svg width="16" height="16"><use href="#q-shape-arrow-ne"/></svg></button>
+        </div>
+        <svg class="q-card__deco q-card__deco--br deco-sparkle" width="240" height="240" style="opacity:0.06;"><use href="#q-shape-arc"/></svg>
+      </article>
+
+      <article class="q-card q-card--lavender q-b-4">
+        <p class="q-card__eyebrow">/ опционально</p>
+        <h3 class="q-card__title" style="font-size: 1.25rem;">Промпт-инженеринг + AI</h3>
+        <p class="q-card__text q-small">24 часа бонусом к любому треку. LLM, RAG, AI-агенты.</p>
+        <svg class="q-card__deco q-card__deco--br deco-sparkle-paper" width="100" height="100" style="opacity:0.3;"><use href="#q-shape-blob"/></svg>
+      </article>
+
+      <article class="q-card q-card--violet q-b-4">
+        <p class="q-card__eyebrow" style="color:var(--q-ink); opacity:0.6;">/ cta</p>
+        <h3 class="q-card__title">Есть вопрос?</h3>
+        <p class="q-card__text q-small" style="color:var(--q-ink); opacity:0.75;">Куратор ответит за 15 минут в рабочее время.</p>
+        <div class="q-card__foot">
+          <span class="q-chip q-chip--ink">online · 15 min</span>
+          <button class="q-btn-round q-btn-round--dark" aria-label="ask"><svg width="16" height="16"><use href="#q-shape-arrow-ne"/></svg></button>
+        </div>
+      </article>
+
+      <article class="q-card q-card--dark q-b-4" style="display:flex; flex-direction:column; justify-content:space-between;">
+        <p class="q-card__eyebrow">/ стат</p>
+        <div class="q-stat">
+          <div class="q-stat__num"><span style="color:var(--q-violet);">3</span>&nbsp;трека</div>
+          <div class="q-stat__label">Backend · Flutter · QA</div>
+        </div>
+      </article>
+    </div>
+
+    <p class="q-mono q-dim" style="margin-top: var(--q-s-8);">composition · 02 — «portrait-splash + dashboard row»</p>
+    <div class="q-bento" style="margin-top: var(--q-s-3);">
+      <article class="q-card q-card--lavender q-b-5 q-r-2s q-card--lg" style="display:flex; flex-direction:column; justify-content:space-between;">
+        <div>
+          <p class="q-card__eyebrow">/ трансформация</p>
+          <h2 class="q-card__title" style="font-size: clamp(2rem, 4vw, 3.5rem); font-weight:700; line-height: 0.95;">
+            Из менеджера<br>
+            в Python-dev<br>
+            <span class="q-quote-mark" style="color:var(--q-violet);">«&nbsp;»</span>
+          </h2>
+          <p class="q-small" style="color:var(--q-text-dark-mid); max-width:30ch; margin-top: var(--q-s-4);">История Артёма, 28 лет. Нашёл работу до защиты диплома.</p>
+        </div>
+        <div class="q-row">
+          <span class="q-avatar q-avatar--on-lavender q-avatar--lg" style="background:#5a4b8a;">А</span>
+          <span class="q-badge-slash">case-01</span>
+        </div>
+        <svg class="q-card__deco q-card__deco--br deco-sparkle-paper" width="180" height="180" style="opacity:0.35;"><use href="#q-shape-leaf"/></svg>
+        <svg class="q-card__deco q-card__deco--tr deco-sparkle-paper" width="40" height="40" style="opacity:0.5; color:var(--q-violet);"><use href="#q-shape-sparkle"/></svg>
+      </article>
+
+      <article class="q-card q-card--dark q-b-4">
+        <p class="q-card__eyebrow">/ launchpad / этап 01</p>
+        <h3 class="q-card__title" style="font-size: 1.375rem;">Soft Skills с HR</h3>
+        <p class="q-card__text q-small">Подготовка резюме, линкдина, поведенческое интервью.</p>
+      </article>
+
+      <article class="q-card q-card--paper q-b-3">
+        <p class="q-card__eyebrow">/ launchpad / этап 02</p>
+        <h3 class="q-card__title" style="font-size: 1.25rem;">Мок-интервью</h3>
+        <p class="q-small" style="color:var(--q-text-dark-mid);">С действующим тимлидом в твоём стеке.</p>
+      </article>
+
+      <article class="q-card q-card--violet q-b-7">
+        <p class="q-card__eyebrow" style="color:var(--q-ink); opacity:0.6;">/ agency</p>
+        <h3 class="q-card__title">С 21 недели — реальные заказы с оплатой</h3>
+        <p class="q-card__text q-small" style="color:var(--q-ink); opacity:0.78; max-width: 46ch;">Python-боты 5–30k, Flutter-приложения 20–80k, QA 3–15k, командные сайты 30–100k. Первый заработок — на 6-м месяце обучения.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ SECTION 10 / SHAPES ═══════════════════════ -->
+  <section id="shapes">
+    <header class="q-section-head">
+      <div class="q-section-head__num"><em>10</em> / organic shapes</div>
+      <div>
+        <h2 class="q-section-head__title">10 форм, нарисованных с нуля</h2>
+        <p class="q-section-head__sub">Inline-SVG, <code class="q-mono" style="color:var(--q-text-hi); text-transform:none; background:var(--q-ink-2); padding:2px 6px; border-radius:4px;">currentColor</code>-совместимые. Используй 1–2 формы на карточку, не больше. Формы — декор в углу, никогда не «заливка за текстом».</p>
+      </div>
+    </header>
+
+    <div class="sg-shapes-grid" style="margin-top: var(--q-s-6);">
+      <div class="sg-shapes-grid__cell"><svg><use href="#q-shape-blob"/></svg><span>blob</span></div>
+      <div class="sg-shapes-grid__cell"><svg><use href="#q-shape-sparkle"/></svg><span>sparkle</span></div>
+      <div class="sg-shapes-grid__cell"><svg><use href="#q-shape-squiggle"/></svg><span>squiggle</span></div>
+      <div class="sg-shapes-grid__cell"><svg><use href="#q-shape-moon"/></svg><span>moon</span></div>
+      <div class="sg-shapes-grid__cell"><svg><use href="#q-shape-pill"/></svg><span>pill</span></div>
+      <div class="sg-shapes-grid__cell"><svg><use href="#q-shape-plus"/></svg><span>plus</span></div>
+      <div class="sg-shapes-grid__cell"><svg><use href="#q-shape-arc"/></svg><span>arc</span></div>
+      <div class="sg-shapes-grid__cell"><svg><use href="#q-shape-leaf"/></svg><span>leaf</span></div>
+      <div class="sg-shapes-grid__cell"><svg><use href="#q-shape-bracket"/></svg><span>bracket</span></div>
+      <div class="sg-shapes-grid__cell"><svg><use href="#q-shape-arrow-ne"/></svg><span>arrow-ne</span></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ SECTION 11 / HERO SAMPLE ═══════════════════════ -->
+  <section id="hero">
+    <header class="q-section-head">
+      <div class="q-section-head__num"><em>11</em> / hero sample</div>
+      <div>
+        <h2 class="q-section-head__title">Не по центру. Не screenshot-под-заголовком.</h2>
+        <p class="q-section-head__sub">Bento вместо центрированного hero. Заголовок живёт в большой dark-карточке слева, справа — lavender-splash с ключевой цифрой; снизу — violet-«задай вопрос» и список треков. Это главная визитка Quillon.</p>
+      </div>
+    </header>
+
+    <div class="sg-hero">
+      <div class="sg-hero__title-card">
+        <p class="q-mono q-dim" style="margin:0 0 var(--q-s-5);">/ quillon — не школа, а IT-компания</p>
+        <h1>
+          12 месяцев.<br>
+          3 трека.<br>
+          <span class="accent">Junior</span> <em>с портфолио.</em>
+          <span class="q-quote-mark">«&nbsp;»</span>
+        </h1>
+        <p class="q-body-l q-muted" style="margin: var(--q-s-6) 0 0; max-width: 54ch;">
+          Ты учишься на реальных продуктах Quillon, собираешь кросс-функциональную
+          команду с 21 недели и получаешь первый заработок на 6-м месяце. Дипломный проект
+          может стать стартапом с грантом 500 000 ₽.
+        </p>
+        <div class="q-row" style="margin-top: var(--q-s-6);">
+          <button class="q-btn q-btn--primary q-btn--pill">Получить программу<svg width="14" height="14" style="margin-left:4px;"><use href="#q-shape-arrow-ne"/></svg></button>
+          <button class="q-btn q-btn--ghost q-btn--pill">Как устроено обучение</button>
+        </div>
+        <svg class="q-card__deco q-card__deco--br deco-sparkle" width="260" height="260" style="opacity:0.07;"><use href="#q-shape-arc"/></svg>
+      </div>
+
+      <aside class="sg-hero__meta-card">
+        <div>
+          <p class="q-mono q-dim" style="color:var(--q-text-dark-mid); margin:0;">/ cost · 2 платежа</p>
+          <div class="q-stat" style="margin-top: var(--q-s-4);">
+            <div class="q-stat__num" style="font-size: clamp(3rem, 6vw, 5rem);">99<span style="color:var(--q-violet);">k</span></div>
+            <div class="q-stat__label" style="color:var(--q-text-dark-mid);">₽ × 2 платежа</div>
+          </div>
+          <p class="q-small" style="color:var(--q-text-dark-mid); margin-top: var(--q-s-4); max-width: 24ch;">Второй платёж — после 6-го месяца, когда у тебя уже может быть первый заработок.</p>
+        </div>
+        <div class="q-row">
+          <span class="q-chip q-chip--paper">рассрочка 0%</span>
+          <svg width="48" height="48" style="color:var(--q-violet);"><use href="#q-shape-sparkle"/></svg>
+        </div>
+      </aside>
+
+      <aside class="sg-hero__side">
+        <div>
+          <p class="q-mono q-dim" style="color:var(--q-ink); opacity:0.6; margin:0;">/ ask</p>
+          <h3 class="q-card__title" style="font-size: 1.75rem; margin-top: var(--q-s-3);">Есть вопрос о треке или оплате?</h3>
+        </div>
+        <div class="q-row" style="justify-content:space-between;">
+          <div class="q-avatar-stack">
+            <span class="q-avatar q-avatar--on-violet" style="background:#0E0E12; color:var(--q-text-hi);">К</span>
+            <span class="q-avatar q-avatar--on-violet" style="background:#DCD7CB; color:var(--q-ink);">А</span>
+          </div>
+          <button class="q-btn-round q-btn-round--dark" aria-label="ask"><svg width="16" height="16"><use href="#q-shape-arrow-ne"/></svg></button>
+        </div>
+      </aside>
+
+      <div class="sg-hero__tracks">
+        <p class="q-mono q-dim" style="margin:0 0 var(--q-s-3);">/ 3 трека</p>
+        <a class="sg-track-row" href="#">
+          <span class="sg-track-row__num">01</span>
+          <span class="sg-track-row__name">Python Backend + ML</span>
+          <span class="sg-track-row__tags">
+            <span class="q-chip q-chip--ink">FastAPI</span>
+            <span class="q-chip q-chip--ink">Scikit-learn</span>
+          </span>
+          <button class="q-btn-round q-btn-round--dark" aria-label="open"><svg width="14" height="14"><use href="#q-shape-arrow-ne"/></svg></button>
+        </a>
+        <a class="sg-track-row" href="#">
+          <span class="sg-track-row__num">02</span>
+          <span class="sg-track-row__name">Flutter</span>
+          <span class="sg-track-row__tags">
+            <span class="q-chip q-chip--ink">Dart</span>
+            <span class="q-chip q-chip--ink">Riverpod</span>
+            <span class="q-chip q-chip--ink">Firebase</span>
+          </span>
+          <button class="q-btn-round q-btn-round--dark" aria-label="open"><svg width="14" height="14"><use href="#q-shape-arrow-ne"/></svg></button>
+        </a>
+        <a class="sg-track-row" href="#">
+          <span class="sg-track-row__num">03</span>
+          <span class="sg-track-row__name">QA Automation</span>
+          <span class="sg-track-row__tags">
+            <span class="q-chip q-chip--ink">Selenium</span>
+            <span class="q-chip q-chip--ink">Pytest</span>
+            <span class="q-chip q-chip--ink">Appium</span>
+          </span>
+          <button class="q-btn-round q-btn-round--dark" aria-label="open"><svg width="14" height="14"><use href="#q-shape-arrow-ne"/></svg></button>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ SECTION 12 / TRACK CARD SAMPLE ═══════════════════════ -->
+  <section id="track">
+    <header class="q-section-head">
+      <div class="q-section-head__num"><em>12</em> / track card</div>
+      <div>
+        <h2 class="q-section-head__title">Python Backend + ML — как выглядит детальная карточка трека</h2>
+        <p class="q-section-head__sub">Dark-surface с paper-aside для ключевой цены. Статы внизу — не glow-«карточки», а простая сетка с верхней hairline.</p>
+      </div>
+    </header>
+
+    <article class="sg-track-card" style="margin-top: var(--q-s-6);">
+      <div>
+        <p class="q-mono q-dim" style="margin:0 0 var(--q-s-4);">/ track · 01</p>
+        <h2 class="q-h1" style="font-size: clamp(2rem, 4vw, 3.25rem); line-height: 1; font-weight: 700;">
+          Python <span style="color:var(--q-violet);">Backend</span><br>
+          + Machine Learning
+        </h2>
+        <p class="q-body-l q-muted" style="max-width: 50ch; margin-top: var(--q-s-5);">
+          Один маршрут до Junior — от синтаксиса Python до production-ready сервиса
+          с FastAPI, PostgreSQL и ML-моделью внутри. Заканчиваешь не портфолио из
+          скринов, а реальным кодом, который крутится на Quillon-серверах.
+        </p>
+        <div class="q-row" style="margin-top: var(--q-s-5);">
+          <span class="q-chip q-chip--violet">FastAPI</span>
+          <span class="q-chip q-chip--stroke-dark">SQLAlchemy</span>
+          <span class="q-chip q-chip--stroke-dark">Docker</span>
+          <span class="q-chip q-chip--stroke-dark">Scikit-learn</span>
+          <span class="q-chip q-chip--stroke-dark">NLP</span>
+        </div>
+        <div class="q-row" style="margin-top: var(--q-s-6);">
+          <button class="q-btn q-btn--primary q-btn--pill">Записаться на трек</button>
+          <a class="q-link q-small" href="#">Скачать программу PDF</a>
+        </div>
+
+        <div class="sg-track-card__stats">
+          <div class="q-stat">
+            <div class="q-stat__num" style="font-size: 2.25rem;">720<span style="color:var(--q-violet); font-size:1.5rem;">ч</span></div>
+            <div class="q-stat__label">объём</div>
+          </div>
+          <div class="q-stat">
+            <div class="q-stat__num" style="font-size: 2.25rem;">12<span style="color:var(--q-violet); font-size:1.5rem;">мес</span></div>
+            <div class="q-stat__label">длительность</div>
+          </div>
+          <div class="q-stat">
+            <div class="q-stat__num" style="font-size: 2.25rem;">21<span style="color:var(--q-violet); font-size:1.5rem;">нед</span></div>
+            <div class="q-stat__label">команды стартуют</div>
+          </div>
+          <div class="q-stat">
+            <div class="q-stat__num" style="font-size: 2.25rem;">6<span style="color:var(--q-violet); font-size:1.5rem;">мес</span></div>
+            <div class="q-stat__label">первый заработок</div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="sg-track-card__aside">
+        <div>
+          <p class="q-mono q-dim" style="color:var(--q-text-dark-mid); margin:0;">/ цена</p>
+          <div class="q-stat" style="margin-top: var(--q-s-4);">
+            <div class="q-stat__num" style="font-size: clamp(2.75rem, 5vw, 4.25rem);">2 × 99k<span style="color:var(--q-violet);">.</span></div>
+            <div class="q-stat__label" style="color:var(--q-text-dark-mid);">₽ · два платежа</div>
+          </div>
+          <p class="q-small" style="color:var(--q-text-dark-mid); margin-top: var(--q-s-3); max-width: 28ch;">Итого 198 000 ₽ за 12 месяцев с реальной стажировкой в IT-компании.</p>
+        </div>
+        <div>
+          <p class="q-mono q-dim" style="color:var(--q-text-dark-mid); margin:0 0 var(--q-s-3);">/ в комплекте</p>
+          <div class="sg-track-card__tools">
+            <span class="q-chip q-chip--paper">Промпт + AI · 24ч</span>
+            <span class="q-chip q-chip--paper">Dev English · 20ч</span>
+            <span class="q-chip q-chip--paper">LaunchPad</span>
+          </div>
+        </div>
+        <svg class="q-card__deco q-card__deco--br deco-sparkle-paper" width="160" height="160" style="opacity:0.35;"><use href="#q-shape-blob"/></svg>
+      </aside>
+    </article>
+  </section>
+
+  <!-- ═══════════════════════ SECTION 13 / DO DON'T ═══════════════════════ -->
+  <section id="principles">
+    <header class="q-section-head">
+      <div class="q-section-head__num"><em>13</em> / do &amp; don't</div>
+      <div>
+        <h2 class="q-section-head__title">Что отличает Quillon v3 от AI-like сайтов</h2>
+        <p class="q-section-head__sub">Ниже — конкретные паттерны, которые мы отрицаем, и то, чем их заменяем.</p>
+      </div>
+    </header>
+
+    <div class="q-stack-lg" style="margin-top: var(--q-s-6);">
+
+      <div class="q-dodont">
+        <div class="q-dodont__cell q-dodont__cell--dont" data-label="DON'T">
+          <p class="q-mono q-dim" style="margin: 0 0 var(--q-s-4);">gradient-text на заголовках</p>
+          <div class="q-antipattern-gradient-h1">Начни свой путь в IT</div>
+          <p class="q-small q-muted" style="margin-top: var(--q-s-4);">Синий-в-белый gradient-fill на h1 — главный AI-паттерн 2023–24. Смотрится шаблонно, «хоумпейдж любого SaaS».</p>
+        </div>
+        <div class="q-dodont__cell q-dodont__cell--do" data-label="DO">
+          <p class="q-mono q-dim" style="margin: 0 0 var(--q-s-4);">монохром + один акцентный кусок</p>
+          <h3 class="q-h2" style="font-weight:700;">Начни путь в IT. <span style="color:var(--q-violet);">В реальной компании.</span></h3>
+          <p class="q-small q-muted" style="margin-top: var(--q-s-4);">Акцент — на смысловом слове, плоским violet. Иерархия читается, личность сохраняется.</p>
+        </div>
+      </div>
+
+      <div class="q-dodont">
+        <div class="q-dodont__cell q-dodont__cell--dont" data-label="DON'T">
+          <p class="q-mono q-dim" style="margin: 0 0 var(--q-s-4);">glow / blur-orbs за заголовком</p>
+          <div class="q-antipattern-glow"><span style="font-family:var(--q-font-display); font-weight:600; font-size:1.5rem;">Твой путь в IT</span></div>
+          <p class="q-small q-muted" style="margin-top: var(--q-s-4);">Радиальные «пятна свечения» под текстом и на h1 — AI-like fingerprint. Не добавляют смысла.</p>
+        </div>
+        <div class="q-dodont__cell q-dodont__cell--do" data-label="DO">
+          <p class="q-mono q-dim" style="margin: 0 0 var(--q-s-4);">organic-shape в углу</p>
+          <div style="position:relative; padding: 40px; display:inline-block;">
+            <span style="font-family:var(--q-font-display); font-weight:600; font-size:1.5rem;">Твой путь в IT</span>
+            <svg width="36" height="36" style="position:absolute; top:0; right:-8px; color:var(--q-violet);"><use href="#q-shape-sparkle"/></svg>
+          </div>
+          <p class="q-small q-muted" style="margin-top: var(--q-s-4);">Нарисованная форма рядом — даёт характер без «свечения». Читается как иллюстрация, а не эффект.</p>
+        </div>
+      </div>
+
+      <div class="q-dodont">
+        <div class="q-dodont__cell q-dodont__cell--dont" data-label="DON'T">
+          <p class="q-mono q-dim" style="margin: 0 0 var(--q-s-4);">glassmorphism на всех карточках</p>
+          <div style="padding: 20px; border-radius: 16px; background: rgba(110,107,255,0.12); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.08);">
+            <h4 style="margin:0; font-family:var(--q-font-display); font-weight:600;">Карточка в glass-стиле</h4>
+            <p class="q-small q-dim" style="margin: 8px 0 0;">Тонет в фоне, не держит иерархию, повторяет 2021-2023.</p>
+          </div>
+        </div>
+        <div class="q-dodont__cell q-dodont__cell--do" data-label="DO">
+          <p class="q-mono q-dim" style="margin: 0 0 var(--q-s-4);">решительный контраст к фону</p>
+          <div class="q-card q-card--lavender" style="padding: 20px;">
+            <h4 class="q-h3" style="font-weight:600; color:var(--q-ink);">Paper-карточка с полным fill</h4>
+            <p class="q-small" style="margin: 8px 0 0; color:var(--q-text-dark-mid);">Отделяется от фона сама, без blur. У SmartClass все карточки имеют характер, не полупрозрачность.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-dodont">
+        <div class="q-dodont__cell q-dodont__cell--dont" data-label="DON'T">
+          <p class="q-mono q-dim" style="margin: 0 0 var(--q-s-4);">gradient на primary-кнопке</p>
+          <button style="padding:14px 22px; border:0; border-radius:12px; background: linear-gradient(135deg, #1F4ED8, #3B6FFF); color:white; font-family: var(--q-font-body); font-weight:500; font-size:0.95rem; cursor:pointer;">Оставить заявку</button>
+          <p class="q-small q-muted" style="margin-top: var(--q-s-4);">Blue-to-light-blue gradient — ещё один AI-шаблон. Плоский violet делает Quillon узнаваемым за 1 скролл.</p>
+        </div>
+        <div class="q-dodont__cell q-dodont__cell--do" data-label="DO">
+          <p class="q-mono q-dim" style="margin: 0 0 var(--q-s-4);">flat violet + pill</p>
+          <button class="q-btn q-btn--primary q-btn--pill">Оставить заявку<svg width="14" height="14" style="margin-left:4px;"><use href="#q-shape-arrow-ne"/></svg></button>
+          <p class="q-small q-muted" style="margin-top: var(--q-s-4);">Один цвет, один радиус, один shift при hover. Работает как метка бренда, а не «эффект».</p>
+        </div>
+      </div>
+
+      <div class="q-dodont">
+        <div class="q-dodont__cell q-dodont__cell--dont" data-label="DON'T">
+          <p class="q-mono q-dim" style="margin: 0 0 var(--q-s-4);">emoji как основной визуальный язык</p>
+          <div style="display:flex; gap:8px; font-size: 1.8rem;">🚀 💻 🎯 ⭐ 🔥</div>
+          <p class="q-small q-muted" style="margin-top: var(--q-s-4);">iMessage-стикеры на лендинге платной школы — несерьёзно для аудитории 22–35.</p>
+        </div>
+        <div class="q-dodont__cell q-dodont__cell--do" data-label="DO">
+          <p class="q-mono q-dim" style="margin: 0 0 var(--q-s-4);">custom SVG-формы</p>
+          <div style="display:flex; gap:12px; color:var(--q-violet); align-items:center;">
+            <svg width="28" height="28"><use href="#q-shape-sparkle"/></svg>
+            <svg width="28" height="28"><use href="#q-shape-plus"/></svg>
+            <svg width="28" height="28"><use href="#q-shape-moon"/></svg>
+            <svg width="28" height="28"><use href="#q-shape-leaf"/></svg>
+            <svg width="28" height="28"><use href="#q-shape-blob"/></svg>
+          </div>
+          <p class="q-small q-muted" style="margin-top: var(--q-s-4);">10 форм из своей библиотеки с currentColor. Узнаваемость без детсада.</p>
+        </div>
+      </div>
+
+      <div class="q-dodont">
+        <div class="q-dodont__cell q-dodont__cell--dont" data-label="DON'T">
+          <p class="q-mono q-dim" style="margin: 0 0 var(--q-s-4);">центрированный hero + 2 CTA + screenshot</p>
+          <div style="text-align:center; padding: 30px 20px; background:var(--q-ink-3); border-radius: 16px;">
+            <h3 style="margin:0; font-family:var(--q-font-display); font-weight:700;">Большой заголовок</h3>
+            <p class="q-small q-muted" style="margin: 8px 0 16px;">Подзаголовок в одну строку</p>
+            <div class="q-row" style="justify-content:center;">
+              <span class="q-chip q-chip--violet">Primary</span>
+              <span class="q-chip q-chip--stroke-dark">Secondary</span>
+            </div>
+          </div>
+          <p class="q-small q-muted" style="margin-top: var(--q-s-4);">Framer-default шаблон. Выглядит как «любой стартап 2024».</p>
+        </div>
+        <div class="q-dodont__cell q-dodont__cell--do" data-label="DO">
+          <p class="q-mono q-dim" style="margin: 0 0 var(--q-s-4);">bento-hero с asymmetry</p>
+          <div style="display:grid; grid-template-columns: 2fr 1fr; gap: 8px;">
+            <div style="background:var(--q-ink-3); border-radius:12px; padding: 16px;">
+              <div style="font-family:var(--q-font-display); font-weight:700; font-size: 1.25rem; line-height:1;">Junior <span style="color:var(--q-violet);">с портфолио</span></div>
+            </div>
+            <div style="background:var(--q-lavender); border-radius:12px; padding: 16px; color: var(--q-ink);">
+              <div style="font-family:var(--q-font-display); font-weight:700; font-size: 1.25rem;">99<span style="color:var(--q-violet);">k</span> × 2</div>
+            </div>
+            <div style="background:var(--q-violet); border-radius:12px; padding: 16px; color: var(--q-ink); grid-column: span 2; font-family: var(--q-font-mono); font-size: 0.75rem;">/ 12 месяцев · 3 трека · реальная стажировка</div>
+          </div>
+          <p class="q-small q-muted" style="margin-top: var(--q-s-4);">Разные surfaces, asymmetric grid — хлеб редакторского дизайна.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="sg-footer">
+    <div>/ quillon v3 — styleguide — rev.03</div>
+    <div>/ designed in bento · violet #6E6BFF · unbounded × dm sans</div>
+    <div>/ localhost:8000/v3/styleguide.html</div>
+  </footer>
+
+</main>
+
+</body>
+</html>

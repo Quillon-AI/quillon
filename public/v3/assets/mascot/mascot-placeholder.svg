@@ -1,0 +1,28 @@
+<!-- Quillon v3 — mascot placeholder.
+  Flat vector "serious-friendly" companion: абстрактный персонаж-конструкт,
+  напоминает шахматную ладью + глаз — «наставник/советник».
+  Это временный флэт. Финальный 3D-рендер придёт от иллюстратора.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- base plate -->
+  <ellipse cx="100" cy="180" rx="58" ry="8" fill="#0E0E12" opacity="0.25"/>
+
+  <!-- body -->
+  <path d="M60 176 H140 L132 100 Q132 80 120 72 L120 50 H132 V30 H116 V42 H84 V30 H68 V50 H80 V72 Q68 80 68 100 Z"
+        fill="#6E6BFF"/>
+
+  <!-- inner panel -->
+  <rect x="82" y="105" width="36" height="48" rx="10" fill="#0E0E12"/>
+
+  <!-- single eye / screen dot -->
+  <circle cx="100" cy="128" r="8" fill="#F4F1EA"/>
+  <circle cx="103" cy="125" r="2.5" fill="#0E0E12"/>
+
+  <!-- antenna dot -->
+  <circle cx="100" cy="22" r="6" fill="#C9C6FF"/>
+  <line x1="100" y1="28" x2="100" y2="32" stroke="#C9C6FF" stroke-width="2"/>
+
+  <!-- small cheek marker -->
+  <rect x="72" y="142" width="6" height="10" rx="2" fill="#C9C6FF"/>
+  <rect x="122" y="142" width="6" height="10" rx="2" fill="#C9C6FF"/>
+</svg>

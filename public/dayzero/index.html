@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="ru" data-theme="dark">
+<head>
+<script>
+  (function(){
+    try {
+      var t = localStorage.getItem('qn-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    } catch(e){}
+  })();
+</script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Quillon — Day Zero · Night Studio</title>
+<meta name="description" content="Design system v3.0 — night studio, mint accent, editorial rail-grid" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="styles.css?v=20260421u02" />
+</head>
+<body>
+
+<!-- ==================== NAV ==================== -->
+<nav class="nav" aria-label="primary">
+  <a href="#" class="nav-brand">
+    <span class="nav-brand-mark" aria-hidden="true"></span>
+    Quillon
+  </a>
+  <ul class="nav-links">
+    <li><a href="#hero" class="is-active">Home</a></li>
+    <li><a href="#system">System</a></li>
+    <li><a href="#principles">Principles</a></li>
+    <li><a href="#manual">Manual</a></li>
+    <li><a href="#tracks">Tracks</a></li>
+  </ul>
+  <a href="#cta" class="btn nav-cta">
+    Get started
+    <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+  <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="(function(){var h=document.documentElement;var t=h.getAttribute('data-theme')==='light'?'dark':'light';h.setAttribute('data-theme',t);try{localStorage.setItem('qn-theme',t);}catch(e){}})();">
+    <svg class="ic-moon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M13 9.5A5.5 5.5 0 0 1 6.5 3a5.5 5.5 0 1 0 6.5 6.5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+    </svg>
+    <svg class="ic-sun" width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.4"/>
+      <path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+    </svg>
+  </button>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero" id="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+
+      <div class="hero-copy">
+        <div class="hero-eyebrow" data-in="1">
+          <span class="dot"></span>
+          <span class="eyebrow">Cohort 07 · starts 05 May · 14 seats left</span>
+        </div>
+
+        <h1 class="h-display" data-in="2">
+          Где <span class="accent-word">точность</span> встречает<br />
+          <span class="mint-word">инженерную глубину.</span>
+        </h1>
+
+        <p class="hero-lede" data-in="3">
+          Quillon — это не курс про «войти в IT». Это студия, где ты собираешь продакшен‑grade код руками, с ревью от инженеров из Яндекса, Сбера и &nbsp;Avito — шаг за шагом, без пропусков.
+        </p>
+
+        <div class="hero-actions" data-in="4">
+          <a href="#" class="btn">
+            Начать бесплатно
+            <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a href="#" class="btn btn--icon" aria-label="Смотреть демо">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M5 3.5v9l7-4.5-7-4.5Z" fill="currentColor"/>
+            </svg>
+          </a>
+          <span class="eyebrow" style="margin-left:8px">14‑дневный пробный · без карты</span>
+        </div>
+
+        <div class="hero-meta" data-in="5">
+          <div class="hero-meta-item">
+            <b>12 мес</b>
+            <span>Python + ML</span>
+          </div>
+          <div class="hero-meta-item">
+            <b>94%</b>
+            <span>завершают трек</span>
+          </div>
+          <div class="hero-meta-item">
+            <b>48 ч</b>
+            <span>от брифа к AI‑агенту</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual" data-in="3">
+        <div class="hero-visual-label">
+          <span class="mini-ic">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M5 3 2 7l3 4m4-8 3 4-3 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          Pulse · урок 042 · live
+        </div>
+
+        <div class="code-card">
+          <div class="code-head">
+            <div class="dots"><i></i><i></i><i></i></div>
+            <span class="path">~/quillon/pulse/lesson_042/agent.py</span>
+          </div>
+          <pre class="code-body"><span class="ln">01</span><span class="cm"># brief → draft agent за 48 часов</span>
+<span class="ln">02</span><span class="kw">from</span> quillon <span class="kw">import</span> Agent, Review
+<span class="ln">03</span>
+<span class="ln">04</span><span class="kw">class</span> <span class="fn">BriefAgent</span>(Agent):
+<span class="ln">05</span>    <span class="prop">model</span> = <span class="str">"claude-opus-4-7"</span>
+<span class="ln">06</span>    <span class="prop">ship_by</span> = <span class="num">48</span>  <span class="cm"># hours</span>
+<span class="ln">07</span>
+<span class="ln">08</span>    <span class="kw">def</span> <span class="fn">run</span>(self, brief):
+<span class="ln">09</span>        draft = self.<span class="fn">compose</span>(brief)
+<span class="ln">10</span>        <span class="kw">return</span> Review.<span class="fn">human</span>(draft)</pre>
+          <div class="loader" aria-label="processing">
+            <div class="loader-spin">
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual-label" style="margin-top:24px">
+          <span class="mini-ic">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M2 7h4l2-4 2 8 2-4h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          review queue · 3 шт / 26 мин
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==================== MARQUEE ==================== -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-item">Python <i class="sep"></i> Production code <i class="sep"></i> AI agents <i class="sep"></i> Peer review <i class="sep"></i> Pulse projects <i class="sep"></i> Career track</span>
+    <span class="marquee-item">Python <i class="sep"></i> Production code <i class="sep"></i> AI agents <i class="sep"></i> Peer review <i class="sep"></i> Pulse projects <i class="sep"></i> Career track</span>
+  </div>
+</div>
+
+<!-- ==================== SYSTEM · colors + type ==================== -->
+<section class="rail-section" id="system">
+  <div class="rail-head">
+    <span class="rail-idx">[01] / 05</span>
+    <span class="rail-label">Design<br>system</span>
+  </div>
+  <div class="rail-body wrap-inner">
+    <h2 class="section-title">Night Studio — <span style="color:var(--text-muted)">палитра и шрифт.</span></h2>
+    <p class="section-lede">Глубокий navy как база, мят как единственный сигнал, и тщательно отмеренные hairline‑линии вместо карточек. Ничего случайного.</p>
+
+    <div class="tokens" style="margin-bottom:64px">
+      <div class="token">
+        <div class="token-swatch" style="background:var(--ink-05)"></div>
+        <div class="token-meta"><b>ink.05</b><span>#06090F · base</span></div>
+      </div>
+      <div class="token">
+        <div class="token-swatch" style="background:var(--ink-15)"></div>
+        <div class="token-meta"><b>ink.15</b><span>#0E1420 · card</span></div>
+      </div>
+      <div class="token">
+        <div class="token-swatch" style="background:var(--ink-30)"></div>
+        <div class="token-meta"><b>ink.30</b><span>#1B2639 · raised</span></div>
+      </div>
+      <div class="token">
+        <div class="token-swatch" style="background:var(--mint)"></div>
+        <div class="token-meta"><b>mint</b><span>#5EF2A1 · accent</span></div>
+      </div>
+      <div class="token">
+        <div class="token-swatch" style="background:var(--text)"></div>
+        <div class="token-meta"><b>text</b><span>#E8EDF5</span></div>
+      </div>
+      <div class="token">
+        <div class="token-swatch" style="background:var(--text-muted)"></div>
+        <div class="token-meta"><b>muted</b><span>#6B7687</span></div>
+      </div>
+    </div>
+
+    <div class="specimen">
+      <div class="specimen-row">
+        <span class="meta">display · 500</span>
+        <div style="font-family:var(--ff-display);font-size:clamp(2.5rem,5vw,4rem);letter-spacing:-0.035em;line-height:0.98;">
+          Code you ship.
+        </div>
+      </div>
+      <div class="specimen-row">
+        <span class="meta">h1 · 500</span>
+        <div style="font-family:var(--ff-display);font-size:2.4rem;letter-spacing:-0.025em;">
+          Host Grotesk — геометрика с характером
+        </div>
+      </div>
+      <div class="specimen-row">
+        <span class="meta">body · 400</span>
+        <p style="color:var(--text);font-size:1rem;max-width:none;">
+          Каждое занятие — это review на реальном репозитории. Не «задачка на leetcode», а pull request с комментариями инженера, который три года чинил payments на проде.
+        </p>
+      </div>
+      <div class="specimen-row">
+        <span class="meta">mono · 500</span>
+        <div class="mono" style="font-size:0.95rem;color:var(--mint);">
+          $ quillon init pulse/agent --template=reviewer --ship=48h
+        </div>
+      </div>
+    </div>
+
+    <div class="rev">
+      <b>rev · 2026-04-21</b> &nbsp; cognac <s>#C9844A</s> → cerulean <s>#2E86AB</s> → mint #5EF2A1 · «зелёный читается как signal, не как brand‑tint» · <s>Archivo</s> → Host Grotesk
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PRINCIPLES ==================== -->
+<section class="rail-section" id="principles">
+  <div class="rail-head">
+    <span class="rail-idx">[02] / 05</span>
+    <span class="rail-label">House<br>rules</span>
+  </div>
+  <div class="rail-body">
+    <h2 class="section-title">Шесть правил <span style="color:var(--text-muted)">дома.</span></h2>
+    <p class="section-lede">Не стиль-гайд — способ думать. Если на макете нарушено правило — макет неверный, а не правило.</p>
+
+    <div class="card-grid">
+      <article class="c-card">
+        <span class="c-num">01</span>
+        <div class="c-ic"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 4h14M2 9h14M2 14h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <h3>Rail-grid, не гриды</h3>
+        <p>120px рельс слева под мета — всегда. На нём висит нумерация, тег, время. Тело дышит справа.</p>
+      </article>
+
+      <article class="c-card">
+        <span class="c-num">02</span>
+        <div class="c-ic"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="5" stroke="currentColor" stroke-width="1.5"/><circle cx="9" cy="9" r="2" fill="currentColor"/></svg></div>
+        <h3>Один акцент — mint</h3>
+        <p>Никакого фиолета, cognac, ochre. Мят — это сигнал: CTA, live‑dot, active. Максимум два проявления на экран.</p>
+      </article>
+
+      <article class="c-card">
+        <span class="c-num">03</span>
+        <div class="c-ic"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 3h12v12H3z" stroke="currentColor" stroke-width="1.5"/><path d="M3 9h12" stroke="currentColor" stroke-width="1.5"/></svg></div>
+        <h3>Hairline вместо карточек</h3>
+        <p>Если можно обойтись линией — обходимся. Карточка оправдана, когда нужно отделить контекст, а не украсить.</p>
+      </article>
+
+      <article class="c-card">
+        <span class="c-num">04</span>
+        <div class="c-ic"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9h12m0 0-4-4m4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Hover — сдвиг смысла</h3>
+        <p>Не translateY, не sheen. Акцент‑рельс, цвет мяты, подвижка текста — читается как «я активен», а не «я украшаюсь».</p>
+      </article>
+
+      <article class="c-card">
+        <span class="c-num">05</span>
+        <div class="c-ic"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 14 8 6l3 4 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Mono‑метка — голос</h3>
+        <p>Технарь узнаёт своих по шрифту. 3–5 mono‑меток на секцию: время, номер, статус. Больше — визуальный шум.</p>
+      </article>
+
+      <article class="c-card">
+        <span class="c-num">06</span>
+        <div class="c-ic"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <h3>Ломай ритм раз в 5</h3>
+        <p>После пяти «правильных» секций — одна с диагональю, марки или цитата. Без ломки макет усыпляет.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ANTI-AI MANUAL ==================== -->
+<section class="rail-section" id="manual">
+  <div class="rail-head">
+    <span class="rail-idx">[03] / 05</span>
+    <span class="rail-label">Anti-AI<br>manual</span>
+  </div>
+  <div class="rail-body">
+    <h2 class="section-title">Паттерны, которые <span style="color:var(--text-muted)">убивают</span> <span style="color:var(--mint)">узнаваемость.</span></h2>
+    <p class="section-lede">Каждый пункт — конкретный AI‑шаблон, замеченный в Framer/Dribbble‑выдаче 2024–2026. Слева — чего не делаем. Справа — наша альтернатива.</p>
+
+    <div class="manual-head">
+      <div class="col-out">AI‑шаблон · избегаем</div>
+      <div class="col-in">Quillon‑паттерн · применяем</div>
+    </div>
+
+    <ul class="manual-list">
+      <li class="manual-row">
+        <div class="manual-cell">
+          <h4>Scarcity‑триггер в eyebrow</h4>
+          <p>«14 seats left», «Limited spots», «Join 2,847 builders». Мозг натренирован это игнорировать — и читать как маркетинговую ложь.</p>
+          <span class="ex">● Limited spots — 14 seats left</span>
+        </div>
+        <div class="manual-cell">
+          <h4>Операционный сигнал</h4>
+          <p>Реальное состояние системы: очередь ревью, ближайший спринт, статус cohort. Не продаёт — информирует. Это признак инженерного продукта.</p>
+          <span class="ex">● Review queue: 3 PR · avg 26 min</span>
+        </div>
+      </li>
+
+      <li class="manual-row">
+        <div class="manual-cell">
+          <h4>translateY(-8px) на hover</h4>
+          <p>«Карточка подпрыгивает». Всё подпрыгивает одинаково — ничто не отличимо. Плюс на ретине выглядит дёшево из‑за subpixel‑jitter.</p>
+          <span class="ex">transform: translateY(-8px)</span>
+        </div>
+        <div class="manual-cell">
+          <h4>Сдвиг границы + отступа</h4>
+          <p>Hover меняет border‑color на mint и увеличивает padding‑left. Карточка «прислушивается», не «прыгает». Читается как смысловое состояние.</p>
+          <span class="ex">border-color · padding-left</span>
+        </div>
+      </li>
+
+      <li class="manual-row">
+        <div class="manual-cell">
+          <h4>3‑icon feature trio</h4>
+          <p>Три карточки с lucide‑иконкой, заголовком, описанием. Каждый второй SaaS‑лендинг. Иконка не несёт информации — декоративна.</p>
+          <span class="ex">⚡ Fast · 🎯 Precise · 🔒 Secure</span>
+        </div>
+        <div class="manual-cell">
+          <h4>Rail‑list с числовой мета</h4>
+          <p>Editorial 2‑col список: номер и тег слева в mono, тело справа. Метрика (строки, PR, время) вместо иконки — несёт факт, не эмоцию.</p>
+          <span class="ex">01 · M03 → ~800 строк · 8 PR</span>
+        </div>
+      </li>
+
+      <li class="manual-row">
+        <div class="manual-cell">
+          <h4>Gradient text в заголовке</h4>
+          <p>`linear-gradient(90deg, #A855F7, #3B82F6)` на H1. Покупают из‑за Stripe‑эффекта — получают generic Framer‑template.</p>
+          <span class="ex">background-clip: text · gradient</span>
+        </div>
+        <div class="manual-cell">
+          <h4>Одно слово другим весом</h4>
+          <p>Ключевое слово в цвете акцента или muted‑серым. Фраза «дышит» смыслом, не эффектом. Дорого выглядит потому, что сдержанно.</p>
+          <span class="ex">Где <em style="color:var(--mint)">точность</em> встречает…</span>
+        </div>
+      </li>
+
+      <li class="manual-row">
+        <div class="manual-cell">
+          <h4>Sheen‑sweep по карточкам</h4>
+          <p>Диагональный градиентный «блик» пробегает при hover. Когда‑то был эффектным — сейчас сигнал «я из шаблона Spline».</p>
+          <span class="ex">::after translateX gradient</span>
+        </div>
+        <div class="manual-cell">
+          <h4>Статичный hairline</h4>
+          <p>Тонкая линия, которая меняет цвет или толщину. Не движется — реагирует. Лаконично и узнаваемо.</p>
+          <span class="ex">border: 1px solid · 1px → 3px</span>
+        </div>
+      </li>
+
+      <li class="manual-row">
+        <div class="manual-cell">
+          <h4>Emoji или lucide‑иконка в meta</h4>
+          <p>🕐 5 min · 🔥 Popular · 🎓 Advanced. Эмодзи в метаданных — это голос пресс‑релиза, не инженерного продукта.</p>
+          <span class="ex">🕐 5 min read · 🔥 Trending</span>
+        </div>
+        <div class="manual-cell">
+          <h4>Mono‑label как голос</h4>
+          <p>Маленький uppercase в JetBrains Mono с реальной величиной: время, номер, размер. 3–5 меток на секцию максимум.</p>
+          <span class="ex">REV 2026-04-21 · ALL SYSTEMS NOMINAL</span>
+        </div>
+      </li>
+    </ul>
+
+    <div class="rev">
+      <b>rev · 2026-04-21</b> &nbsp; Manual вырос из v2‑styleguide · в v3 стал полноценной секцией, а не сайдбаром · решение: <s>показывать только «как надо»</s> → показывать «как НЕ надо» рядом с «как надо» · контраст учит быстрее
+    </div>
+  </div>
+</section>
+
+<!-- ==================== TRACKS ==================== -->
+<section class="rail-section" id="tracks">
+  <div class="rail-head">
+    <span class="rail-idx">[04] / 05</span>
+    <span class="rail-label">What you<br>ship</span>
+  </div>
+  <div class="rail-body">
+    <h2 class="section-title">За 12 месяцев <span style="color:var(--text-muted)">ты соберёшь.</span></h2>
+    <p class="section-lede">Не учебные задачки, а живые артефакты, которые останутся у тебя в GitHub и на стенде у Quillon Agency.</p>
+
+    <ul class="rail-list">
+      <li class="rail-item">
+        <span class="r-idx">01 · M03</span>
+        <div class="r-body">
+          <h4>CLI‑инструмент с тестами и CI</h4>
+          <p>Python‑утилита, которую ты деплоишь на PyPI. С покрытием тестами, чёрным‑белым Github Actions и семантическим релизом.</p>
+        </div>
+        <span class="r-meta">~120 строк · 3 PR</span>
+      </li>
+      <li class="rail-item">
+        <span class="r-idx">02 · M05</span>
+        <div class="r-body">
+          <h4>Telegram‑бот с Postgres и очередью</h4>
+          <p>Собственный продукт: от async‑handler до alembic‑миграций и докер‑compose. Ревью от инженера из Avito.</p>
+        </div>
+        <span class="r-meta">~800 строк · 8 PR</span>
+      </li>
+      <li class="rail-item">
+        <span class="r-idx">03 · M08</span>
+        <div class="r-body">
+          <h4>ML‑пайплайн: классификатор отзывов</h4>
+          <p>Полный цикл — сбор данных, токенизация, обучение, inference‑API. С metric tracking через MLflow.</p>
+        </div>
+        <span class="r-meta">~1.2k строк · 12 PR</span>
+      </li>
+      <li class="rail-item">
+        <span class="r-idx">04 · M11</span>
+        <div class="r-body">
+          <h4>Pulse‑проект: AI‑агент за 48 часов</h4>
+          <p>Финал: берёшь бриф заказчика из Quillon Agency, собираешь продуктовый AI‑агент, деплоишь, сдаёшь.</p>
+        </div>
+        <span class="r-meta">48 ч · live demo</span>
+      </li>
+    </ul>
+
+    <div class="rev">
+      <b>rev · 2026-04-21</b> &nbsp; убрали 12-card grid с эмоджи → rail‑list · <s>translateY(-8px)</s> → border-shift + padding‑shift · «hover читается как «я смотрю», не как «я прыгаю»»
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CTA ==================== -->
+<section class="rail-section" id="cta">
+  <div class="rail-head">
+    <span class="rail-idx">[05] / 05</span>
+    <span class="rail-label">Start</span>
+  </div>
+  <div class="rail-body">
+    <h2 class="section-title" style="max-width:16ch">
+      14 дней · без карты · <span style="color:var(--mint)">первый PR — твой.</span>
+    </h2>
+    <p class="section-lede">Начни с первого модуля. Если не подойдёт — уходишь, ничего не теряешь. Если заходит — остаёшься на 12 месяцев.</p>
+
+    <div class="hero-actions">
+      <a href="#" class="btn">
+        Начать бесплатно
+        <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="#" class="btn btn--ghost">
+        Программа · 12 месяцев
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Quillon</div>
+        <p>Студия инженерной практики. Собираем Python‑разработчиков уровня middle через ревью, парные сессии и реальные PR.</p>
+      </div>
+      <div>
+        <h5>Программа</h5>
+        <ul>
+          <li><a href="#">Python + ML</a></li>
+          <li><a href="#">Career Track</a></li>
+          <li><a href="#">Pulse projects</a></li>
+          <li><a href="#">Agency briefs</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Студия</h5>
+        <ul>
+          <li><a href="#">О нас</a></li>
+          <li><a href="#">Ревьюеры</a></li>
+          <li><a href="#">Вакансии</a></li>
+          <li><a href="#">Блог</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Контакт</h5>
+        <ul>
+          <li><a href="#">hello@quillon.ru</a></li>
+          <li><a href="#">t.me/quillon</a></li>
+          <li><a href="#">github.com/quillon</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 QUILLON · NIGHT STUDIO v3.0</span>
+      <span>REV 2026-04-21 · ALL SYSTEMS NOMINAL</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

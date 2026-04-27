@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quillon v4 · FAQ block (15)</title>
+
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/tokens.css?v=4">
+  <link rel="stylesheet" href="../css/base.css?v=4">
+  <link rel="stylesheet" href="../css/components.css?v=4">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+     * 15 · FAQ — частые вопросы
+     *
+     * Тексты 1:1 с прод-content.json (`.faq`).
+     *
+     * Композиция:
+     *   • Section head (15 · ВОПРОСЫ)
+     *   • Body grid 4/8: aside-card слева (sticky на desktop) | accordion справа
+     *   • Accordion = native <details>/<summary> с mono-num + display Q + plus-glyph
+     *   • Первый вопрос открыт по умолчанию (anchor для glance)
+     *
+     * Anti-AI:
+     *   • Нет feather-иконок, +/− glyph — mono, rotate 45° на open.
+     *   • Hairline-сетка между вопросами. Никаких card-shadows, glow-orb'ов.
+     *   • Aside-карточка слева — editorial-якорь, без bullet-иконок.
+     * ═══════════════════════════════════════════════════════════════ */
+
+    .q-faq {
+      position: relative;
+      padding: var(--q-s-10) 0 var(--q-s-11);
+      overflow: hidden;
+    }
+    .q-faq::before {
+      content: "";
+      position: absolute;
+      top: -200px;
+      left: -240px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(94, 106, 210, 0.06), transparent 62%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .q-faq .q-container { position: relative; z-index: 1; }
+    .q-faq .q-section-head { max-width: 800px; margin-bottom: var(--q-s-9); }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * BODY · grid 4/8: aside | accordion
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-faq-body {
+      display: grid;
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+      gap: var(--q-s-8);
+      align-items: start;
+    }
+
+    /* ─── ASIDE: editorial intro card ─── */
+    .q-faq-aside {
+      position: sticky;
+      top: var(--q-s-7);
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-5);
+      padding-right: var(--q-s-6);
+    }
+    .q-faq-aside__kicker {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+    .q-faq-aside__kicker em {
+      color: var(--q-accent-hover);
+      font-style: normal;
+      font-weight: var(--q-fw-medium);
+    }
+    .q-faq-aside__title {
+      font-family: var(--q-font-display);
+      font-size: clamp(1.5rem, 2vw, 1.875rem);
+      font-weight: var(--q-fw-linear);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: var(--q-text-hi);
+      margin: 0;
+      max-width: 22ch;
+    }
+    .q-faq-aside__text {
+      font-size: var(--q-t-base);
+      line-height: 1.55;
+      color: var(--q-text-mid);
+      margin: 0;
+      max-width: 32ch;
+    }
+    .q-faq-aside__cta {
+      margin-top: var(--q-s-3);
+      padding-top: var(--q-s-5);
+      border-top: 1px solid var(--q-line);
+      display: inline-flex;
+      align-items: baseline;
+      gap: var(--q-s-3);
+      font-family: var(--q-font-display);
+      font-size: var(--q-t-h6);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.012em;
+      color: var(--q-text-hi);
+      text-decoration: none;
+      transition: color var(--q-dur-fast) var(--q-ease);
+    }
+    .q-faq-aside__cta-arrow {
+      font-family: var(--q-font-mono);
+      color: var(--q-text-low);
+      transition: transform var(--q-dur-fast) var(--q-ease),
+                  color var(--q-dur-fast) var(--q-ease);
+    }
+    .q-faq-aside__cta:hover { color: var(--q-accent-hover); }
+    .q-faq-aside__cta:hover .q-faq-aside__cta-arrow {
+      color: var(--q-accent);
+      transform: translateX(2px);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * ACCORDION · native <details>/<summary>
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-faq-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .q-faq-item {
+      border-bottom: 1px solid var(--q-line);
+    }
+    .q-faq-item:last-child { border-bottom: 0; }
+
+    /* SUMMARY = clickable header row */
+    .q-faq-item summary {
+      display: grid;
+      grid-template-columns: 56px 1fr 32px;
+      column-gap: var(--q-s-4);
+      align-items: baseline;
+      padding: var(--q-s-5) 0;
+      cursor: pointer;
+      list-style: none;
+      user-select: none;
+      transition: background var(--q-dur-fast) var(--q-ease);
+    }
+    .q-faq-item summary::-webkit-details-marker { display: none; }
+    .q-faq-item summary::marker { display: none; content: ''; }
+    .q-faq-item summary:hover { background: rgba(94, 106, 210, 0.03); }
+    .q-faq-item summary:focus-visible {
+      outline: 1px dashed var(--q-accent);
+      outline-offset: 4px;
+    }
+
+    .q-faq-item__num {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      color: var(--q-text-low);
+      font-weight: var(--q-fw-medium);
+      font-feature-settings: "tnum" 1;
+    }
+    .q-faq-item__q {
+      font-family: var(--q-font-display);
+      font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.014em;
+      color: var(--q-text-hi);
+      line-height: 1.4;
+      margin: 0;
+    }
+    .q-faq-item__plus {
+      font-family: var(--q-font-mono);
+      font-size: 1.5rem;
+      line-height: 1;
+      color: var(--q-text-mid);
+      justify-self: center;
+      align-self: center;
+      transition: transform var(--q-dur-base) var(--q-ease),
+                  color var(--q-dur-base) var(--q-ease);
+    }
+    .q-faq-item[open] .q-faq-item__plus {
+      transform: rotate(45deg);
+      color: var(--q-accent-hover);
+    }
+    .q-faq-item summary:hover .q-faq-item__plus { color: var(--q-text-hi); }
+
+    /* ANSWER = body content under summary */
+    .q-faq-item__a {
+      display: grid;
+      grid-template-columns: 56px 1fr 32px;
+      column-gap: var(--q-s-4);
+      padding: 0 0 var(--q-s-6) 0;
+    }
+    .q-faq-item__a-text {
+      grid-column: 2;
+      font-size: var(--q-t-base);
+      line-height: 1.65;
+      color: var(--q-text-mid);
+      margin: 0;
+      max-width: 64ch;
+    }
+    .q-faq-item__a-text b {
+      color: var(--q-text-hi);
+      font-weight: var(--q-fw-medium);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * RESPONSIVE
+     * ═══════════════════════════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .q-faq-body { grid-template-columns: 1fr; gap: var(--q-s-7); }
+      .q-faq-aside {
+        position: static;
+        padding-right: 0;
+        padding-bottom: var(--q-s-6);
+        border-bottom: 1px solid var(--q-line);
+      }
+    }
+    @media (max-width: 720px) {
+      .q-faq { padding: var(--q-s-8) 0 var(--q-s-9); }
+      .q-faq-item summary,
+      .q-faq-item__a {
+        grid-template-columns: 36px 1fr 28px;
+        column-gap: var(--q-s-3);
+      }
+      .q-faq-item summary { padding: var(--q-s-4) 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       STICKY TOPBAR
+       ═══════════════════════════════════════════════════════════════ -->
+  <header class="q-topbar">
+    <a href="#" class="q-topbar__brand">
+      <span class="q-topbar__brand-mark">Q</span>
+      <span>Quillon</span>
+    </a>
+
+    <nav class="q-topbar__nav" aria-label="Главная навигация">
+      <a class="q-topbar__link" href="#tracks">Треки</a>
+      <a class="q-topbar__link" href="#format">Формат</a>
+      <a class="q-topbar__link" href="#pricing">Цена</a>
+      <a class="q-topbar__link" href="#quillon_jobs">Jobs</a>
+      <a class="q-topbar__link" href="#faq">FAQ</a>
+    </nav>
+
+    <div class="q-topbar__actions">
+      <a class="q-btn q-btn--link" href="https://lms.quillon.ru" target="_blank" rel="noopener noreferrer">Войти</a>
+      <a class="q-btn q-btn--primary q-btn--sm" href="/quiz">Пройти тест</a>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       15 · FAQ
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="q-section q-faq" id="faq">
+    <div class="q-container">
+
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>15</em> · ВОПРОСЫ</div>
+        <h2 class="q-section-head__title">Частые вопросы</h2>
+      </header>
+
+      <div class="q-faq-body">
+
+        <!-- ─── ASIDE: editorial intro ─── -->
+        <aside class="q-faq-aside">
+          <span class="q-faq-aside__kicker"><em>08</em> · ОТВЕТОВ ВНУТРИ</span>
+          <h3 class="q-faq-aside__title">Всё, что обычно спрашивают на&nbsp;консультации.</h3>
+          <p class="q-faq-aside__text">Опыт, формат, гарантии, заработок&nbsp;— ответы на&nbsp;все вопросы, которые могут возникнуть до&nbsp;старта.</p>
+        </aside>
+
+        <!-- ─── ACCORDION: 9 questions ─── -->
+        <ul class="q-faq-list" role="list">
+
+          <li class="q-faq-item">
+            <details open>
+              <summary>
+                <span class="q-faq-item__num">01</span>
+                <h3 class="q-faq-item__q">Нужен&nbsp;ли опыт в&nbsp;программировании?</h3>
+                <span class="q-faq-item__plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="q-faq-item__a">
+                <p class="q-faq-item__a-text">Нет. Все треки рассчитаны на&nbsp;старт без IT-опыта. Первые 8&nbsp;недель&nbsp;— полное погружение в&nbsp;основы с&nbsp;наставником-практиком. <b>80% участников приходят без технического образования.</b> Единственное условие&nbsp;— готовность работать 12&nbsp;часов в&nbsp;неделю.</p>
+              </div>
+            </details>
+          </li>
+
+          <li class="q-faq-item">
+            <details>
+              <summary>
+                <span class="q-faq-item__num">02</span>
+                <h3 class="q-faq-item__q">Можно&nbsp;ли совмещать с&nbsp;работой?</h3>
+                <span class="q-faq-item__plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="q-faq-item__a">
+                <p class="q-faq-item__a-text">Да, программа рассчитана именно на&nbsp;это. <b>12&nbsp;часов в&nbsp;неделю&nbsp;— 2&nbsp;часа в&nbsp;день.</b> Записи доступны 24/7. Командный формат со&nbsp;спринтами структурирует время. Совмещать с&nbsp;работой&nbsp;— стандартный сценарий, а&nbsp;не&nbsp;исключение.</p>
+              </div>
+            </details>
+          </li>
+
+          <li class="q-faq-item">
+            <details>
+              <summary>
+                <span class="q-faq-item__num">03</span>
+                <h3 class="q-faq-item__q">Что если мне не&nbsp;подойдёт?</h3>
+                <span class="q-faq-item__plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="q-faq-item__a">
+                <p class="q-faq-item__a-text">Первые 7&nbsp;дней&nbsp;— полный доступ ко&nbsp;всем материалам и&nbsp;командным процессам. Если решите, что это не&nbsp;ваше&nbsp;— <b>вернём 100% без вопросов.</b> Без мелкого шрифта, без «удержания за&nbsp;обработку». Просто напишите&nbsp;— и&nbsp;деньги вернутся.</p>
+              </div>
+            </details>
+          </li>
+
+          <li class="q-faq-item">
+            <details>
+              <summary>
+                <span class="q-faq-item__num">04</span>
+                <h3 class="q-faq-item__q">Сколько реально можно заработать на&nbsp;коммерческих задачах?</h3>
+                <span class="q-faq-item__plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="q-faq-item__a">
+                <p class="q-faq-item__a-text"><b>От&nbsp;5&nbsp;000 до&nbsp;80&nbsp;000&nbsp;руб за&nbsp;проект</b>&nbsp;— зависит от&nbsp;сложности задачи и&nbsp;вашего трека. Первый заказ доступен со&nbsp;2-го месяца&nbsp;— Quillon находит задачу от&nbsp;реального заказчика. С&nbsp;3-го месяца&nbsp;— задачи через Quillon&nbsp;Jobs. С&nbsp;7-го месяца&nbsp;— коммерческие проекты через Студию. Это не&nbsp;обещание будущего дохода, а&nbsp;модель, которая работает: вы&nbsp;решаете реальные задачи бизнеса и&nbsp;получаете за&nbsp;это оплату.</p>
+              </div>
+            </details>
+          </li>
+
+          <li class="q-faq-item">
+            <details>
+              <summary>
+                <span class="q-faq-item__num">05</span>
+                <h3 class="q-faq-item__q">Почему именно Python, Flutter и&nbsp;QA?</h3>
+                <span class="q-faq-item__plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="q-faq-item__a">
+                <p class="q-faq-item__a-text">Три критерия: <b>максимум вакансий, минимум конкуренции среди Junior-специалистов, совместимость с&nbsp;AI-инструментами.</b> Python&nbsp;— язык номер 1 для&nbsp;AI и&nbsp;backend. Flutter&nbsp;— один код на&nbsp;iOS, Android и&nbsp;web, специалистов в&nbsp;3–4&nbsp;раза меньше спроса. QA&nbsp;Automation&nbsp;— недооценённая ниша с&nbsp;растущим спросом.</p>
+              </div>
+            </details>
+          </li>
+
+          <li class="q-faq-item">
+            <details>
+              <summary>
+                <span class="q-faq-item__num">06</span>
+                <h3 class="q-faq-item__q">Чем Quillon отличается от&nbsp;других онлайн-программ?</h3>
+                <span class="q-faq-item__plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="q-faq-item__a">
+                <p class="q-faq-item__a-text">Три ключевых отличия. <b>Первое:</b> работа на&nbsp;production-продуктах компании (ChatAI, Meet, LMS)&nbsp;— не&nbsp;учебные проекты, а&nbsp;код для&nbsp;реальных пользователей. <b>Второе:</b> оплачиваемые задачи со&nbsp;2-го месяца, возможность взять коммерческие проекты&nbsp;— от&nbsp;5&nbsp;000 до&nbsp;80&nbsp;000&nbsp;руб за&nbsp;проект. <b>Третье:</b> стартап как дипломный проект с&nbsp;инвестицией до&nbsp;500&nbsp;000&nbsp;руб. Ни&nbsp;одна онлайн-программа этого не&nbsp;предлагает.</p>
+              </div>
+            </details>
+          </li>
+
+          <li class="q-faq-item">
+            <details>
+              <summary>
+                <span class="q-faq-item__num">07</span>
+                <h3 class="q-faq-item__q">AI заменит программистов&nbsp;— зачем учиться?</h3>
+                <span class="q-faq-item__plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="q-faq-item__a">
+                <p class="q-faq-item__a-text">AI не&nbsp;умеет проектировать архитектуру, понимать бизнес-задачу, тестировать продукт и&nbsp;нести ответственность за&nbsp;результат. Он&nbsp;— инструмент. <b>Как калькулятор не&nbsp;заменил бухгалтеров, AI не&nbsp;заменит разработчиков.</b> Он заменит тех, кто не&nbsp;умеет с&nbsp;ним работать. В&nbsp;Quillon AI встроен в&nbsp;каждый этап&nbsp;— вы&nbsp;выходите как специалист, который умеет и&nbsp;писать код, и&nbsp;управлять AI.</p>
+              </div>
+            </details>
+          </li>
+
+          <li class="q-faq-item">
+            <details>
+              <summary>
+                <span class="q-faq-item__num">08</span>
+                <h3 class="q-faq-item__q">Помогаете&nbsp;ли вы&nbsp;с&nbsp;трудоустройством?</h3>
+                <span class="q-faq-item__plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="q-faq-item__a">
+                <p class="q-faq-item__a-text">Да. <b>LaunchPad</b> включает: индивидуальное резюме, мок-интервью с&nbsp;видеоразбором и&nbsp;рекомендательные письма. Помощь без ограничения по&nbsp;времени после выпуска. А&nbsp;рынок работает в&nbsp;вашу пользу: <b>57&nbsp;400&nbsp;— дефицит IT-специалистов, 12&nbsp;000+ открытых вакансий,</b> и&nbsp;80% работодателей оценивают по&nbsp;портфолио, а&nbsp;не&nbsp;по&nbsp;дипломам.</p>
+              </div>
+            </details>
+          </li>
+
+        </ul>
+
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quillon v4 · Format block (05)</title>
+
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/tokens.css?v=4">
+  <link rel="stylesheet" href="../css/base.css?v=4">
+  <link rel="stylesheet" href="../css/components.css?v=4">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+     * 05 · FORMAT — редизайн прод-блока (тексты 1:1 с content.json)
+     *
+     * Структура:
+     *   • Section head (label · title 10 ч / subtitle)
+     *   • Details strip (4 prose-блока: Длительность · Формат · Нагрузка · Старт)
+     *   • «Что включено» — asymmetric 6-col grid из 7 пунктов (hero)
+     *   • Inline CTA
+     *
+     * Изменены ТОЛЬКО цифры (12 → 10 ч/нед, 576–720 → 480–600 ч).
+     * Никаких выдуманных категорий, тэглайнов и иллюстраций.
+     * ═══════════════════════════════════════════════════════════════ */
+
+    .q-fmt {
+      position: relative;
+      padding: var(--q-s-10) 0 var(--q-s-11);
+      overflow: hidden;
+    }
+    .q-fmt::before {
+      content: "";
+      position: absolute;
+      bottom: -240px;
+      right: -240px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(94, 106, 210, 0.06), transparent 62%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .q-fmt .q-container { position: relative; z-index: 1; }
+    .q-fmt .q-section-head { max-width: 760px; margin-bottom: var(--q-s-9); }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * DETAILS STRIP — 4 prose-блока в 2×2 (горизонтальная спека)
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-fmt-details {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0;
+      border-top: 1px solid var(--q-line);
+      border-bottom: 1px solid var(--q-line);
+      margin-bottom: var(--q-s-9);
+    }
+    .q-fmt-detail {
+      padding: var(--q-s-6) 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-3);
+      position: relative;
+    }
+    /* Левая колонка (#1, #3) прижата к левому краю grid'а. */
+    .q-fmt-detail:nth-child(odd) { padding-right: var(--q-s-6); }
+    /* Правая колонка (#2, #4) — отступ слева под hairline и текстовый воздух. */
+    .q-fmt-detail:nth-child(even) {
+      padding-left: var(--q-s-6);
+      border-left: 1px solid var(--q-line);
+    }
+    /* Горизонтальная hairline между двумя рядами. */
+    .q-fmt-detail:nth-child(3),
+    .q-fmt-detail:nth-child(4) { border-top: 1px solid var(--q-line); }
+
+    .q-fmt-detail__kicker {
+      display: flex;
+      align-items: baseline;
+      gap: var(--q-s-3);
+      font-family: var(--q-font-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+    .q-fmt-detail__kicker b {
+      color: var(--q-accent-hover);
+      font-weight: var(--q-fw-medium);
+    }
+    .q-fmt-detail__title {
+      font-family: var(--q-font-display);
+      font-size: var(--q-t-h5);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.012em;
+      color: var(--q-text-hi);
+      margin: 0;
+    }
+    .q-fmt-detail__text {
+      font-size: var(--q-t-base);
+      line-height: 1.55;
+      color: var(--q-text-mid);
+      margin: 0;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * INCLUDES — editorial syllabus
+     *
+     * Композиция: одна вертикальная колонка из 7 hairline-строк.
+     *   [ mono num ] · [ title (Inter 510) ] · [ sub (text-mid, right) ]
+     *
+     * Логика:
+     *   • контент — список, не карточки → форма = список
+     *   • плотность достигается hairline-разделителем + padding 20-24px
+     *   • mono-числа в фикс-ширине колонке = tabular ledger feel
+     *   • #01 Quilly выделен только увеличенным title (1.625rem) и
+     *     индиго-цветом mono-номера — без фоновой заливки/градиента
+     *   • hover — тонкое indigo-tint всей строки, num светлеет до accent
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-fmt-incl-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--q-s-6);
+      padding-bottom: var(--q-s-5);
+      margin-bottom: 0;
+    }
+    .q-fmt-incl-head__title {
+      font-family: var(--q-font-display);
+      font-size: clamp(1.75rem, 2.6vw, 2.25rem);
+      font-weight: var(--q-fw-linear);
+      letter-spacing: -0.022em;
+      color: var(--q-text-hi);
+      line-height: 1.05;
+      margin: 0;
+    }
+    .q-fmt-incl-head__count {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-text-low);
+      font-feature-settings: "tnum" 1;
+      flex-shrink: 0;
+    }
+
+    .q-fmt-incl {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      border-top: 1px solid var(--q-line-strong);
+      border-bottom: 1px solid var(--q-line-strong);
+    }
+
+    .q-fmt-row {
+      display: grid;
+      grid-template-columns: 56px 1fr minmax(0, 28ch);
+      align-items: baseline;
+      gap: var(--q-s-6);
+      padding: var(--q-s-6) 0;
+      border-bottom: 1px solid var(--q-line);
+      transition: background var(--q-dur-fast) var(--q-ease);
+    }
+    .q-fmt-row:last-child { border-bottom: 0; }
+    .q-fmt-row:hover { background: rgba(94, 106, 210, 0.025); }
+    .q-fmt-row:hover .q-fmt-row__num { color: var(--q-accent-hover); }
+
+    .q-fmt-row__num {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: var(--q-tracking-mono);
+      color: var(--q-text-low);
+      font-feature-settings: "tnum" 1;
+      align-self: baseline;
+      transition: color var(--q-dur-fast) var(--q-ease);
+    }
+
+    .q-fmt-row__title {
+      font-family: var(--q-font-display);
+      font-size: 1.125rem;            /* 18px — на 2px крупнее body */
+      font-weight: var(--q-fw-linear);
+      letter-spacing: -0.012em;
+      color: var(--q-text-hi);
+      line-height: 1.35;
+      margin: 0;
+    }
+
+    .q-fmt-row__sub {
+      font-size: var(--q-t-small);    /* 15px */
+      line-height: 1.45;
+      color: var(--q-text-mid);
+      margin: 0;
+      text-align: right;
+    }
+
+    /* Hero-строка #01 Quilly — крупнее title, индиго-цвет mono-номера */
+    .q-fmt-row--hero { padding: var(--q-s-7) 0; }
+    .q-fmt-row--hero .q-fmt-row__title {
+      font-size: clamp(1.375rem, 1.8vw, 1.625rem);
+      letter-spacing: -0.018em;
+      line-height: 1.2;
+    }
+    .q-fmt-row--hero .q-fmt-row__num { color: var(--q-accent-hover); }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * INLINE CTA
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-fmt-cta {
+      margin-top: var(--q-s-9);
+      padding-top: var(--q-s-7);
+      border-top: 1px solid var(--q-line);
+      display: flex;
+      justify-content: flex-end;
+    }
+    .q-fmt-cta a {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--q-s-3);
+      font-family: var(--q-font-display);
+      font-size: var(--q-t-h6);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.012em;
+      color: var(--q-text-hi);
+      text-decoration: none;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--q-line-strong);
+      transition: color var(--q-dur-fast) var(--q-ease),
+                  border-color var(--q-dur-fast) var(--q-ease);
+    }
+    .q-fmt-cta a:hover {
+      color: var(--q-accent-hover);
+      border-color: var(--q-accent);
+    }
+    .q-fmt-cta__arrow {
+      font-family: var(--q-font-mono);
+      color: var(--q-text-low);
+      transition: transform var(--q-dur-fast) var(--q-ease),
+                  color var(--q-dur-fast) var(--q-ease);
+    }
+    .q-fmt-cta a:hover .q-fmt-cta__arrow {
+      color: var(--q-accent);
+      transform: translateX(2px);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * RESPONSIVE
+     * ═══════════════════════════════════════════════════════════════ */
+    @media (max-width: 860px) {
+      .q-fmt-row {
+        grid-template-columns: 40px 1fr;
+        gap: var(--q-s-4);
+        padding: var(--q-s-5) 0;
+      }
+      .q-fmt-row__sub {
+        grid-column: 2 / -1;
+        text-align: left;
+        margin-top: 4px;
+      }
+    }
+    @media (max-width: 720px) {
+      .q-fmt { padding: var(--q-s-8) 0 var(--q-s-9); }
+      .q-fmt-details { grid-template-columns: 1fr; }
+      .q-fmt-detail:nth-child(n) {
+        border-left: 0;
+        border-top: 1px solid var(--q-line);
+        padding: var(--q-s-5) 0;
+      }
+      .q-fmt-detail:first-child { border-top: 0; }
+      .q-fmt-incl-head { flex-direction: column; align-items: flex-start; gap: var(--q-s-2); }
+      .q-fmt-cta { justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       STICKY TOPBAR
+       ═══════════════════════════════════════════════════════════════ -->
+  <header class="q-topbar">
+    <a href="#" class="q-topbar__brand">
+      <span class="q-topbar__brand-mark">Q</span>
+      <span>Quillon</span>
+    </a>
+
+    <nav class="q-topbar__nav" aria-label="Главная навигация">
+      <a class="q-topbar__link" href="#tracks">Треки</a>
+      <a class="q-topbar__link" href="#format">Формат</a>
+      <a class="q-topbar__link" href="#pricing">Цена</a>
+      <a class="q-topbar__link" href="#quillon_jobs">Jobs</a>
+      <a class="q-topbar__link" href="#faq">FAQ</a>
+    </nav>
+
+    <div class="q-topbar__actions">
+      <a class="q-btn q-btn--link" href="#">Войти</a>
+      <a class="q-btn q-btn--primary q-btn--sm" href="/quiz">Пройти тест</a>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       05 · FORMAT
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="q-section q-fmt" id="format">
+    <div class="q-container">
+
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>05</em> · ФОРМАТ</div>
+        <h2 class="q-section-head__title">10&nbsp;часов в&nbsp;неделю, без увольнения</h2>
+        <p class="q-section-head__sub">
+          Программа рассчитана на&nbsp;тех, кто совмещает с&nbsp;работой. Не&nbsp;«в&nbsp;удобном темпе»&nbsp;— а&nbsp;командные спринты с&nbsp;дедлайнами, которые структурируют даже минимальное время.
+        </p>
+      </header>
+
+      <!-- ═══════════════ DETAILS STRIP ═══════════════ -->
+      <div class="q-fmt-details">
+
+        <div class="q-fmt-detail">
+          <div class="q-fmt-detail__kicker"><b>01</b> · ДЛИТЕЛЬНОСТЬ</div>
+          <h3 class="q-fmt-detail__title">Длительность</h3>
+          <p class="q-fmt-detail__text">12&nbsp;месяцев, 480–600&nbsp;часов практики и&nbsp;теории. Конкретный срок с&nbsp;понятным результатом.</p>
+        </div>
+
+        <div class="q-fmt-detail">
+          <div class="q-fmt-detail__kicker"><b>02</b> · ФОРМАТ</div>
+          <h3 class="q-fmt-detail__title">Формат</h3>
+          <p class="q-fmt-detail__text">Скринкасты + практика + вебинары + командная работа. Полностью онлайн, из&nbsp;любого города. Записи доступны 24/7.</p>
+        </div>
+
+        <div class="q-fmt-detail">
+          <div class="q-fmt-detail__kicker"><b>03</b> · НАГРУЗКА</div>
+          <h3 class="q-fmt-detail__title">Нагрузка</h3>
+          <p class="q-fmt-detail__text">10&nbsp;часов в&nbsp;неделю&nbsp;— 2&nbsp;часа в&nbsp;день. Совмещать с&nbsp;работой реально: командные спринты задают ритм, а&nbsp;не&nbsp;оставляют наедине с&nbsp;мотивацией.</p>
+        </div>
+
+        <div class="q-fmt-detail">
+          <div class="q-fmt-detail__kicker"><b>04</b> · СТАРТ</div>
+          <h3 class="q-fmt-detail__title">Старт</h3>
+          <p class="q-fmt-detail__text">Без технического образования. 80%&nbsp;участников приходят без IT-опыта. Первые 8&nbsp;недель&nbsp;— полное погружение в&nbsp;основы с&nbsp;наставником.</p>
+        </div>
+
+      </div>
+
+      <!-- ═══════════════ WHAT'S INCLUDED — editorial syllabus ═══════════════ -->
+      <header class="q-fmt-incl-head">
+        <h3 class="q-fmt-incl-head__title">Что включено</h3>
+        <span class="q-fmt-incl-head__count">09 пунктов</span>
+      </header>
+
+      <ul class="q-fmt-incl" aria-label="Что включено в программу">
+
+        <!-- 01 · Quilly (hero) -->
+        <li class="q-fmt-row q-fmt-row--hero">
+          <span class="q-fmt-row__num">01</span>
+          <h4 class="q-fmt-row__title">AI-помощник Quilly</h4>
+          <p class="q-fmt-row__sub">Персональная поддержка 24/7</p>
+        </li>
+
+        <!-- 02 · Наставник -->
+        <li class="q-fmt-row">
+          <span class="q-fmt-row__num">02</span>
+          <h4 class="q-fmt-row__title">Наставник-практик с&nbsp;первого дня</h4>
+          <p class="q-fmt-row__sub">Команды 4–6&nbsp;человек</p>
+        </li>
+
+        <!-- 03 · Нейростарт -->
+        <li class="q-fmt-row">
+          <span class="q-fmt-row__num">03</span>
+          <h4 class="q-fmt-row__title">Курс «Нейростарт»</h4>
+          <p class="q-fmt-row__sub">10&nbsp;дней · 20+ AI-инструментов</p>
+        </li>
+
+        <!-- 04 · Prompt Engineering -->
+        <li class="q-fmt-row">
+          <span class="q-fmt-row__num">04</span>
+          <h4 class="q-fmt-row__title">Модуль: Prompt Engineering</h4>
+          <p class="q-fmt-row__sub">Работа с&nbsp;AI-инструментами</p>
+        </li>
+
+        <!-- 05 · Vibe Coding -->
+        <li class="q-fmt-row">
+          <span class="q-fmt-row__num">05</span>
+          <h4 class="q-fmt-row__title">Модуль: Vibe Coding</h4>
+          <p class="q-fmt-row__sub">Создание приложений с&nbsp;помощью AI</p>
+        </li>
+
+        <!-- 06 · AI-инструменты -->
+        <li class="q-fmt-row">
+          <span class="q-fmt-row__num">06</span>
+          <h4 class="q-fmt-row__title">Модуль: AI-инструменты нового поколения</h4>
+          <p class="q-fmt-row__sub">Передовой AI-стек</p>
+        </li>
+
+        <!-- 07 · MVP стартапа -->
+        <li class="q-fmt-row">
+          <span class="q-fmt-row__num">07</span>
+          <h4 class="q-fmt-row__title">Реализация MVP&nbsp;стартапа</h4>
+          <p class="q-fmt-row__sub">До&nbsp;500&nbsp;000&nbsp;₽ инвестиций</p>
+        </li>
+
+        <!-- 08 · Сертификат -->
+        <li class="q-fmt-row">
+          <span class="q-fmt-row__num">08</span>
+          <h4 class="q-fmt-row__title">Сертификат об&nbsp;окончании программы</h4>
+          <p class="q-fmt-row__sub">С&nbsp;указанием трека и&nbsp;часов</p>
+        </li>
+
+        <!-- 09 · Сообщество -->
+        <li class="q-fmt-row">
+          <span class="q-fmt-row__num">09</span>
+          <h4 class="q-fmt-row__title">Закрытое сообщество выпускников</h4>
+          <p class="q-fmt-row__sub">Без ограничений по&nbsp;времени</p>
+        </li>
+
+      </ul>
+    </div>
+  </section>
+
+</body>
+</html>

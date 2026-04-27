@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quillon v4 · Quilly AI block (07)</title>
+
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/tokens.css?v=4">
+  <link rel="stylesheet" href="../css/base.css?v=4">
+  <link rel="stylesheet" href="../css/components.css?v=4">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+     * 07 · QUILLY AI — экономия времени до/после
+     *
+     * Тексты 1:1 с прод-content.json (`.quilly_ai`).
+     *
+     * Композиция:
+     *   • Section head (07 · МГНОВЕННАЯ ПОЛЬЗА)
+     *   • Hero benefit (`.benefit`): «до 10 часов в неделю» + sub-text
+     *   • Ledger из 6 строк (`.features[]`): WAS → NOW · title · text
+     *   • Inline CTA («Попробовать Quilly AI →»)
+     *
+     * Anti-AI:
+     *   • Никаких 2×3 карточек с feather-иконками.
+     *   • Никаких прогресс-баров и метрик-чипсов.
+     *   • Числа в tabular-nums, эконом-дельта подчёркнута цветом
+     *     (was=text-low, →=accent, now=text-hi).
+     * ═══════════════════════════════════════════════════════════════ */
+
+    .q-quilly {
+      position: relative;
+      padding: var(--q-s-10) 0 var(--q-s-11);
+      overflow: hidden;
+    }
+    .q-quilly::before {
+      content: "";
+      position: absolute;
+      top: -240px;
+      right: -240px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(94, 106, 210, 0.06), transparent 62%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .q-quilly .q-container { position: relative; z-index: 1; }
+    .q-quilly .q-section-head { max-width: 800px; margin-bottom: var(--q-s-9); }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * BENEFIT — hero-число с описанием (12-col asymmetric)
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-quilly-benefit {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: var(--q-s-7);
+      align-items: end;
+      padding: var(--q-s-8) 0;
+      border-top: 1px solid var(--q-line-strong);
+      border-bottom: 1px solid var(--q-line-strong);
+      margin-bottom: var(--q-s-9);
+    }
+    .q-quilly-benefit__num {
+      grid-column: 1 / span 6;
+      font-family: var(--q-font-display);
+      font-size: clamp(2.75rem, 5.4vw, 4.5rem);
+      font-weight: var(--q-fw-linear);
+      line-height: 1;
+      letter-spacing: -0.028em;
+      color: var(--q-text-hi);
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+    }
+    .q-quilly-benefit__num em {
+      font-style: normal;
+      color: var(--q-text-mid);
+      font-size: 0.45em;
+      letter-spacing: -0.01em;
+    }
+    .q-quilly-benefit__num span { color: var(--q-accent-hover); }
+    .q-quilly-benefit__copy {
+      grid-column: 7 / span 6;
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-3);
+    }
+    .q-quilly-benefit__title {
+      font-family: var(--q-font-display);
+      font-size: var(--q-t-h6);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.012em;
+      color: var(--q-text-hi);
+      line-height: 1.3;
+      margin: 0;
+      max-width: 42ch;
+    }
+    .q-quilly-benefit__text {
+      font-size: var(--q-t-base);
+      line-height: 1.55;
+      color: var(--q-text-mid);
+      margin: 0;
+      max-width: 48ch;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * LEDGER — 6 строк WAS → NOW · title · text
+     *
+     * Grid: [was→now: 168px] [title: 1fr] [text: minmax(0, 42ch)]
+     *   • was — text-low, mono
+     *   • → — accent, mono, шире letter-spacing
+     *   • now — text-hi, mono medium, tnum
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-quilly-led-head {
+      padding-bottom: var(--q-s-5);
+    }
+    .q-quilly-led-head__title {
+      font-family: var(--q-font-display);
+      font-size: clamp(1.5rem, 2.2vw, 1.875rem);
+      font-weight: var(--q-fw-linear);
+      letter-spacing: -0.02em;
+      color: var(--q-text-hi);
+      line-height: 1.1;
+      margin: 0;
+    }
+
+    .q-quilly-led {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      border-top: 1px solid var(--q-line-strong);
+      border-bottom: 1px solid var(--q-line-strong);
+    }
+
+    .q-quilly-row {
+      display: grid;
+      grid-template-columns: 168px 1fr minmax(0, 42ch);
+      align-items: baseline;
+      gap: var(--q-s-6);
+      padding: var(--q-s-6) 0;
+      border-bottom: 1px solid var(--q-line);
+      transition: background var(--q-dur-fast) var(--q-ease);
+    }
+    .q-quilly-row:last-child { border-bottom: 0; }
+    .q-quilly-row:hover { background: rgba(94, 106, 210, 0.025); }
+
+    /* WAS → NOW delta cell */
+    .q-quilly-row__delta {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-text-low);
+      font-feature-settings: "tnum" 1;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .q-quilly-row__was { color: var(--q-text-low); }
+    .q-quilly-row__arrow { color: var(--q-accent); padding: 0 2px; }
+    .q-quilly-row__now {
+      color: var(--q-text-hi);
+      font-weight: var(--q-fw-medium);
+    }
+
+    .q-quilly-row__title {
+      font-family: var(--q-font-display);
+      font-size: 1.125rem;          /* 18px — на 2px крупнее body */
+      font-weight: var(--q-fw-linear);
+      letter-spacing: -0.014em;
+      color: var(--q-text-hi);
+      line-height: 1.3;
+      margin: 0;
+    }
+    .q-quilly-row__text {
+      font-size: var(--q-t-small);
+      line-height: 1.5;
+      color: var(--q-text-mid);
+      margin: 0;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * INLINE CTA
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-quilly-cta {
+      margin-top: var(--q-s-9);
+      padding-top: var(--q-s-7);
+      border-top: 1px solid var(--q-line);
+      display: flex;
+      justify-content: flex-end;
+    }
+    .q-quilly-cta a {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--q-s-3);
+      font-family: var(--q-font-display);
+      font-size: var(--q-t-h6);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.012em;
+      color: var(--q-text-hi);
+      text-decoration: none;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--q-line-strong);
+      transition: color var(--q-dur-fast) var(--q-ease),
+                  border-color var(--q-dur-fast) var(--q-ease);
+    }
+    .q-quilly-cta a:hover {
+      color: var(--q-accent-hover);
+      border-color: var(--q-accent);
+    }
+    .q-quilly-cta__arrow {
+      font-family: var(--q-font-mono);
+      color: var(--q-text-low);
+      transition: transform var(--q-dur-fast) var(--q-ease),
+                  color var(--q-dur-fast) var(--q-ease);
+    }
+    .q-quilly-cta a:hover .q-quilly-cta__arrow {
+      color: var(--q-accent);
+      transform: translateX(2px);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * RESPONSIVE
+     * ═══════════════════════════════════════════════════════════════ */
+    @media (max-width: 1100px) {
+      .q-quilly-row { grid-template-columns: 140px 1fr minmax(0, 36ch); }
+    }
+    @media (max-width: 900px) {
+      .q-quilly-benefit { grid-template-columns: 1fr; gap: var(--q-s-5); align-items: start; }
+      .q-quilly-benefit__num,
+      .q-quilly-benefit__copy { grid-column: 1 / -1; }
+      .q-quilly-row {
+        grid-template-columns: 140px 1fr;
+        gap: var(--q-s-4);
+      }
+      .q-quilly-row__text { grid-column: 2 / -1; margin-top: 4px; }
+    }
+    @media (max-width: 720px) {
+      .q-quilly { padding: var(--q-s-8) 0 var(--q-s-9); }
+      .q-quilly-benefit { padding: var(--q-s-6) 0; }
+      .q-quilly-row {
+        grid-template-columns: 1fr;
+        gap: 6px;
+        padding: var(--q-s-5) 0;
+      }
+      .q-quilly-row__delta,
+      .q-quilly-row__text { grid-column: 1; }
+      .q-quilly-cta { justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       STICKY TOPBAR
+       ═══════════════════════════════════════════════════════════════ -->
+  <header class="q-topbar">
+    <a href="#" class="q-topbar__brand">
+      <span class="q-topbar__brand-mark">Q</span>
+      <span>Quillon</span>
+    </a>
+
+    <nav class="q-topbar__nav" aria-label="Главная навигация">
+      <a class="q-topbar__link" href="#tracks">Треки</a>
+      <a class="q-topbar__link" href="#format">Формат</a>
+      <a class="q-topbar__link" href="#pricing">Цена</a>
+      <a class="q-topbar__link" href="#quillon_jobs">Jobs</a>
+      <a class="q-topbar__link" href="#faq">FAQ</a>
+    </nav>
+
+    <div class="q-topbar__actions">
+      <a class="q-btn q-btn--link" href="#">Войти</a>
+      <a class="q-btn q-btn--primary q-btn--sm" href="/quiz">Пройти тест</a>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       07 · QUILLY AI
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="q-section q-quilly" id="quilly_ai">
+    <div class="q-container">
+
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>07</em> · МГНОВЕННАЯ ПОЛЬЗА</div>
+        <h2 class="q-section-head__title">Quilly&nbsp;AI: экономит 2&nbsp;часа в&nbsp;день на&nbsp;текущей работе</h2>
+        <p class="q-section-head__sub">
+          AI-агенты Quilly анализируют вашу работу и&nbsp;берут на&nbsp;себя рутину&nbsp;— персонально под ваши задачи. Не&nbsp;через 12&nbsp;месяцев&nbsp;— прямо сейчас. Вы&nbsp;освобождаете время для&nbsp;программы. Разработаем персонализированно под ваши задачи.
+        </p>
+      </header>
+
+      <!-- ═══════════════ HERO BENEFIT ═══════════════ -->
+      <div class="q-quilly-benefit">
+        <div class="q-quilly-benefit__num">
+          <em>до</em>&nbsp;10<em>&nbsp;ч/нед</em>
+        </div>
+        <div class="q-quilly-benefit__copy">
+          <h3 class="q-quilly-benefit__title">Столько времени в&nbsp;среднем уходит на&nbsp;рутину, которую Quilly&nbsp;AI может взять на&nbsp;себя</h3>
+          <p class="q-quilly-benefit__text">Освободившиеся 2&nbsp;часа в&nbsp;день&nbsp;— как раз столько нужно для&nbsp;программы Quillon.</p>
+        </div>
+      </div>
+
+      <!-- ═══════════════ LEDGER · 6 features ═══════════════ -->
+      <header class="q-quilly-led-head">
+        <h3 class="q-quilly-led-head__title">Персонализируем задачи под Вас</h3>
+      </header>
+
+      <ul class="q-quilly-led" aria-label="Что делает Quilly AI">
+
+        <li class="q-quilly-row">
+          <div class="q-quilly-row__delta">
+            <span class="q-quilly-row__was">40&nbsp;мин</span>
+            <span class="q-quilly-row__arrow">→</span>
+            <span class="q-quilly-row__now">3&nbsp;мин</span>
+          </div>
+          <h4 class="q-quilly-row__title">Отчёты за&nbsp;3&nbsp;минуты вместо 40</h4>
+          <p class="q-quilly-row__text">Собирает данные из&nbsp;таблиц, формирует сводки и&nbsp;оформляет отчёты в&nbsp;нужном формате.</p>
+        </li>
+
+        <li class="q-quilly-row">
+          <div class="q-quilly-row__delta">
+            <span class="q-quilly-row__was">15&nbsp;мин</span>
+            <span class="q-quilly-row__arrow">→</span>
+            <span class="q-quilly-row__now">2&nbsp;мин</span>
+          </div>
+          <h4 class="q-quilly-row__title">Ответы на&nbsp;рутинные письма</h4>
+          <p class="q-quilly-row__text">Анализирует входящие, предлагает варианты ответов в&nbsp;вашем стиле.</p>
+        </li>
+
+        <li class="q-quilly-row">
+          <div class="q-quilly-row__delta">
+            <span class="q-quilly-row__was">час</span>
+            <span class="q-quilly-row__arrow">→</span>
+            <span class="q-quilly-row__now">секунды</span>
+          </div>
+          <h4 class="q-quilly-row__title">Обработка таблиц и&nbsp;данных</h4>
+          <p class="q-quilly-row__text">Сводные таблицы, фильтрация, поиск аномалий&nbsp;— за&nbsp;секунды вместо часа в&nbsp;Excel.</p>
+        </li>
+
+        <li class="q-quilly-row">
+          <div class="q-quilly-row__delta">
+            <span class="q-quilly-row__was">пустой&nbsp;экран</span>
+            <span class="q-quilly-row__arrow">→</span>
+            <span class="q-quilly-row__now">черновик</span>
+          </div>
+          <h4 class="q-quilly-row__title">Подготовка презентаций</h4>
+          <p class="q-quilly-row__text">Структурирует информацию, формирует слайды. Готовый черновик вместо пустого экрана.</p>
+        </li>
+
+        <li class="q-quilly-row">
+          <div class="q-quilly-row__delta">
+            <span class="q-quilly-row__was">час+</span>
+            <span class="q-quilly-row__arrow">→</span>
+            <span class="q-quilly-row__now">2&nbsp;мин</span>
+          </div>
+          <h4 class="q-quilly-row__title">Анализ документов</h4>
+          <p class="q-quilly-row__text">Договоры, регламенты&nbsp;— выделяет ключевое, сравнивает версии. 50&nbsp;страниц за&nbsp;2&nbsp;минуты.</p>
+        </li>
+
+        <li class="q-quilly-row">
+          <div class="q-quilly-row__delta">
+            <span class="q-quilly-row__was">—</span>
+            <span class="q-quilly-row__arrow">→</span>
+            <span class="q-quilly-row__now">48&nbsp;ч</span>
+          </div>
+          <h4 class="q-quilly-row__title">Персональный AI-агент за&nbsp;48&nbsp;часов</h4>
+          <p class="q-quilly-row__text">Анализируем вашу работу&nbsp;— встречи, переписки, процессы&nbsp;— и&nbsp;собираем AI-агента под конкретные задачи. Не&nbsp;шаблон, а&nbsp;решение под вас.</p>
+        </li>
+
+      </ul>
+
+      <!-- ═══════════════ INLINE CTA ═══════════════ -->
+      <div class="q-quilly-cta">
+        <a href="/quiz">
+          Попробовать Quilly&nbsp;AI
+          <span class="q-quilly-cta__arrow">→</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+</body>
+</html>

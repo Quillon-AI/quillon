@@ -1,0 +1,54 @@
+<!-- Quillon v3 — organic shape library.
+  Inline SVG symbols. Use via <svg><use href="shapes.svg#q-shape-blob"/></svg>.
+  Все формы нарисованы с нуля, без сторонних stock-assets. -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <!-- 1. Blob: asymmetric organic shape, medium -->
+  <symbol id="q-shape-blob" viewBox="0 0 120 120">
+    <path d="M60 8 C92 8 112 30 112 58 C112 86 96 112 64 112 C34 112 10 94 10 62 C10 32 28 8 60 8 Z" fill="currentColor"/>
+  </symbol>
+
+  <!-- 2. Sparkle / 4-pointer star -->
+  <symbol id="q-shape-sparkle" viewBox="0 0 40 40">
+    <path d="M20 0 C21 11 28 17 40 20 C28 23 21 29 20 40 C19 29 12 23 0 20 C12 17 19 11 20 0 Z" fill="currentColor"/>
+  </symbol>
+
+  <!-- 3. Squiggle / wavy line -->
+  <symbol id="q-shape-squiggle" viewBox="0 0 120 24">
+    <path d="M2 12 Q 15 2 30 12 T 60 12 T 90 12 T 118 12" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>
+  </symbol>
+
+  <!-- 4. Half-moon / crescent arc -->
+  <symbol id="q-shape-moon" viewBox="0 0 100 100">
+    <path d="M50 8 A42 42 0 1 0 50 92 A30 42 0 1 1 50 8 Z" fill="currentColor"/>
+  </symbol>
+
+  <!-- 5. Pill / capsule -->
+  <symbol id="q-shape-pill" viewBox="0 0 120 50">
+    <rect x="2" y="2" width="116" height="46" rx="23" fill="currentColor"/>
+  </symbol>
+
+  <!-- 6. Plus / cross -->
+  <symbol id="q-shape-plus" viewBox="0 0 40 40">
+    <path d="M16 2 H24 V16 H38 V24 H24 V38 H16 V24 H2 V16 H16 Z" fill="currentColor"/>
+  </symbol>
+
+  <!-- 7. Arc / partial ring -->
+  <symbol id="q-shape-arc" viewBox="0 0 120 120">
+    <path d="M60 12 A48 48 0 1 1 12 60" stroke="currentColor" stroke-width="14" fill="none" stroke-linecap="round"/>
+  </symbol>
+
+  <!-- 8. Leaf / elongated drop -->
+  <symbol id="q-shape-leaf" viewBox="0 0 80 120">
+    <path d="M40 4 C70 30 76 70 40 116 C4 70 10 30 40 4 Z" fill="currentColor"/>
+  </symbol>
+
+  <!-- 9. Bracket corner — editorial marker -->
+  <symbol id="q-shape-bracket" viewBox="0 0 60 60">
+    <path d="M4 4 H26 M4 4 V26 M56 56 H34 M56 56 V34" stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round"/>
+  </symbol>
+
+  <!-- 10. Arrow NE -->
+  <symbol id="q-shape-arrow-ne" viewBox="0 0 24 24">
+    <path d="M6 18 L18 6 M10 6 H18 V14" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+</svg>

@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quillon v4 · Solution block (03)</title>
+
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/tokens.css?v=3">
+  <link rel="stylesheet" href="../css/base.css?v=3">
+  <link rel="stylesheet" href="../css/components.css?v=3">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+     * 03 · SOLUTION — Product Board (внутренний экран IT-компании)
+     *
+     * Концепция:
+     *   На странице — не «4 преимущества с иконками», а вид
+     *   операционной панели Quillon: три продукта (ChatAI, Meet, LMS)
+     *   как параллельные колонки, сверху — горизонтальная timeline
+     *   вовлечения студента (М01 → М12). Четыре «почему» вписаны
+     *   асимметрично как pinned-аннотации между колонками. Они
+     *   комментируют конкретные продукты, а не висят сами по себе.
+     *
+     * Отстройка от блока 01 (hero):
+     *   • hero — 2-col asymmetric, abstract typo plot карусель
+     *   • solution — three-column ledger (вертикальные потоки) +
+     *     горизонтальный engagement-track сверху
+     *
+     * Отстройка от блока 02 (market):
+     *   • market — FT-spread, hero-figure 7/12 + minors 5/12
+     *   • solution — другая ось доминирования (вертикаль вместо
+     *     горизонтального data-spread). Другая визуальная плотность
+     *     (live ops dashboard вместо financial summary).
+     *
+     * Anti-AI решения по чек-листу:
+     *   ✓ Zero feather-icons на benefits (главный AI-tell)
+     *   ✓ 4 причины НЕ в 2×2 grid — асимметричный layout «product+pin»
+     *   ✓ H2 моноцвет (Inter 510, наследуется от section-head)
+     *   ✓ Один indigo, никаких gradient-text, никаких ✓
+     *   ✓ Tabular-nums на таймлайне и метриках продуктов
+     *   ✓ Inline-доказательства: ChatAI/Meet/LMS, М02, М03, М07,
+     *     5–80 тыс ₽, CI/CD, code-review
+     * ═══════════════════════════════════════════════════════════════ */
+
+    .q-sol {
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Корнер-halo по диагонали, противоположной market.
+       hero: top-left. market: bottom-right. solution: top-right.
+       Создаёт ритм чередования источников «света» по странице. */
+    .q-sol::before {
+      content: "";
+      position: absolute;
+      top: -240px;
+      right: -240px;
+      width: 640px;
+      height: 640px;
+      background: radial-gradient(circle, rgba(94, 106, 210, 0.07), transparent 62%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .q-sol .q-container { position: relative; z-index: 1; }
+
+    .q-sol .q-section-head { max-width: 760px; }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * BOARD HEADER — мета-полоска над панелью
+     * Имитирует service-status-line: «BOARD · LIVE · обновлено».
+     * Не «Live now 🟢» (AI), а «BOARD/04.2026», как admin-overlay.
+     * ═══════════════════════════════════════════════════════════════ */
+
+    .q-sol-board-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--q-s-5);
+      padding: var(--q-s-4) 0;
+      border-top: 1px solid var(--q-line-strong);
+      border-bottom: 1px solid var(--q-line);
+      font-family: var(--q-font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--q-text-low);
+      flex-wrap: wrap;
+    }
+    .q-sol-board-meta__group {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--q-s-3);
+    }
+    .q-sol-board-meta__sep {
+      display: inline-block;
+      width: 14px;
+      height: 1px;
+      background: var(--q-line-strong);
+    }
+    .q-sol-board-meta b {
+      color: var(--q-text-mid);
+      font-weight: var(--q-fw-medium);
+    }
+    .q-sol-board-meta__live {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--q-accent-hover);
+    }
+    .q-sol-board-meta__live::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--q-accent-hover);
+      box-shadow: 0 0 0 3px rgba(94, 106, 210, 0.18);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * ENGAGEMENT TRACK — горизонтальная timeline студента
+     *
+     * НЕ «бар прогресса с кружочками 1-2-3-4». Эта timeline —
+     * фактическая шкала месяцев М01 → М12 c пинами этапов вовлечения.
+     * Tracks: Code | Jobs | Студия | Career. Каждый этап — точка на оси.
+     * ═══════════════════════════════════════════════════════════════ */
+
+    .q-sol-track {
+      position: relative;
+      padding: var(--q-s-8) 0 var(--q-s-9);
+      border-bottom: 1px solid var(--q-line);
+    }
+
+    .q-sol-track__legend {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      /* 80px нужен чтобы пин лейн-2 (M03 на -52px от рельса + label ~14px) не наезжал на H3 */
+      margin-bottom: 80px;
+      gap: var(--q-s-5);
+      flex-wrap: wrap;
+    }
+    @media (max-width: 720px) {
+      .q-sol-track__legend { margin-bottom: var(--q-s-6); }
+    }
+    .q-sol-track__legend-title {
+      font-family: var(--q-font-display);
+      font-size: var(--q-t-h4);
+      font-weight: var(--q-fw-linear);
+      color: var(--q-text-hi);
+      letter-spacing: -0.01em;
+      margin: 0;
+    }
+    .q-sol-track__legend-meta {
+      font-family: var(--q-font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+    .q-sol-track__legend-meta b {
+      color: var(--q-text-mid);
+      font-weight: var(--q-fw-medium);
+    }
+
+    /* Сама ось */
+    .q-sol-track__rail {
+      position: relative;
+      height: 1px;
+      background: var(--q-line-strong);
+      margin: 0 8px;
+    }
+
+    /* Tick marks по 12 месяцам — 11 равных интервалов */
+    .q-sol-track__ticks {
+      position: absolute;
+      top: -4px;
+      left: 0;
+      right: 0;
+      height: 9px;
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none;
+    }
+    .q-sol-track__tick {
+      width: 1px;
+      height: 9px;
+      background: var(--q-text-dim);
+    }
+
+    /* Метки месяцев под рейлом */
+    .q-sol-track__months {
+      display: flex;
+      justify-content: space-between;
+      margin: var(--q-s-3) 8px 0;
+      font-family: var(--q-font-mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: var(--q-text-low);
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+    }
+    .q-sol-track__months b {
+      color: var(--q-accent-hover);
+      font-weight: var(--q-fw-medium);
+    }
+
+    /* Pins — фактические события, прикрепляются к % по шкале (М01..М12 → 0..100%).
+       Лейблы кучные (М02 9%, М03 18%) → стэгер на 2 лейна, чтобы не наезжали. */
+    .q-sol-track__pins {
+      position: absolute;
+      top: -52px;
+      left: 0;
+      right: 0;
+      height: 0;
+      pointer-events: none;
+    }
+    .q-sol-track__pin {
+      position: absolute;
+      top: 30px;          /* лейн-1: лейбл ниже, ближе к рельсу */
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      pointer-events: auto;
+      max-width: 160px;
+    }
+    .q-sol-track__pin--lane-2 {
+      top: 0;             /* лейн-2: лейбл выше */
+    }
+    .q-sol-track__pin--lane-2 .q-sol-track__pin-stem {
+      height: 30px;       /* удлинённый стебель, чтобы дот по-прежнему касался рельса */
+    }
+    .q-sol-track__pin-label {
+      font-family: var(--q-font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--q-text-mid);
+      white-space: nowrap;
+      padding: 2px 6px;
+      border-radius: var(--q-r-sm);
+      background: var(--q-bg-1);
+      border: 1px solid var(--q-line);
+    }
+    .q-sol-track__pin-label b {
+      color: var(--q-accent-hover);
+      font-weight: var(--q-fw-medium);
+    }
+    .q-sol-track__pin-stem {
+      width: 1px;
+      height: 8px;
+      background: var(--q-line-strong);
+    }
+    .q-sol-track__pin-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--q-accent-hover);
+      box-shadow: 0 0 0 3px rgba(94, 106, 210, 0.16);
+    }
+    .q-sol-track__pin--soft .q-sol-track__pin-dot {
+      background: transparent;
+      border: 1.5px solid var(--q-text-low);
+      box-shadow: none;
+    }
+    .q-sol-track__pin--soft .q-sol-track__pin-label b {
+      color: var(--q-text-mid);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * PRODUCT COLUMNS — three-column ledger
+     *
+     * Это сердце блока. ChatAI · Meet · LMS — параллельные вертикальные
+     * колонки, разделённые hairlines (как в admin-консоли). У каждой
+     * есть мини-stats: stack, состояние команды, активные задачи.
+     *
+     * Между колонок плавают «pinned» аннотации-преимущества (4 шт),
+     * расположенные асимметрично — НЕ 2×2 grid.
+     * ═══════════════════════════════════════════════════════════════ */
+
+    .q-sol-board {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0;
+      border-bottom: 1px solid var(--q-line);
+    }
+    /* Тонкая indigo-подсветка под центром доски (Linear-style, single source).
+       Не glow-orb — широкий мягкий радиал, едва заметный, без пульсации. */
+    .q-sol-board::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 40%;
+      width: 720px;
+      height: 360px;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(
+        ellipse at center,
+        rgba(94, 106, 210, 0.10),
+        rgba(94, 106, 210, 0.04) 38%,
+        transparent 70%
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Абстрактная waveform-текстура за досской — слой между bg и radial.
+       Низкий opacity, mask-fade по краям, не доминирует над продуктовыми
+       колонками. Linear settings-bg-стиль. */
+    .q-sol-board__bg-art {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 1200px;
+      max-width: 110%;
+      height: 400px;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      opacity: 0.14;
+      mix-blend-mode: screen;
+      -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+              mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+    }
+
+    .q-sol-prod {
+      position: relative;
+      z-index: 1;
+      padding: var(--q-s-7) var(--q-s-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-5);
+    }
+    .q-sol-prod + .q-sol-prod {
+      border-left: 1px solid var(--q-line);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * PRODUCT VISUAL — custom SVG mini-mockup (anti-stock, anti-Lottie).
+     *
+     * Каждый продукт получает абстрактный UI-моdkup (chat-flow / video-grid /
+     * lesson-list) — НЕ stock illustration. Стиль: line-art 1.5–2px, indigo
+     * accent на 1 active элементе, остальное в hairline-grays.
+     *
+     * Это «product card» в духе Linear/Stripe engineering blog, а не
+     * Storyset/unDraw (cartoon-edtech).
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-sol-prod__visual {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      width: 100%;
+      background: var(--q-bg-2);
+      border: 1px solid var(--q-line);
+      border-radius: var(--q-r-lg);
+      overflow: hidden;
+      display: flex;
+      align-items: stretch;
+      justify-content: stretch;
+      /* Тонкая dot-сетка подложка (как в hero plot-карусели) */
+      background-image:
+        radial-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 16px 16px;
+    }
+    .q-sol-prod__visual svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    /* Photo-variant — реальный скриншот продукта (Meet, LMS), без dot-сетки. */
+    .q-sol-prod__visual--photo {
+      background-image: none;
+      background: var(--q-bg-1);
+    }
+    .q-sol-prod__visual--photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      /* Лёгкое выравнивание яркости под палитру v4 */
+      filter: brightness(0.96) contrast(1.02) saturate(0.94);
+    }
+    /* Внутренние стили SVG-mockup-ов */
+    .q-sol-svg__line { fill: none; stroke: var(--q-line-strong); stroke-width: 1; }
+    .q-sol-svg__bubble {
+      fill: var(--q-bg-3);
+      stroke: var(--q-line);
+      stroke-width: 1;
+    }
+    .q-sol-svg__bubble--accent {
+      fill: var(--q-accent-soft);
+      stroke: rgba(94, 106, 210, 0.4);
+    }
+    .q-sol-svg__bar { fill: var(--q-bg-4); }
+    .q-sol-svg__bar--accent { fill: var(--q-accent-hover); }
+    .q-sol-svg__text {
+      fill: var(--q-text-mid);
+      font-family: var(--q-font-mono);
+      font-size: 9px;
+      letter-spacing: 0.04em;
+    }
+    .q-sol-svg__text--lo { fill: var(--q-text-low); }
+    .q-sol-svg__text--hi { fill: var(--q-text-hi); }
+    .q-sol-svg__text--accent { fill: var(--q-accent-hover); }
+    .q-sol-svg__dot { fill: var(--q-text-low); }
+    .q-sol-svg__dot--accent { fill: var(--q-accent-hover); }
+    .q-sol-svg__dot--filled { fill: var(--q-text-hi); }
+
+    /* Header: ref + name + status */
+    .q-sol-prod__head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--q-s-3);
+      flex-wrap: wrap;
+    }
+    .q-sol-prod__ref {
+      font-family: var(--q-font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+    .q-sol-prod__ref b {
+      color: var(--q-accent);
+      font-weight: var(--q-fw-medium);
+    }
+    /* Status — без green-dot AI-маркера. Просто mono-текст в low-color */
+    .q-sol-prod__status {
+      font-family: var(--q-font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+
+    .q-sol-prod__name {
+      font-family: var(--q-font-display);
+      font-size: 1.625rem;
+      font-weight: var(--q-fw-linear);
+      letter-spacing: -0.02em;
+      color: var(--q-text-hi);
+      line-height: 1.05;
+      margin: 0;
+    }
+
+    .q-sol-prod__desc {
+      font-size: var(--q-t-small);
+      line-height: 1.5;
+      color: var(--q-text-mid);
+      margin: 0;
+    }
+
+    /* Stack-теги в моно. БЕЗ pill-формы — это «спека», не chip-decoration */
+    .q-sol-prod__stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      padding-top: var(--q-s-3);
+      border-top: 1px dashed var(--q-line);
+    }
+    .q-sol-prod__stack-item {
+      font-family: var(--q-font-mono);
+      font-size: 10px;
+      font-weight: var(--q-fw-medium);
+      letter-spacing: 0.04em;
+      color: var(--q-text-mid);
+      padding: 3px 7px;
+      border: 1px solid var(--q-line);
+      border-radius: var(--q-r-xs);
+      background: var(--q-bg-1);
+    }
+
+    /* Mini-metrics внутри колонки — три строки tabular-nums */
+    .q-sol-prod__metrics {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      margin-top: auto;
+      padding-top: var(--q-s-5);
+      border-top: 1px solid var(--q-line);
+    }
+    .q-sol-prod__metric {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--q-s-3);
+      padding: var(--q-s-3) 0;
+    }
+    .q-sol-prod__metric + .q-sol-prod__metric {
+      border-top: 1px dashed var(--q-line);
+    }
+    .q-sol-prod__metric-key {
+      font-family: var(--q-font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+    .q-sol-prod__metric-val {
+      font-family: var(--q-font-mono);
+      font-size: 13px;
+      font-weight: var(--q-fw-medium);
+      color: var(--q-text-hi);
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum", "ss01";
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * REASONS — четыре «почему» как пронумерованные long-form blocks
+     *
+     * Раскладка: 12-col grid, ассиметричное распределение:
+     *   01 — col 1..6  (под ChatAI/Meet, левая сторона)
+     *   02 — col 7..12 (правая, под LMS)
+     *   03 — col 1..7  (шире, левая, центр-баланс)
+     *   04 — col 8..12 (компакт, правая)
+     * Это снимает 2×2-AI-симметрию.
+     *
+     * Каждый блок — пронумерованный editorial-параграф с metaref-line
+     * сверху и attached-citation снизу. БЕЗ иконок, БЕЗ ✓.
+     * ═══════════════════════════════════════════════════════════════ */
+
+    .q-sol-reasons {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 0;
+      border-bottom: 1px solid var(--q-line);
+    }
+
+    .q-sol-reason {
+      position: relative;
+      padding: var(--q-s-8) var(--q-s-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-4);
+    }
+    .q-sol-reason::before {
+      content: "";
+      position: absolute;
+      left: var(--q-s-6);
+      right: var(--q-s-6);
+      top: 0;
+      height: 1px;
+      background: var(--q-line);
+    }
+    .q-sol-reason:first-child::before,
+    .q-sol-reason--top-clear::before {
+      display: none;
+    }
+
+    /* Колонки + асимметричные размеры */
+    .q-sol-reason--01 { grid-column: 1 / span 6;  border-right: 1px solid var(--q-line); }
+    .q-sol-reason--02 { grid-column: 7 / span 6;  }
+    .q-sol-reason--03 { grid-column: 1 / span 7;  border-right: 1px solid var(--q-line); border-top: 1px solid var(--q-line); }
+    .q-sol-reason--04 { grid-column: 8 / span 5;  border-top: 1px solid var(--q-line); }
+
+    /* Reason head: large numeral + key */
+    .q-sol-reason__head {
+      display: flex;
+      align-items: baseline;
+      gap: var(--q-s-4);
+    }
+    .q-sol-reason__num {
+      font-family: var(--q-font-mono);
+      font-size: 2.25rem;
+      font-weight: var(--q-fw-medium);
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      color: var(--q-accent-hover);
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+    }
+    .q-sol-reason__key {
+      font-family: var(--q-font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+    .q-sol-reason__key b {
+      color: var(--q-text-mid);
+      font-weight: var(--q-fw-medium);
+    }
+
+    .q-sol-reason__title {
+      font-family: var(--q-font-display);
+      font-size: 1.375rem;
+      font-weight: var(--q-fw-linear);
+      letter-spacing: -0.018em;
+      line-height: 1.2;
+      color: var(--q-text-hi);
+      margin: 0;
+      max-width: 28ch;
+    }
+
+    .q-sol-reason__body {
+      font-size: var(--q-t-small);
+      line-height: 1.55;
+      color: var(--q-text-mid);
+      margin: 0;
+      max-width: 56ch;
+    }
+    .q-sol-reason__body b {
+      color: var(--q-text-hi);
+      font-weight: var(--q-fw-semibold);
+    }
+
+    /* Footer-line: inline mono refs (продукты, диапазоны, месяцы).
+       Не «теги», а editorial-footnote. */
+    .q-sol-reason__refs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--q-s-3);
+      padding-top: var(--q-s-3);
+      margin-top: auto;
+      border-top: 1px dashed var(--q-line);
+      font-family: var(--q-font-mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+    .q-sol-reason__refs span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .q-sol-reason__refs span + span::before {
+      content: "·";
+      color: var(--q-text-dim);
+      margin-right: 4px;
+    }
+    .q-sol-reason__refs b {
+      color: var(--q-text-mid);
+      font-weight: var(--q-fw-medium);
+    }
+    .q-sol-reason__refs em {
+      font-style: normal;
+      color: var(--q-accent-hover);
+      font-weight: var(--q-fw-medium);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * FOOT — «то, чего нет у 95 % курсов» + CTA
+     * Аналог market-foot, но фраза другая: здесь не источники, а
+     * сжатый assertion + переход к продуктам/треку.
+     * ═══════════════════════════════════════════════════════════════ */
+
+    .q-sol-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--q-s-6);
+      flex-wrap: wrap;
+      padding-top: var(--q-s-7);
+    }
+
+    .q-sol-foot__assertion {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      max-width: 56ch;
+    }
+    .q-sol-foot__assertion-label {
+      font-family: var(--q-font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+    .q-sol-foot__assertion-text {
+      font-size: var(--q-t-small);
+      line-height: 1.5;
+      color: var(--q-text-mid);
+      margin: 0;
+    }
+    .q-sol-foot__assertion-text b {
+      color: var(--q-text-hi);
+      font-weight: var(--q-fw-semibold);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * RESPONSIVE — 960 / 640
+     * ═══════════════════════════════════════════════════════════════ */
+
+    @media (max-width: 960px) {
+      .q-sol-board {
+        grid-template-columns: 1fr;
+      }
+      .q-sol-prod + .q-sol-prod {
+        border-left: 0;
+        border-top: 1px solid var(--q-line);
+      }
+      .q-sol-reasons { grid-template-columns: 1fr; }
+      .q-sol-reason--01,
+      .q-sol-reason--02,
+      .q-sol-reason--03,
+      .q-sol-reason--04 {
+        grid-column: 1 / -1;
+        border-right: 0;
+        border-top: 1px solid var(--q-line);
+      }
+      .q-sol-reason--01 { border-top: 0; }
+      .q-sol-reason--01::before,
+      .q-sol-reason--02::before,
+      .q-sol-reason--03::before,
+      .q-sol-reason--04::before { display: none; }
+
+      /* Track pin labels могут наезжать друг на друга — скрываем soft pins */
+      .q-sol-track__pin--mobile-hide { display: none; }
+    }
+
+    @media (max-width: 640px) {
+      .q-sol-prod {
+        padding: var(--q-s-6) var(--q-s-5);
+      }
+      .q-sol-prod__name { font-size: 1.375rem; }
+      .q-sol-reason {
+        padding: var(--q-s-7) var(--q-s-5);
+      }
+      .q-sol-reason__num { font-size: 1.875rem; }
+      .q-sol-reason__title { font-size: 1.25rem; }
+      .q-sol-foot { flex-direction: column; align-items: flex-start; }
+      .q-sol-foot .q-btn { width: 100%; justify-content: center; }
+      .q-sol-track { padding: var(--q-s-7) 0 var(--q-s-8); }
+      .q-sol-track__pin-label { display: none; }
+      .q-sol-track__legend { flex-direction: column; align-items: flex-start; gap: var(--q-s-2); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       STICKY TOPBAR — same as hero/market
+       ═══════════════════════════════════════════════════════════════ -->
+
+  <header class="q-topbar">
+    <a href="#" class="q-topbar__brand">
+      <span class="q-topbar__brand-mark">Q</span>
+      <span>Quillon</span>
+    </a>
+
+    <nav class="q-topbar__nav" aria-label="Главная навигация">
+      <a class="q-topbar__link" href="#products">Треки</a>
+      <a class="q-topbar__link" href="#format">Формат</a>
+      <a class="q-topbar__link" href="#pricing">Цена</a>
+      <a class="q-topbar__link" href="#quillon_jobs">Jobs</a>
+      <a class="q-topbar__link" href="#faq">FAQ</a>
+    </nav>
+
+    <div class="q-topbar__actions">
+      <a class="q-btn q-btn--link" href="#">Войти</a>
+      <a class="q-btn q-btn--primary q-btn--sm" href="/quiz">Пройти тест</a>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       03 · SOLUTION
+       ═══════════════════════════════════════════════════════════════ -->
+
+  <section class="q-section q-sol" id="solution">
+    <div class="q-container">
+
+      <!-- Section head -->
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>03</em> · ПОЧЕМУ QUILLON</div>
+        <h2 class="q-section-head__title">Обучение внутри действующей IT-компании</h2>
+        <p class="q-section-head__sub">
+          Quillon разрабатывает три продукта: ChatAI, Meet и&nbsp;LMS. Участники программы работают над ними в&nbsp;командах — решают реальные задачи, получают обратную связь от&nbsp;менторов и&nbsp;видят результат своей работы у&nbsp;живых пользователей. За&nbsp;12&nbsp;месяцев вы&nbsp;набираете опыт, который ценят работодатели.
+        </p>
+      </header>
+
+      <!-- Board meta-line -->
+      <div class="q-sol-board-meta" aria-hidden="true">
+        <div class="q-sol-board-meta__group">
+          <span>Quillon&nbsp;/&nbsp;Product&nbsp;Board</span>
+          <span class="q-sol-board-meta__sep"></span>
+          <span>3 продукта</span>
+          <span class="q-sol-board-meta__sep"></span>
+          <span><b>~22 человека</b> в командах</span>
+        </div>
+        <div class="q-sol-board-meta__group">
+          <span class="q-sol-board-meta__live">все сервисы&nbsp;— online</span>
+        </div>
+      </div>
+
+      <!-- ═════════════════════════════════════════════════════════
+           ENGAGEMENT TRACK — горизонтальная timeline вовлечения
+           М01 → М12 с пинами «вкл-в-проде / Jobs / Студия / оффер».
+           Это «навигатор» в самой панели, не декоративный progress bar.
+           ═════════════════════════════════════════════════════════ -->
+      <div class="q-sol-track">
+        <div class="q-sol-track__legend">
+          <p class="q-sol-track__legend-title">Когда вы&nbsp;входите в&nbsp;production</p>
+          <span class="q-sol-track__legend-meta">Шкала&nbsp;/ <b>М01 → М12</b></span>
+        </div>
+
+        <div class="q-sol-track__rail" role="img" aria-label="Таймлайн вовлечения студента в продукты Quillon с М01 по М12">
+          <!-- 12 ticks, evenly spaced -->
+          <div class="q-sol-track__ticks" aria-hidden="true">
+            <span class="q-sol-track__tick"></span>
+            <span class="q-sol-track__tick"></span>
+            <span class="q-sol-track__tick"></span>
+            <span class="q-sol-track__tick"></span>
+            <span class="q-sol-track__tick"></span>
+            <span class="q-sol-track__tick"></span>
+            <span class="q-sol-track__tick"></span>
+            <span class="q-sol-track__tick"></span>
+            <span class="q-sol-track__tick"></span>
+            <span class="q-sol-track__tick"></span>
+            <span class="q-sol-track__tick"></span>
+            <span class="q-sol-track__tick"></span>
+          </div>
+
+          <!-- Pins (top of rail). 11 интервалов между М01..М12.
+               М01/М12 — только дот (без лейбла), бокс-енды дублируют strip ниже.
+               М02 на лейне-1 (ниже), М03 на лейне-2 (выше) → не наезжают. -->
+          <div class="q-sol-track__pins">
+            <div class="q-sol-track__pin q-sol-track__pin--soft q-sol-track__pin--mobile-hide" style="left: 0%;">
+              <span class="q-sol-track__pin-stem"></span>
+              <span class="q-sol-track__pin-dot"></span>
+            </div>
+            <div class="q-sol-track__pin" style="left: 9.09%;">
+              <span class="q-sol-track__pin-label"><b>М02</b> <b>·</b> первые задачи</span>
+              <span class="q-sol-track__pin-stem"></span>
+              <span class="q-sol-track__pin-dot"></span>
+            </div>
+            <div class="q-sol-track__pin q-sol-track__pin--lane-2" style="left: 18.18%;">
+              <span class="q-sol-track__pin-label"><b>М03</b> <b>·</b> Jobs (оплата)</span>
+              <span class="q-sol-track__pin-stem"></span>
+              <span class="q-sol-track__pin-dot"></span>
+            </div>
+            <div class="q-sol-track__pin" style="left: 54.54%;">
+              <span class="q-sol-track__pin-label"><b>М07</b> <b>·</b> Студия · 5–80 тыс</span>
+              <span class="q-sol-track__pin-stem"></span>
+              <span class="q-sol-track__pin-dot"></span>
+            </div>
+            <div class="q-sol-track__pin q-sol-track__pin--soft q-sol-track__pin--mobile-hide" style="left: 100%;">
+              <span class="q-sol-track__pin-stem"></span>
+              <span class="q-sol-track__pin-dot"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Month labels strip -->
+        <div class="q-sol-track__months" aria-hidden="true">
+          <span>М01</span>
+          <span><b>М02</b></span>
+          <span><b>М03</b></span>
+          <span>М04</span>
+          <span>М05</span>
+          <span>М06</span>
+          <span><b>М07</b></span>
+          <span>М08</span>
+          <span>М09</span>
+          <span>М10</span>
+          <span>М11</span>
+          <span>М12</span>
+        </div>
+      </div>
+
+      <!-- ═════════════════════════════════════════════════════════
+           PRODUCT BOARD — три продукта параллельно как колонки
+           ChatAI · Meet · LMS. Каждая колонка — самостоятельный
+           «service-card» БЕЗ glass/blur/hover-lift, всё на hairlines.
+           ═════════════════════════════════════════════════════════ -->
+      <div class="q-sol-board" role="list" aria-label="Продукты Quillon в production">
+        <img src="../images/recolored/probe-C-accent.svg" alt="" class="q-sol-board__bg-art" loading="lazy" decoding="async">
+
+        <!-- ChatAI -->
+        <article class="q-sol-prod" role="listitem">
+          <div class="q-sol-prod__visual" aria-hidden="true">
+            <svg viewBox="0 0 320 200" preserveAspectRatio="xMidYMid meet">
+              <!-- Mono label сверху -->
+              <text x="14" y="20" class="q-sol-svg__text q-sol-svg__text--lo">CHATAI · QUERY THREAD</text>
+              <!-- User query bubble (right, accent-tinted) -->
+              <rect x="116" y="32" width="190" height="44" rx="8" class="q-sol-svg__bubble q-sol-svg__bubble--accent"/>
+              <text x="128" y="50" class="q-sol-svg__text q-sol-svg__text--hi">Найди в handbook раздел</text>
+              <text x="128" y="66" class="q-sol-svg__text q-sol-svg__text--hi">про onboarding-чеклист</text>
+              <!-- AI response bubble (left) -->
+              <rect x="14" y="86" width="226" height="60" rx="8" class="q-sol-svg__bubble"/>
+              <text x="26" y="104" class="q-sol-svg__text q-sol-svg__text--hi">Раздел 4.2: «Чеклист первого</text>
+              <text x="26" y="120" class="q-sol-svg__text q-sol-svg__text--hi">дня». 12 пунктов · NDA-форма</text>
+              <text x="26" y="136" class="q-sol-svg__text q-sol-svg__text--hi">подписана автоматически →</text>
+              <!-- Source pill -->
+              <rect x="14" y="156" width="148" height="20" rx="10" fill="none" stroke="rgba(94,106,210,0.35)" stroke-width="1"/>
+              <circle cx="26" cy="166" r="2.5" class="q-sol-svg__dot--accent"/>
+              <text x="36" y="170" class="q-sol-svg__text q-sol-svg__text--accent">RAG · handbook.md</text>
+              <!-- Input bar -->
+              <line x1="14" y1="190" x2="306" y2="190" class="q-sol-svg__line"/>
+              <text x="14" y="186" class="q-sol-svg__text q-sol-svg__text--lo">Ввести запрос…</text>
+              <rect x="80" y="178" width="1.5" height="12" fill="var(--q-text-mid)">
+                <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>
+              </rect>
+            </svg>
+          </div>
+          <div class="q-sol-prod__head">
+            <span class="q-sol-prod__ref"><b>P-01</b> · AI</span>
+            <span class="q-sol-prod__status">в&nbsp;проде</span>
+          </div>
+          <h3 class="q-sol-prod__name">ChatAI</h3>
+          <p class="q-sol-prod__desc">
+            Корпоративный AI-ассистент с&nbsp;собственным RAG и&nbsp;тонкой настройкой под клиента.
+          </p>
+          <div class="q-sol-prod__stack">
+            <span class="q-sol-prod__stack-item">Python</span>
+            <span class="q-sol-prod__stack-item">FastAPI</span>
+            <span class="q-sol-prod__stack-item">Postgres</span>
+            <span class="q-sol-prod__stack-item">LLM</span>
+          </div>
+          <div class="q-sol-prod__metrics">
+            <div class="q-sol-prod__metric">
+              <span class="q-sol-prod__metric-key">команда</span>
+              <span class="q-sol-prod__metric-val">8 чел.</span>
+            </div>
+            <div class="q-sol-prod__metric">
+              <span class="q-sol-prod__metric-key">релиз</span>
+              <span class="q-sol-prod__metric-val">CI/CD · еженедельно</span>
+            </div>
+            <div class="q-sol-prod__metric">
+              <span class="q-sol-prod__metric-key">точка входа</span>
+              <span class="q-sol-prod__metric-val">с&nbsp;М02</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Meet -->
+        <article class="q-sol-prod" role="listitem">
+          <div class="q-sol-prod__visual q-sol-prod__visual--photo" aria-hidden="true">
+            <img src="../images/meet-product.jpg" alt="" loading="lazy" decoding="async" width="1280" height="800">
+          </div>
+          <div class="q-sol-prod__head">
+            <span class="q-sol-prod__ref"><b>P-02</b> · МОБ.</span>
+            <span class="q-sol-prod__status">в&nbsp;проде</span>
+          </div>
+          <h3 class="q-sol-prod__name">Meet</h3>
+          <p class="q-sol-prod__desc">
+            iOS-приложение для&nbsp;офлайн-знакомств в&nbsp;закрытых сообществах. Live-пользователи и&nbsp;App&nbsp;Store-сборка.
+          </p>
+          <div class="q-sol-prod__stack">
+            <span class="q-sol-prod__stack-item">Flutter</span>
+            <span class="q-sol-prod__stack-item">Swift</span>
+            <span class="q-sol-prod__stack-item">REST</span>
+            <span class="q-sol-prod__stack-item">QA</span>
+          </div>
+          <div class="q-sol-prod__metrics">
+            <div class="q-sol-prod__metric">
+              <span class="q-sol-prod__metric-key">команда</span>
+              <span class="q-sol-prod__metric-val">7 чел.</span>
+            </div>
+            <div class="q-sol-prod__metric">
+              <span class="q-sol-prod__metric-key">релиз</span>
+              <span class="q-sol-prod__metric-val">App Store · 2-нед спринт</span>
+            </div>
+            <div class="q-sol-prod__metric">
+              <span class="q-sol-prod__metric-key">точка входа</span>
+              <span class="q-sol-prod__metric-val">с&nbsp;М02</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- LMS -->
+        <article class="q-sol-prod" role="listitem">
+          <div class="q-sol-prod__visual" aria-hidden="true">
+            <svg viewBox="0 0 320 200" preserveAspectRatio="xMidYMid meet">
+              <text x="14" y="20" class="q-sol-svg__text q-sol-svg__text--lo">LMS · ТРЕК PYTHON · М03</text>
+              <!-- Lesson 1: Complete (filled checkmark circle) -->
+              <g transform="translate(14, 32)">
+                <circle cx="9" cy="10" r="7" class="q-sol-svg__dot--filled"/>
+                <path d="M5.5 10.5 L8 13 L12.5 7.5" fill="none" stroke="var(--q-bg-0)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <text x="26" y="14" class="q-sol-svg__text q-sol-svg__text--lo">Урок 12 · FastAPI · обработчики</text>
+                <text x="270" y="14" class="q-sol-svg__text q-sol-svg__text--lo">28м</text>
+              </g>
+              <!-- Lesson 2: In progress (accent ring with dot) -->
+              <g transform="translate(14, 60)">
+                <circle cx="9" cy="10" r="7" fill="none" stroke="var(--q-accent-hover)" stroke-width="1.5"/>
+                <circle cx="9" cy="10" r="3" class="q-sol-svg__dot--accent"/>
+                <text x="26" y="14" class="q-sol-svg__text q-sol-svg__text--hi">Урок 13 · Pydantic-схемы</text>
+                <text x="270" y="14" class="q-sol-svg__text q-sol-svg__text--accent">сейчас</text>
+                <!-- Progress bar -->
+                <rect x="26" y="22" width="244" height="3" rx="1.5" fill="var(--q-bg-4)"/>
+                <rect x="26" y="22" width="118" height="3" rx="1.5" class="q-sol-svg__bar--accent"/>
+                <text x="26" y="38" class="q-sol-svg__text q-sol-svg__text--lo" style="font-size:8px">6 из 12 шагов</text>
+              </g>
+              <!-- Lesson 3: Locked (empty ring) -->
+              <g transform="translate(14, 110)">
+                <circle cx="9" cy="10" r="7" fill="none" stroke="var(--q-line-strong)" stroke-width="1"/>
+                <text x="26" y="14" class="q-sol-svg__text q-sol-svg__text--lo">Урок 14 · async-handlers</text>
+                <text x="270" y="14" class="q-sol-svg__text q-sol-svg__text--lo">42м</text>
+              </g>
+              <!-- Lesson 4: Locked -->
+              <g transform="translate(14, 134)">
+                <circle cx="9" cy="10" r="7" fill="none" stroke="var(--q-line-strong)" stroke-width="1"/>
+                <text x="26" y="14" class="q-sol-svg__text q-sol-svg__text--lo">Урок 15 · WebSocket basics</text>
+                <text x="270" y="14" class="q-sol-svg__text q-sol-svg__text--lo">36м</text>
+              </g>
+              <!-- Footer -->
+              <line x1="14" y1="166" x2="306" y2="166" class="q-sol-svg__line"/>
+              <text x="14" y="184" class="q-sol-svg__text q-sol-svg__text--lo">прогресс трека</text>
+              <!-- Linear progress bar full-width -->
+              <rect x="14" y="190" width="220" height="3" rx="1.5" fill="var(--q-bg-4)"/>
+              <rect x="14" y="190" width="55" height="3" rx="1.5" class="q-sol-svg__bar--accent"/>
+              <text x="244" y="194" class="q-sol-svg__text q-sol-svg__text--accent">М03 / М12</text>
+            </svg>
+          </div>
+          <div class="q-sol-prod__head">
+            <span class="q-sol-prod__ref"><b>P-03</b> · ВЕБ</span>
+            <span class="q-sol-prod__status">в&nbsp;проде</span>
+          </div>
+          <h3 class="q-sol-prod__name">LMS</h3>
+          <p class="q-sol-prod__desc">
+            Внутренняя обучающая платформа Quillon: уроки, прогресс, проверка домашних заданий менторами.
+          </p>
+          <div class="q-sol-prod__stack">
+            <span class="q-sol-prod__stack-item">Python</span>
+            <span class="q-sol-prod__stack-item">React</span>
+            <span class="q-sol-prod__stack-item">Postgres</span>
+            <span class="q-sol-prod__stack-item">CI/CD</span>
+          </div>
+          <div class="q-sol-prod__metrics">
+            <div class="q-sol-prod__metric">
+              <span class="q-sol-prod__metric-key">команда</span>
+              <span class="q-sol-prod__metric-val">7 чел.</span>
+            </div>
+            <div class="q-sol-prod__metric">
+              <span class="q-sol-prod__metric-key">релиз</span>
+              <span class="q-sol-prod__metric-val">CI/CD · по&nbsp;готовности</span>
+            </div>
+            <div class="q-sol-prod__metric">
+              <span class="q-sol-prod__metric-key">точка входа</span>
+              <span class="q-sol-prod__metric-val">с&nbsp;М02</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- ═════════════════════════════════════════════════════════
+           REASONS — четыре «почему» как асимметричные параграфы
+           Сетка 12-col, разная ширина: 6+6, потом 7+5.
+           ЗАМЕЧАНИЕ: ноль иконок, ноль ✓, ноль gradient.
+           ═════════════════════════════════════════════════════════ -->
+      <div class="q-sol-reasons">
+
+        <!-- 01 -->
+        <article class="q-sol-reason q-sol-reason--01 q-sol-reason--top-clear">
+          <div class="q-sol-reason__head">
+            <span class="q-sol-reason__num">01</span>
+            <span class="q-sol-reason__key">Code <b>·</b> в&nbsp;production</span>
+          </div>
+          <h3 class="q-sol-reason__title">
+            Код в&nbsp;production с&nbsp;первых месяцев
+          </h3>
+          <p class="q-sol-reason__body">
+            Вы работаете в&nbsp;репозиториях <b>ChatAI, Meet и&nbsp;LMS</b> — продуктов, которыми пользуются реальные люди. Ваши коммиты попадают в&nbsp;production, и&nbsp;на&nbsp;собеседовании вы&nbsp;показываете историю работы над живым проектом.
+          </p>
+          <div class="q-sol-reason__refs">
+            <span><em>М02</em> старт</span>
+            <span>3 репозитория</span>
+            <span>code-review · ментор</span>
+          </div>
+        </article>
+
+        <!-- 02 -->
+        <article class="q-sol-reason q-sol-reason--02 q-sol-reason--top-clear">
+          <div class="q-sol-reason__head">
+            <span class="q-sol-reason__num">02</span>
+            <span class="q-sol-reason__key">Jobs <b>·</b> оплата</span>
+          </div>
+          <h3 class="q-sol-reason__title">
+            Оплачиваемые задачи со&nbsp;2-го месяца
+          </h3>
+          <p class="q-sol-reason__body">
+            Со&nbsp;<b>2-го месяца</b> — первые задачи от&nbsp;заказчиков: Telegram-боты, парсеры, автоматизации. С&nbsp;<b>3-го месяца</b> доступны оплачиваемые задачи через&nbsp;Quillon&nbsp;Jobs. С&nbsp;<b>7-го месяца</b> — коммерческие проекты через Студию: <b>от&nbsp;5&nbsp;000 до&nbsp;80&nbsp;000&nbsp;₽</b> за&nbsp;проект.
+          </p>
+          <div class="q-sol-reason__refs">
+            <span><em>М02</em> · <em>М03</em> · <em>М07</em></span>
+            <span>Quillon Jobs</span>
+            <span>Студия</span>
+          </div>
+        </article>
+
+        <!-- 03 -->
+        <article class="q-sol-reason q-sol-reason--03">
+          <div class="q-sol-reason__head">
+            <span class="q-sol-reason__num">03</span>
+            <span class="q-sol-reason__key">Team <b>·</b> кросс-функциональная</span>
+          </div>
+          <h3 class="q-sol-reason__title">
+            Работа в&nbsp;кросс-функциональной команде
+          </h3>
+          <p class="q-sol-reason__body">
+            <b>Backend, mobile и&nbsp;QA</b> работают над одним продуктом — спринты, дедлайны, код-ревью. Вы&nbsp;учитесь не&nbsp;только писать код, но&nbsp;и&nbsp;взаимодействовать с&nbsp;командой так, как&nbsp;это устроено в&nbsp;любой IT-компании.
+          </p>
+          <div class="q-sol-reason__refs">
+            <span><b>22</b> человека</span>
+            <span>2-нед спринты</span>
+            <span>стендапы · ретро</span>
+            <span>pull-request review</span>
+          </div>
+        </article>
+
+        <!-- 04 -->
+        <article class="q-sol-reason q-sol-reason--04">
+          <div class="q-sol-reason__head">
+            <span class="q-sol-reason__num">04</span>
+            <span class="q-sol-reason__key">Ops <b>·</b> инфраструктура</span>
+          </div>
+          <h3 class="q-sol-reason__title">
+            Три продукта в&nbsp;production за&nbsp;программой
+          </h3>
+          <p class="q-sol-reason__body">
+            За программой стоит инфраструктура действующей IT-компании: <b>три продукта с&nbsp;реальными пользователями</b>, собственные серверы, CI/CD-пайплайны. Вы&nbsp;учитесь на&nbsp;процессах, которые уже работают, а&nbsp;не&nbsp;на&nbsp;демо-примерах.
+          </p>
+          <div class="q-sol-reason__refs">
+            <span>own servers</span>
+            <span>CI/CD</span>
+            <span>не&nbsp;демо</span>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- ═════════════════════════════════════════════════════════
+           FOOT — assertion + CTA
+           ═════════════════════════════════════════════════════════ -->
+      <div class="q-sol-foot">
+        <div class="q-sol-foot__assertion">
+          <span class="q-sol-foot__assertion-label">Главное отличие</span>
+          <p class="q-sol-foot__assertion-text">
+            <b>Учебных проектов в&nbsp;Quillon нет.</b> С&nbsp;М02 — реальные репозитории, с&nbsp;М03 — оплата, с&nbsp;М07 — коммерческие проекты Студии. К&nbsp;М12 у&nbsp;вас в&nbsp;портфолио&nbsp;— production-история, а&nbsp;не&nbsp;TODO-лист.
+          </p>
+        </div>
+
+        <a class="q-btn q-btn--primary q-btn--lg" href="#products">
+          Посмотреть треки
+          <span class="q-btn__icon" aria-hidden="true">→</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+</body>
+</html>

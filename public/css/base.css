@@ -102,12 +102,13 @@ section {
 .section-label {
   display: inline-block;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 500;
+  font-size: 0.6875rem;
+  font-weight: 400;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--accent-light);
-  margin-bottom: var(--space-sm);
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: var(--space-xs, 8px);
+  opacity: 0.75;
 }
 
 /* Subtitle below section heading */
@@ -120,12 +121,10 @@ section {
   text-wrap: pretty;
 }
 
-/* Gradient text utility */
+/* Gradient text utility — kept for cases that explicitly opt in.
+   Anti-AI guideline: use at most once per page. */
 .text-gradient {
-  background: linear-gradient(135deg, var(--accent-light), var(--purple));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--accent);
 }
 
 /* ── Scrollbar ─────────────────────────────────────────────────────────── */
@@ -184,16 +183,10 @@ html {
   }
 }
 
-/* Glow pulse — CTA buttons */
+/* Glow pulse removed (anti-AI). Kept as no-op to avoid breaking
+   references — any `animation: glow ...` now resolves to nothing. */
 @keyframes glow {
-  0%, 100% {
-    box-shadow: 0 0 20px var(--accent-glow),
-                0 0 40px rgba(31, 78, 216, 0.15);
-  }
-  50% {
-    box-shadow: 0 0 30px var(--accent-glow),
-                0 0 60px rgba(31, 78, 216, 0.25);
-  }
+  0%, 100% { box-shadow: none; }
 }
 
 /* Blink — live dot opacity */

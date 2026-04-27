@@ -178,16 +178,9 @@
 }
 
 /* Larger icons for section cards */
-.solution-icon [data-lucide],
 .product-icon-row [data-lucide] {
   width: 32px;
   height: 32px;
-  color: var(--accent-light);
-}
-
-.audience-emoji [data-lucide] {
-  width: 28px;
-  height: 28px;
   color: var(--accent-light);
 }
 
@@ -244,7 +237,9 @@
   white-space: nowrap;
   cursor: pointer;
   border: none;
-  transition: all var(--transition);
+  transition: background var(--transition), color var(--transition),
+              box-shadow var(--transition), transform var(--transition),
+              border-color var(--transition);
   text-decoration: none;
 }
 
@@ -254,35 +249,18 @@
   background: linear-gradient(135deg, var(--accent), var(--accent-light));
   color: #fff;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.18) inset,
-              0 8px 24px rgba(31, 78, 216, 0.28);
+              0 8px 24px rgba(46, 134, 171, 0.28);
   overflow: hidden;
   isolation: isolate;
 }
 
-/* Sheen — diagonal light sweep on hover */
-.btn-primary::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(120deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.18) 50%,
-    transparent 70%);
-  transform: translateX(-120%);
-  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  z-index: -1;
-  pointer-events: none;
-}
+/* Sheen sweep removed (anti-AI). Hover → quiet color-shift + lift only. */
 
 .btn-primary:hover {
-  transform: translateY(-2px) scale(1.01);
+  background: var(--accent-light);
+  transform: translateY(-1px);
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.22) inset,
-              0 16px 40px rgba(31, 78, 216, 0.5),
-              0 0 0 1px rgba(59, 111, 255, 0.3);
-}
-
-.btn-primary:hover::before {
-  transform: translateX(120%);
+              0 12px 28px rgba(46, 134, 171, 0.42);
 }
 
 .btn-primary:active {
@@ -305,7 +283,7 @@
 .btn-big {
   height: 64px;
   padding: 0 44px;
-  border-radius: 16px;
+  border-radius: 6px;
   font-size: 1.125rem;
 }
 
@@ -335,47 +313,22 @@
   overflow: hidden;
 }
 
-/* Hover accent — thin light sweep across the top edge */
-.card::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    color-mix(in oklab, var(--accent-blue) 70%, transparent) 25%,
-    color-mix(in oklab, var(--accent-violet) 65%, transparent) 75%,
-    transparent 100%
-  );
-  opacity: 0;
-  transform: scaleX(0.4);
-  transform-origin: center;
-  transition: opacity 0.4s ease, transform 0.5s ease;
-  pointer-events: none;
-}
+/* Card top-edge gradient sweep removed (anti-AI, shadcn cliché).
+   2026-04-21: убран translateY-lift (Manual rule iv). Hover теперь —
+   смена цвета бордера + тонкая inner-highlight, без подъёма. */
 
 .card:hover {
-  transform: translateY(-4px);
-  border-color: var(--border-blue);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset,
-              0 20px 44px rgba(0, 0, 0, 0.38),
-              0 6px 18px rgba(31, 78, 216, 0.16);
-}
-
-.card:hover::after {
-  opacity: 1;
-  transform: scaleX(1);
+  border-color: var(--border-accent);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08) inset,
+              0 8px 28px rgba(0, 0, 0, 0.32);
 }
 
 /* Highlighted card — gradient accent border */
 .card-highlight {
   background: linear-gradient(
     160deg,
-    rgba(31, 78, 216, 0.12),
-    rgba(124, 58, 237, 0.08)
+    rgba(46, 134, 171, 0.12),
+    rgba(46, 134, 171, 0.08)
   );
   border: 2px solid var(--border-blue);
 }
@@ -399,7 +352,7 @@
 
 /* Color variants */
 .tag-blue {
-  background: rgba(31, 78, 216, 0.15);
+  background: rgba(46, 134, 171, 0.15);
   color: var(--accent-light);
 }
 
@@ -409,8 +362,8 @@
 }
 
 .tag-purple {
-  background: rgba(124, 58, 237, 0.15);
-  color: var(--purple);
+  background: rgba(46, 134, 171, 0.15);
+  color: var(--accent);
 }
 
 .tag-orange {
@@ -423,7 +376,7 @@
    ACCORDION / FAQ
    ========================================================================== */
 .faq-item {
-  border-radius: 14px;
+  border-radius: 6px;
   border: 1px solid var(--border);
   overflow: hidden;
   transition: border-color var(--transition),
@@ -484,27 +437,28 @@
 /* ==========================================================================
    LIVE BADGE
    ========================================================================== */
+/* Monochrome tonal — keeps "live" affordance via blink + pulse, no warm accent. */
 .live-badge {
   display: inline-flex;
   align-items: center;
   gap: var(--space-xs);
-  padding: 6px 16px;
+  padding: 6px 14px;
   border-radius: 9999px;
   font-family: var(--font-mono);
   font-size: 0.75rem;
   font-weight: 500;
-  color: var(--success);
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  color: var(--accent-light);
+  background: var(--accent-subtle);
+  border: 1px solid color-mix(in oklab, var(--accent) 28%, transparent);
 }
 
 .live-dot {
   position: relative;
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background: var(--success);
-  animation: blink 2s ease-in-out infinite;
+  background: var(--accent-light);
+  animation: blink 2.4s ease-in-out infinite;
 }
 
 .live-dot::after {
@@ -512,8 +466,9 @@
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: var(--success);
-  animation: pulse 2s ease-out infinite;
+  background: var(--accent-light);
+  animation: pulse 2.4s ease-out infinite;
+  opacity: 0.6;
 }
 
 
@@ -542,7 +497,7 @@
   padding: 0 var(--space-sm);
   background: var(--bg);
   border: 1px solid var(--border-light);
-  border-radius: 10px;
+  border-radius: 6px;
   color: var(--text-primary);
   font-family: var(--font-body);
   font-size: 1rem;

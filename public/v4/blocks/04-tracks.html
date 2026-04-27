@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quillon v4 · Tracks block (04)</title>
+
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/tokens.css?v=4">
+  <link rel="stylesheet" href="../css/base.css?v=4">
+  <link rel="stylesheet" href="../css/components.css?v=4">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+     * 04 · TRACKS — comparison ledger (Python · Flutter · QA)
+     *
+     * Концепция:
+     *   3 трека = 3 параллельных editorial-колонки. Каждая строка
+     *   данных идёт сквозь все колонки (salary, vacancies, stack, why).
+     *   Это compare-table, но в editorial-стиле FT/Stripe-spec —
+     *   horizontal rules, tabular-nums, никаких feather-icons.
+     *
+     * Отстройка от 03 (solution):
+     *   solution = 3 продукта компании Quillon (что строим)
+     *   tracks   = 3 направления обучения (на чём растём как
+     *              специалист). Структурно похоже, но смыслово
+     *              ДРУГОЕ — это oferta, не product board.
+     *
+     * Anti-AI:
+     *   • Нет «выбери лучший трек» (decision-noise). Ровный сравнительный лист.
+     *   • Salary = display numeral, monoцветный.
+     *   • Stack — не 8 цветных бейджей, а inline mono-список через «·».
+     *   • Badge — короткая mono-вспышка indigo, не 3D-pill.
+     *   • Числа в tabular-nums.
+     * ═══════════════════════════════════════════════════════════════ */
+
+    .q-tracks {
+      position: relative;
+      padding: var(--q-s-10) 0 var(--q-s-11);
+      overflow: hidden;
+    }
+    /* Тонкая accent-halo по диагонали к solution (top-right) — продолжение
+       ритма: hero=top-left, market=bottom-right, solution=top-right,
+       tracks=bottom-left. */
+    .q-tracks::before {
+      content: "";
+      position: absolute;
+      bottom: -240px;
+      left: -240px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(94, 106, 210, 0.07), transparent 62%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .q-tracks .q-container { position: relative; z-index: 1; }
+
+    .q-tracks .q-section-head { max-width: 760px; margin-bottom: var(--q-s-9); }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * COMPARE LEDGER — 3 column grid, rows aligned via subgrid.
+     * Hairlines между колонками. Padding столбцов одинаковый, чтобы
+     * соседние строки выстраивались по высоте.
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-tracks-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-rows: auto auto auto auto auto auto auto 1fr auto;
+      row-gap: var(--q-s-5);
+      border-top: 1px solid var(--q-line);
+      border-bottom: 1px solid var(--q-line);
+      padding: var(--q-s-7) 0;
+    }
+    .q-track {
+      display: grid;
+      grid-row: 1 / -1;
+      grid-template-rows: subgrid;
+      padding: 0 var(--q-s-6);
+      position: relative;
+    }
+    .q-track + .q-track { border-left: 1px solid var(--q-line); }
+
+    /* Top ref-line: track id + vacancies, mono. */
+    .q-track__topref {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-family: var(--q-font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+    .q-track__topref b {
+      color: var(--q-accent-hover);
+      font-weight: var(--q-fw-medium);
+    }
+
+    /* Name — display heading */
+    .q-track__name {
+      font-family: var(--q-font-display);
+      font-size: clamp(1.625rem, 2.4vw, 2.125rem);
+      font-weight: var(--q-fw-linear);
+      line-height: 1.1;
+      letter-spacing: -0.022em;
+      color: var(--q-text-hi);
+      margin: 0;
+    }
+
+    /* Badge — indigo mono flash, без декоративной точки (anti-AI) */
+    .q-track__badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border: 1px solid rgba(94, 106, 210, 0.35);
+      border-radius: var(--q-r-sm);
+      background: rgba(94, 106, 210, 0.08);
+      font-family: var(--q-font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--q-accent-hover);
+      width: fit-content;
+    }
+
+    /* Salary block — hero stat */
+    .q-track__salary {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding-top: var(--q-s-3);
+      border-top: 1px dashed var(--q-line);
+    }
+    .q-track__salary-num {
+      font-family: var(--q-font-display);
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      font-weight: var(--q-fw-linear);
+      line-height: 1;
+      letter-spacing: -0.025em;
+      color: var(--q-text-hi);
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+    }
+    .q-track__salary-num span { color: var(--q-text-mid); }
+    .q-track__salary-meta {
+      font-family: var(--q-font-mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+
+    /* Description */
+    .q-track__desc {
+      font-size: var(--q-t-base);
+      line-height: 1.55;
+      color: var(--q-text-mid);
+      margin: 0;
+      max-width: 38ch;
+    }
+
+    /* Stack list — inline mono with separators */
+    .q-track__stack {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding-top: var(--q-s-3);
+      border-top: 1px dashed var(--q-line);
+    }
+    .q-track__stack-kicker {
+      font-family: var(--q-font-mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+    .q-track__stack-kicker b {
+      color: var(--q-text-mid);
+      font-weight: var(--q-fw-medium);
+    }
+    .q-track__stack-list {
+      font-family: var(--q-font-mono);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      color: var(--q-text-mid);
+      line-height: 1.6;
+    }
+    .q-track__stack-list span + span::before {
+      content: " · ";
+      color: var(--q-text-dim);
+    }
+
+    /* Why kicker — без верхнего разделителя, продолжает зону «stack» */
+    .q-track__why {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .q-track__why-kicker {
+      font-family: var(--q-font-mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+    .q-track__why-text {
+      font-size: var(--q-t-small);
+      line-height: 1.55;
+      color: var(--q-text-mid);
+      margin: 0;
+      max-width: 38ch;
+    }
+
+    /* Spacer — fills 1fr to push CTA to bottom */
+    .q-track__spacer { display: block; }
+
+    /* CTA stack */
+    .q-track__cta-block {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-top: var(--q-s-4);
+    }
+    .q-track__cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-radius: var(--q-r-md);
+      background: var(--q-bg-2);
+      border: 1px solid var(--q-line-strong);
+      color: var(--q-text-hi);
+      font-weight: var(--q-fw-medium);
+      font-size: var(--q-t-base);
+      text-decoration: none;
+      transition: border-color var(--q-dur-fast) var(--q-ease),
+                  background var(--q-dur-fast) var(--q-ease),
+                  color var(--q-dur-fast) var(--q-ease);
+    }
+    .q-track__cta:hover {
+      border-color: var(--q-accent);
+      background: var(--q-bg-3);
+      color: var(--q-accent-hover);
+    }
+    .q-track__cta-arrow {
+      font-family: var(--q-font-mono);
+      color: var(--q-text-low);
+      transition: transform var(--q-dur-fast) var(--q-ease),
+                  color var(--q-dur-fast) var(--q-ease);
+    }
+    .q-track__cta:hover .q-track__cta-arrow {
+      color: var(--q-accent);
+      transform: translateX(2px);
+    }
+    .q-track__price {
+      font-family: var(--q-font-mono);
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      color: var(--q-text-low);
+    }
+    .q-track__price b {
+      color: var(--q-text-mid);
+      font-weight: var(--q-fw-medium);
+    }
+
+    /* Bottom cross-section CTA — без своей верхней хайрлайны
+       (нижняя граница grid уже разделяет). */
+    .q-tracks-foot {
+      margin-top: var(--q-s-7);
+      padding: var(--q-s-6) 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--q-s-5);
+    }
+    .q-tracks-foot__copy {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      max-width: 50ch;
+    }
+    .q-tracks-foot__title {
+      font-family: var(--q-font-display);
+      font-size: var(--q-t-h4);
+      font-weight: var(--q-fw-linear);
+      letter-spacing: -0.014em;
+      color: var(--q-text-hi);
+    }
+    .q-tracks-foot__sub {
+      font-size: var(--q-t-small);
+      color: var(--q-text-mid);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * RESPONSIVE
+     * ═══════════════════════════════════════════════════════════════ */
+    @media (max-width: 980px) {
+      .q-tracks-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+      }
+      .q-track + .q-track {
+        border-left: 0;
+        border-top: 1px solid var(--q-line);
+      }
+      .q-track {
+        grid-row: auto;
+        grid-template-rows: auto;
+        gap: var(--q-s-4);
+      }
+      .q-track__desc, .q-track__why-text { max-width: none; }
+    }
+    @media (max-width: 720px) {
+      .q-tracks { padding: var(--q-s-8) 0 var(--q-s-9); }
+      .q-tracks-foot {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--q-s-4);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       STICKY TOPBAR
+       ═══════════════════════════════════════════════════════════════ -->
+  <header class="q-topbar">
+    <a href="#" class="q-topbar__brand">
+      <span class="q-topbar__brand-mark">Q</span>
+      <span>Quillon</span>
+    </a>
+
+    <nav class="q-topbar__nav" aria-label="Главная навигация">
+      <a class="q-topbar__link" href="#products">Треки</a>
+      <a class="q-topbar__link" href="#format">Формат</a>
+      <a class="q-topbar__link" href="#pricing">Цена</a>
+      <a class="q-topbar__link" href="#quillon_jobs">Jobs</a>
+      <a class="q-topbar__link" href="#faq">FAQ</a>
+    </nav>
+
+    <div class="q-topbar__actions">
+      <a class="q-btn q-btn--link" href="#">Войти</a>
+      <a class="q-btn q-btn--primary q-btn--sm" href="/quiz">Пройти тест</a>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       04 · TRACKS
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="q-section q-tracks" id="tracks">
+    <div class="q-container">
+
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>04</em> · НАПРАВЛЕНИЯ</div>
+        <h2 class="q-section-head__title">Три трека&nbsp;— максимум вакансий</h2>
+        <p class="q-section-head__sub">
+          Каждый трек выбран по&nbsp;двум критериям: высокий спрос на&nbsp;рынке и&nbsp;низкая конкуренция среди Junior-специалистов. Все три включают работу с&nbsp;AI-инструментами и&nbsp;кросс-командную практику на&nbsp;продуктах Quillon.
+        </p>
+      </header>
+
+      <div class="q-tracks-grid" role="list" aria-label="Треки обучения">
+
+        <!-- ═══════════════ Python Backend + ML ═══════════════ -->
+        <article class="q-track" role="listitem">
+          <div class="q-track__topref">
+            <span><b>T-01</b> · ML</span>
+            <span>12&nbsp;000+ вакансий</span>
+          </div>
+
+          <h3 class="q-track__name">Python Backend&nbsp;+&nbsp;ML</h3>
+
+          <span class="q-track__badge">Самый&nbsp;востребованный</span>
+
+          <div class="q-track__salary">
+            <div class="q-track__salary-num"><span>от</span>&nbsp;90&nbsp;000&nbsp;<span>₽</span></div>
+            <div class="q-track__salary-meta">junior · по&nbsp;рынку</div>
+          </div>
+
+          <p class="q-track__desc">
+            Серверная часть приложений, работа с&nbsp;данными и&nbsp;внедрение AI-моделей в&nbsp;реальные продукты. Python&nbsp;— язык номер&nbsp;1 для&nbsp;работы с&nbsp;искусственным интеллектом.
+          </p>
+
+          <div class="q-track__stack">
+            <div class="q-track__stack-kicker"><b>Стек</b> · 8&nbsp;технологий</div>
+            <div class="q-track__stack-list">
+              <span>Python</span><span>FastAPI</span><span>PostgreSQL</span><span>Redis</span><span>Docker</span><span>Claude&nbsp;API</span><span>RAG</span><span>ML</span>
+            </div>
+          </div>
+
+          <div class="q-track__why">
+            <div class="q-track__why-kicker">Почему это направление</div>
+            <p class="q-track__why-text">
+              Специалистов с&nbsp;ML-навыками критически мало&nbsp;— конкуренция среди Junior в&nbsp;разы ниже, чем&nbsp;в&nbsp;других направлениях.
+            </p>
+          </div>
+
+          <span class="q-track__spacer"></span>
+
+          <div class="q-track__cta-block">
+            <a class="q-track__cta" href="/quiz">
+              <span>Выбрать Python</span>
+              <span class="q-track__cta-arrow">→</span>
+            </a>
+            <span class="q-track__price"><b>8&nbsp;250&nbsp;₽/мес</b> · рассрочка 0% · 24&nbsp;месяца</span>
+          </div>
+        </article>
+
+        <!-- ═══════════════ Flutter Developer ═══════════════ -->
+        <article class="q-track" role="listitem">
+          <div class="q-track__topref">
+            <span><b>T-02</b> · МОБИЛЬНЫЕ</span>
+            <span>4&nbsp;500+ вакансий</span>
+          </div>
+
+          <h3 class="q-track__name">Flutter Developer</h3>
+
+          <span class="q-track__badge">Один&nbsp;код&nbsp;— три&nbsp;платформы</span>
+
+          <div class="q-track__salary">
+            <div class="q-track__salary-num"><span>от</span>&nbsp;85&nbsp;000&nbsp;<span>₽</span></div>
+            <div class="q-track__salary-meta">junior · по&nbsp;рынку</div>
+          </div>
+
+          <p class="q-track__desc">
+            Полноценные мобильные приложения: один язык (Dart), один код&nbsp;— и&nbsp;он&nbsp;работает на&nbsp;iOS, Android и&nbsp;в&nbsp;браузере. Flutter-разработчиков в&nbsp;России в&nbsp;3–4&nbsp;раза меньше, чем iOS/Android.
+          </p>
+
+          <div class="q-track__stack">
+            <div class="q-track__stack-kicker"><b>Стек</b> · 7&nbsp;технологий</div>
+            <div class="q-track__stack-list">
+              <span>Flutter</span><span>Dart</span><span>Firebase</span><span>REST&nbsp;API</span><span>Web</span><span>App&nbsp;Store</span><span>Google&nbsp;Play</span>
+            </div>
+          </div>
+
+          <div class="q-track__why">
+            <div class="q-track__why-kicker">Почему это направление</div>
+            <p class="q-track__why-text">
+              Вы&nbsp;выходите на&nbsp;рынок, где за&nbsp;вас конкурируют работодатели, а&nbsp;не&nbsp;вы за&nbsp;вакансии.
+            </p>
+          </div>
+
+          <span class="q-track__spacer"></span>
+
+          <div class="q-track__cta-block">
+            <a class="q-track__cta" href="/quiz">
+              <span>Выбрать Flutter</span>
+              <span class="q-track__cta-arrow">→</span>
+            </a>
+            <span class="q-track__price"><b>8&nbsp;250&nbsp;₽/мес</b> · рассрочка 0% · 24&nbsp;месяца</span>
+          </div>
+        </article>
+
+        <!-- ═══════════════ QA Automation ═══════════════ -->
+        <article class="q-track" role="listitem">
+          <div class="q-track__topref">
+            <span><b>T-03</b> · QA</span>
+            <span>6&nbsp;000+ вакансий</span>
+          </div>
+
+          <h3 class="q-track__name">QA&nbsp;Automation</h3>
+
+          <span class="q-track__badge">Быстрый вход в&nbsp;IT</span>
+
+          <div class="q-track__salary">
+            <div class="q-track__salary-num"><span>от</span>&nbsp;75&nbsp;000&nbsp;<span>₽</span></div>
+            <div class="q-track__salary-meta">junior · по&nbsp;рынку</div>
+          </div>
+
+          <p class="q-track__desc">
+            Автотесты, CI/CD-пайплайны, контроль качества продуктов. QA&nbsp;Automation&nbsp;— одна из&nbsp;самых недооценённых специализаций в&nbsp;IT: меньше конкурентов на&nbsp;входе, стабильный спрос.
+          </p>
+
+          <div class="q-track__stack">
+            <div class="q-track__stack-kicker"><b>Стек</b> · 6&nbsp;технологий</div>
+            <div class="q-track__stack-list">
+              <span>Python</span><span>Pytest</span><span>Selenium</span><span>Playwright</span><span>GitHub&nbsp;Actions</span><span>Allure</span>
+            </div>
+          </div>
+
+          <div class="q-track__why">
+            <div class="q-track__why-kicker">Почему это направление</div>
+            <p class="q-track__why-text">
+              QA-специалист, умеющий тестировать AI-системы&nbsp;— отдельный уровень ценности на&nbsp;рынке. С&nbsp;ростом AI-сервисов потребность только увеличивается.
+            </p>
+          </div>
+
+          <span class="q-track__spacer"></span>
+
+          <div class="q-track__cta-block">
+            <a class="q-track__cta" href="/quiz">
+              <span>Выбрать QA</span>
+              <span class="q-track__cta-arrow">→</span>
+            </a>
+            <span class="q-track__price"><b>8&nbsp;250&nbsp;₽/мес</b> · рассрочка 0% · 24&nbsp;месяца</span>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- ═══════════════ Bottom: cross-track CTA ═══════════════ -->
+      <div class="q-tracks-foot">
+        <div class="q-tracks-foot__copy">
+          <span class="q-tracks-foot__title">Не&nbsp;знаете, какой трек?</span>
+          <span class="q-tracks-foot__sub">Тест покажет за&nbsp;5&nbsp;минут&nbsp;— персональная рекомендация по&nbsp;стеку и&nbsp;прогноз заработка.</span>
+        </div>
+        <a class="q-btn q-btn--primary q-btn--lg" href="/quiz">
+          Пройти тест
+          <span class="q-btn__icon" aria-hidden="true">→</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+</body>
+</html>

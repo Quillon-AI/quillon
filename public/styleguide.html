@@ -1,0 +1,2396 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quillon — Design System v2.0 (Cerulean / Editorial)</title>
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- Live design system: variables + components pulled from production CSS.
+     Any edit to these files updates this styleguide automatically. -->
+<link rel="stylesheet" href="/css/variables.css">
+<link rel="stylesheet" href="/css/components.css">
+
+<style>
+/* ══════════════════════════════════════════════════
+   STYLEGUIDE CHROME — only for this document.
+   Design tokens live in /css/variables.css.
+   ══════════════════════════════════════════════════ */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.sg-shell { max-width: 1240px; margin: 0 auto; padding: 64px clamp(20px, 4vw, 48px) 120px; }
+
+.sg-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px; flex-wrap: wrap;
+  padding: 18px clamp(20px, 4vw, 48px);
+  position: sticky; top: 0; z-index: 50;
+  /* anti-AI: flat fill + 1px hairline вместо blur+translucency */
+  background: var(--bg-deep);
+  border-bottom: 1px solid var(--border-light);
+}
+.sg-brand {
+  display: flex; align-items: center; gap: 12px;
+  font-family: var(--font-display);
+  font-weight: 800; font-size: 1rem; letter-spacing: 0.02em;
+}
+.sg-brand-dot {
+  width: 10px; height: 10px; border-radius: 2px;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+.sg-brand em { font-style: normal; color: var(--text-tertiary); font-weight: 500; font-family: var(--font-mono); font-size: 0.8rem; }
+
+.sg-nav { display: flex; gap: 4px; flex-wrap: wrap; }
+.sg-nav a {
+  font-family: var(--font-mono); font-size: 0.72rem;
+  color: var(--text-tertiary); text-decoration: none;
+  padding: 6px 10px; border-radius: 4px;
+  border: 1px solid transparent;
+  transition: color var(--transition), border-color var(--transition), background var(--transition);
+}
+.sg-nav a:hover { color: var(--text-primary); border-color: var(--border); background: var(--card-elevated); }
+
+.sg-theme {
+  display: inline-flex; gap: 4px;
+  padding: 4px; border: 1px solid var(--border); border-radius: 4px;
+  background: var(--card-elevated);
+}
+.sg-theme button {
+  font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.04em;
+  padding: 6px 12px; border: 0; background: transparent;
+  color: var(--text-tertiary); cursor: pointer; border-radius: 3px;
+  transition: color var(--transition), background var(--transition);
+}
+.sg-theme button.active { color: var(--text-primary); background: var(--accent-subtle); }
+
+.sg-hero {
+  position: relative;
+  padding: 80px 0 56px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 56px;
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: clamp(20px, 4vw, 56px);
+  align-items: start;
+}
+/* левая marginalia-полоса с editorial-номером */
+.sg-hero-mark {
+  position: relative;
+  border-right: 1px solid var(--border);
+  padding-right: 16px;
+  min-height: 100%;
+  display: flex; flex-direction: column; gap: 8px;
+  font-family: var(--font-mono); font-size: 0.7rem;
+  color: var(--text-tertiary);
+  letter-spacing: 0.14em; text-transform: uppercase;
+}
+.sg-hero-mark b {
+  font-family: var(--font-display);
+  font-weight: 800; font-size: 2.4rem;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.sg-hero-mark s {
+  color: var(--text-muted);
+  text-decoration: line-through;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 1.5px;
+}
+.sg-hero-body { min-width: 0; }
+.sg-kicker {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-mono); font-size: 0.72rem;
+  text-transform: uppercase; letter-spacing: 0.14em;
+  color: var(--accent-light);
+}
+.sg-kicker::before { content: ""; width: 24px; height: 1px; background: var(--accent); }
+.sg-hero h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.6rem, 6vw, 4.4rem);
+  line-height: 0.98; letter-spacing: -0.03em;
+  margin: 18px 0 22px;
+  color: var(--text-primary);
+  /* off-grid: заголовок чуть вылезает влево за свою колонку */
+  margin-left: clamp(-56px, -4vw, -20px);
+}
+.sg-hero h1 span { color: var(--accent-light); }
+.sg-hero h1 sup {
+  font-family: var(--font-mono);
+  font-size: 0.28em;
+  font-weight: 500;
+  vertical-align: top;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-left: 6px;
+  position: relative; top: 0.3em;
+}
+.sg-hero p {
+  max-width: 64ch; color: var(--text-secondary);
+  font-size: 1.06rem; line-height: 1.65;
+}
+/* meta-строка через column-rule вместо gap+flex — газетная сетка */
+.sg-hero-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  margin-top: 36px;
+  font-family: var(--font-mono); font-size: 0.74rem;
+  color: var(--text-tertiary);
+  border-top: 1px solid var(--border);
+}
+.sg-hero-meta > div {
+  padding: 16px 18px 4px 0;
+  border-right: 1px solid var(--border);
+}
+.sg-hero-meta > div:last-child { border-right: 0; }
+.sg-hero-meta b {
+  color: var(--text-primary); font-weight: 600;
+  display: block; font-size: 0.94rem;
+  letter-spacing: 0.02em;
+  margin-bottom: 4px;
+}
+@media (max-width: 720px) {
+  .sg-hero { grid-template-columns: 1fr; }
+  .sg-hero-mark { border-right: 0; border-bottom: 1px solid var(--border); padding: 0 0 16px; flex-direction: row; align-items: baseline; gap: 16px; }
+  .sg-hero h1 { margin-left: 0; }
+}
+
+/* Section chrome — marginalia-номера, без шаблонной 01/02-плашки */
+.sg-section { padding: 64px 0; border-bottom: 1px solid var(--border); }
+.sg-section:last-child { border-bottom: 0; }
+.sg-section-head {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: clamp(16px, 3vw, 40px);
+  margin-bottom: 36px;
+  align-items: baseline;
+}
+.sg-section-num {
+  font-family: var(--font-mono); font-size: 0.7rem;
+  color: var(--text-tertiary); letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding-right: 16px;
+  border-right: 1px solid var(--border);
+  align-self: stretch;
+  display: flex; align-items: flex-start;
+}
+.sg-section-num::before {
+  content: ""; width: 14px; height: 1px; background: var(--accent);
+  margin-right: 10px; align-self: center;
+}
+.sg-section h2 {
+  font-family: var(--font-display);
+  font-weight: 700; font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+  letter-spacing: -0.02em; line-height: 1.05;
+  margin: 0; color: var(--text-primary);
+}
+.sg-section-sub {
+  grid-column: 2;
+  max-width: 64ch;
+  color: var(--text-secondary); font-size: 0.98rem;
+  margin: 14px 0 0;
+}
+@media (max-width: 720px) {
+  .sg-section-head { grid-template-columns: 1fr; gap: 8px; }
+  .sg-section-num { border-right: 0; padding-right: 0; }
+  .sg-section-sub { grid-column: 1; }
+}
+
+/* Revision marginalia — вклеенная правка, датированная рукой */
+.sg-rev {
+  grid-column: 2;
+  display: flex; flex-wrap: wrap; gap: 4px 14px;
+  margin: 10px 0 0;
+  padding: 8px 0 0;
+  border-top: 1px dashed var(--border-light);
+  font-family: var(--font-mono);
+  font-size: 0.68rem; letter-spacing: 0.04em;
+  color: var(--text-tertiary);
+}
+.sg-rev b {
+  color: var(--accent-light); font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+}
+.sg-rev i { font-style: normal; color: var(--text-secondary); }
+.sg-rev s { color: var(--text-muted); text-decoration-color: var(--text-muted); }
+
+/* Manual — руководство для дизайнера. Ломает ритм 01–15: */
+/* римско-латинская нумерация, сплошной текст, без rail. */
+.sg-manual {
+  padding: 72px 0 64px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.sg-manual::before {
+  content: "";
+  position: absolute; left: 0; top: 40px;
+  width: 40px; height: 1px; background: var(--accent);
+}
+.sg-manual-head {
+  display: grid; grid-template-columns: 120px 1fr;
+  gap: clamp(16px, 3vw, 40px);
+  margin-bottom: 36px; align-items: baseline;
+}
+.sg-manual-key {
+  font-family: var(--font-mono); font-size: 0.7rem;
+  color: var(--text-tertiary); letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.sg-manual h2 {
+  font-family: var(--font-display);
+  font-weight: 800; font-size: clamp(1.6rem, 3vw, 2.2rem);
+  letter-spacing: -0.02em; line-height: 1.1;
+  margin: 0; color: var(--text-primary);
+}
+.sg-manual h2 em {
+  font-style: italic; font-weight: 400;
+  color: var(--text-secondary); letter-spacing: -0.01em;
+}
+.sg-manual-sub {
+  grid-column: 2; max-width: 58ch;
+  color: var(--text-secondary); font-size: 0.98rem;
+  margin: 10px 0 0;
+}
+.sg-manual-body {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: clamp(16px, 3vw, 40px);
+}
+.sg-manual-list {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column;
+  border-top: 1px solid var(--border);
+}
+.sg-manual-list li {
+  display: grid;
+  grid-template-columns: 56px 1fr 140px;
+  gap: 24px; align-items: baseline;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+}
+.sg-manual-list .r {
+  font-family: var(--font-mono);
+  font-size: 0.74rem; letter-spacing: 0.14em;
+  color: var(--accent); text-transform: lowercase;
+  padding-top: 4px;
+}
+.sg-manual-list .t {
+  font-family: var(--font-body);
+  font-size: 1.02rem; line-height: 1.55;
+  color: var(--text-primary);
+}
+.sg-manual-list .t b {
+  font-family: var(--font-display);
+  font-weight: 700; letter-spacing: -0.005em;
+  color: var(--text-primary);
+}
+.sg-manual-list .t span {
+  display: block; margin-top: 6px;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+.sg-manual-list .n {
+  font-family: var(--font-mono);
+  font-size: 0.7rem; color: var(--text-tertiary);
+  letter-spacing: 0.04em; line-height: 1.5;
+  border-left: 1px solid var(--border);
+  padding-left: 14px; padding-top: 6px;
+}
+.sg-manual-list .n b {
+  color: var(--accent-light); font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  display: block; margin-bottom: 4px; font-size: 0.62rem;
+}
+.sg-manual-foot {
+  grid-column: 2;
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.sg-manual-foot > div {
+  padding: 16px 20px 16px 0;
+  border-right: 1px solid var(--border);
+  font-family: var(--font-mono); font-size: 0.72rem;
+  color: var(--text-tertiary); letter-spacing: 0.04em;
+  line-height: 1.55;
+}
+.sg-manual-foot > div:last-child { border-right: 0; }
+.sg-manual-foot b {
+  display: block; margin-bottom: 6px;
+  color: var(--accent-light); font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  font-size: 0.62rem;
+}
+@media (max-width: 720px) {
+  .sg-manual-head, .sg-manual-body { grid-template-columns: 1fr; }
+  .sg-manual-sub { grid-column: 1; }
+  .sg-manual-list li { grid-template-columns: 40px 1fr; }
+  .sg-manual-list .n { grid-column: 1 / -1; border-left: 0; border-top: 1px dashed var(--border-light); padding: 10px 0 0; }
+  .sg-manual-foot { grid-column: 1; grid-template-columns: 1fr; }
+  .sg-manual-foot > div { border-right: 0; border-bottom: 1px solid var(--border); }
+  .sg-manual-foot > div:last-child { border-bottom: 0; }
+}
+
+/* Panel: demo area */
+.sg-panel {
+  border: 1px solid var(--border);
+  border-radius: var(--card-radius);
+  background: var(--bg);
+  padding: clamp(24px, 4vw, 40px);
+}
+.sg-panel + .sg-panel { margin-top: 20px; }
+
+.sg-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-start; }
+.sg-stack > * + * { margin-top: 16px; }
+.sg-grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.sg-grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.sg-grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+
+/* Caption + code chip */
+.sg-cap {
+  font-family: var(--font-mono); font-size: 0.72rem;
+  color: var(--text-tertiary); letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+code.sg-code {
+  font-family: var(--font-mono); font-size: 0.78rem;
+  color: var(--accent-light);
+  background: var(--accent-subtle);
+  padding: 2px 6px; border-radius: 3px;
+}
+pre.sg-snippet {
+  font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.7;
+  color: var(--text-secondary);
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 16px 18px;
+  overflow-x: auto;
+  margin: 0;
+}
+pre.sg-snippet .k { color: var(--accent-light); }
+pre.sg-snippet .v { color: var(--text-primary); }
+pre.sg-snippet .c { color: var(--text-muted); font-style: italic; }
+
+/* 01 Colors */
+.sw {
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 14px; border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--card-elevated);
+}
+.sw-chip { height: 68px; border-radius: 4px; border: 1px solid var(--border); }
+.sw-name { font-family: var(--font-mono); font-size: 0.76rem; color: var(--text-primary); letter-spacing: 0.02em; }
+.sw-token { font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-tertiary); }
+
+/* 02 Typography */
+.tp { display: flex; flex-direction: column; gap: 6px; padding: 16px 0; border-top: 1px solid var(--border); }
+.tp:first-child { border-top: 0; padding-top: 0; }
+.tp-meta { display: flex; gap: 14px; font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-tertiary); }
+.tp h1s { display: block; font-family: var(--font-display); font-weight: 800; font-size: 3.2rem; line-height: 1.05; letter-spacing: -0.025em; color: var(--text-primary); }
+.tp h2s { display: block; font-family: var(--font-display); font-weight: 700; font-size: 2rem; line-height: 1.15; letter-spacing: -0.015em; color: var(--text-primary); }
+.tp h3s { display: block; font-family: var(--font-display); font-weight: 600; font-size: 1.4rem; line-height: 1.3; color: var(--text-primary); }
+.tp .body { font-family: var(--font-body); font-size: 1rem; line-height: 1.65; color: var(--text-secondary); max-width: 60ch; }
+.tp .body-sm { font-family: var(--font-body); font-size: 0.875rem; line-height: 1.6; color: var(--text-tertiary); }
+.tp .mono { font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent-light); letter-spacing: 0.02em; }
+
+/* 03 Spacing */
+.sp-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-end; }
+.sp-cell { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.sp-box { background: var(--accent); border-radius: 2px; }
+.sp-label { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-tertiary); }
+.sp-label b { color: var(--text-primary); font-weight: 600; }
+
+/* 04 Animations demo */
+.mo-card {
+  padding: 20px; border: 1px solid var(--border);
+  border-radius: 6px; background: var(--card-elevated);
+  display: flex; flex-direction: column; gap: 8px;
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+  cursor: pointer;
+}
+.mo-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-accent);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.38), 0 4px 14px var(--accent-glow);
+}
+.mo-card--spring { transition: transform 420ms var(--spring); }
+.mo-card--spring:hover { transform: translateY(-6px) scale(1.02); }
+.mo-name { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-primary); letter-spacing: 0.04em; }
+.mo-meta { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-tertiary); }
+
+/* 06 Cards demo extras */
+.sg-card-demo { padding: 28px; }
+.sg-card-demo h4 {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 1.3rem; letter-spacing: -0.01em;
+  margin: 0 0 10px; color: var(--text-primary);
+}
+.sg-card-demo p { color: var(--text-secondary); font-size: 0.95rem; margin: 0 0 16px; }
+.sg-card-demo .tag { margin-bottom: 12px; }
+
+/* Metric card */
+.sg-metric {
+  display: flex; flex-direction: column; gap: 8px; padding: 28px;
+  background: var(--glass-bg); border: 1px solid var(--border);
+  border-radius: var(--card-radius);
+}
+.sg-metric-val {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: 2.4rem; letter-spacing: -0.02em; line-height: 1;
+  color: var(--text-primary);
+}
+.sg-metric-val em {
+  font-style: normal; color: var(--accent-light); font-weight: 600;
+}
+.sg-metric-lbl { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-tertiary); letter-spacing: 0.05em; text-transform: uppercase; }
+
+/* 08 Badges extras — live badge */
+.sg-live {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 12px; border-radius: 999px;
+  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.04em;
+  color: var(--accent-light);
+  background: var(--accent-subtle);
+  border: 1px solid var(--border-accent);
+}
+.sg-live-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 0 4px rgba(16,185,129,0.18);
+  animation: sg-pulse 2.2s ease-in-out infinite;
+}
+@keyframes sg-pulse {
+  0%,100% { box-shadow: 0 0 0 2px rgba(16,185,129,0.18); }
+  50%     { box-shadow: 0 0 0 6px rgba(16,185,129,0.02); }
+}
+
+/* 09 Progress bar */
+.sg-progress-wrap { display: flex; flex-direction: column; gap: 10px; }
+.sg-progress-meta { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-tertiary); }
+.sg-progress {
+  height: 6px; border-radius: 999px;
+  background: var(--card-elevated);
+  overflow: hidden;
+}
+.sg-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-deep), var(--accent), var(--accent-light));
+  border-radius: 999px;
+}
+
+/* 10 Quiz choice (list, editorial) */
+.sg-quiz-list { display: flex; flex-direction: column; gap: 10px; }
+.sg-quiz-opt {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--card-elevated);
+  cursor: pointer;
+  transition: border-color var(--transition), background var(--transition), transform var(--transition);
+}
+.sg-quiz-opt:hover { border-color: var(--border-accent); background: var(--accent-subtle); }
+.sg-quiz-opt.selected { border-color: var(--accent); background: var(--accent-subtle); }
+.sg-quiz-mark {
+  width: 22px; height: 22px; border-radius: 4px;
+  border: 1.5px solid var(--border-light);
+  display: grid; place-items: center;
+  font-family: var(--font-mono); font-size: 0.7rem;
+  color: var(--accent-light);
+  flex-shrink: 0;
+}
+.sg-quiz-opt.selected .sg-quiz-mark {
+  border-color: var(--accent); background: var(--accent);
+  color: #fff;
+}
+.sg-quiz-txt { color: var(--text-primary); font-size: 0.96rem; }
+
+/* 11 Accordion */
+.sg-acc { display: flex; flex-direction: column; gap: 10px; }
+.sg-acc-item {
+  border: 1px solid var(--border); border-radius: 6px;
+  background: var(--card-elevated);
+  overflow: hidden;
+  transition: border-color var(--transition), background var(--transition);
+}
+.sg-acc-item[open] { border-color: var(--border-accent); background: var(--bg-card); }
+.sg-acc-item summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 18px 20px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-weight: 600; color: var(--text-primary);
+}
+.sg-acc-item summary::-webkit-details-marker { display: none; }
+.sg-acc-item summary::after {
+  content: "+";
+  font-family: var(--font-mono); font-size: 1.1rem;
+  color: var(--accent-light);
+  transition: transform var(--transition);
+}
+.sg-acc-item[open] summary::after { content: "−"; }
+.sg-acc-body { padding: 0 20px 18px; color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; }
+
+/* 12 Glass block */
+.sg-glass {
+  position: relative;
+  padding: 36px;
+  border-radius: var(--card-radius);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  isolation: isolate;
+}
+.sg-glass::before {
+  content: ""; position: absolute; inset: -40%;
+  background: radial-gradient(circle at 30% 20%, var(--accent-glow), transparent 55%),
+              radial-gradient(circle at 80% 80%, rgba(16,185,129,0.18), transparent 60%);
+  filter: blur(20px);
+  z-index: -1;
+}
+.sg-glass h4 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; margin: 0 0 8px; }
+.sg-glass p { color: var(--text-secondary); margin: 0 0 16px; }
+
+/* 13 Toasts */
+.sg-toast {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px;
+  border-radius: 6px;
+  border: 1px solid var(--border-light);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-card);
+  max-width: 420px;
+  font-size: 0.92rem;
+  color: var(--text-primary);
+}
+.sg-toast-ic {
+  width: 28px; height: 28px; border-radius: 4px;
+  display: grid; place-items: center;
+  font-family: var(--font-mono); font-size: 0.85rem; font-weight: 600;
+  color: #fff;
+}
+.sg-toast--ok    .sg-toast-ic { background: var(--success); }
+.sg-toast--warn  .sg-toast-ic { background: var(--warning); }
+.sg-toast--err   .sg-toast-ic { background: var(--error); }
+.sg-toast--info  .sg-toast-ic { background: var(--accent); }
+
+/* 14 Stepper */
+.sg-stepper { display: flex; flex-direction: column; gap: 0; position: relative; }
+.sg-step { display: grid; grid-template-columns: 44px 1fr; gap: 20px; padding: 14px 0; position: relative; }
+.sg-step::before {
+  content: ""; position: absolute; left: 21px; top: 44px; bottom: -14px;
+  width: 1px; background: var(--border);
+}
+.sg-step:last-child::before { display: none; }
+.sg-step-num {
+  width: 44px; height: 44px; border-radius: 4px;
+  background: var(--accent-subtle);
+  border: 1px solid var(--border-accent);
+  display: grid; place-items: center;
+  font-family: var(--font-display); font-weight: 700; font-size: 1rem;
+  color: var(--accent-light);
+}
+.sg-step-t { font-weight: 600; color: var(--text-primary); font-size: 1.02rem; margin: 8px 0 4px; }
+.sg-step-d { color: var(--text-secondary); font-size: 0.92rem; }
+
+/* 15 Tokens table */
+.sg-tokens table { width: 100%; border-collapse: collapse; }
+.sg-tokens th, .sg-tokens td {
+  text-align: left; padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono); font-size: 0.78rem;
+}
+.sg-tokens th { color: var(--text-tertiary); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; font-size: 0.7rem; }
+.sg-tokens td { color: var(--text-secondary); }
+.sg-tokens td:first-child { color: var(--accent-light); }
+.sg-tokens td:nth-child(2) { color: var(--text-primary); }
+
+/* Foot */
+.sg-foot {
+  margin-top: 64px; padding-top: 32px;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+  font-family: var(--font-mono); font-size: 0.74rem;
+  color: var(--text-tertiary);
+}
+
+/* ══════════════════════════════════════════════════
+   v2.1 EDITORIAL UPGRADE — sweeping chrome
+   ══════════════════════════════════════════════════ */
+
+/* Sweeping marginalia-rail: every section uses 120 | content grid.
+   Marginalia col holds: tick-anchor, mono key-value pair, optional figure ref. */
+.sg-rail {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: clamp(16px, 3vw, 40px);
+  align-items: start;
+}
+.sg-rail > .sg-margin {
+  position: sticky; top: 96px;
+  border-right: 1px solid var(--border);
+  padding: 4px 16px 4px 0;
+  font-family: var(--font-mono); font-size: 0.7rem;
+  color: var(--text-tertiary); letter-spacing: 0.12em; text-transform: uppercase;
+  display: flex; flex-direction: column; gap: 8px;
+  min-height: 80px;
+}
+.sg-margin .k { color: var(--text-primary); }
+.sg-margin .tick {
+  display: inline-block; width: 14px; height: 1px; background: var(--accent);
+  margin-bottom: 6px;
+}
+.sg-margin .fig {
+  margin-top: auto;
+  font-size: 0.66rem; color: var(--text-muted);
+  letter-spacing: 0.16em;
+}
+@media (max-width: 720px) {
+  .sg-rail { grid-template-columns: 1fr; }
+  .sg-rail > .sg-margin {
+    position: static;
+    border-right: 0; border-bottom: 1px solid var(--border);
+    padding: 0 0 12px;
+    flex-direction: row; align-items: center; flex-wrap: wrap; gap: 10px 16px;
+  }
+  .sg-margin .tick { margin: 0 8px 0 0; align-self: center; }
+  .sg-margin .fig { margin-top: 0; }
+}
+
+/* Hairline subsection divider with mono key */
+.sg-sub {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: clamp(16px, 3vw, 40px);
+  padding: 24px 0 8px;
+  border-top: 1px solid var(--border);
+  margin-top: 24px;
+}
+.sg-sub:first-of-type { border-top: 0; padding-top: 4px; margin-top: 0; }
+.sg-sub > .sg-sub-key {
+  font-family: var(--font-mono); font-size: 0.68rem;
+  color: var(--text-tertiary); letter-spacing: 0.16em; text-transform: uppercase;
+  padding-right: 16px; border-right: 1px solid var(--border);
+  display: flex; align-items: flex-start; gap: 10px;
+}
+.sg-sub > .sg-sub-key::before {
+  content: ""; width: 10px; height: 1px; background: var(--accent);
+  margin-top: 0.6em; flex-shrink: 0;
+}
+.sg-sub > .sg-sub-body { min-width: 0; }
+@media (max-width: 720px) {
+  .sg-sub { grid-template-columns: 1fr; gap: 8px; padding-top: 16px; }
+  .sg-sub > .sg-sub-key { border-right: 0; padding-right: 0; }
+}
+
+/* Annotation: footnote-style aside used under demos */
+.sg-note {
+  font-family: var(--font-mono); font-size: 0.72rem;
+  color: var(--text-tertiary); line-height: 1.6;
+  padding: 12px 0 0;
+  border-top: 1px dashed var(--border);
+  margin-top: 16px;
+  display: grid; grid-template-columns: 120px 1fr;
+  gap: clamp(12px, 2vw, 24px);
+}
+.sg-note > b {
+  font-family: var(--font-mono); font-weight: 600;
+  color: var(--accent-light); letter-spacing: 0.12em; text-transform: uppercase;
+  font-size: 0.66rem;
+}
+.sg-note .ok { color: var(--success); }
+.sg-note .no { color: var(--error); }
+@media (max-width: 720px) { .sg-note { grid-template-columns: 1fr; } }
+
+/* ── 02 TYPE: modular scale table ─────────────────────────────────── */
+.sg-type-scale {
+  display: grid;
+  grid-template-columns: 80px 100px 80px 1fr;
+  gap: 0;
+  font-family: var(--font-mono); font-size: 0.72rem;
+}
+.sg-type-scale > div {
+  padding: 18px 16px;
+  border-top: 1px solid var(--border);
+  color: var(--text-tertiary);
+  display: flex; align-items: baseline;
+}
+.sg-type-scale > .h {
+  border-top: 0;
+  font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-muted); padding-bottom: 12px;
+}
+.sg-type-scale > .px { color: var(--text-primary); }
+.sg-type-scale > .sample {
+  color: var(--text-primary);
+  font-family: var(--font-display); font-weight: 700;
+  letter-spacing: -0.02em; line-height: 1.05;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.sg-type-scale > .sample.body { font-family: var(--font-body); font-weight: 400; letter-spacing: 0; line-height: 1.5; }
+.sg-type-scale > .sample.mono { font-family: var(--font-mono); font-weight: 500; letter-spacing: 0.04em; }
+@media (max-width: 720px) {
+  .sg-type-scale { grid-template-columns: 60px 70px 60px 1fr; font-size: 0.66rem; }
+  .sg-type-scale > div { padding: 12px 8px; }
+}
+
+.sg-type-weights {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-top: 1px solid var(--border);
+}
+.sg-type-weights > div {
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+}
+.sg-type-weights > div:nth-child(odd) { border-right: 1px solid var(--border); }
+.sg-type-weights .w { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-tertiary); letter-spacing: 0.1em; text-transform: uppercase; }
+.sg-type-weights .s { font-family: var(--font-display); font-size: 1.4rem; color: var(--text-primary); }
+@media (max-width: 720px) {
+  .sg-type-weights { grid-template-columns: 1fr; }
+  .sg-type-weights > div:nth-child(odd) { border-right: 0; }
+}
+
+.sg-type-leading {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+}
+.sg-type-leading > div {
+  padding: 16px 18px;
+  border-left: 1px solid var(--border);
+  font-family: var(--font-body); font-size: 0.86rem; color: var(--text-secondary);
+}
+.sg-type-leading > div:first-child { border-left: 0; }
+.sg-type-leading .lh { display: block; font-family: var(--font-mono); font-size: 0.66rem; color: var(--text-tertiary); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+@media (max-width: 720px) {
+  .sg-type-leading { grid-template-columns: 1fr; }
+  .sg-type-leading > div { border-left: 0; border-top: 1px solid var(--border); }
+  .sg-type-leading > div:first-child { border-top: 0; }
+}
+
+/* ── 01 COLOR: relational ramp + WCAG matrix ──────────────────────── */
+.sg-ramp {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 24px;
+  align-items: stretch;
+}
+.sg-ramp-col {
+  display: grid;
+  grid-template-rows: repeat(7, 1fr);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  min-height: 320px;
+}
+.sg-ramp-col > div {
+  position: relative;
+  padding: 8px 12px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-family: var(--font-mono); font-size: 0.7rem;
+  color: rgba(255,255,255,0.85);
+}
+.sg-ramp-col > div span:last-child { font-size: 0.64rem; opacity: 0.7; }
+.sg-ramp-meta {
+  display: flex; flex-direction: column; gap: 12px;
+  font-family: var(--font-mono); font-size: 0.74rem;
+  color: var(--text-secondary);
+}
+.sg-ramp-meta > div { padding: 10px 0; border-top: 1px solid var(--border); }
+.sg-ramp-meta > div:first-child { border-top: 0; padding-top: 0; }
+.sg-ramp-meta b { color: var(--text-primary); display: block; margin-bottom: 4px; font-size: 0.78rem; }
+@media (max-width: 720px) { .sg-ramp { grid-template-columns: 1fr; } }
+
+.sg-wcag {
+  width: 100%; border-collapse: collapse;
+  font-family: var(--font-mono); font-size: 0.74rem;
+}
+.sg-wcag th, .sg-wcag td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  text-align: left; vertical-align: middle;
+}
+.sg-wcag th {
+  font-size: 0.66rem; color: var(--text-tertiary);
+  letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600;
+}
+.sg-wcag .swatch {
+  display: inline-block; width: 64px; height: 28px; border-radius: 3px;
+  border: 1px solid var(--border-light);
+  vertical-align: middle; margin-right: 10px;
+  font-family: var(--font-body); font-size: 0.78rem;
+  text-align: center; line-height: 28px;
+}
+.sg-wcag .pass { color: var(--success); }
+.sg-wcag .warn { color: var(--warning); }
+.sg-wcag .fail { color: var(--error); }
+.sg-wcag td:last-child { font-family: var(--font-mono); font-size: 0.72rem; }
+
+/* ── 03 SPACE: ruler ──────────────────────────────────────────────── */
+.sg-ruler {
+  position: relative;
+  padding: 24px 0 36px;
+  border-top: 1px solid var(--border);
+  margin-top: 8px;
+}
+.sg-ruler-track {
+  position: relative;
+  height: 32px;
+  background:
+    linear-gradient(to right, var(--border) 1px, transparent 1px) 0 0 / 8px 100%;
+  border-bottom: 1px solid var(--border-light);
+}
+.sg-ruler-bar {
+  position: absolute;
+  top: 0; bottom: 0;
+  background: var(--accent);
+  border-left: 1px solid var(--accent-light);
+  border-right: 1px solid var(--accent-light);
+}
+.sg-ruler-tick {
+  position: absolute;
+  top: 100%;
+  font-family: var(--font-mono); font-size: 0.66rem;
+  color: var(--text-tertiary); letter-spacing: 0.06em;
+  white-space: nowrap;
+  padding-top: 6px;
+  transform: translateX(-50%);
+}
+.sg-ruler-tick::before {
+  content: ""; position: absolute;
+  top: 0; left: 50%; transform: translateX(-50%);
+  width: 1px; height: 6px; background: var(--accent);
+}
+.sg-ruler-tick b { color: var(--text-primary); font-weight: 500; }
+
+.sg-spacing-real {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  margin-top: 32px;
+}
+.sg-spacing-real > .sg-srcell {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0;
+  overflow: hidden;
+  background: var(--card-elevated);
+}
+.sg-srcell-stack {
+  padding: 24px;
+  display: flex; align-items: stretch; gap: 0;
+}
+.sg-srcell-mini {
+  background: var(--bg-card); border: 1px solid var(--border-light);
+  border-radius: 4px; flex: 1; padding: 14px;
+  font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-secondary);
+}
+.sg-srcell-gap {
+  position: relative;
+  background: var(--accent-subtle);
+  border-left: 1px dashed var(--border-accent);
+  border-right: 1px dashed var(--border-accent);
+}
+.sg-srcell-cap {
+  padding: 10px 16px;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-tertiary);
+  letter-spacing: 0.06em;
+  display: flex; justify-content: space-between;
+}
+.sg-srcell-cap b { color: var(--text-primary); font-weight: 500; }
+@media (max-width: 720px) { .sg-spacing-real { grid-template-columns: 1fr; } }
+
+/* ── 04 MOTION: easing curves SVG ─────────────────────────────────── */
+.sg-easing {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+  border: 1px solid var(--border); border-radius: 6px;
+  overflow: hidden;
+}
+.sg-easing > div {
+  padding: 20px;
+  border-left: 1px solid var(--border);
+  display: flex; flex-direction: column; gap: 10px;
+}
+.sg-easing > div:first-child { border-left: 0; }
+.sg-easing svg { width: 100%; height: 80px; display: block; }
+.sg-easing svg .grid { stroke: var(--border); stroke-width: 1; }
+.sg-easing svg .axis { stroke: var(--border-light); stroke-width: 1; }
+.sg-easing svg .curve { stroke: var(--accent-light); stroke-width: 2; fill: none; }
+.sg-easing svg .dot { fill: var(--accent); }
+.sg-easing-name { font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-primary); letter-spacing: 0.04em; }
+.sg-easing-meta { font-family: var(--font-mono); font-size: 0.66rem; color: var(--text-tertiary); }
+@media (max-width: 720px) { .sg-easing { grid-template-columns: 1fr; } .sg-easing > div { border-left: 0; border-top: 1px solid var(--border); } .sg-easing > div:first-child { border-top: 0; } }
+
+/* ── 05 BUTTONS: anatomy + state matrix ───────────────────────────── */
+.sg-anatomy {
+  position: relative;
+  padding: 60px 40px 80px;
+  border: 1px dashed var(--border-light);
+  border-radius: 6px;
+  display: flex; justify-content: center; align-items: center;
+}
+.sg-anatomy .annot {
+  position: absolute;
+  font-family: var(--font-mono); font-size: 0.66rem;
+  color: var(--accent-light); letter-spacing: 0.1em; text-transform: uppercase;
+  white-space: nowrap;
+}
+.sg-anatomy .annot::before {
+  content: ""; position: absolute;
+  background: var(--accent);
+}
+.sg-anatomy .annot.top { top: 14px; }
+.sg-anatomy .annot.top::before { left: 50%; bottom: -12px; width: 1px; height: 18px; }
+.sg-anatomy .annot.bot { bottom: 14px; }
+.sg-anatomy .annot.bot::before { left: 50%; top: -12px; width: 1px; height: 18px; }
+.sg-anatomy .annot.l { left: 14px; top: 50%; transform: translateY(-50%); }
+.sg-anatomy .annot.l::before { right: -16px; top: 50%; width: 14px; height: 1px; }
+.sg-anatomy .annot.r { right: 14px; top: 50%; transform: translateY(-50%); }
+.sg-anatomy .annot.r::before { left: -16px; top: 50%; width: 14px; height: 1px; }
+
+.sg-matrix {
+  width: 100%; border-collapse: collapse;
+  font-family: var(--font-mono); font-size: 0.72rem;
+}
+.sg-matrix th, .sg-matrix td {
+  padding: 16px 14px;
+  border-bottom: 1px solid var(--border);
+  text-align: left; vertical-align: middle;
+}
+.sg-matrix th {
+  font-size: 0.64rem; color: var(--text-tertiary);
+  letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600;
+}
+.sg-matrix td:first-child { color: var(--text-primary); width: 130px; }
+.sg-matrix tr:last-child td { border-bottom: 0; }
+
+/* ── 06 CARDS: annotated ──────────────────────────────────────────── */
+.sg-card-annot {
+  position: relative;
+  padding: 60px 60px 60px 60px;
+  border: 1px dashed var(--border-light);
+  border-radius: 6px;
+}
+.sg-card-annot .pin {
+  position: absolute;
+  font-family: var(--font-mono); font-size: 0.62rem;
+  color: var(--accent-light); letter-spacing: 0.12em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 8px;
+}
+.sg-card-annot .pin::before {
+  content: ""; width: 8px; height: 8px; border-radius: 50%;
+  border: 1px solid var(--accent); background: var(--bg-deep);
+  flex-shrink: 0;
+}
+.sg-card-annot .pin.t1 { top: 18px; left: 80px; }
+.sg-card-annot .pin.t2 { top: 18px; right: 28px; }
+.sg-card-annot .pin.b1 { bottom: 18px; left: 80px; }
+.sg-card-annot .pin.b2 { bottom: 18px; right: 28px; }
+
+/* ── 07 INPUTS: states matrix ─────────────────────────────────────── */
+.sg-input-states {
+  display: grid; grid-template-columns: 140px 1fr;
+  gap: 0;
+}
+.sg-input-states > div {
+  padding: 16px 18px;
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center;
+}
+.sg-input-states > div:nth-child(-n+2) { border-top: 0; }
+.sg-input-states > .label {
+  font-family: var(--font-mono); font-size: 0.68rem;
+  color: var(--text-tertiary); letter-spacing: 0.12em; text-transform: uppercase;
+  border-right: 1px solid var(--border);
+}
+.sg-input-states .form-input { width: 100%; max-width: 360px; }
+
+.sg-input-error { border-color: var(--error) !important; }
+.sg-input-error-msg { display: block; margin-top: 6px; font-family: var(--font-mono); font-size: 0.68rem; color: var(--error); letter-spacing: 0.04em; }
+.sg-input-helper { display: block; margin-top: 6px; font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-tertiary); }
+
+.sg-checkbox, .sg-radio { display: inline-flex; align-items: center; gap: 10px; font-size: 0.92rem; color: var(--text-primary); cursor: pointer; }
+.sg-checkbox input, .sg-radio input { appearance: none; -webkit-appearance: none; width: 18px; height: 18px; border: 1.5px solid var(--border-light); background: var(--card-elevated); cursor: pointer; position: relative; transition: border-color var(--transition), background var(--transition); }
+.sg-checkbox input { border-radius: 3px; }
+.sg-radio input { border-radius: 50%; }
+.sg-checkbox input:checked { border-color: var(--accent); background: var(--accent); }
+.sg-checkbox input:checked::after { content: ""; position: absolute; left: 4px; top: 0px; width: 5px; height: 10px; border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+.sg-radio input:checked { border-color: var(--accent); background: var(--accent); box-shadow: inset 0 0 0 3px var(--bg-deep); }
+
+.sg-toggle { position: relative; width: 38px; height: 22px; background: var(--card-elevated); border: 1px solid var(--border-light); border-radius: 999px; cursor: pointer; transition: background var(--transition), border-color var(--transition); }
+.sg-toggle::after { content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--text-secondary); transition: transform var(--transition), background var(--transition); }
+.sg-toggle.on { background: var(--accent); border-color: var(--accent); }
+.sg-toggle.on::after { transform: translateX(16px); background: #fff; }
+
+.sg-select { width: 100%; max-width: 360px; padding: 14px 36px 14px 16px; background: var(--card-elevated); border: 1px solid var(--border-light); border-radius: var(--radius-input); color: var(--text-primary); font-family: var(--font-body); font-size: 0.95rem; appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--text-secondary) 50%), linear-gradient(135deg, var(--text-secondary) 50%, transparent 50%); background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; }
+
+@media (max-width: 720px) {
+  .sg-input-states { grid-template-columns: 1fr; }
+  .sg-input-states > .label { border-right: 0; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+  .sg-input-states > div:nth-child(2) { border-top: 0; }
+}
+
+/* ── 08 TAGS: matrix ──────────────────────────────────────────────── */
+.sg-tag-matrix {
+  display: grid; grid-template-columns: 140px 1fr 1fr;
+  gap: 0;
+}
+.sg-tag-matrix > div {
+  padding: 16px 18px;
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.sg-tag-matrix > div:nth-child(-n+3) { border-top: 0; }
+.sg-tag-matrix > .h { font-family: var(--font-mono); font-size: 0.64rem; color: var(--text-tertiary); letter-spacing: 0.14em; text-transform: uppercase; padding-bottom: 8px; }
+.sg-tag-matrix > .label { font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-tertiary); letter-spacing: 0.12em; text-transform: uppercase; border-right: 1px solid var(--border); }
+.sg-tag-matrix > .usage { color: var(--text-secondary); font-size: 0.82rem; font-family: var(--font-mono); }
+
+.sg-counter { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 4px; background: var(--card-elevated); border: 1px solid var(--border-light); font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-secondary); letter-spacing: 0.04em; }
+.sg-counter b { color: var(--accent-light); font-weight: 500; }
+
+@media (max-width: 720px) {
+  .sg-tag-matrix { grid-template-columns: 1fr; }
+  .sg-tag-matrix > .label { border-right: 0; }
+}
+
+/* ── 15 TOKENS: grouped table ─────────────────────────────────────── */
+.sg-tokens .group-h {
+  background: transparent;
+}
+.sg-tokens .group-h td {
+  padding: 28px 12px 8px;
+  border-bottom: 1px solid var(--border-light);
+  font-family: var(--font-mono); font-size: 0.66rem;
+  color: var(--accent-light); letter-spacing: 0.16em; text-transform: uppercase;
+}
+.sg-tokens .group-h td::before {
+  content: "▸ ";
+  color: var(--accent);
+}
+.sg-tokens tbody tr:first-child .group-h td,
+.sg-tokens .group-h:first-child td { padding-top: 8px; }
+
+/* Light-theme corrections */
+[data-theme="light"] .sg-ramp-col > div { color: rgba(255,255,255,0.92); }
+[data-theme="light"] .sg-ramp-col > div[data-light="dark"] { color: var(--text-primary); }
+[data-theme="light"] .sg-glass::before { opacity: 0.5; }
+[data-theme="light"] .sw-chip { box-shadow: inset 0 0 0 1px rgba(0,0,0,0.04); }
+[data-theme="light"] pre.sg-snippet { background: var(--bg-card); }
+[data-theme="light"] pre.sg-snippet .v { color: var(--text-primary); }
+[data-theme="light"] .sg-toast-ic { color: #fff; }
+[data-theme="light"] .sg-easing svg .grid { stroke: var(--border-light); }
+[data-theme="light"] .sg-anatomy, [data-theme="light"] .sg-card-annot { background: var(--card-elevated); }
+[data-theme="light"] .mo-card { background: var(--bg); }
+[data-theme="light"] .sg-srcell-mini { color: var(--text-primary); }
+[data-theme="light"] .sg-card-annot .pin::before { background: var(--bg); }
+</style>
+</head>
+<body>
+
+<header class="sg-topbar">
+  <div class="sg-brand">
+    <span class="sg-brand-dot"></span>
+    Quillon Design System <em>v2.0 · Cerulean / Editorial</em>
+  </div>
+  <nav class="sg-nav">
+    <a href="#manual">✱ Manual</a>
+    <a href="#colors">01 Colors</a>
+    <a href="#type">02 Type</a>
+    <a href="#space">03 Space</a>
+    <a href="#motion">04 Motion</a>
+    <a href="#buttons">05 Buttons</a>
+    <a href="#cards">06 Cards</a>
+    <a href="#inputs">07 Inputs</a>
+    <a href="#tags">08 Tags</a>
+    <a href="#progress">09 Progress</a>
+    <a href="#quiz">10 Quiz</a>
+    <a href="#accordion">11 FAQ</a>
+    <a href="#glass">12 Glass</a>
+    <a href="#toasts">13 Toasts</a>
+    <a href="#stepper">14 Stepper</a>
+    <a href="#tokens">15 Tokens</a>
+  </nav>
+  <div class="sg-theme" role="tablist" aria-label="Theme">
+    <button class="active" data-theme-set="dark">DARK</button>
+    <button data-theme-set="light">LIGHT</button>
+  </div>
+</header>
+
+<main class="sg-shell">
+
+  <section class="sg-hero" id="hero">
+    <aside class="sg-hero-mark">
+      <b>02</b>
+      <span>Design Notes</span>
+      <span>Spring 2026</span>
+      <span style="margin-top:auto"><s>shadcn</s> · own grammar</span>
+    </aside>
+    <div class="sg-hero-body">
+      <div class="sg-kicker">Design System · обновлено 21.04.2026</div>
+      <h1>Quillon UI Kit.<sup>v2.0</sup><br>
+        <span>Editorial, not AI-template.</span></h1>
+      <p>Консолидированная дизайн-система после анти-AI редизайна главной:
+         cerulean-акцент вместо cognac/purple, editorial border-radius (6–8 px),
+         Archivo + DM Sans + JetBrains Mono, warm cream текст на navy, монохромная палитра.
+         Все токены — из <code class="sg-code">/css/variables.css</code>,
+         компоненты — из <code class="sg-code">/css/components.css</code>.
+         Этот файл — живая документация: меняешь CSS → обновляется здесь.</p>
+      <div class="sg-hero-meta">
+        <div><b>Cerulean</b>#2E86AB · primary</div>
+        <div><b>Archivo 800</b>display, −0.03em</div>
+        <div><b>DM Sans 400</b>body, 1.65 lh</div>
+        <div><b>JB Mono 500</b>labels & code</div>
+        <div><b>8 / 16 / 24 / 32 / 48 / 64</b>grid scale</div>
+        <div><b>8 · 6 · 999</b>radius · card / btn / pill</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       ✱ MANUAL · как пользоваться системой
+          Намеренный слом ритма 01–15: римско-латинские
+          правила, датировано, одна колонка вместо rail.
+       ══════════════════════════════════════════════════ -->
+  <section class="sg-manual" id="manual" aria-labelledby="manual-title">
+    <div class="sg-manual-head">
+      <span class="sg-manual-key">✱ &nbsp;Manual<br>для дизайнера</span>
+      <h2 id="manual-title">Как строить экран <em>в этой системе.</em></h2>
+      <p class="sg-manual-sub">Семь правил, которых придерживается команда. Нарушай осознанно — напиши ревизию в коммит, обнови этот файл. Правила &gt; вкус, но вкус уточняет правила.</p>
+    </div>
+
+    <div class="sg-manual-body">
+      <aside class="sg-margin" aria-hidden="true">
+        <span class="tick"></span>
+        <span>Rules</span>
+        <span class="k">i — vii</span>
+        <span>rev. 2026-04-21</span>
+        <span class="fig">Fig. ✱.0</span>
+      </aside>
+
+      <div>
+        <ol class="sg-manual-list">
+          <li>
+            <span class="r">i.</span>
+            <span class="t"><b>Начинай с сетки 120 + rail.</b>
+              <span>Маргиналия слева (120px) — не декор, а место для номера, кода и fig-подписи. Тело справа. На &lt;720px всё схлопывается в одну колонку.</span>
+            </span>
+            <span class="n"><b>Зачем</b>Держит редакторский ритм и даёт место «голосу» без новых блоков.</span>
+          </li>
+          <li>
+            <span class="r">ii.</span>
+            <span class="t"><b>Один акцент — cerulean.</b>
+              <span>Никаких вторых брендовых цветов. Для разделения состояний — градации 700/500/400, не новые тона. Semantic (success / warning / error) — только на статусах, не в декоре.</span>
+            </span>
+            <span class="n"><b>Банлист</b>cognac · purple · olive · neon-glow</span>
+          </li>
+          <li>
+            <span class="r">iii.</span>
+            <span class="t"><b>Hairline вместо карточек.</b>
+              <span>Сначала раздели содержимое линией 1px (<code class="sg-code">--border</code>). Карточка с фоном — только когда нужна плотная группа контента или действие. Карточек на экране &lt; 4.</span>
+            </span>
+            <span class="n"><b>Зачем</b>shadcn-шаблоны выдают себя облаком карточек. Мы — нет.</span>
+          </li>
+          <li>
+            <span class="r">iv.</span>
+            <span class="t"><b>Hover — это сдвиг смысла, не подъём.</b>
+              <span>Линки: <code class="sg-code">text-underline-offset</code> 6 → 12px. Кнопки: смена фона, не translateY. Карточки: смена <code class="sg-code">border</code>-цвета, без shadow-lift. Никогда — sheen-sweep.</span>
+            </span>
+            <span class="n"><b>Токены</b>--transition · 0.3s ease-out<br>--spring · 0.42s overshoot</span>
+          </li>
+          <li>
+            <span class="r">v.</span>
+            <span class="t"><b>Mono-метка — это голос.</b>
+              <span>JetBrains Mono 11–12px для k-labels, fig-подписей, ревизий, tick-меток. Ставь 3–5 меток на секцию — создают «руку» без иллюстраций.</span>
+            </span>
+            <span class="n"><b>Формат</b>UPPER · 0.14em tracking<br>или lower · 0.04em</span>
+          </li>
+          <li>
+            <span class="r">vi.</span>
+            <span class="t"><b>Ломай ритм раз в 5 секций.</b>
+              <span>Если 4 блока подряд — одинаковый rail, пятый делай иначе: горизонтальная раскадровка, сплошной текст, off-grid заголовок с отрицательным <code class="sg-code">margin-left</code>. Этот манифест — пример слома.</span>
+            </span>
+            <span class="n"><b>Где</b>Motion, Hero, Manual —<br>уже сломаны. Далее — по месту.</span>
+          </li>
+          <li>
+            <span class="r">vii.</span>
+            <span class="t"><b>Датируй правки.</b>
+              <span>Добавил новое правило — пиши <code class="sg-code">rev. YYYY-MM-DD</code> рядом. Удалил старое — оставь <code class="sg-code">&lt;s&gt;</code>-зачёркивание на месяц. Система — не презентация, а журнал.</span>
+            </span>
+            <span class="n"><b>Пример</b>rev. 2026-04-21 · <s>card-sweep</s> → hairline</span>
+          </li>
+        </ol>
+
+        <div class="sg-manual-foot">
+          <div><b>Источник истины</b>/css/variables.css<br>/css/components.css</div>
+          <div><b>Как редактировать</b>правь CSS — страница<br>обновится автоматически</div>
+          <div><b>Ревизия</b>v2.0 · 2026-04-21<br>далее — по журналу</div>
+          <div><b>Владелец</b>design@quillon<br>вопросы — в ветку</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       01 COLORS
+       ══════════════════════════════════════════════════ -->
+  <section class="sg-section" id="colors">
+    <div class="sg-section-head">
+      <span class="sg-section-num">01</span>
+      <h2>Цвета</h2>
+      <p class="sg-section-sub">Monochrome cerulean + warm cream + navy editorial. Без cognac, olive, purple — забанены как AI-маркеры. Semantic-цвета (success/warning/error) — только для статусов, никогда как decoration.</p>
+      <p class="sg-rev">
+        <b>rev. 2026-03-14</b> <i>cognac → cerulean</i> · <s>#C9844A</s> → <s>#7C3AED</s> → #2E86AB
+        <b style="margin-left:auto">rev. 2026-04-21</b> <i>ramp</i> · +2 стопа (200, 300) для light-theme
+      </p>
+    </div>
+
+    <div class="sg-rail">
+      <aside class="sg-margin">
+        <span class="tick"></span>
+        <span>Palette</span>
+        <span class="k">3 + 4 + 3</span>
+        <span>accent · surface · semantic</span>
+        <span class="fig">Fig. 01.1</span>
+      </aside>
+
+      <div>
+        <div class="sg-sub">
+          <span class="sg-sub-key">A · Accent ramp</span>
+          <div class="sg-sub-body">
+            <div class="sg-ramp">
+              <div class="sg-ramp-col" aria-label="Cerulean ramp">
+                <div style="background:#0A2632"><span>900 / shade</span><span>#0A2632</span></div>
+                <div style="background:#123E54"><span>800</span><span>#123E54</span></div>
+                <div style="background:var(--accent-deep)"><span>700 · --accent-deep</span><span>#1F5E7A</span></div>
+                <div style="background:var(--accent)"><span>500 · --accent</span><span>#2E86AB</span></div>
+                <div style="background:var(--accent-light)"><span>400 · --accent-light</span><span>#4FA3C7</span></div>
+                <div style="background:#7CC0DC"><span>300</span><span>#7CC0DC</span></div>
+                <div style="background:#B9DDEC" data-light="dark" style="background:#B9DDEC; color:#0A1222"><span style="color:#0A1222">200 / tint</span><span style="color:#0A1222">#B9DDEC</span></div>
+              </div>
+              <div class="sg-ramp-meta">
+                <div><b>Cerulean</b>Один тон — пять значений. Мы используем 700/500/400 как утверждённые токены. 900/800/300/200 — резерв для hover-on-tint, dark-on-light, инверсий.</div>
+                <div><b>Tick spacing</b>≈ +14% L* per stop. Воспринимается как равномерный ритм без скачков.</div>
+                <div><b>Не использовать</b>200/300 на навигации и кнопках — теряют контраст на bg-deep.</div>
+              </div>
+            </div>
+            <div class="sg-note">
+              <b>OK</b>
+              <span><span class="ok">Da</span> — accent-deep как pressed, accent как default, accent-light как hover. <span class="no">No</span> — фиолетово-голубые градиенты, neon-glow на больших площадях.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sg-sub">
+          <span class="sg-sub-key">B · Surfaces</span>
+          <div class="sg-sub-body">
+            <div class="sg-grid-4">
+              <div class="sw"><div class="sw-chip" style="background: var(--bg-deep)"></div><div class="sw-name">BG deep</div><div class="sw-token">--bg-deep · #0A1222</div></div>
+              <div class="sw"><div class="sw-chip" style="background: var(--bg)"></div><div class="sw-name">BG alt</div><div class="sw-token">--bg · #0F1B33</div></div>
+              <div class="sw"><div class="sw-chip" style="background: var(--bg-card)"></div><div class="sw-name">BG card</div><div class="sw-token">--bg-card · #162747</div></div>
+              <div class="sw"><div class="sw-chip" style="background: var(--glass-bg); backdrop-filter: blur(10px)"></div><div class="sw-name">Glass</div><div class="sw-token">--glass-bg · 60% α</div></div>
+            </div>
+            <div class="sg-note">
+              <b>Layering</b>
+              <span>bg-deep → bg → bg-card. Каждый шаг ≈ +5% L*. Никогда не клади glass-blur на bg-deep — теряется граница, читается как AI-template.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sg-sub">
+          <span class="sg-sub-key">C · Text · cream</span>
+          <div class="sg-sub-body">
+            <div class="sg-grid-4">
+              <div class="sw"><div class="sw-chip" style="background: var(--text-primary)"></div><div class="sw-name">Primary</div><div class="sw-token">#F5EFE3 · headings</div></div>
+              <div class="sw"><div class="sw-chip" style="background: var(--text-secondary)"></div><div class="sw-name">Secondary</div><div class="sw-token">#A8B0C0 · body</div></div>
+              <div class="sw"><div class="sw-chip" style="background: var(--text-tertiary)"></div><div class="sw-name">Tertiary</div><div class="sw-token">#6B7690 · captions</div></div>
+              <div class="sw"><div class="sw-chip" style="background: var(--text-muted)"></div><div class="sw-name">Muted</div><div class="sw-token">#4A5468 · disabled</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sg-sub">
+          <span class="sg-sub-key">D · Contrast pairs · WCAG AA</span>
+          <div class="sg-sub-body">
+            <table class="sg-wcag">
+              <thead><tr><th>Foreground</th><th>Background</th><th>Ratio</th><th>Level</th><th>Use for</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><span class="swatch" style="background: var(--text-primary); color:#0A1222">Aa</span>--text-primary</td>
+                  <td>--bg-deep</td>
+                  <td>14.8 : 1</td>
+                  <td class="pass">AAA</td>
+                  <td>Все заголовки, body</td>
+                </tr>
+                <tr>
+                  <td><span class="swatch" style="background: var(--text-secondary); color:#0A1222">Aa</span>--text-secondary</td>
+                  <td>--bg-deep</td>
+                  <td>7.2 : 1</td>
+                  <td class="pass">AAA</td>
+                  <td>Описания, абзацы</td>
+                </tr>
+                <tr>
+                  <td><span class="swatch" style="background: var(--text-tertiary); color:#fff">Aa</span>--text-tertiary</td>
+                  <td>--bg-deep</td>
+                  <td>4.6 : 1</td>
+                  <td class="pass">AA</td>
+                  <td>Captions, mono-метки</td>
+                </tr>
+                <tr>
+                  <td><span class="swatch" style="background: var(--accent-light); color:#0A1222">Aa</span>--accent-light</td>
+                  <td>--bg-deep</td>
+                  <td>5.9 : 1</td>
+                  <td class="pass">AA</td>
+                  <td>Hover-links, inline highlight</td>
+                </tr>
+                <tr>
+                  <td><span class="swatch" style="background: var(--accent); color:#fff">Aa</span>--accent</td>
+                  <td>--bg-deep</td>
+                  <td>3.8 : 1</td>
+                  <td class="warn">AA Large</td>
+                  <td>Только 18px+ или 14px bold</td>
+                </tr>
+                <tr>
+                  <td><span class="swatch" style="background: var(--text-muted); color:#fff">Aa</span>--text-muted</td>
+                  <td>--bg-deep</td>
+                  <td>2.4 : 1</td>
+                  <td class="fail">FAIL</td>
+                  <td>Только disabled / decorative</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="sg-sub">
+          <span class="sg-sub-key">E · Semantic · status</span>
+          <div class="sg-sub-body">
+            <div class="sg-grid-4">
+              <div class="sw"><div class="sw-chip" style="background: var(--success)"></div><div class="sw-name">Success</div><div class="sw-token">#10B981 · ok</div></div>
+              <div class="sw"><div class="sw-chip" style="background: var(--warning)"></div><div class="sw-name">Warning</div><div class="sw-token">#F59E0B · attention</div></div>
+              <div class="sw"><div class="sw-chip" style="background: var(--error)"></div><div class="sw-name">Error</div><div class="sw-token">#EF4444 · destructive</div></div>
+              <div class="sw"><div class="sw-chip" style="background: var(--border-light)"></div><div class="sw-name">Border</div><div class="sw-token">--border-light · 14% α</div></div>
+            </div>
+            <div class="sg-note">
+              <b>Rule</b>
+              <span>Semantic ≠ decoration. Зелёный — только success-state, не «trust». Жёлтый — только warning, не «highlight». Красный — только error, не «emphasis».</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       02 TYPOGRAPHY
+       ══════════════════════════════════════════════════ -->
+  <section class="sg-section" id="type">
+    <div class="sg-section-head">
+      <span class="sg-section-num">02</span>
+      <h2>Типографика</h2>
+      <p class="sg-section-sub">Archivo (display, 700–900) для заголовков. DM Sans (body, 400–500) для параграфов. JetBrains Mono — метки, бейджи, code, stat-labels. Никогда не использовать Inter / Roboto / Space Grotesk (AI-cliché).</p>
+    </div>
+
+    <div class="sg-rail">
+      <aside class="sg-margin">
+        <span class="tick"></span>
+        <span>Type</span>
+        <span class="k">3 families</span>
+        <span>Archivo · DM Sans · JB Mono</span>
+        <span class="fig">Fig. 02.1</span>
+      </aside>
+
+      <div>
+        <div class="sg-sub">
+          <span class="sg-sub-key">A · Modular scale</span>
+          <div class="sg-sub-body">
+            <div class="sg-type-scale">
+              <div class="h">Token</div><div class="h">Px / Rem</div><div class="h">LH</div><div class="h">Sample</div>
+              <div>--fs-12</div><div class="px">12 / 0.75</div><div>1.4</div><div class="sample mono">CAPTION · MONO LABEL</div>
+              <div>--fs-14</div><div class="px">14 / 0.875</div><div>1.55</div><div class="sample body">Helper, form hint, footnote.</div>
+              <div>--fs-16</div><div class="px">16 / 1.00</div><div>1.65</div><div class="sample body">Body — основной параграф.</div>
+              <div>--fs-18</div><div class="px">18 / 1.125</div><div>1.55</div><div class="sample body">Lead — увеличенный intro.</div>
+              <div>--fs-22</div><div class="px">22 / 1.375</div><div>1.30</div><div class="sample">H3 · карточка</div>
+              <div>--fs-28</div><div class="px">28 / 1.75</div><div>1.20</div><div class="sample">H2 mid · подсекция</div>
+              <div>--fs-40</div><div class="px">40 / 2.50</div><div>1.10</div><div class="sample">H2 · секция</div>
+              <div>--fs-64</div><div class="px">64 / 4.00</div><div>1.00</div><div class="sample">H1 · hero</div>
+            </div>
+            <div class="sg-note">
+              <b>Ratio</b>
+              <span>Шкала ≈ 1.25 (major third), но прерывная — мы оптимизировали под реальные слоты, не под чистую математику. 12→14→16 — мелкая зона, 22→28→40→64 — display.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sg-sub">
+          <span class="sg-sub-key">B · Tracking</span>
+          <div class="sg-sub-body">
+            <table class="sg-wcag" style="margin: 0">
+              <thead><tr><th>Use</th><th>Letter-spacing</th><th>Sample</th></tr></thead>
+              <tbody>
+                <tr><td>Display 40–72px</td><td>−0.03em</td><td style="font-family: var(--font-display); font-weight: 800; font-size: 1.4rem; letter-spacing: -0.03em; color: var(--text-primary)">Editorial, not AI</td></tr>
+                <tr><td>Section H2 28–40</td><td>−0.02em</td><td style="font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; letter-spacing: -0.02em; color: var(--text-primary)">Почему это направление</td></tr>
+                <tr><td>Card H3 18–22</td><td>−0.01em</td><td style="font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; letter-spacing: -0.01em; color: var(--text-primary)">Flutter Developer</td></tr>
+                <tr><td>Body 14–18</td><td>0</td><td style="font-family: var(--font-body); font-size: 0.95rem; color: var(--text-secondary)">Один язык, один код, три платформы.</td></tr>
+                <tr><td>Mono uppercase</td><td>+0.12em</td><td style="font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-light)">TRACK · PYTHON+ML</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="sg-sub">
+          <span class="sg-sub-key">C · Weights</span>
+          <div class="sg-sub-body">
+            <div class="sg-type-weights">
+              <div><span class="w">Archivo 700</span><span class="s" style="font-weight:700">Quillon</span></div>
+              <div><span class="w">Archivo 800</span><span class="s" style="font-weight:800">Quillon</span></div>
+              <div><span class="w">Archivo 900</span><span class="s" style="font-weight:900">Quillon</span></div>
+              <div><span class="w">DM Sans 400</span><span class="s" style="font-family: var(--font-body); font-weight:400">Quillon</span></div>
+              <div><span class="w">DM Sans 500</span><span class="s" style="font-family: var(--font-body); font-weight:500">Quillon</span></div>
+              <div><span class="w">JB Mono 500</span><span class="s" style="font-family: var(--font-mono); font-weight:500">Quillon</span></div>
+            </div>
+            <div class="sg-note">
+              <b>Pair</b>
+              <span>Display: 800 default, 700 для denser контента, 900 — только в hero, не в карточках. Body: 400 — основной, 500 — выделение в строке. Никогда не миксуй 600+ DM Sans с Archivo — становится «Inter-like».</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sg-sub">
+          <span class="sg-sub-key">D · Leading</span>
+          <div class="sg-sub-body">
+            <div class="sg-type-leading">
+              <div>
+                <span class="lh">1.10 · headlines</span>
+                Стань инженером,<br>которого нанимают<br>в первый же месяц
+              </div>
+              <div>
+                <span class="lh">1.50 · UI body</span>
+                Один язык. Один код. Работает на iOS, Android и web — без копий проекта на каждый стек.
+              </div>
+              <div>
+                <span class="lh">1.65 · long read</span>
+                Flutter-разработчиков в 3–4 раза меньше, чем iOS/Android-специалистов. Это и есть наш аргумент.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       03 SPACING
+       ══════════════════════════════════════════════════ -->
+  <section class="sg-section" id="space">
+    <div class="sg-section-head">
+      <span class="sg-section-num">03</span>
+      <h2>Отступы</h2>
+      <p class="sg-section-sub">8-pixel base-grid. Секции используют <code class="sg-code">clamp(64px, 10vw, 96px)</code> чтобы адаптироваться без breakpoint-ов. Container: max 1200px, padding clamp(16px, 4vw, 48px).</p>
+    </div>
+
+    <div class="sg-rail">
+      <aside class="sg-margin">
+        <span class="tick"></span>
+        <span>Grid</span>
+        <span class="k">8 px base</span>
+        <span>7 stops · xs → 3xl</span>
+        <span class="fig">Fig. 03.1</span>
+      </aside>
+
+      <div>
+        <div class="sg-sub">
+          <span class="sg-sub-key">A · Ruler</span>
+          <div class="sg-sub-body">
+            <div class="sg-ruler">
+              <div class="sg-ruler-track">
+                <div class="sg-ruler-bar" style="left:0; width:8px"></div>
+                <div class="sg-ruler-bar" style="left:24px; width:16px"></div>
+                <div class="sg-ruler-bar" style="left:64px; width:24px"></div>
+                <div class="sg-ruler-bar" style="left:112px; width:32px"></div>
+                <div class="sg-ruler-bar" style="left:168px; width:48px"></div>
+                <div class="sg-ruler-bar" style="left:240px; width:64px"></div>
+                <div class="sg-ruler-bar" style="left:328px; width:96px"></div>
+              </div>
+              <div class="sg-ruler-tick" style="left:4px"><b>8</b><br>xs</div>
+              <div class="sg-ruler-tick" style="left:32px"><b>16</b><br>sm</div>
+              <div class="sg-ruler-tick" style="left:76px"><b>24</b><br>md</div>
+              <div class="sg-ruler-tick" style="left:128px"><b>32</b><br>lg</div>
+              <div class="sg-ruler-tick" style="left:192px"><b>48</b><br>xl</div>
+              <div class="sg-ruler-tick" style="left:272px"><b>64</b><br>2xl</div>
+              <div class="sg-ruler-tick" style="left:376px"><b>96</b><br>3xl</div>
+            </div>
+            <div class="sg-note">
+              <b>Read</b>
+              <span>Каждое деление 8px. Бар = реальный размер токена. Ниже — токен и numeric. Один взгляд = один масштаб.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sg-sub">
+          <span class="sg-sub-key">B · Real use</span>
+          <div class="sg-sub-body">
+            <div class="sg-spacing-real">
+              <div class="sg-srcell">
+                <div class="sg-srcell-stack">
+                  <div class="sg-srcell-mini">Card A</div>
+                  <div class="sg-srcell-gap" style="width:24px"></div>
+                  <div class="sg-srcell-mini">Card B</div>
+                </div>
+                <div class="sg-srcell-cap"><span>between cards in grid</span><b>24 px · --space-md</b></div>
+              </div>
+              <div class="sg-srcell">
+                <div class="sg-srcell-stack">
+                  <div class="sg-srcell-mini">Card A</div>
+                  <div class="sg-srcell-gap" style="width:48px"></div>
+                  <div class="sg-srcell-mini">Card B</div>
+                </div>
+                <div class="sg-srcell-cap"><span>between hero & first section</span><b>48 px · --space-xl</b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sg-sub">
+          <span class="sg-sub-key">C · Container · radius</span>
+          <div class="sg-sub-body">
+            <pre class="sg-snippet" style="margin:0">
+<span class="c">/* Container / section rhythm */</span>
+<span class="k">--container-max</span>: <span class="v">1200px</span>;
+<span class="k">--container-pad</span>: <span class="v">clamp(16px, 4vw, 48px)</span>;
+<span class="k">--section-pad</span>:   <span class="v">clamp(64px, 10vw, 96px)</span>;
+
+<span class="c">/* Radius — editorial, не AI-soft */</span>
+<span class="k">--card-radius</span>: <span class="v">8px</span>;   <span class="c">/* было 24 */</span>
+<span class="k">--btn-radius</span>:  <span class="v">6px</span>;   <span class="c">/* было 12 */</span>
+<span class="k">--radius-pill</span>: <span class="v">999px</span>; <span class="c">/* только tags/badges */</span></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       04 MOTION
+       ══════════════════════════════════════════════════ -->
+  <section class="sg-section" id="motion">
+    <div class="sg-section-head">
+      <span class="sg-section-num">04</span>
+      <h2>Анимации</h2>
+      <p class="sg-section-sub">Два timing-function: <code class="sg-code">--transition</code> (0.3s ease-out) и <code class="sg-code">--spring</code> (0.42s overshoot) — для редких акцентов. Запрещены: sheen-sweep, card top-border glow, gradient-text animation, glow-pulse на декоре.</p>
+      <p class="sg-rev">
+        <b>rev. 2026-04-02</b> <i>сняли</i> <s>sheen-sweep на кнопках</s> · <s>card top-border gradient</s>
+        <b style="margin-left:auto">rev. 2026-04-21</b> <i>link-hover</i> · underline-offset 6 → 12
+      </p>
+    </div>
+
+    <div class="sg-rail">
+      <aside class="sg-margin">
+        <span class="tick"></span>
+        <span>Motion</span>
+        <span class="k">2 curves</span>
+        <span>ease-out · spring</span>
+        <span class="fig">Fig. 04.1</span>
+      </aside>
+
+      <div>
+        <div class="sg-sub">
+          <span class="sg-sub-key">A · Easing curves</span>
+          <div class="sg-sub-body">
+            <div class="sg-easing">
+              <div>
+                <svg viewBox="0 0 100 80" preserveAspectRatio="none">
+                  <line class="grid" x1="0" y1="20" x2="100" y2="20"/>
+                  <line class="grid" x1="0" y1="40" x2="100" y2="40"/>
+                  <line class="grid" x1="0" y1="60" x2="100" y2="60"/>
+                  <line class="axis" x1="0" y1="75" x2="100" y2="75"/>
+                  <line class="axis" x1="5" y1="0" x2="5" y2="80"/>
+                  <path class="curve" d="M5,75 C45,75 25,5 95,5"/>
+                  <circle class="dot" cx="5" cy="75" r="2"/>
+                  <circle class="dot" cx="95" cy="5" r="2"/>
+                </svg>
+                <span class="sg-easing-name">--transition · ease-out</span>
+                <span class="sg-easing-meta">cubic-bezier(.4, 0, .2, 1) · 300 ms</span>
+                <span class="sg-easing-meta">default · 95% случаев</span>
+              </div>
+              <div>
+                <svg viewBox="0 0 100 80" preserveAspectRatio="none">
+                  <line class="grid" x1="0" y1="20" x2="100" y2="20"/>
+                  <line class="grid" x1="0" y1="40" x2="100" y2="40"/>
+                  <line class="grid" x1="0" y1="60" x2="100" y2="60"/>
+                  <line class="axis" x1="0" y1="75" x2="100" y2="75"/>
+                  <line class="axis" x1="5" y1="0" x2="5" y2="80"/>
+                  <path class="curve" d="M5,75 C40,-15 60,15 95,5"/>
+                  <circle class="dot" cx="5" cy="75" r="2"/>
+                  <circle class="dot" cx="95" cy="5" r="2"/>
+                </svg>
+                <span class="sg-easing-name">--spring · overshoot</span>
+                <span class="sg-easing-meta">cubic-bezier(.34, 1.56, .64, 1) · 420 ms</span>
+                <span class="sg-easing-meta">редко · CTA-success, modal-enter</span>
+              </div>
+              <div>
+                <svg viewBox="0 0 100 80" preserveAspectRatio="none">
+                  <line class="grid" x1="0" y1="20" x2="100" y2="20"/>
+                  <line class="grid" x1="0" y1="40" x2="100" y2="40"/>
+                  <line class="grid" x1="0" y1="60" x2="100" y2="60"/>
+                  <line class="axis" x1="0" y1="75" x2="100" y2="75"/>
+                  <line class="axis" x1="5" y1="0" x2="5" y2="80"/>
+                  <path class="curve" d="M5,75 L95,5"/>
+                  <circle class="dot" cx="5" cy="75" r="2"/>
+                  <circle class="dot" cx="95" cy="5" r="2"/>
+                </svg>
+                <span class="sg-easing-name">linear · banned</span>
+                <span class="sg-easing-meta">cubic-bezier(0, 0, 1, 1)</span>
+                <span class="sg-easing-meta">только loops (spinner, marquee)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sg-sub">
+          <span class="sg-sub-key">B · Hover demos</span>
+          <div class="sg-sub-body">
+            <div class="sg-grid-3">
+              <div class="mo-card">
+                <span class="mo-name">Default lift</span>
+                <span class="mo-meta">translateY(-3px) + border<br>0.3s ease-out</span>
+              </div>
+              <div class="mo-card mo-card--spring">
+                <span class="mo-name">Spring (rare)</span>
+                <span class="mo-meta">translateY(-6px) scale(1.02)<br>0.42s spring</span>
+              </div>
+              <div class="mo-card" style="transition: background var(--transition), color var(--transition);">
+                <span class="mo-name">Color-only</span>
+                <span class="mo-meta">без layout-shift<br>для inline-actions</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sg-sub">
+          <span class="sg-sub-key">C · Link · underline shift</span>
+          <div class="sg-sub-body">
+            <div style="display:flex; flex-direction:column; gap:18px">
+              <a href="#" class="sg-link-shift">Перейти к программе Python+ML →</a>
+              <a href="#" class="sg-link-shift">Открыть Quillon Agency · brief'ы</a>
+              <a href="#" class="sg-link-shift">Скачать SAFE · 14 страниц PDF</a>
+            </div>
+            <div class="sg-note">
+              <b>Why</b>
+              <span>Hover двигает не текст, а подчёркивание. Это наш фирменный жест: text стабилен, indicator реагирует. Меньше «AI-bounce», больше editorial-precision.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <style>
+      .sg-link-shift {
+        display: inline-flex; align-items: baseline; gap: 0;
+        font-family: var(--font-display); font-weight: 600;
+        font-size: 1.08rem; letter-spacing: -0.01em;
+        color: var(--text-primary);
+        text-decoration: underline;
+        text-decoration-color: var(--accent);
+        text-decoration-thickness: 1px;
+        text-underline-offset: 6px;
+        transition: text-underline-offset 220ms cubic-bezier(.4,0,.2,1),
+                    color 220ms cubic-bezier(.4,0,.2,1),
+                    text-decoration-color 220ms cubic-bezier(.4,0,.2,1);
+        width: fit-content;
+      }
+      .sg-link-shift:hover {
+        color: var(--accent-light);
+        text-decoration-color: var(--accent-light);
+        text-underline-offset: 12px;
+      }
+    </style>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       05 BUTTONS
+       ══════════════════════════════════════════════════ -->
+  <section class="sg-section" id="buttons">
+    <div class="sg-section-head">
+      <span class="sg-section-num">05</span>
+      <h2>Кнопки</h2>
+      <p class="sg-section-sub">Primary — cerulean gradient (accent→accent-light) с тонкой inset-highlight. Secondary — outlined, 1px border. Big — hero CTA 64px. Sm — inline. Sheen-sweep удалён.</p>
+      <p class="sg-rev">
+        <b>rev. 2026-04-02</b> <i>радиус</i> · <s>12px</s> → 6px
+        <b style="margin-left:auto">rev. 2026-04-21</b> <i>focus-ring</i> · 2px outline + 2px offset
+      </p>
+    </div>
+
+    <div class="sg-rail">
+      <aside class="sg-margin">
+        <span class="tick"></span>
+        <span>Buttons</span>
+        <span class="k">2 × 4 × 5</span>
+        <span>variant · size · state</span>
+        <span class="fig">Fig. 05.1</span>
+      </aside>
+
+      <div>
+        <div class="sg-sub">
+          <span class="sg-sub-key">A · Anatomy</span>
+          <div class="sg-sub-body">
+            <div class="sg-anatomy">
+              <span class="annot top" style="left:50%; transform:translateX(-50%)">label · DM Sans 500</span>
+              <span class="annot l">padding-x · 24</span>
+              <span class="annot r">padding-x · 24</span>
+              <span class="annot bot" style="left:50%; transform:translateX(-50%)">height · 48 · radius 6</span>
+              <button class="btn btn-primary">Начать учиться</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="sg-sub">
+          <span class="sg-sub-key">B · Variants</span>
+          <div class="sg-sub-body">
+            <table class="sg-matrix">
+              <thead><tr><th>Variant</th><th>Use</th><th>Sample</th></tr></thead>
+              <tbody>
+                <tr><td>btn-primary</td><td>Главное действие на странице. Один на экран.</td><td><button class="btn btn-primary">Начать учиться</button></td></tr>
+                <tr><td>btn-secondary</td><td>Вторичное действие рядом с primary, или одиночный inline.</td><td><button class="btn btn-secondary">Посмотреть программу</button></td></tr>
+                <tr><td>btn-primary btn-big</td><td>Hero / sticky bottom-bar. 56–64px.</td><td><button class="btn btn-primary btn-big">Пройти тест за 2 минуты</button></td></tr>
+                <tr><td>btn-secondary btn-sm</td><td>Inline-link в карточке.</td><td><button class="btn btn-secondary btn-sm">Выбрать Python →</button></td></tr>
+                <tr><td>btn-hero-cta</td><td>Двухстрочная hero-CTA с подзаголовком.</td><td>
+                  <button class="btn btn-primary btn-hero-cta">
+                    <span class="btn-hero-title">Подходит ли мне Flutter</span>
+                    <span class="btn-hero-sub">пройди тест за 2 минуты</span>
+                  </button>
+                </td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="sg-sub">
+          <span class="sg-sub-key">C · States</span>
+          <div class="sg-sub-body">
+            <table class="sg-matrix">
+              <thead><tr><th>State</th><th>Primary</th><th>Secondary</th></tr></thead>
+              <tbody>
+                <tr><td>default</td><td><button class="btn btn-primary">Action</button></td><td><button class="btn btn-secondary">Action</button></td></tr>
+                <tr><td>hover (наведи)</td><td><button class="btn btn-primary">Action</button></td><td><button class="btn btn-secondary">Action</button></td></tr>
+                <tr><td>disabled</td><td><button class="btn btn-primary" disabled style="opacity:0.4; cursor:not-allowed; pointer-events:none">Action</button></td><td><button class="btn btn-secondary" disabled style="opacity:0.4; cursor:not-allowed; pointer-events:none">Action</button></td></tr>
+                <tr><td>loading</td><td><button class="btn btn-primary" style="pointer-events:none"><span style="display:inline-block; width:14px; height:14px; border:2px solid rgba(255,255,255,0.4); border-top-color:#fff; border-radius:50%; animation: sg-spin 0.8s linear infinite; margin-right:8px; vertical-align:middle"></span>Загружаем</button></td><td><button class="btn btn-secondary" style="pointer-events:none"><span style="display:inline-block; width:14px; height:14px; border:2px solid var(--border-light); border-top-color: var(--accent); border-radius:50%; animation: sg-spin 0.8s linear infinite; margin-right:8px; vertical-align:middle"></span>Загружаем</button></td></tr>
+              </tbody>
+            </table>
+            <style>@keyframes sg-spin { to { transform: rotate(360deg); } }</style>
+          </div>
+        </div>
+
+        <div class="sg-sub">
+          <span class="sg-sub-key">D · Code</span>
+          <div class="sg-sub-body">
+            <pre class="sg-snippet" style="margin:0">
+<span class="c">&lt;!-- Usage --&gt;</span>
+<span class="k">&lt;a</span> class="<span class="v">btn btn-primary btn-big</span>"<span class="k">&gt;</span>Пройти тест<span class="k">&lt;/a&gt;</span>
+<span class="k">&lt;a</span> class="<span class="v">btn btn-secondary btn-sm</span>"<span class="k">&gt;</span>Программа<span class="k">&lt;/a&gt;</span>
+<span class="k">&lt;a</span> class="<span class="v">btn btn-primary btn-hero-cta</span>"<span class="k">&gt;</span>
+  <span class="k">&lt;span</span> class="<span class="v">btn-hero-title</span>"<span class="k">&gt;</span>Подходит ли мне Flutter<span class="k">&lt;/span&gt;</span>
+  <span class="k">&lt;span</span> class="<span class="v">btn-hero-sub</span>"<span class="k">&gt;</span>пройди тест за 2 минуты<span class="k">&lt;/span&gt;</span>
+<span class="k">&lt;/a&gt;</span></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       06 CARDS
+       ══════════════════════════════════════════════════ -->
+  <section class="sg-section" id="cards">
+    <div class="sg-section-head">
+      <span class="sg-section-num">06</span>
+      <h2>Карточки</h2>
+      <p class="sg-section-sub">Glass-bg + blur 16px + border 1px. Hover: lift 3px + border-color → accent + soft shadow. Top-edge gradient sweep удалён (shadcn-cliché).</p>
+    </div>
+
+    <div class="sg-rail">
+      <aside class="sg-margin">
+        <span class="tick"></span>
+        <span>Cards</span>
+        <span class="k">2 styles</span>
+        <span>flat default · glass rare</span>
+        <span class="fig">Fig. 06.1</span>
+      </aside>
+
+      <div>
+        <div class="sg-sub">
+          <span class="sg-sub-key">A · Anatomy</span>
+          <div class="sg-sub-body">
+            <div class="sg-card-annot">
+              <span class="pin t1">tag · slot</span>
+              <span class="pin t2">corner-mark</span>
+              <span class="pin b1">cta · btn-sm</span>
+              <span class="pin b2">padding · 32</span>
+              <div class="sg-card-flat sg-card-demo">
+                <span class="tag tag-blue">Трек · QA Automation</span>
+                <h4>Быстрый вход в IT</h4>
+                <p>Слоты: tag (top-left) · h4 (display 600 22px) · p (body) · cta (btn-sm). Corner-mark в правом верхнем — фирменная типографская марка вместо gradient-sweep.</p>
+                <a href="#" class="btn btn-secondary btn-sm">Подробнее</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sg-sub">
+          <span class="sg-sub-key">B · Flat default</span>
+          <div class="sg-sub-body">
+            <div class="sg-grid-2">
+              <div class="sg-card-flat sg-card-demo">
+                <span class="tag tag-blue">Трек · QA Automation</span>
+                <h4>Быстрый вход в IT</h4>
+                <p>Плотный <code class="sg-code">--bg-card</code>, 1px hairline, corner-mark. Hover — border → accent, без lift.</p>
+                <a href="#" class="btn btn-secondary btn-sm">Подробнее</a>
+              </div>
+              <div class="sg-card-flat sg-card-flat--accent sg-card-demo">
+                <span class="tag tag-blue">Featured</span>
+                <h4>Python + ML</h4>
+                <p>Тот же flat-fill, но с левой 3px-cerulean-полосой вместо gradient-border. Editorial way to mark featured.</p>
+                <a href="#" class="btn btn-primary btn-sm">Начать →</a>
+              </div>
+            </div>
+            <div class="sg-note">
+              <b>When</b>
+              <span><span class="ok">Da</span> — grid-списки треков, FAQ-ответы, статистические карточки. <span class="no">No</span> — поверх изображений (теряется hairline), внутри glass-блока (двойная стенка).</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sg-sub">
+          <span class="sg-sub-key">C · Glass · rare</span>
+          <div class="sg-sub-body">
+            <div class="sg-grid-2">
+              <div class="card sg-card-demo">
+                <span class="tag tag-blue">Трек · Flutter</span>
+                <h4>Один код на 3 платформы</h4>
+                <p>Dart, Flutter, Firebase. iOS, Android и web из одного исходника.</p>
+                <a href="#" class="btn btn-secondary btn-sm">Подробнее</a>
+              </div>
+              <div class="card card-highlight sg-card-demo">
+                <span class="tag tag-blue">Featured</span>
+                <h4>Python + ML</h4>
+                <p>Флагман. 12 месяцев. <code class="sg-code">.card-highlight</code> — для featured.</p>
+                <a href="#" class="btn btn-primary btn-sm">Начать →</a>
+              </div>
+            </div>
+            <div class="sg-note">
+              <b>When</b>
+              <span><span class="ok">Da</span> — featured-CTA на hero, postscript-блок над footer. <span class="no">No</span> — массовое использование в grid (glass теряет смысл, превращается в AI-template).</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sg-sub">
+          <span class="sg-sub-key">D · Metric</span>
+          <div class="sg-sub-body">
+            <div class="sg-grid-2">
+              <div class="sg-metric">
+                <span class="sg-metric-val">4 500<em>+</em></span>
+                <span class="sg-metric-lbl">открытых junior-вакансий</span>
+              </div>
+              <div class="sg-metric">
+                <span class="sg-metric-val">85 000<em>₽</em></span>
+                <span class="sg-metric-lbl">зарплата на первой работе</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <style>
+      .sg-card-flat {
+        position: relative;
+        background: var(--bg-card);
+        border: 1px solid var(--border-light);
+        border-radius: var(--card-radius);
+        padding: clamp(24px, 5vw, 36px);
+        transition: border-color var(--transition), background var(--transition);
+        overflow: hidden;
+      }
+      .sg-card-flat::before {
+        /* corner-mark — печатная марка в правом верхнем углу */
+        content: ""; position: absolute;
+        top: 0; right: 0;
+        width: 22px; height: 22px;
+        border-left: 1px solid var(--border-light);
+        border-bottom: 1px solid var(--border-light);
+        border-bottom-left-radius: 6px;
+      }
+      .sg-card-flat:hover {
+        border-color: var(--border-accent);
+        background: color-mix(in oklab, var(--bg-card) 92%, var(--accent) 8%);
+      }
+      .sg-card-flat--accent {
+        border-left: 3px solid var(--accent);
+        padding-left: calc(clamp(24px, 5vw, 36px) - 2px);
+      }
+    </style>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       07 INPUTS
+       ══════════════════════════════════════════════════ -->
+  <section class="sg-section" id="inputs">
+    <div class="sg-section-head">
+      <span class="sg-section-num">07</span>
+      <h2>Поля ввода</h2>
+      <p class="sg-section-sub">52px высота, border 1px, focus-ring через 3px accent-subtle box-shadow (без outline). Radius 4-6px — совпадает с btn-radius.</p>
+    </div>
+
+    <div class="sg-rail">
+      <aside class="sg-margin">
+        <span class="tick"></span>
+        <span>Inputs</span>
+        <span class="k">7 states</span>
+        <span>text · select · check · radio · toggle</span>
+        <span class="fig">Fig. 07.1</span>
+      </aside>
+
+      <div>
+        <div class="sg-sub">
+          <span class="sg-sub-key">A · Text · states</span>
+          <div class="sg-sub-body">
+            <div class="sg-input-states">
+              <div class="label">default</div>
+              <div><input class="form-input" type="text" placeholder="Имя"></div>
+              <div class="label">filled</div>
+              <div><input class="form-input" type="text" value="Кристина Бли"></div>
+              <div class="label">focus (tap)</div>
+              <div><input class="form-input" type="text" value="kristina@example.com" autofocus></div>
+              <div class="label">with helper</div>
+              <div>
+                <input class="form-input" type="email" placeholder="you@example.com">
+                <span class="sg-input-helper">Используем только для подтверждения и расписания.</span>
+              </div>
+              <div class="label">error</div>
+              <div>
+                <input class="form-input sg-input-error" type="email" value="kristina@">
+                <span class="sg-input-error-msg">Похоже на незавершённый адрес — добавь домен.</span>
+              </div>
+              <div class="label">disabled</div>
+              <div><input class="form-input" type="text" value="Заблокировано до оплаты" disabled style="opacity:0.5"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sg-sub">
+          <span class="sg-sub-key">B · Textarea · select</span>
+          <div class="sg-sub-body">
+            <div class="sg-input-states">
+              <div class="label">textarea</div>
+              <div><textarea class="form-input" placeholder="Коротко о цели трека"></textarea></div>
+              <div class="label">select</div>
+              <div>
+                <select class="sg-select">
+                  <option>Python + ML — 12 мес</option>
+                  <option>Flutter — 9 мес</option>
+                  <option>QA Automation — 6 мес</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sg-sub">
+          <span class="sg-sub-key">C · Choice</span>
+          <div class="sg-sub-body">
+            <div class="sg-input-states">
+              <div class="label">checkbox</div>
+              <div style="gap:24px; flex-wrap:wrap">
+                <label class="sg-checkbox"><input type="checkbox" checked>Согласен с офертой</label>
+                <label class="sg-checkbox"><input type="checkbox">Получать письма раз в неделю</label>
+              </div>
+              <div class="label">radio</div>
+              <div style="gap:24px; flex-wrap:wrap">
+                <label class="sg-radio"><input type="radio" name="plan" checked>Месяц</label>
+                <label class="sg-radio"><input type="radio" name="plan">3 месяца</label>
+                <label class="sg-radio"><input type="radio" name="plan">12 месяцев</label>
+              </div>
+              <div class="label">toggle</div>
+              <div style="gap:24px">
+                <span class="sg-toggle on" onclick="this.classList.toggle('on')"></span>
+                <span class="sg-toggle" onclick="this.classList.toggle('on')"></span>
+                <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-tertiary)">click to toggle</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sg-sub">
+          <span class="sg-sub-key">D · Code</span>
+          <div class="sg-sub-body">
+            <pre class="sg-snippet" style="margin:0">
+<span class="k">&lt;input</span> class="<span class="v">form-input</span>" type="email" placeholder="..."<span class="k">&gt;</span>
+<span class="k">&lt;textarea</span> class="<span class="v">form-input</span>"<span class="k">&gt;&lt;/textarea&gt;</span>
+<span class="k">&lt;input</span> class="<span class="v">form-input sg-input-error</span>" value="kristina@"<span class="k">&gt;</span></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       08 TAGS & BADGES
+       ══════════════════════════════════════════════════ -->
+  <section class="sg-section" id="tags">
+    <div class="sg-section-head">
+      <span class="sg-section-num">08</span>
+      <h2>Теги и бейджи</h2>
+      <p class="sg-section-sub">Mono-шрифт, uppercase, 0.05em tracking. 4 цвет-варианта (blue/green/purple-alias/orange) + live-badge с pulsing-dot. <code class="sg-code">.tag-purple</code> теперь = cerulean (алиас для обратной совместимости).</p>
+    </div>
+
+    <div class="sg-rail">
+      <aside class="sg-margin">
+        <span class="tick"></span>
+        <span>Tags</span>
+        <span class="k">4 kinds</span>
+        <span>monochrome · semantic · live · counter</span>
+        <span class="fig">Fig. 08.1</span>
+      </aside>
+
+      <div>
+        <div class="sg-tag-matrix">
+          <div class="h">Kind</div><div class="h">Sample</div><div class="h">Use</div>
+
+          <div class="label">monochrome</div>
+          <div><span class="tag tag-blue">Python · 12 мес</span><span class="tag tag-purple">Flutter</span></div>
+          <div class="usage">Категория, трек, тип контента. Default.</div>
+
+          <div class="label">semantic</div>
+          <div><span class="tag tag-green">Stage · Live</span><span class="tag tag-orange">Early access</span></div>
+          <div class="usage">Статус: green=live, orange=warning. Только статусы, не decoration.</div>
+
+          <div class="label">live</div>
+          <div><span class="sg-live"><span class="sg-live-dot"></span>Группа набирается · старт 06.05</span></div>
+          <div class="usage">Real-time event с pulsing dot. Один на экран максимум.</div>
+
+          <div class="label">counter</div>
+          <div><span class="sg-counter"><b>12</b>новых brief</span><span class="sg-counter"><b>3</b>места осталось</span></div>
+          <div class="usage">Числовая метрика рядом с label. Mono-цифра, текст secondary.</div>
+        </div>
+        <div class="sg-note">
+          <b>Don't</b>
+          <span><span class="no">No</span> — emoji в теге, gradient-fill, более 3 тегов в ряд на карточке (визуальный шум).</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       09 PROGRESS
+       ══════════════════════════════════════════════════ -->
+  <section class="sg-section" id="progress">
+    <div class="sg-section-head">
+      <span class="sg-section-num">09</span>
+      <h2>Прогресс</h2>
+      <p class="sg-section-sub">Горизонтальный прогресс для квиза и форм. Fill — линейный cerulean-gradient (deep→accent→light), track — card-elevated.</p>
+    </div>
+    <div class="sg-rail">
+      <aside class="sg-margin">
+        <span class="tick"></span>
+        <span>Progress</span>
+        <span class="k">6 px h</span>
+        <span>linear gradient fill</span>
+        <span class="fig">Fig. 09.1</span>
+      </aside>
+      <div>
+        <div class="sg-stack">
+          <div class="sg-progress-wrap">
+            <div class="sg-progress-meta"><span>Вопрос 3 из 7</span><span>43%</span></div>
+            <div class="sg-progress"><div class="sg-progress-fill" style="width:43%"></div></div>
+          </div>
+          <div class="sg-progress-wrap">
+            <div class="sg-progress-meta"><span>Онбординг</span><span>80%</span></div>
+            <div class="sg-progress"><div class="sg-progress-fill" style="width:80%"></div></div>
+          </div>
+          <div class="sg-progress-wrap">
+            <div class="sg-progress-meta"><span>Программа Python+ML</span><span>12%</span></div>
+            <div class="sg-progress"><div class="sg-progress-fill" style="width:12%"></div></div>
+          </div>
+        </div>
+        <div class="sg-note">
+          <b>When</b>
+          <span><span class="ok">Da</span> — квиз, multi-step форма, onboarding. <span class="no">No</span> — для skill-уровня (выглядит как «прокачка»), для метрик в карточках (используй число).</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       10 QUIZ
+       ══════════════════════════════════════════════════ -->
+  <section class="sg-section" id="quiz">
+    <div class="sg-section-head">
+      <span class="sg-section-num">10</span>
+      <h2>Квиз-выбор</h2>
+      <p class="sg-section-sub">Редакторский list-style вариант: одна колонка, 1px border, hover/selected → accent-subtle + accent-mark. Без card-grid с иконками (AI-шаблон).</p>
+    </div>
+    <div class="sg-rail">
+      <aside class="sg-margin">
+        <span class="tick"></span>
+        <span>Quiz</span>
+        <span class="k">list, not grid</span>
+        <span>A · B · C · D mono mark</span>
+        <span class="fig">Fig. 10.1</span>
+      </aside>
+      <div>
+        <div class="sg-quiz-list">
+          <div class="sg-quiz-opt"><span class="sg-quiz-mark">A</span><span class="sg-quiz-txt">Хочу максимум денег быстро, готов к нагрузке</span></div>
+          <div class="sg-quiz-opt selected"><span class="sg-quiz-mark">B</span><span class="sg-quiz-txt">Хочу стабильный вход в IT, минимум конкурентов</span></div>
+          <div class="sg-quiz-opt"><span class="sg-quiz-mark">C</span><span class="sg-quiz-txt">Хочу делать продукты, которые можно показать другу</span></div>
+          <div class="sg-quiz-opt"><span class="sg-quiz-mark">D</span><span class="sg-quiz-txt">Не уверен — посоветуйте на основе ответов</span></div>
+        </div>
+        <div class="sg-note">
+          <b>When</b>
+          <span><span class="ok">Da</span> — single-choice вопросы с длинным текстом. <span class="no">No</span> — для multi-select (нужны checkbox), для коротких ответов (используй radio-row).</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       11 ACCORDION / FAQ
+       ══════════════════════════════════════════════════ -->
+  <section class="sg-section" id="accordion">
+    <div class="sg-section-head">
+      <span class="sg-section-num">11</span>
+      <h2>FAQ / Аккордеон</h2>
+      <p class="sg-section-sub">Нативный <code class="sg-code">&lt;details&gt;</code>. Open-state: border → accent, bg → bg-card, маркер «+» → «−». Без chevron-иконок.</p>
+    </div>
+    <div class="sg-rail">
+      <aside class="sg-margin">
+        <span class="tick"></span>
+        <span>Accordion</span>
+        <span class="k">native &lt;details&gt;</span>
+        <span>+ / − marker, no chevron</span>
+        <span class="fig">Fig. 11.1</span>
+      </aside>
+      <div>
+        <div class="sg-acc">
+          <details class="sg-acc-item" open>
+            <summary>Можно ли совмещать с работой?</summary>
+            <div class="sg-acc-body">Да. 12 часов в неделю распределяются как 3×вечер + суббота. Треть студентов учится, не увольняясь.</div>
+          </details>
+          <details class="sg-acc-item">
+            <summary>Есть ли возврат, если не подошло?</summary>
+            <div class="sg-acc-body">Первые 14 дней — полный возврат без вопросов. Дальше — pro-rata по пройденной программе.</div>
+          </details>
+          <details class="sg-acc-item">
+            <summary>Что если я не смогу проходить в темпе?</summary>
+            <div class="sg-acc-body">В треке предусмотрены 2 «академических отпуска» по 2 недели каждый — без пересдач и штрафов.</div>
+          </details>
+        </div>
+        <div class="sg-note">
+          <b>When</b>
+          <span><span class="ok">Da</span> — FAQ, programs sub-points, troubleshooting. <span class="no">No</span> — навигация (используй tab), главный контент (он не должен быть свёрнут).</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       12 GLASS BLOCK
+       ══════════════════════════════════════════════════ -->
+  <section class="sg-section" id="glass">
+    <div class="sg-section-head">
+      <span class="sg-section-num">12</span>
+      <h2>Glass-блок</h2>
+      <p class="sg-section-sub">Полупрозрачный фон <code class="sg-code">--glass-bg</code> + blur 16px + два радиальных glow (cerulean + success). Использовать редко, для featured-CTA и hero-postscript.</p>
+    </div>
+    <div class="sg-rail">
+      <aside class="sg-margin">
+        <span class="tick"></span>
+        <span>Glass</span>
+        <span class="k">rare</span>
+        <span>1 per page max</span>
+        <span class="fig">Fig. 12.1</span>
+      </aside>
+      <div>
+        <div class="sg-glass">
+          <h4>Первый оплачиваемый заказ — на 2-м месяце</h4>
+          <p>Quillon Agency подбирает студентам реальные brief-ы: парсеры, dashboards, чат-боты. Оплата от 25 000 ₽ за задачу. Студент делает — agency проверяет — клиент платит.</p>
+          <a href="#" class="btn btn-primary btn-sm">Посмотреть открытые brief-ы →</a>
+        </div>
+        <div class="sg-note">
+          <b>When</b>
+          <span><span class="ok">Da</span> — featured-CTA, postscript над footer, hero-asterisk. <span class="no">No</span> — внутри grid-карточек (двойная стенка), на контенте, который часто меняется (blur плохо переживает text-shift).</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       13 TOASTS
+       ══════════════════════════════════════════════════ -->
+  <section class="sg-section" id="toasts">
+    <div class="sg-section-head">
+      <span class="sg-section-num">13</span>
+      <h2>Уведомления</h2>
+      <p class="sg-section-sub">4 статуса: info · ok · warn · err. 28×28 icon-квадрат с цветным фоном, copy — text-primary.</p>
+    </div>
+    <div class="sg-rail">
+      <aside class="sg-margin">
+        <span class="tick"></span>
+        <span>Toasts</span>
+        <span class="k">4 statuses</span>
+        <span>info · ok · warn · err</span>
+        <span class="fig">Fig. 13.1</span>
+      </aside>
+      <div>
+        <div class="sg-stack">
+          <div class="sg-toast sg-toast--ok"><span class="sg-toast-ic">✓</span>Группа Python·12 апр набрана. Отправили письмо с инструкциями.</div>
+          <div class="sg-toast sg-toast--info"><span class="sg-toast-ic">i</span>Новый урок доступен: «Async SQLAlchemy — N+1 и сессии».</div>
+          <div class="sg-toast sg-toast--warn"><span class="sg-toast-ic">!</span>До конца early-access 3 дня · потом +15% к стоимости.</div>
+          <div class="sg-toast sg-toast--err"><span class="sg-toast-ic">×</span>Платёж не прошёл. Проверь банк или напиши поддержке.</div>
+        </div>
+        <div class="sg-note">
+          <b>When</b>
+          <span><span class="ok">Da</span> — фоновое подтверждение действия, system-event. Auto-dismiss 4–6 сек для ok/info, persistent для warn/err. <span class="no">No</span> — для критических ошибок формы (показывай inline под полем).</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       14 STEPPER
+       ══════════════════════════════════════════════════ -->
+  <section class="sg-section" id="stepper">
+    <div class="sg-section-head">
+      <span class="sg-section-num">14</span>
+      <h2>Stepper · Путь студента</h2>
+      <p class="sg-section-sub">Вертикальный stepper с квадратным номером (44×44, radius 4px) и тонкой 1px-линией-связкой. Используется в секциях «Путь» и «Программа».</p>
+    </div>
+    <div class="sg-rail">
+      <aside class="sg-margin">
+        <span class="tick"></span>
+        <span>Stepper</span>
+        <span class="k">vertical</span>
+        <span>square num · 1 px line</span>
+        <span class="fig">Fig. 14.1</span>
+      </aside>
+      <div>
+        <div class="sg-stepper">
+        <div class="sg-step">
+          <div class="sg-step-num">01</div>
+          <div>
+            <div class="sg-step-t">Фундамент · недели 1–8</div>
+            <div class="sg-step-d">Python-синтаксис, структуры данных, первые скрипты. На 2-м месяце — первый оплачиваемый brief от Quillon Agency.</div>
+          </div>
+        </div>
+        <div class="sg-step">
+          <div class="sg-step-num">02</div>
+          <div>
+            <div class="sg-step-t">Backend-продукт · недели 9–24</div>
+            <div class="sg-step-d">FastAPI, PostgreSQL, pgvector, очереди, observability. Сдаёшь production-pet-проект с метриками.</div>
+          </div>
+        </div>
+        <div class="sg-step">
+          <div class="sg-step-num">03</div>
+          <div>
+            <div class="sg-step-t">ML + LLM · недели 25–40</div>
+            <div class="sg-step-d">PyTorch-базис, RAG с pgvector, fine-tuning, LLM-гейты. Финальный артефакт — AI-фича в твоём backend.</div>
+          </div>
+        </div>
+        <div class="sg-step">
+          <div class="sg-step-num">04</div>
+          <div>
+            <div class="sg-step-t">Карьера · недели 41–48</div>
+            <div class="sg-step-d">Резюме под ATS, mock-интервью, портфолио. Цель — оффер в течение 2 месяцев после финала.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       15 TOKENS REFERENCE
+       ══════════════════════════════════════════════════ -->
+  <section class="sg-section sg-tokens" id="tokens">
+    <div class="sg-section-head">
+      <span class="sg-section-num">15</span>
+      <h2>CSS-токены</h2>
+      <p class="sg-section-sub">Источник истины: <code class="sg-code">/css/variables.css</code>. Ничего не хардкодить — только ссылки на переменные.</p>
+    </div>
+    <div class="sg-panel" style="padding:0">
+      <table>
+        <thead><tr><th>Token</th><th>Value</th><th>Usage</th></tr></thead>
+        <tbody>
+          <tr><td>--accent</td><td>#2E86AB</td><td>CTA, links, focus-ring</td></tr>
+          <tr><td>--accent-light</td><td>#4FA3C7</td><td>Hover, inline-highlight</td></tr>
+          <tr><td>--accent-deep</td><td>#1F5E7A</td><td>Pressed / gradient stop</td></tr>
+          <tr><td>--accent-subtle</td><td>rgba(46,134,171,0.12)</td><td>Tints, selected quiz option</td></tr>
+          <tr><td>--bg-deep</td><td>#0A1222</td><td>Body</td></tr>
+          <tr><td>--bg</td><td>#0F1B33</td><td>Alternate section</td></tr>
+          <tr><td>--bg-card</td><td>#162747</td><td>Cards, FAQ open</td></tr>
+          <tr><td>--glass-bg</td><td>rgba(15,27,51,0.6)</td><td>.card, featured blocks</td></tr>
+          <tr><td>--text-primary</td><td>#F5EFE3 (cream)</td><td>Headings, body copy</td></tr>
+          <tr><td>--text-secondary</td><td>#A8B0C0</td><td>Descriptions</td></tr>
+          <tr><td>--text-tertiary</td><td>#6B7690</td><td>Mono-labels, captions</td></tr>
+          <tr><td>--text-muted</td><td>#4A5468</td><td>Disabled, placeholder</td></tr>
+          <tr><td>--border</td><td>rgba(245,239,227,0.07)</td><td>Default card border</td></tr>
+          <tr><td>--border-light</td><td>rgba(245,239,227,0.14)</td><td>Input border, stronger edge</td></tr>
+          <tr><td>--border-accent</td><td>rgba(46,134,171,0.4)</td><td>Hover / active card</td></tr>
+          <tr><td>--card-radius</td><td>8px</td><td>Cards, panels</td></tr>
+          <tr><td>--btn-radius</td><td>6px</td><td>Buttons, inputs</td></tr>
+          <tr><td>--radius-pill</td><td>999px</td><td>Badges, live-dots</td></tr>
+          <tr><td>--space-xs…3xl</td><td>8 / 16 / 24 / 32 / 48 / 64 / 96</td><td>Grid scale</td></tr>
+          <tr><td>--container-max</td><td>1200px</td><td>Main content width</td></tr>
+          <tr><td>--section-pad</td><td>clamp(64, 10vw, 96)</td><td>Vertical rhythm</td></tr>
+          <tr><td>--transition</td><td>0.3s cubic-bezier(.4,0,.2,1)</td><td>Default motion</td></tr>
+          <tr><td>--spring</td><td>cubic-bezier(.34,1.56,.64,1)</td><td>Spring, use rarely</td></tr>
+          <tr><td>--font-display</td><td>Archivo 700–900</td><td>H1–H3</td></tr>
+          <tr><td>--font-body</td><td>DM Sans 400–500</td><td>Body, buttons</td></tr>
+          <tr><td>--font-mono</td><td>JetBrains Mono 500</td><td>Labels, code, tags</td></tr>
+          <tr><td>--shadow-card</td><td>inset + 0 8 32 rgba</td><td>Default card shadow</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="sg-foot">
+    <span>Quillon Design System · v2.0 · обновлено 21.04.2026</span>
+    <span>источник: /css/variables.css + /css/components.css</span>
+  </footer>
+
+</main>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  document.querySelectorAll('[data-theme-set]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var t = btn.getAttribute('data-theme-set');
+      root.setAttribute('data-theme', t);
+      document.querySelectorAll('[data-theme-set]').forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+    });
+  });
+})();
+</script>
+</body>
+</html>

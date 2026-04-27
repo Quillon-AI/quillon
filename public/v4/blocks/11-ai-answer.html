@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quillon v4 · AI Answer block (11)</title>
+
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/tokens.css?v=4">
+  <link rel="stylesheet" href="../css/base.css?v=4">
+  <link rel="stylesheet" href="../css/components.css?v=4">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+     * 11 · AI ANSWER — Q/A манифест
+     *
+     * Тексты 1:1 с прод-content.json (`.ai_answer`).
+     *
+     * Композиция:
+     *   • Section head (11 · ГЛАВНЫЙ ВОПРОС, h2 = вопрос с «?»)
+     *   • Q-row: mono Q. + question (повтор для interview-feel)
+     *   • Hero A-row: «Нет.» display-якорь + продолжение
+     *   • Supporting prose: 2 параграфа (рассуждение + Quillon-разворот)
+     *   • Inline CTA
+     *
+     * Anti-AI:
+     *   • Никаких AI-робот-иконок, glow-orb'ов, feather-иконок.
+     *   • Чистая типографика-якорь: «Нет.» как display-крючок.
+     *   • Цитата-формат, без декоративных элементов.
+     * ═══════════════════════════════════════════════════════════════ */
+
+    .q-aia {
+      position: relative;
+      padding: var(--q-s-10) 0 var(--q-s-11);
+      overflow: hidden;
+    }
+    .q-aia::before {
+      content: "";
+      position: absolute;
+      top: -200px;
+      right: -200px;
+      width: 580px;
+      height: 580px;
+      background: radial-gradient(circle, rgba(94, 106, 210, 0.06), transparent 62%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .q-aia .q-container { position: relative; z-index: 1; }
+    .q-aia .q-section-head { max-width: 900px; margin-bottom: var(--q-s-9); }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * ANSWER — единая editorial-строка
+     *   «Нет.» — индиго-акцент в начале (без display-крушения).
+     *   Дальше идёт продолжение в том же типографическом весе.
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-aia-answer {
+      padding: var(--q-s-7) 0;
+      border-top: 1px solid var(--q-line-strong);
+      border-bottom: 1px solid var(--q-line-strong);
+      position: relative;
+      font-family: var(--q-font-display);
+      font-size: clamp(1.5rem, 2.8vw, 2.375rem);
+      font-weight: var(--q-fw-linear);
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      color: var(--q-text-hi);
+      max-width: 32ch;
+      margin: 0;
+    }
+    .q-aia-answer__hook {
+      color: var(--q-accent-hover);
+      font-weight: var(--q-fw-medium);
+      margin-right: 0.25em;
+    }
+
+    /* Recraft-арт как декоративная текстура за контентом секции. */
+    .q-aia__deco {
+      position: absolute;
+      top: 0;
+      right: -120px;
+      width: 720px;
+      height: 720px;
+      object-fit: contain;
+      object-position: center right;
+      opacity: 0.16;
+      mix-blend-mode: screen;
+      mask-image: radial-gradient(ellipse at 75% 50%, black 12%, transparent 60%);
+      -webkit-mask-image: radial-gradient(ellipse at 75% 50%, black 12%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+      transform: translateY(-15%);
+    }
+    .q-aia .q-section-head,
+    .q-aia-answer,
+    .q-aia-prose,
+    .q-aia-cta { position: relative; z-index: 1; }
+
+
+    /* ═══════════════════════════════════════════════════════════════
+     * SUPPORTING PROSE — 2 параграфа (рассуждение + Quillon)
+     *   Editorial 2-col grid: первый параграф = rationale,
+     *   второй = product-разворот.
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-aia-prose {
+      margin-top: var(--q-s-9);
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--q-s-7);
+    }
+    .q-aia-para {
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-3);
+    }
+    .q-aia-para__kicker {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+    .q-aia-para__kicker b {
+      color: var(--q-accent-hover);
+      font-weight: var(--q-fw-medium);
+    }
+    .q-aia-para__text {
+      font-size: var(--q-t-base);
+      line-height: 1.65;
+      color: var(--q-text-mid);
+      margin: 0;
+    }
+    .q-aia-para__text b {
+      color: var(--q-text-hi);
+      font-weight: var(--q-fw-medium);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * INLINE CTA
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-aia-cta {
+      margin-top: var(--q-s-9);
+      padding-top: var(--q-s-7);
+      border-top: 1px solid var(--q-line);
+      display: flex;
+      justify-content: flex-end;
+    }
+    .q-aia-cta a {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--q-s-3);
+      font-family: var(--q-font-display);
+      font-size: var(--q-t-h6);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.012em;
+      color: var(--q-text-hi);
+      text-decoration: none;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--q-line-strong);
+      transition: color var(--q-dur-fast) var(--q-ease),
+                  border-color var(--q-dur-fast) var(--q-ease);
+    }
+    .q-aia-cta a:hover {
+      color: var(--q-accent-hover);
+      border-color: var(--q-accent);
+    }
+    .q-aia-cta__arrow {
+      font-family: var(--q-font-mono);
+      color: var(--q-text-low);
+      transition: transform var(--q-dur-fast) var(--q-ease),
+                  color var(--q-dur-fast) var(--q-ease);
+    }
+    .q-aia-cta a:hover .q-aia-cta__arrow {
+      color: var(--q-accent);
+      transform: translateX(2px);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * RESPONSIVE
+     * ═══════════════════════════════════════════════════════════════ */
+    @media (max-width: 900px) {
+      .q-aia-prose { grid-template-columns: 1fr; gap: var(--q-s-6); }
+      .q-aia__deco { width: 480px; height: 480px; right: -160px; opacity: 0.12; }
+    }
+    @media (max-width: 720px) {
+      .q-aia { padding: var(--q-s-8) 0 var(--q-s-9); }
+      .q-aia-answer { padding: var(--q-s-5) 0; }
+      .q-aia-cta { justify-content: flex-start; }
+      .q-aia__deco { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       STICKY TOPBAR
+       ═══════════════════════════════════════════════════════════════ -->
+  <header class="q-topbar">
+    <a href="#" class="q-topbar__brand">
+      <span class="q-topbar__brand-mark">Q</span>
+      <span>Quillon</span>
+    </a>
+
+    <nav class="q-topbar__nav" aria-label="Главная навигация">
+      <a class="q-topbar__link" href="#tracks">Треки</a>
+      <a class="q-topbar__link" href="#format">Формат</a>
+      <a class="q-topbar__link" href="#pricing">Цена</a>
+      <a class="q-topbar__link" href="#quillon_jobs">Jobs</a>
+      <a class="q-topbar__link" href="#faq">FAQ</a>
+    </nav>
+
+    <div class="q-topbar__actions">
+      <a class="q-btn q-btn--link" href="#">Войти</a>
+      <a class="q-btn q-btn--primary q-btn--sm" href="/quiz">Пройти тест</a>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       11 · AI ANSWER
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="q-section q-aia" id="ai_answer">
+
+    <!-- Декоративный Recraft-визуал (фоновая текстура, без смысловой нагрузки) -->
+    <img class="q-aia__deco"
+         src="../images/recolored/ai-neural.svg"
+         alt=""
+         aria-hidden="true"
+         loading="lazy">
+
+    <div class="q-container">
+
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>11</em> · ГЛАВНЫЙ ВОПРОС</div>
+        <h2 class="q-section-head__title">AI заменит разработчиков?</h2>
+      </header>
+
+      <!-- ═══════════════ ANSWER · одна editorial-строка ═══════════════ -->
+      <p class="q-aia-answer">
+        <span class="q-aia-answer__hook">Нет.</span>Но&nbsp;разработчики с&nbsp;AI заменят разработчиков без AI.
+      </p>
+
+      <!-- ═══════════════ Supporting prose · 2 параграфа ═══════════════ -->
+      <div class="q-aia-prose">
+
+        <article class="q-aia-para">
+          <span class="q-aia-para__kicker"><b>Почему</b></span>
+          <p class="q-aia-para__text">Нейросети не&nbsp;умеют проектировать архитектуру, понимать бизнес-задачу, тестировать продукт и&nbsp;нести ответственность за&nbsp;результат. Они&nbsp;— инструмент. <b>Как калькулятор не&nbsp;убил бухгалтеров</b>, AI не&nbsp;заменит разработчиков. Он заменит тех, кто не&nbsp;умеет с&nbsp;ним работать.</p>
+        </article>
+
+        <article class="q-aia-para">
+          <span class="q-aia-para__kicker"><b>В&nbsp;Quillon</b></span>
+          <p class="q-aia-para__text">AI встроен в&nbsp;каждый этап: вы&nbsp;с&nbsp;первого дня работаете с&nbsp;передовыми AI-инструментами. Не&nbsp;«изучаете промпты» по&nbsp;учебнику&nbsp;— а&nbsp;решаете с&nbsp;их&nbsp;помощью реальные задачи на&nbsp;production-продуктах. На&nbsp;выходе вы&nbsp;— специалист, который умеет и&nbsp;писать код, и&nbsp;управлять AI. <b>Таких на&nbsp;рынке единицы.</b></p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

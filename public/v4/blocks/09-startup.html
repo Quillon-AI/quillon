@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quillon v4 · Startup block (09)</title>
+
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/tokens.css?v=4">
+  <link rel="stylesheet" href="../css/base.css?v=4">
+  <link rel="stylesheet" href="../css/components.css?v=4">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+     * 09 · STARTUP — 5-step proceess + sidebar (highlight + why)
+     *
+     * Тексты 1:1 с прод-content.json (`.startup`).
+     *
+     * Композиция:
+     *   • Section head (09 · СТАРТАП)
+     *   • 12-col asymmetric:
+     *       LEFT (1–7):  5-step process (.steps[])
+     *       RIGHT (8–12): highlight card (500K ₽) + why card
+     *   • Inline CTA
+     *
+     * Anti-AI:
+     *   • Никаких 5-card grid'ов в ряд (path-блок уже использовал такую механику).
+     *   • Sidebar — две карточки разной плотности (hero + объяснение).
+     *   • Числа в tabular-nums.
+     * ═══════════════════════════════════════════════════════════════ */
+
+    .q-st {
+      position: relative;
+      padding: var(--q-s-10) 0 var(--q-s-11);
+      overflow: hidden;
+    }
+    .q-st::before {
+      content: "";
+      position: absolute;
+      top: -200px;
+      right: -200px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(94, 106, 210, 0.06), transparent 62%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .q-st .q-container { position: relative; z-index: 1; }
+    .q-st .q-section-head { max-width: 800px; margin-bottom: var(--q-s-9); }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * BODY — 12-col split: steps (7) / sidebar (5)
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-st-body {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: var(--q-s-7);
+      align-items: start;
+    }
+
+    /* ─── LEFT: 5-step process ────────────────────────────────── */
+    .q-st-steps-head {
+      grid-column: 1 / span 7;
+      padding-bottom: var(--q-s-5);
+    }
+    .q-st-steps-head__title {
+      font-family: var(--q-font-display);
+      font-size: clamp(1.5rem, 2.2vw, 1.875rem);
+      font-weight: var(--q-fw-linear);
+      letter-spacing: -0.02em;
+      color: var(--q-text-hi);
+      line-height: 1.1;
+      margin: 0;
+    }
+
+    .q-st-steps {
+      grid-column: 1 / span 7;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      border-top: 1px solid var(--q-line-strong);
+      border-bottom: 1px solid var(--q-line-strong);
+    }
+    .q-st-step {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: var(--q-s-5);
+      padding: var(--q-s-6) 0;
+      border-bottom: 1px solid var(--q-line);
+      transition: background var(--q-dur-fast) var(--q-ease);
+    }
+    .q-st-step:last-child { border-bottom: 0; }
+    .q-st-step:hover { background: rgba(94, 106, 210, 0.025); }
+    .q-st-step:hover .q-st-step__num { color: var(--q-accent-hover); }
+
+    .q-st-step__num {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      color: var(--q-text-low);
+      font-weight: var(--q-fw-medium);
+      font-feature-settings: "tnum" 1;
+      padding-top: 4px;
+      transition: color var(--q-dur-fast) var(--q-ease);
+    }
+    .q-st-step__body {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .q-st-step__title {
+      font-family: var(--q-font-display);
+      font-size: 1.125rem;          /* 18px */
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.014em;
+      color: var(--q-text-hi);
+      line-height: 1.25;
+      margin: 0;
+    }
+    .q-st-step__text {
+      font-size: var(--q-t-small);
+      line-height: 1.5;
+      color: var(--q-text-mid);
+      margin: 0;
+      max-width: 56ch;
+    }
+
+    /* ─── RIGHT: sidebar (highlight + why) ───────────────────── */
+    .q-st-side {
+      grid-column: 8 / span 5;
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-5);
+      align-self: stretch;
+      padding-top: calc(var(--q-s-5) + 1.5rem); /* выравниваем с верхом ledger'а под steps-head */
+    }
+
+    .q-st-card {
+      padding: var(--q-s-7);
+      border: 1px solid var(--q-line);
+      border-radius: var(--q-r-md);
+      background: var(--q-bg-2);
+    }
+    .q-st-card--accent {
+      background: linear-gradient(180deg, rgba(94,106,210,0.08), var(--q-bg-2) 70%);
+      border-color: rgba(94, 106, 210, 0.35);
+    }
+
+    .q-st-card__kicker {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-text-low);
+      margin-bottom: var(--q-s-4);
+      display: block;
+    }
+    .q-st-card__kicker b {
+      color: var(--q-accent-hover);
+      font-weight: var(--q-fw-medium);
+    }
+
+    .q-st-card__num {
+      font-family: var(--q-font-display);
+      font-size: clamp(2.5rem, 4.4vw, 3.75rem);
+      font-weight: var(--q-fw-linear);
+      line-height: 1;
+      letter-spacing: -0.028em;
+      color: var(--q-text-hi);
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+      margin-bottom: var(--q-s-3);
+    }
+    .q-st-card__num em {
+      font-style: normal;
+      color: var(--q-text-mid);
+      font-size: 0.5em;
+      letter-spacing: -0.01em;
+    }
+    .q-st-card__num span { color: var(--q-accent-hover); }
+
+    .q-st-card__title {
+      font-family: var(--q-font-display);
+      font-size: var(--q-t-h6);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.012em;
+      color: var(--q-text-hi);
+      line-height: 1.3;
+      margin: 0 0 var(--q-s-3);
+    }
+    .q-st-card__text {
+      font-size: var(--q-t-small);
+      line-height: 1.55;
+      color: var(--q-text-mid);
+      margin: 0;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * INLINE CTA
+     * ═══════════════════════════════════════════════════════════════ */
+    /* CTA — без верхней хайрлайны (нижний бордер ledger'а уже разделяет). */
+    .q-st-cta {
+      margin-top: var(--q-s-7);
+      padding-top: var(--q-s-6);
+      display: flex;
+      justify-content: flex-end;
+    }
+    .q-st-cta a {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--q-s-3);
+      font-family: var(--q-font-display);
+      font-size: var(--q-t-h6);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.012em;
+      color: var(--q-text-hi);
+      text-decoration: none;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--q-line-strong);
+      transition: color var(--q-dur-fast) var(--q-ease),
+                  border-color var(--q-dur-fast) var(--q-ease);
+    }
+    .q-st-cta a:hover {
+      color: var(--q-accent-hover);
+      border-color: var(--q-accent);
+    }
+    .q-st-cta__arrow {
+      font-family: var(--q-font-mono);
+      color: var(--q-text-low);
+      transition: transform var(--q-dur-fast) var(--q-ease),
+                  color var(--q-dur-fast) var(--q-ease);
+    }
+    .q-st-cta a:hover .q-st-cta__arrow {
+      color: var(--q-accent);
+      transform: translateX(2px);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+     * RESPONSIVE
+     * ═══════════════════════════════════════════════════════════════ */
+    @media (max-width: 1100px) {
+      .q-st-steps,
+      .q-st-steps-head { grid-column: 1 / span 7; }
+      .q-st-side { grid-column: 8 / span 5; padding-top: calc(var(--q-s-5) + 1.5rem); }
+    }
+    @media (max-width: 900px) {
+      .q-st-body { gap: var(--q-s-7); }
+      .q-st-steps,
+      .q-st-steps-head,
+      .q-st-side { grid-column: 1 / -1; }
+      .q-st-side { padding-top: 0; }
+    }
+    @media (max-width: 720px) {
+      .q-st { padding: var(--q-s-8) 0 var(--q-s-9); }
+      .q-st-step { grid-template-columns: 40px 1fr; gap: var(--q-s-3); }
+      .q-st-card { padding: var(--q-s-6); }
+      .q-st-cta { justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       STICKY TOPBAR
+       ═══════════════════════════════════════════════════════════════ -->
+  <header class="q-topbar">
+    <a href="#" class="q-topbar__brand">
+      <span class="q-topbar__brand-mark">Q</span>
+      <span>Quillon</span>
+    </a>
+
+    <nav class="q-topbar__nav" aria-label="Главная навигация">
+      <a class="q-topbar__link" href="#tracks">Треки</a>
+      <a class="q-topbar__link" href="#format">Формат</a>
+      <a class="q-topbar__link" href="#pricing">Цена</a>
+      <a class="q-topbar__link" href="#quillon_jobs">Jobs</a>
+      <a class="q-topbar__link" href="#faq">FAQ</a>
+    </nav>
+
+    <div class="q-topbar__actions">
+      <a class="q-btn q-btn--link" href="#">Войти</a>
+      <a class="q-btn q-btn--primary q-btn--sm" href="/quiz">Пройти тест</a>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       09 · STARTUP
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="q-section q-st" id="startup">
+    <div class="q-container">
+
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>09</em> · СТАРТАП</div>
+        <h2 class="q-section-head__title">Лучший проект получает 500&nbsp;000&nbsp;руб</h2>
+        <p class="q-section-head__sub">
+          Не&nbsp;«дипломный проект для&nbsp;галочки». Полноценный стартап: от&nbsp;идеи до&nbsp;MVP с&nbsp;реальными пользователями. Ваша команда&nbsp;— 10&nbsp;человек&nbsp;— создаёт продукт, который можно масштабировать.
+        </p>
+      </header>
+
+      <div class="q-st-body">
+
+        <!-- ═══════════════ LEFT · 5-step process ═══════════════ -->
+        <header class="q-st-steps-head">
+          <h3 class="q-st-steps-head__title">5&nbsp;этапов от&nbsp;идеи до&nbsp;защиты</h3>
+        </header>
+
+        <ol class="q-st-steps" aria-label="Этапы стартапа">
+
+          <li class="q-st-step">
+            <span class="q-st-step__num">01</span>
+            <div class="q-st-step__body">
+              <h4 class="q-st-step__title">Идея и&nbsp;валидация</h4>
+              <p class="q-st-step__text">Формулируете гипотезу продукта. Анализируете рынок, конкурентов и&nbsp;целевую аудиторию.</p>
+            </div>
+          </li>
+
+          <li class="q-st-step">
+            <span class="q-st-step__num">02</span>
+            <div class="q-st-step__body">
+              <h4 class="q-st-step__title">Команда и&nbsp;архитектура</h4>
+              <p class="q-st-step__text">Собираете кросс-команду: backend, mobile, QA. Распределяете роли, проектируете архитектуру.</p>
+            </div>
+          </li>
+
+          <li class="q-st-step">
+            <span class="q-st-step__num">03</span>
+            <div class="q-st-step__body">
+              <h4 class="q-st-step__title">Разработка MVP</h4>
+              <p class="q-st-step__text">8&nbsp;недель активной разработки. Серверная часть, мобильное приложение, автотесты&nbsp;— как в&nbsp;реальной компании.</p>
+            </div>
+          </li>
+
+          <li class="q-st-step">
+            <span class="q-st-step__num">04</span>
+            <div class="q-st-step__body">
+              <h4 class="q-st-step__title">Запуск и&nbsp;пользователи</h4>
+              <p class="q-st-step__text">MVP выходит в&nbsp;production. Реальные пользователи, реальная обратная связь, реальные метрики.</p>
+            </div>
+          </li>
+
+          <li class="q-st-step">
+            <span class="q-st-step__num">05</span>
+            <div class="q-st-step__body">
+              <h4 class="q-st-step__title">Защита перед инвесторами</h4>
+              <p class="q-st-step__text">Питч продукта. Демонстрация метрик, бизнес-модели и&nbsp;плана развития.</p>
+            </div>
+          </li>
+
+        </ol>
+
+        <!-- ═══════════════ RIGHT · sidebar (highlight + why) ═══════════════ -->
+        <aside class="q-st-side">
+
+          <!-- Highlight card · 500K ₽ -->
+          <div class="q-st-card q-st-card--accent">
+            <span class="q-st-card__kicker"><b>Инвестиция</b> · от&nbsp;Quillon</span>
+            <div class="q-st-card__num"><em>до</em>&nbsp;<span>500&nbsp;000</span>&nbsp;<em>₽</em></div>
+            <p class="q-st-card__text">Инвестиция от&nbsp;Quillon в&nbsp;лучший проект потока. Целевые деньги на&nbsp;развитие: серверы, маркетинг, доработка.</p>
+          </div>
+
+          <!-- Why card -->
+          <div class="q-st-card">
+            <span class="q-st-card__kicker">Зачем</span>
+            <h3 class="q-st-card__title">Два сценария роста вместо одного</h3>
+            <p class="q-st-card__text">Junior в&nbsp;найме растёт по&nbsp;грейдам: +5–10%&nbsp;в&nbsp;год, потолок известен заранее. Стартап ломает этот сценарий. На&nbsp;рынке вакансий вы&nbsp;выходите не&nbsp;как «один из&nbsp;200 Junior-специалистов», а&nbsp;как человек, который вывел продукт в&nbsp;production&nbsp;— это +20&nbsp;000&nbsp;руб к&nbsp;зарплате уже на&nbsp;старте. А&nbsp;если MVP идёт в&nbsp;рост&nbsp;— у&nbsp;вас остаётся свой продукт с&nbsp;долей. Потенциал, которого корпоративный найм не&nbsp;даёт.</p>
+          </div>
+
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

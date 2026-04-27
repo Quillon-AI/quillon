@@ -1,0 +1,436 @@
+/* Quillon v3 — Components
+ * Self-contained, prefixed with .q- to avoid clashes with legacy styles.
+ */
+
+/* ═══════════════════════════════════════════════════════════════
+ * BUTTONS
+ * Два силуэта: rounded-16 (rectangular-radius) и full pill.
+ * Три variant: primary (violet flat), secondary (paper on dark), ghost.
+ * ═══════════════════════════════════════════════════════════════ */
+
+.q-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--q-s-2);
+  padding: 14px 22px;
+  font-family: var(--q-font-body);
+  font-weight: 500;
+  font-size: 0.95rem;
+  line-height: 1;
+  border-radius: var(--q-r-2);
+  border: 1px solid transparent;
+  transition: transform var(--q-dur-fast) var(--q-ease),
+              background-color var(--q-dur-fast) var(--q-ease),
+              border-color var(--q-dur-fast) var(--q-ease),
+              color var(--q-dur-fast) var(--q-ease);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.q-btn--pill { border-radius: var(--q-r-pill); padding: 14px 24px; }
+
+.q-btn--primary {
+  background: var(--q-violet);
+  color: var(--q-ink);
+  /* flat, без gradient. shift hue via --q-violet-bright при hover */
+}
+.q-btn--primary:hover { background: var(--q-violet-bright); }
+.q-btn--primary:active { background: var(--q-violet-ink); color: var(--q-paper); }
+.q-btn--primary[disabled] { background: var(--q-line-strong); color: var(--q-text-low); cursor: not-allowed; }
+
+.q-btn--secondary {
+  background: var(--q-paper);
+  color: var(--q-ink);
+}
+.q-btn--secondary:hover { background: var(--q-paper-2); }
+
+.q-btn--ghost {
+  background: transparent;
+  color: var(--q-text-hi);
+  border-color: var(--q-line-strong);
+}
+.q-btn--ghost:hover { background: var(--q-ink-2); border-color: var(--q-violet); }
+
+.q-btn--dark {
+  background: var(--q-ink-2);
+  color: var(--q-text-hi);
+  border-color: var(--q-line);
+}
+.q-btn--dark:hover { background: var(--q-ink-3); border-color: var(--q-line-strong); }
+
+.q-btn__icon {
+  width: 1.15em;
+  height: 1.15em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* icon-only круглая кнопка (стрелка, как в SmartClass) */
+.q-btn-round {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--q-paper);
+  color: var(--q-ink);
+  transition: transform var(--q-dur-fast) var(--q-ease), background-color var(--q-dur-fast) var(--q-ease);
+}
+.q-btn-round:hover { transform: translate(2px, -2px); background: var(--q-lavender); }
+.q-btn-round--dark { background: var(--q-ink-2); color: var(--q-text-hi); border: 1px solid var(--q-line); }
+.q-btn-round--violet { background: var(--q-violet); color: var(--q-ink); }
+
+/* ═══════════════════════════════════════════════════════════════
+ * CHIPS / TAGS
+ * Pill со stroke на paper или fill на dark.
+ * ═══════════════════════════════════════════════════════════════ */
+
+.q-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--q-r-pill);
+  font-family: var(--q-font-body);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+}
+.q-chip--stroke-dark {
+  background: transparent;
+  color: var(--q-text-hi);
+  border: 1px solid var(--q-line-strong);
+}
+.q-chip--stroke-paper {
+  background: transparent;
+  color: var(--q-ink);
+  border: 1px solid var(--q-bone);
+}
+.q-chip--violet {
+  background: var(--q-violet);
+  color: var(--q-ink);
+  border: 1px solid transparent;
+}
+.q-chip--lavender {
+  background: var(--q-lavender);
+  color: var(--q-ink);
+}
+.q-chip--paper {
+  background: var(--q-paper);
+  color: var(--q-ink);
+}
+.q-chip--ink {
+  background: var(--q-ink-2);
+  color: var(--q-text-hi);
+  border: 1px solid var(--q-line);
+}
+
+/* mono-badge на слеше — editorial деталь: "/opportunities" */
+.q-badge-slash {
+  font-family: var(--q-font-mono);
+  font-size: var(--q-t-micro);
+  color: var(--q-ink);
+  background: var(--q-paper);
+  padding: 6px 10px 6px 8px;
+  border-radius: var(--q-r-pill);
+  letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.q-badge-slash::before { content: "/"; opacity: 0.5; }
+
+.q-badge-new {
+  font-family: var(--q-font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: var(--q-r-pill);
+  background: var(--q-violet);
+  color: var(--q-ink);
+  font-weight: 500;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+ * CARDS
+ * 5 «характеров»: dark, lavender-splash, violet-feature, photo, stat.
+ * Все с radius 28-36px (по SmartClass-мотиву).
+ * ═══════════════════════════════════════════════════════════════ */
+
+.q-card {
+  position: relative;
+  border-radius: var(--q-r-4);
+  padding: var(--q-s-6);
+  overflow: hidden;
+  transition: transform var(--q-dur-med) var(--q-ease);
+}
+.q-card--lg { border-radius: var(--q-r-5); padding: var(--q-s-7); }
+
+.q-card--dark {
+  background: var(--q-ink-2);
+  color: var(--q-text-hi);
+  border: 1px solid var(--q-line);
+  box-shadow: var(--q-el-1);
+}
+.q-card--lavender {
+  background: var(--q-lavender);
+  color: var(--q-text-dark-hi);
+}
+.q-card--lavender-soft {
+  background: var(--q-lavender-2);
+  color: var(--q-text-dark-hi);
+}
+.q-card--violet {
+  background: var(--q-violet);
+  color: var(--q-ink);
+}
+.q-card--paper {
+  background: var(--q-paper);
+  color: var(--q-text-dark-hi);
+}
+.q-card--photo {
+  background: var(--q-ink-3);
+  color: var(--q-text-hi);
+}
+.q-card--photo .q-card__media {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+.q-card--photo .q-card__body { position: relative; z-index: 1; }
+.q-card--photo::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(14,14,18,0) 40%, rgba(14,14,18,0.75) 100%);
+  z-index: 0;
+}
+
+/* Декоративная форма в углу карточки (organic shape) */
+.q-card__deco {
+  position: absolute;
+  pointer-events: none;
+}
+.q-card__deco--tr { top: var(--q-s-4); right: var(--q-s-4); }
+.q-card__deco--br { bottom: -24px; right: -24px; opacity: 0.9; }
+.q-card__deco--bl { bottom: var(--q-s-5); left: var(--q-s-5); }
+
+.q-card__eyebrow {
+  font-family: var(--q-font-mono);
+  font-size: var(--q-t-micro);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.7;
+  margin: 0 0 var(--q-s-3);
+}
+
+.q-card__title {
+  font-family: var(--q-font-display);
+  font-size: var(--q-t-h2);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--q-s-3);
+}
+.q-card--lg .q-card__title { font-size: var(--q-t-display-l); font-weight: 700; line-height: 0.98; }
+
+.q-card__text { color: inherit; opacity: 0.82; line-height: 1.55; max-width: 44ch; }
+.q-card--dark .q-card__text { color: var(--q-text-mid); opacity: 1; }
+
+.q-card__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--q-s-6);
+  gap: var(--q-s-4);
+  flex-wrap: wrap;
+}
+
+/* Stat-card (цифра + подпись) */
+.q-stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--q-s-2);
+}
+.q-stat__num {
+  font-family: var(--q-font-display);
+  font-size: clamp(2.5rem, 4.5vw, 4rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+.q-stat__label {
+  font-family: var(--q-font-mono);
+  font-size: var(--q-t-micro);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.7;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+ * AVATAR STACK
+ * ═══════════════════════════════════════════════════════════════ */
+
+.q-avatar-stack {
+  display: inline-flex;
+  align-items: center;
+}
+.q-avatar-stack > .q-avatar + .q-avatar { margin-left: -10px; }
+.q-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--q-ink);
+  background: var(--q-ink-3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--q-font-body);
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: var(--q-text-hi);
+}
+.q-avatar--on-paper { border-color: var(--q-paper); }
+.q-avatar--on-lavender { border-color: var(--q-lavender); }
+.q-avatar--on-violet { border-color: var(--q-violet); }
+.q-avatar--lg { width: 48px; height: 48px; font-size: 0.95rem; }
+
+.q-avatar-stack__count {
+  margin-left: var(--q-s-3);
+  font-family: var(--q-font-body);
+  font-size: 0.875rem;
+  color: var(--q-text-mid);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+ * BENTO GRID
+ * Асимметричная сетка: 12 cols, span по контенту.
+ * ═══════════════════════════════════════════════════════════════ */
+
+.q-bento {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--q-bento-gap);
+}
+.q-bento > * { min-height: 180px; }
+
+.q-b-4 { grid-column: span 4; }
+.q-b-5 { grid-column: span 5; }
+.q-b-6 { grid-column: span 6; }
+.q-b-7 { grid-column: span 7; }
+.q-b-8 { grid-column: span 8; }
+.q-b-12 { grid-column: span 12; }
+.q-r-2s { grid-row: span 2; }
+
+/* ═══════════════════════════════════════════════════════════════
+ * NAV (styleguide-specific top-bar)
+ * ═══════════════════════════════════════════════════════════════ */
+
+.q-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--q-s-4) 0;
+  gap: var(--q-s-4);
+  border-bottom: 1px solid var(--q-line);
+  position: sticky;
+  top: 0;
+  background: color-mix(in oklab, var(--q-ink) 90%, transparent);
+  backdrop-filter: saturate(1.2) blur(8px);
+  z-index: 10;
+}
+.q-topbar__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--q-s-2);
+  font-family: var(--q-font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.q-topbar__brand-mark {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: var(--q-violet);
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--q-ink); font-weight: 700;
+  font-family: var(--q-font-display);
+}
+.q-topbar__nav {
+  display: flex; gap: var(--q-s-4);
+  font-size: 0.875rem;
+  color: var(--q-text-mid);
+}
+.q-topbar__nav a:hover { color: var(--q-text-hi); }
+
+/* ═══════════════════════════════════════════════════════════════
+ * DO / DON'T блоки
+ * ═══════════════════════════════════════════════════════════════ */
+
+.q-dodont {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--q-s-4);
+}
+.q-dodont__cell {
+  padding: var(--q-s-5);
+  border-radius: var(--q-r-3);
+  border: 1px solid var(--q-line);
+  background: var(--q-ink-2);
+  position: relative;
+}
+.q-dodont__cell--do::before,
+.q-dodont__cell--dont::before {
+  content: attr(data-label);
+  position: absolute;
+  top: var(--q-s-4);
+  right: var(--q-s-4);
+  font-family: var(--q-font-mono);
+  font-size: var(--q-t-micro);
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: var(--q-r-pill);
+}
+.q-dodont__cell--do::before { background: var(--q-ok); color: var(--q-ink); }
+.q-dodont__cell--dont::before { background: var(--q-err); color: var(--q-ink); }
+
+/* Примеры «плохих» AI-паттернов: намеренно воссоздаём, чтобы показать «так — нет» */
+.q-antipattern-gradient-h1 {
+  font-family: var(--q-font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #F1F5F9, #3B6FFF);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+}
+.q-antipattern-glow {
+  position: relative;
+  padding: 40px;
+  display: inline-block;
+}
+.q-antipattern-glow::before {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(31,78,216,0.4), transparent 60%);
+  filter: blur(30px);
+  z-index: -1;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+ * RESPONSIVE
+ * ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 900px) {
+  .q-bento > [class*="q-b-"] { grid-column: span 12; }
+  .q-dodont { grid-template-columns: 1fr; }
+  .q-section-head { grid-template-columns: 1fr; }
+  .q-section-head__sub { grid-column: 1; }
+}

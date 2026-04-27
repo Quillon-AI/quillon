@@ -1,0 +1,1494 @@
+/* ==========================================================================
+   Quillon Night Studio · Flutter track override
+   Scoped under body.track-flutter-ns. Overrides tokens + key components
+   to match Night Studio design system v3.0.
+   ========================================================================== */
+
+/* ── Token overrides ──────────────────────────────────────────────────── */
+
+body.track-flutter-ns {
+  /* Night Studio ink palette */
+  --ink-00: #04070C;
+  --ink-05: #06090F;
+  --ink-10: #0A0F18;
+  --ink-15: #0E1420;
+  --ink-20: #131B2A;
+  --ink-30: #1B2639;
+
+  /* Mint as single accent */
+  --mint:         #5EF2A1;
+  --mint-bright:  #7DFFB3;
+  --mint-deep:    #3BCB7F;
+  --mint-halo:    rgba(94, 242, 161, 0.18);
+  --mint-glow:    rgba(94, 242, 161, 0.45);
+  --mint-tint:    rgba(94, 242, 161, 0.08);
+
+  /* Text */
+  --ns-text:       #E8EDF5;
+  --ns-text-soft:  #C3CBD9;
+  --ns-text-muted: #6B7687;
+  --ns-text-faint: #434C5E;
+
+  /* Rules / hairlines */
+  --ns-rule:        rgba(232, 237, 245, 0.10);
+  --ns-rule-faint:  rgba(232, 237, 245, 0.06);
+  --ns-rule-strong: rgba(232, 237, 245, 0.18);
+
+  /* Legacy-token overrides — cascade to components that still use them */
+  --bg-deep:        var(--ink-05);
+  --bg:             var(--ink-05);
+  --bg-card:        var(--ink-10);
+  --card:           var(--ink-10);
+  --card-elevated:  var(--ink-15);
+
+  --accent:         var(--mint);
+  --accent-light:   var(--mint-bright);
+  --accent-deep:    var(--mint-deep);
+  --accent-glow:    var(--mint-halo);
+  --accent-subtle:  var(--mint-tint);
+  --accent-secondary: var(--mint-deep);
+
+  --text-primary:   var(--ns-text);
+  --text-secondary: var(--ns-text-soft);
+  --text-tertiary:  var(--ns-text-muted);
+  --text-muted:     var(--ns-text-faint);
+  --text-blue:      var(--mint);
+
+  --border:         var(--ns-rule);
+  --border-blue:    color-mix(in oklab, var(--mint) 30%, transparent);
+  --border-accent:  color-mix(in oklab, var(--mint) 30%, transparent);
+  --border-light:   var(--ns-rule-strong);
+
+  /* Typography — Host Grotesk for display+body, keep JetBrains Mono */
+  --font-display: 'Host Grotesk', 'Inter', system-ui, sans-serif;
+  --font-body:    'Host Grotesk', 'Inter', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Radii — editorial tightening */
+  --card-radius: 6px;
+  --btn-radius:  10px;
+
+  background: var(--ink-05);
+  color: var(--ns-text-soft);
+  font-family: var(--font-body);
+}
+
+/* Light theme — paper studio */
+body.track-flutter-ns[data-theme="light"] {
+  --ink-00: #FFFFFF;
+  --ink-05: #FAF9F5;
+  --ink-10: #F3F1E9;
+  --ink-15: #EDEAE1;
+  --ink-20: #E5E1D4;
+  --ink-30: #D9D4C3;
+
+  --mint:        #14A85A;
+  --mint-bright: #17C76B;
+  --mint-deep:   #0D7A3F;
+  --mint-halo:   rgba(20, 168, 90, 0.18);
+  --mint-glow:   rgba(20, 168, 90, 0.28);
+  --mint-tint:   rgba(20, 168, 90, 0.08);
+
+  --ns-text:       #06090F;
+  --ns-text-soft:  #2A3240;
+  --ns-text-muted: #66707F;
+  --ns-text-faint: #98A0AD;
+
+  --ns-rule:        rgba(6, 9, 15, 0.10);
+  --ns-rule-faint:  rgba(6, 9, 15, 0.05);
+  --ns-rule-strong: rgba(6, 9, 15, 0.22);
+
+  background: var(--ink-05);
+}
+
+/* Hero blueprint dot-grid — flip to dark-on-paper in light theme */
+body.track-flutter-ns[data-theme="light"] .track-hero::before {
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(6, 9, 15, 0.08) 1px, transparent 0);
+}
+
+/* ── Global typography reset on this page ─────────────────────────────── */
+
+body.track-flutter-ns,
+body.track-flutter-ns p,
+body.track-flutter-ns li {
+  font-family: var(--font-body);
+  font-feature-settings: "ss01", "ss02", "cv11";
+}
+
+body.track-flutter-ns h1,
+body.track-flutter-ns h2,
+body.track-flutter-ns h3,
+body.track-flutter-ns h4,
+body.track-flutter-ns h5,
+body.track-flutter-ns h6 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.022em;
+  color: var(--ns-text);
+}
+
+/* Kill text gradients across this page (Anti-AI §7) */
+body.track-flutter-ns .gradient-text,
+body.track-flutter-ns [class*="gradient-text"] {
+  background: none !important;
+  -webkit-text-fill-color: currentColor !important;
+  color: var(--ns-text) !important;
+}
+
+/* ── Decorative hero background — kill the radial purple/blue glow ────── */
+
+body.track-flutter-ns .hero-bg,
+body.track-flutter-ns .hero-grid,
+body.track-flutter-ns .track-hero-glow {
+  display: none;
+}
+
+body.track-flutter-ns .track-hero {
+  position: relative;
+  background: var(--ink-05);
+  overflow: hidden;
+  padding: 96px 0 72px;
+}
+
+/* Subtle dot-grid blueprint backdrop — hairline, not glow */
+body.track-flutter-ns .track-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(232, 237, 245, 0.04) 1px, transparent 0);
+  background-size: 28px 28px;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 30%, black 40%, transparent 85%);
+          mask-image: radial-gradient(ellipse at 50% 30%, black 40%, transparent 85%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body.track-flutter-ns .track-hero > .container { position: relative; z-index: 1; }
+
+/* ── Navbar — simple, no glass pill ───────────────────────────────────── */
+
+body.track-flutter-ns .nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: color-mix(in oklab, var(--ink-05) 85%, transparent);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border-bottom: 1px solid var(--ns-rule);
+  z-index: 100;
+  transform: none;
+  width: 100%;
+  max-width: none;
+}
+
+body.track-flutter-ns .nav-inner {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 3vw, 32px);
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+body.track-flutter-ns .nav-logo img { height: 26px; width: auto; }
+body.track-flutter-ns .nav-logo-light { display: none; }
+body.track-flutter-ns[data-theme="light"] .nav-logo-dark  { display: none; }
+body.track-flutter-ns[data-theme="light"] .nav-logo-light { display: block; }
+
+body.track-flutter-ns .nav-links {
+  display: flex;
+  gap: clamp(14px, 2vw, 28px);
+  margin-left: auto;
+}
+
+body.track-flutter-ns .nav-links a {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ns-text-muted);
+  text-decoration: none;
+  transition: color 200ms cubic-bezier(.22, 1, .36, 1);
+  position: relative;
+  padding: 6px 0;
+}
+
+body.track-flutter-ns .nav-links a:hover {
+  color: var(--ns-text);
+}
+
+body.track-flutter-ns .nav-links a:hover::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--mint);
+  box-shadow: 0 0 8px var(--mint-halo);
+}
+
+body.track-flutter-ns .nav-cta {
+  margin-left: 16px;
+}
+
+body.track-flutter-ns .nav-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+body.track-flutter-ns .theme-toggle,
+body.track-flutter-ns .nav-burger {
+  background: transparent;
+  border: 1px solid var(--ns-rule);
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ns-text-soft);
+  cursor: pointer;
+  transition: border-color 200ms, color 200ms;
+}
+body.track-flutter-ns .theme-toggle:hover,
+body.track-flutter-ns .nav-burger:hover {
+  border-color: color-mix(in oklab, var(--mint) 40%, transparent);
+  color: var(--ns-text);
+}
+
+body.track-flutter-ns .theme-toggle svg,
+body.track-flutter-ns .theme-toggle [data-lucide] { width: 16px; height: 16px; }
+
+/* ── Buttons ──────────────────────────────────────────────────────────── */
+
+body.track-flutter-ns .btn {
+  font-family: var(--font-body);
+  font-weight: 500;
+  border-radius: var(--btn-radius);
+  transition: background 200ms cubic-bezier(.22, 1, .36, 1),
+              border-color 200ms cubic-bezier(.22, 1, .36, 1),
+              box-shadow 200ms cubic-bezier(.22, 1, .36, 1),
+              color 200ms cubic-bezier(.22, 1, .36, 1);
+  letter-spacing: -0.005em;
+}
+
+body.track-flutter-ns .btn-primary {
+  background: var(--mint);
+  color: var(--ink-05);
+  border: 1px solid var(--mint-deep);
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--mint-deep) 40%, transparent),
+    0 8px 24px -8px var(--mint-glow);
+}
+body.track-flutter-ns .btn-primary:hover {
+  background: var(--mint-bright);
+  box-shadow:
+    0 0 0 4px var(--mint-halo),
+    0 10px 28px -8px var(--mint-glow);
+  transform: none;
+}
+body.track-flutter-ns .btn-primary:active { transform: translateY(1px); }
+
+body.track-flutter-ns .btn-secondary {
+  background: transparent;
+  color: var(--ns-text);
+  border: 1px solid var(--ns-rule-strong);
+}
+body.track-flutter-ns .btn-secondary:hover {
+  border-color: color-mix(in oklab, var(--mint) 50%, transparent);
+  background: var(--mint-tint);
+  color: var(--ns-text);
+  transform: none;
+}
+
+/* ── Track hero ───────────────────────────────────────────────────────── */
+
+body.track-flutter-ns .track-hero-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 64px);
+  align-items: center;
+  padding: clamp(48px, 7vh, 88px) 0 clamp(40px, 6vh, 72px);
+}
+
+body.track-flutter-ns .track-hero-supertag {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ns-text-muted);
+  padding: 0;
+  border: none;
+  background: none;
+  margin-bottom: 28px;
+}
+
+body.track-flutter-ns .track-hero-supertag::before {
+  content: '';
+  width: 22px;
+  height: 1.5px;
+  background: var(--mint);
+  flex-shrink: 0;
+}
+
+body.track-flutter-ns .track-hero-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(38px, 4.8vw, 68px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--ns-text);
+  margin: 0 0 clamp(20px, 3vw, 32px);
+  max-width: 16ch;
+}
+
+body.track-flutter-ns .track-hero-title em {
+  font-style: normal;
+  color: var(--mint);
+  font-weight: 500;
+}
+
+body.track-flutter-ns .track-hero-sub {
+  font-family: var(--font-body);
+  font-size: clamp(16px, 1.35vw, 19px);
+  line-height: 1.55;
+  color: var(--ns-text-soft);
+  max-width: 54ch;
+  margin: 0 0 40px;
+}
+
+body.track-flutter-ns .track-hero-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--ns-rule);
+  padding-top: 28px;
+  margin-bottom: 40px;
+}
+
+body.track-flutter-ns .track-hero-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 20px;
+  border-right: 1px solid var(--ns-rule);
+  min-width: 0;
+}
+body.track-flutter-ns .track-hero-stat + .track-hero-stat {
+  padding-left: 20px;
+}
+body.track-flutter-ns .track-hero-stat:last-child { border-right: none; }
+
+body.track-flutter-ns .track-hero-stat-value {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(22px, 2.3vw, 32px);
+  line-height: 1.02;
+  letter-spacing: -0.028em;
+  color: var(--ns-text);
+  font-feature-settings: "tnum";
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+body.track-flutter-ns .track-hero-stat:first-child .track-hero-stat-value {
+  color: var(--mint);
+}
+
+body.track-flutter-ns .track-hero-stat-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ns-text-muted);
+  line-height: 1.45;
+}
+
+body.track-flutter-ns .track-hero-ctas {
+  display: flex;
+  gap: 12px;
+  flex-wrap: nowrap;
+  align-items: center;
+  padding-bottom: 24px;
+}
+
+body.track-flutter-ns .track-hero-ctas .btn-primary,
+body.track-flutter-ns .track-hero-ctas .btn-secondary {
+  min-height: 48px;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+body.track-flutter-ns .btn-hero-cta {
+  position: relative;
+  flex-direction: row;
+  align-items: center;
+  gap: 0;
+  overflow: visible;
+}
+
+body.track-flutter-ns .btn-hero-title {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1;
+}
+
+body.track-flutter-ns .btn-hero-sub {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ns-text-muted);
+  background: none;
+  white-space: nowrap;
+  font-weight: 400;
+}
+
+/* ── Section rhythm ───────────────────────────────────────────────────── */
+
+body.track-flutter-ns [data-page="track"] section {
+  background: transparent;
+  padding: clamp(72px, 10vw, 112px) 0;
+  position: relative;
+}
+
+body.track-flutter-ns #hero,
+body.track-flutter-ns .track-hero,
+body.track-flutter-ns [data-page="track"] section.track-hero {
+  padding-top: clamp(96px, 11vh, 128px);
+  padding-bottom: clamp(48px, 6vh, 72px);
+  min-height: 0;
+}
+
+/* Quilly chat — ink text on mint bubble, not white */
+body.track-flutter-ns .quilly-msg-user {
+  background: var(--mint);
+  color: var(--ink-05);
+}
+body.track-flutter-ns .quilly-msg-user code {
+  background: rgba(6, 9, 15, 0.14);
+  color: var(--ink-05);
+}
+body.track-flutter-ns .quilly-msg-ai code {
+  background: rgba(232, 237, 245, 0.08);
+  color: var(--mint);
+}
+
+body.track-flutter-ns .section-bg-deep,
+body.track-flutter-ns .section-bg-alt {
+  background: transparent;
+}
+
+/* ── Term glossary (.tip) — editorial, not dashed AI-tech ─────────────── */
+
+body.track-flutter-ns .tip {
+  position: relative;
+  cursor: help;
+  border-bottom: 1px solid color-mix(in oklab, var(--mint) 28%, transparent);
+  color: inherit;
+  text-decoration: none;
+  padding-bottom: 0;
+  transition: border-color 180ms ease, color 180ms ease;
+}
+
+body.track-flutter-ns .tip:hover,
+body.track-flutter-ns .tip.active {
+  border-bottom-color: var(--mint);
+  color: color-mix(in oklab, var(--mint) 22%, var(--ns-text));
+}
+
+/* Tooltip popover — ink tile with hairline, not glassy */
+body.track-flutter-ns .tip::after {
+  background: var(--ink-20);
+  color: var(--ns-text);
+  border: 1px solid var(--ns-rule-strong);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  padding: 10px 14px;
+  text-align: left;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+body.track-flutter-ns .tip::before {
+  border-top-color: var(--ns-rule-strong);
+}
+
+/* Light theme — inverted paper tile */
+body.track-flutter-ns[data-theme="light"] .tip {
+  border-bottom-color: color-mix(in oklab, var(--mint) 45%, transparent);
+}
+
+body.track-flutter-ns[data-theme="light"] .tip:hover {
+  border-bottom-color: var(--mint);
+  color: color-mix(in oklab, var(--mint) 55%, var(--ns-text));
+}
+
+body.track-flutter-ns[data-theme="light"] .tip::after {
+  background: var(--ink-05);
+  color: var(--ns-text);
+  border-color: var(--ns-rule-strong);
+  box-shadow: 0 8px 24px rgba(6, 9, 15, 0.12);
+}
+
+body.track-flutter-ns[data-theme="light"] .tip::before {
+  border-top-color: var(--ns-rule-strong);
+}
+
+/* Hairline dividers between sections */
+body.track-flutter-ns section + section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1200px, calc(100% - 48px));
+  height: 1px;
+  background: var(--ns-rule);
+}
+
+/* Section headers — editorial rail-grid */
+body.track-flutter-ns .section-label,
+body.track-flutter-ns .section-eyebrow,
+body.track-flutter-ns .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ns-text-muted);
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin-bottom: 16px;
+}
+
+body.track-flutter-ns .section-label::before,
+body.track-flutter-ns .section-eyebrow::before,
+body.track-flutter-ns .eyebrow::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--mint);
+}
+
+body.track-flutter-ns .section-title,
+body.track-flutter-ns section > .container > h2,
+body.track-flutter-ns .section-header h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(28px, 3.2vw, 44px);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: var(--ns-text);
+  margin: 0 0 16px;
+  max-width: 22ch;
+  background: none !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+
+body.track-flutter-ns .section-subtitle,
+body.track-flutter-ns .section-header p,
+body.track-flutter-ns .section-sub {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ns-text-muted);
+  max-width: 58ch;
+  margin: 0 0 40px;
+}
+
+body.track-flutter-ns section > .container > h2 + .section-sub,
+body.track-flutter-ns section > .container > .section-label + h2 { margin-top: 0; }
+
+body.track-flutter-ns .section-decor,
+body.track-flutter-ns [class*="section-decor"] { display: none; }
+
+/* Remove accent-glow radial on track sections */
+body.track-flutter-ns #program::before,
+body.track-flutter-ns #quilly-ai::before,
+body.track-flutter-ns #career::before,
+body.track-flutter-ns #stack::before,
+body.track-flutter-ns #demand::before { display: none; }
+
+/* ── Cards — hairline, no lift ────────────────────────────────────────── */
+
+body.track-flutter-ns .card,
+body.track-flutter-ns .demand-card,
+body.track-flutter-ns .stack-card,
+body.track-flutter-ns .mentor-card,
+body.track-flutter-ns .program-module-card,
+body.track-flutter-ns .bonus-card,
+body.track-flutter-ns .pricing-card,
+body.track-flutter-ns .faq-item,
+body.track-flutter-ns .contact-form-card {
+  background: var(--ink-10);
+  border: 1px solid var(--ns-rule);
+  border-radius: 6px;
+  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.02) inset;
+  transition: border-color 260ms cubic-bezier(.22, 1, .36, 1),
+              background 260ms cubic-bezier(.22, 1, .36, 1),
+              transform 260ms cubic-bezier(.22, 1, .36, 1);
+}
+
+body.track-flutter-ns .card:hover,
+body.track-flutter-ns .demand-card:hover,
+body.track-flutter-ns .stack-card:hover,
+body.track-flutter-ns .mentor-card:hover,
+body.track-flutter-ns .program-module-card:hover,
+body.track-flutter-ns .bonus-card:hover {
+  transform: none;
+  border-color: color-mix(in oklab, var(--mint) 32%, transparent);
+  background: var(--ink-15);
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--mint) 12%, transparent);
+}
+
+/* Demand cards — override gradient top border + dynamic accent */
+body.track-flutter-ns .demand-card {
+  padding: 24px 22px;
+  border-top: 1px solid var(--ns-rule);
+  --demand-accent: var(--mint) !important;
+}
+
+/* Unify project + program accents under mint (kill rainbow inline colors) */
+body.track-flutter-ns .project-card,
+body.track-flutter-ns .program-module,
+body.track-flutter-ns .program-module-card {
+  --proj-accent: var(--mint);
+  --module-accent: var(--mint);
+}
+
+body.track-flutter-ns .demand-card:hover {
+  border-top-color: var(--mint);
+}
+
+body.track-flutter-ns .demand-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  background: transparent;
+  border: 1px solid var(--ns-rule-strong);
+  color: var(--ns-text-soft);
+  margin-bottom: 14px;
+}
+
+body.track-flutter-ns .demand-card:hover .demand-icon {
+  border-color: var(--mint);
+  color: var(--mint);
+}
+
+body.track-flutter-ns .demand-icon svg,
+body.track-flutter-ns .demand-icon [data-lucide] {
+  width: 18px; height: 18px; stroke-width: 1.5; stroke: currentColor; fill: none;
+}
+
+body.track-flutter-ns .demand-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  color: var(--ns-text);
+  margin: 0 0 8px;
+}
+
+body.track-flutter-ns .demand-text {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ns-text-muted);
+  margin: 0;
+}
+
+/* ── Fit section — two-column editorial ───────────────────────────────── */
+
+body.track-flutter-ns .fit-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+body.track-flutter-ns .fit-col {
+  background: var(--ink-10);
+  border: 1px solid var(--ns-rule);
+  border-radius: 6px;
+  padding: 28px;
+}
+
+body.track-flutter-ns .fit-col-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--ns-rule);
+}
+
+body.track-flutter-ns .fit-col-head h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 17px;
+  letter-spacing: -0.015em;
+  margin: 0;
+  color: var(--ns-text);
+}
+
+body.track-flutter-ns .fit-col-icon {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  border: 1px solid var(--ns-rule-strong);
+  background: transparent;
+}
+
+body.track-flutter-ns .fit-col-icon-yes { color: var(--mint); border-color: color-mix(in oklab, var(--mint) 50%, transparent); }
+body.track-flutter-ns .fit-col-icon-no  { color: var(--ns-text-muted); }
+
+body.track-flutter-ns .fit-col-icon svg,
+body.track-flutter-ns .fit-col-icon [data-lucide] { width: 14px; height: 14px; stroke-width: 1.5; }
+
+body.track-flutter-ns .fit-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+body.track-flutter-ns .fit-list li {
+  padding-left: 22px;
+  position: relative;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ns-text-soft);
+}
+
+body.track-flutter-ns .fit-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 12px;
+  height: 1px;
+  background: var(--mint);
+}
+
+body.track-flutter-ns .fit-list-no li::before {
+  background: var(--ns-text-faint);
+}
+
+/* ── Program timeline ─────────────────────────────────────────────────── */
+
+body.track-flutter-ns .program-timeline {
+  position: relative;
+  padding-left: clamp(48px, 6vw, 96px);
+}
+
+body.track-flutter-ns .program-timeline-line {
+  position: absolute;
+  left: 16px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--ns-rule);
+}
+
+body.track-flutter-ns .program-module {
+  position: relative;
+  padding: 24px 0;
+}
+
+body.track-flutter-ns .program-module-card {
+  padding: 24px;
+  border-radius: 6px;
+}
+
+body.track-flutter-ns .program-module-period,
+body.track-flutter-ns .program-period {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ns-text-muted);
+  margin-bottom: 10px;
+  display: block;
+}
+
+body.track-flutter-ns .program-module-title,
+body.track-flutter-ns .program-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  color: var(--ns-text);
+  margin: 0 0 14px;
+  line-height: 1.2;
+}
+
+body.track-flutter-ns .program-topics,
+body.track-flutter-ns .program-module-topics {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+body.track-flutter-ns .program-topics li,
+body.track-flutter-ns .program-module-topics li {
+  padding-left: 18px;
+  position: relative;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ns-text-soft);
+}
+
+body.track-flutter-ns .program-topics li::before,
+body.track-flutter-ns .program-module-topics li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 10px;
+  height: 1px;
+  background: var(--mint);
+  opacity: 0.6;
+}
+
+body.track-flutter-ns .program-outcome,
+body.track-flutter-ns .program-module-outcome {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ns-text-soft);
+  padding-top: 14px;
+  margin-top: 14px;
+  border-top: 1px dashed var(--ns-rule);
+  font-style: italic;
+}
+body.track-flutter-ns .program-outcome::before,
+body.track-flutter-ns .program-module-outcome::before {
+  content: 'Итог: ';
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mint);
+  font-style: normal;
+  margin-right: 6px;
+}
+
+/* Timeline bullets next to modules */
+body.track-flutter-ns .program-module::before {
+  content: '';
+  position: absolute;
+  left: -42px;
+  top: 36px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--ink-05);
+  border: 1.5px solid var(--ns-rule-strong);
+  box-sizing: border-box;
+  z-index: 2;
+}
+
+body.track-flutter-ns .program-module:first-child::before {
+  background: var(--mint);
+  border-color: var(--mint);
+  box-shadow: 0 0 0 4px var(--mint-halo);
+}
+
+/* ── Stack / tools grid ───────────────────────────────────────────────── */
+
+body.track-flutter-ns .stack-card,
+body.track-flutter-ns .tool-card {
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+body.track-flutter-ns .stack-card-name,
+body.track-flutter-ns .tool-name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: -0.015em;
+  color: var(--ns-text);
+}
+
+body.track-flutter-ns .stack-card-desc,
+body.track-flutter-ns .tool-desc {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ns-text-muted);
+}
+
+/* ── Pricing ──────────────────────────────────────────────────────────── */
+
+body.track-flutter-ns .pricing-card {
+  padding: 32px 28px;
+}
+
+body.track-flutter-ns .pricing-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 17px;
+  letter-spacing: -0.02em;
+  color: var(--ns-text);
+  margin: 0 0 18px;
+}
+
+body.track-flutter-ns .pricing-amount {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(34px, 3.6vw, 48px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--ns-text);
+  font-feature-settings: "tnum";
+}
+
+body.track-flutter-ns .pricing-period {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ns-text-muted);
+  margin-top: 6px;
+}
+
+body.track-flutter-ns .pricing-card.featured,
+body.track-flutter-ns .pricing-card--featured {
+  border-color: color-mix(in oklab, var(--mint) 40%, transparent);
+  background: linear-gradient(180deg,
+    color-mix(in oklab, var(--mint) 3%, var(--ink-10)),
+    var(--ink-10));
+}
+
+body.track-flutter-ns .pricing-card.featured .pricing-amount,
+body.track-flutter-ns .pricing-card--featured .pricing-amount {
+  color: var(--mint);
+}
+
+/* ── FAQ ──────────────────────────────────────────────────────────────── */
+
+body.track-flutter-ns .faq-item {
+  padding: 0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+body.track-flutter-ns .faq-question,
+body.track-flutter-ns .faq-item summary,
+body.track-flutter-ns .faq-item-q {
+  padding: 20px 22px;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  color: var(--ns-text);
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+body.track-flutter-ns .faq-question::after,
+body.track-flutter-ns .faq-item summary::after,
+body.track-flutter-ns .faq-item-q::after {
+  content: '+';
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--mint);
+  transition: transform 280ms cubic-bezier(.22, 1, .36, 1);
+}
+
+body.track-flutter-ns .faq-item[open] .faq-question::after,
+body.track-flutter-ns .faq-item[open] summary::after,
+body.track-flutter-ns .faq-item[open] .faq-item-q::after {
+  transform: rotate(45deg);
+}
+
+body.track-flutter-ns .faq-answer,
+body.track-flutter-ns .faq-item-a {
+  padding: 0 22px 20px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ns-text-muted);
+  border-top: 1px solid var(--ns-rule);
+  padding-top: 16px;
+  margin-top: 0;
+}
+
+/* ── Tags / chips ─────────────────────────────────────────────────────── */
+
+body.track-flutter-ns .tag,
+body.track-flutter-ns [class*="tag-"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ns-text-muted);
+  background: transparent;
+  border: 1px solid var(--ns-rule-strong);
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+
+body.track-flutter-ns .tag-blue,
+body.track-flutter-ns .tag-accent,
+body.track-flutter-ns .tag-primary {
+  color: var(--mint);
+  border-color: color-mix(in oklab, var(--mint) 40%, transparent);
+}
+
+/* ── Footer ───────────────────────────────────────────────────────────── */
+
+body.track-flutter-ns footer,
+body.track-flutter-ns .footer {
+  background: var(--ink-00);
+  border-top: 1px solid var(--ns-rule);
+  color: var(--ns-text-muted);
+  padding: 48px 0 32px;
+}
+
+body.track-flutter-ns footer a,
+body.track-flutter-ns .footer a {
+  color: var(--ns-text-soft);
+  transition: color 200ms;
+}
+body.track-flutter-ns footer a:hover,
+body.track-flutter-ns .footer a:hover { color: var(--mint); }
+
+/* ── Track hero visual override — ensure track-hero-glow stays hidden ── */
+
+body.track-flutter-ns .track-hero--flutter .track-hero-visual {
+  aspect-ratio: 5 / 4;
+  min-height: 520px;
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  body.track-flutter-ns .track-hero-layout {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  body.track-flutter-ns .track-hero--flutter .track-hero-visual {
+    min-height: 420px;
+    aspect-ratio: auto;
+  }
+  body.track-flutter-ns .fit-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  body.track-flutter-ns .nav-links { display: none; }
+  body.track-flutter-ns .track-hero {
+    padding: 72px 0 48px;
+  }
+  body.track-flutter-ns .track-hero-title {
+    max-width: none;
+  }
+  body.track-flutter-ns .track-hero-stats {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  body.track-flutter-ns .track-hero-stat {
+    border-right: none;
+    border-bottom: 1px solid var(--ns-rule);
+    padding: 14px 0;
+  }
+  body.track-flutter-ns .track-hero-stat + .track-hero-stat {
+    padding-left: 0;
+  }
+  body.track-flutter-ns .track-hero-stat:last-child { border-bottom: none; }
+  body.track-flutter-ns .track-hero-ctas {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  body.track-flutter-ns .track-hero-ctas .btn-primary,
+  body.track-flutter-ns .track-hero-ctas .btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ── how_money — flatten 3-step cards into editorial ledger ─────────── */
+
+body.track-flutter-ns .how-money-cards {
+  margin-top: 44px;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+body.track-flutter-ns .how-money-card {
+  background: transparent !important;
+  border: none !important;
+  border-top: 1px solid var(--ns-rule) !important;
+  border-radius: 0 !important;
+  padding: 28px 0 !important;
+  box-shadow: none !important;
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+body.track-flutter-ns .how-money-card:last-child {
+  border-bottom: 1px solid var(--ns-rule) !important;
+}
+
+body.track-flutter-ns .how-money-card:hover {
+  background: transparent !important;
+  transform: none !important;
+}
+
+body.track-flutter-ns .how-money-num {
+  font-family: var(--font-display);
+  font-size: 48px;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  color: var(--mint) !important;
+  font-feature-settings: "tnum";
+  margin-bottom: 0;
+}
+
+body.track-flutter-ns .how-money-title {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--ns-text) !important;
+  margin: 0 0 8px;
+  line-height: 1.25;
+}
+
+body.track-flutter-ns .how-money-text {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--ns-text-soft) !important;
+  max-width: 60ch;
+}
+
+@media (max-width: 720px) {
+  body.track-flutter-ns .how-money-card {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  body.track-flutter-ns .how-money-num {
+    font-size: 36px;
+  }
+}
+
+/* ── Quilly capabilities — definition list (replaces 2x2 grid) ───────── */
+
+body.track-flutter-ns .ns-quilly-caps {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+body.track-flutter-ns .ns-quilly-cap {
+  padding: 20px 0;
+  border-top: 1px solid var(--ns-rule);
+}
+
+body.track-flutter-ns .ns-quilly-cap:last-child {
+  border-bottom: 1px solid var(--ns-rule);
+}
+
+body.track-flutter-ns .ns-quilly-cap-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+body.track-flutter-ns .ns-quilly-cap-icon {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mint);
+  flex-shrink: 0;
+}
+
+body.track-flutter-ns .ns-quilly-cap-icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+
+body.track-flutter-ns .ns-quilly-cap-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--ns-text);
+  margin: 0;
+  line-height: 1.25;
+}
+
+body.track-flutter-ns .ns-quilly-cap-text {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ns-text-soft);
+  margin: 0;
+  padding-left: 36px;
+  max-width: 58ch;
+}
+
+@media (max-width: 640px) {
+  body.track-flutter-ns .ns-quilly-cap-text {
+    padding-left: 0;
+  }
+}
+
+/* ── Mentors — editorial ledger (replaces initials-grid) ──────────────── */
+
+body.track-flutter-ns #mentors .mentors-grid,
+body.track-flutter-ns #mentors .mentor-card {
+  display: none;
+}
+
+body.track-flutter-ns .ns-mentors-ledger {
+  list-style: none;
+  padding: 0;
+  margin: 44px 0 0 0;
+  max-width: 920px;
+}
+
+body.track-flutter-ns .ns-mentor-row {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 24px;
+  padding: 28px 0;
+  border-top: 1px solid var(--ns-rule);
+}
+
+body.track-flutter-ns .ns-mentor-row:last-child {
+  border-bottom: 1px solid var(--ns-rule);
+}
+
+body.track-flutter-ns .ns-mentor-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: color-mix(in oklab, var(--mint) 55%, var(--ns-text-muted));
+  padding-top: 7px;
+}
+
+body.track-flutter-ns .ns-mentor-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+body.track-flutter-ns .ns-mentor-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+body.track-flutter-ns .ns-mentor-head-main {
+  min-width: 0;
+}
+
+body.track-flutter-ns .ns-mentor-name {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.012em;
+  line-height: 1.2;
+  color: var(--ns-text);
+  margin: 0 0 4px 0;
+}
+
+body.track-flutter-ns .ns-mentor-meta {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ns-text-muted);
+  margin: 0;
+}
+
+body.track-flutter-ns .ns-mentor-company {
+  color: color-mix(in oklab, var(--mint) 75%, var(--ns-text));
+  font-weight: 500;
+}
+
+body.track-flutter-ns .ns-mentor-years {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ns-text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding-top: 6px;
+  font-feature-settings: "tnum";
+}
+
+body.track-flutter-ns .ns-mentor-bio {
+  font-size: 15px;
+  line-height: 1.65;
+  color: color-mix(in oklab, var(--ns-text) 85%, transparent);
+  max-width: 68ch;
+  margin: 2px 0 0 0;
+}
+
+body.track-flutter-ns .ns-mentor-tags {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 18px;
+  row-gap: 4px;
+  margin-top: 6px;
+}
+
+body.track-flutter-ns .ns-mentor-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--ns-text-muted);
+  position: relative;
+  padding-left: 14px;
+}
+
+body.track-flutter-ns .ns-mentor-tag::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 6px;
+  height: 1px;
+  background: color-mix(in oklab, var(--mint) 55%, transparent);
+}
+
+body.track-flutter-ns .ns-mentor-tag:first-child {
+  padding-left: 0;
+}
+
+body.track-flutter-ns .ns-mentor-tag:first-child::before {
+  content: none;
+}
+
+/* ── Companies strip (replaces company chips inside cards) ───────────── */
+
+body.track-flutter-ns .ns-mentors-companies {
+  margin-top: 44px;
+  padding-top: 24px;
+  border-top: 1px solid var(--ns-rule);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+body.track-flutter-ns .ns-mentors-companies-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ns-text-muted);
+}
+
+body.track-flutter-ns .ns-mentors-companies-strip {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 38px;
+  row-gap: 10px;
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--ns-text);
+}
+
+body.track-flutter-ns .ns-mentors-companies-strip span {
+  opacity: 0.58;
+  transition: opacity 180ms ease, color 180ms ease;
+  cursor: default;
+}
+
+body.track-flutter-ns .ns-mentors-companies-strip span:hover {
+  opacity: 1;
+  color: var(--mint);
+}
+
+body.track-flutter-ns #mentors .mentors-disclaimer {
+  margin-top: 28px;
+  font-size: 12px;
+  color: var(--ns-text-muted);
+  font-style: normal;
+  text-align: left;
+  max-width: 70ch;
+}
+
+@media (max-width: 720px) {
+  body.track-flutter-ns .ns-mentor-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 24px 0;
+  }
+  body.track-flutter-ns .ns-mentor-num {
+    padding-top: 0;
+    font-size: 10px;
+  }
+  body.track-flutter-ns .ns-mentor-head {
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-start;
+  }
+  body.track-flutter-ns .ns-mentor-years {
+    padding-top: 0;
+    order: -1;
+  }
+  body.track-flutter-ns .ns-mentor-name {
+    font-size: 19px;
+  }
+  body.track-flutter-ns .ns-mentors-companies-strip {
+    font-size: 17px;
+    column-gap: 24px;
+  }
+}
