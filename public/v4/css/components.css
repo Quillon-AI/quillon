@@ -312,7 +312,7 @@
   height: 56px;
   padding: 0 var(--q-gutter);
   gap: var(--q-s-4);
-  background: rgba(8, 9, 10, 0.72);
+  background: color-mix(in srgb, var(--q-bg-0) 72%, transparent);
   backdrop-filter: saturate(1.4) blur(12px);
   -webkit-backdrop-filter: saturate(1.4) blur(12px);
   border-bottom: 1px solid var(--q-line);
@@ -320,6 +320,41 @@
   top: 0;
   z-index: 50;
 }
+
+/* Logo инверсия на light: SVG зашит белым обводом — invert делает его читаемым на белом фоне */
+:root[data-theme="light"] .q-topbar__brand-img,
+:root[data-theme="light"] .q-ft-brand__img {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* Theme toggle button (sun ↔ moon) */
+.q-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  margin: 0;
+  border: 1px solid var(--q-line);
+  border-radius: var(--q-r-md);
+  background: transparent;
+  color: var(--q-text-mid);
+  cursor: pointer;
+  transition: background-color var(--q-dur-fast) var(--q-ease),
+              border-color var(--q-dur-fast) var(--q-ease),
+              color var(--q-dur-fast) var(--q-ease);
+}
+.q-theme-toggle:hover {
+  background: var(--q-bg-2);
+  border-color: var(--q-line-hover);
+  color: var(--q-text-hi);
+}
+.q-theme-toggle svg { width: 16px; height: 16px; }
+.q-theme-toggle__sun  { display: none; }
+.q-theme-toggle__moon { display: block; }
+:root[data-theme="light"] .q-theme-toggle__sun  { display: block; }
+:root[data-theme="light"] .q-theme-toggle__moon { display: none; }
 
 .q-topbar__brand {
   display: inline-flex;

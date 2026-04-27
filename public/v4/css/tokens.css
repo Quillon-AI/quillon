@@ -233,3 +233,76 @@
     --q-dur-slow: 0ms;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+ * LIGHT THEME — переопределение токенов при [data-theme="light"]
+ *
+ * Стратегия: симметричная инверсия dark → light с тёплыми off-whites
+ * (Linear #F7F8F8, Stripe #FFFFFF, Vercel #FAFAFA), сохранение accent
+ * #5E6AD2 (одинаково читается на обеих темах), пересборка elevation
+ * под light-shadow philosophy.
+ * ═══════════════════════════════════════════════════════════════════ */
+
+:root[data-theme="light"] {
+  /* Surface: warm off-white scale, mirror dark */
+  --q-bg-0: #FCFCFD;
+  --q-bg-1: #F7F7F8;
+  --q-bg-2: #F0F0F2;
+  --q-bg-3: #E7E7EA;
+  --q-bg-4: #DDDDE0;
+  --q-bg-5: #C8C8CC;
+  --q-bg-6: #A1A1AA;
+  --q-bg-7: #71717A;
+  --q-bg-8: #404046;
+  --q-bg-9: #1A1B1E;
+
+  /* Hairlines: dark-on-light, та же лесенка alpha */
+  --q-line:        rgba(0, 0, 0, 0.07);
+  --q-line-soft:   rgba(0, 0, 0, 0.04);
+  --q-line-strong: rgba(0, 0, 0, 0.12);
+  --q-line-hover:  rgba(0, 0, 0, 0.18);
+
+  /* Text: deep near-black, mirror */
+  --q-text-hi:  #08090A;
+  --q-text-mid: #52525B;
+  --q-text-low: #71717A;
+  --q-text-dim: #A1A1AA;
+
+  /* Inverse в light — это тёмные регионы (CTA dark variant) */
+  --q-text-inv-hi:  #F4F4F5;
+  --q-text-inv-mid: #C9CACF;
+
+  /* Accent: тот же hue, но hover-направление инвертируется
+     (на тёмном — brighter, на светлом — deeper для контраста) */
+  --q-accent:        #5E6AD2;
+  --q-accent-hover:  #4C58BE;
+  --q-accent-press:  #3A4399;
+  --q-accent-soft:   #E8EAFA;
+  --q-accent-ink:    #2A2E52;
+
+  /* Elevation: пересборка под светлый фон —
+     inset light, shadow gentle (Linear/Stripe-стиль) */
+  --q-el-1: 0 0 0 1px var(--q-line);
+  --q-el-2:
+    0 0 0 1px var(--q-line),
+    0 1px 0 0 rgba(255, 255, 255, 0.6) inset,
+    0 8px 24px -12px rgba(0, 0, 0, 0.08);
+  --q-el-3:
+    0 0 0 1px var(--q-line-strong),
+    0 1px 0 0 rgba(255, 255, 255, 0.8) inset,
+    0 24px 48px -20px rgba(0, 0, 0, 0.12);
+
+  --q-glow-accent: 0 0 0 1px rgba(94, 106, 210, 0.4),
+                   0 8px 32px -12px rgba(94, 106, 210, 0.28);
+}
+
+/* Smooth transition при переключении темы (только bg/border/color, не layout) */
+html, body, .q-topbar, .q-section, .q-card, .q-btn,
+.q-track, .q-faq-item, .q-cf-card, .q-fc, .q-pr,
+.q-section-head__num, .q-section-head__title, .q-section-head__sub,
+input, textarea, select, button, a {
+  transition: background-color var(--q-dur-med) var(--q-ease),
+              border-color var(--q-dur-med) var(--q-ease),
+              color var(--q-dur-med) var(--q-ease),
+              box-shadow var(--q-dur-med) var(--q-ease);
+}
