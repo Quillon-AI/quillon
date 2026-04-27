@@ -8170,5 +8170,48 @@
     })();
   </script>
 
+  <!-- ═══ Smooth-scroll для якорей (топбар, CTA, любые href="#…") ═══ -->
+  <script>
+    (function () {
+      var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var DURATION = 720;
+      // ease-out-quart: быстрый старт, мягкое завершение — Linear/Stripe-чувство
+      function ease(t) { return 1 - Math.pow(1 - t, 4); }
+
+      function topbarOffset() {
+        var bar = document.querySelector('.q-topbar');
+        return bar ? bar.getBoundingClientRect().height + 8 : 64;
+      }
+
+      function smoothScrollTo(targetY) {
+        var startY = window.pageYOffset;
+        var dist = targetY - startY;
+        if (Math.abs(dist) < 2) return;
+        if (prefersReduced) { window.scrollTo(0, targetY); return; }
+        var startT = performance.now();
+        function step(now) {
+          var p = Math.min(1, (now - startT) / DURATION);
+          window.scrollTo(0, startY + dist * ease(p));
+          if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+
+      document.addEventListener('click', function (ev) {
+        var link = ev.target.closest('a[href^="#"]');
+        if (!link) return;
+        var href = link.getAttribute('href');
+        if (!href || href === '#') return;
+        var id = href.slice(1);
+        var target = document.getElementById(id);
+        if (!target) return;
+        ev.preventDefault();
+        var y = target.getBoundingClientRect().top + window.pageYOffset - topbarOffset();
+        smoothScrollTo(y);
+        if (history.replaceState) history.replaceState(null, '', '#' + id);
+      }, { passive: false });
+    })();
+  </script>
+
 </body>
 </html>
