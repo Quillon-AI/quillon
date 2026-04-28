@@ -4,6 +4,7 @@ __pycache__/
 node_modules/
 *.log
 .env
+.mcp.json
 *.session
 *.session-journal
 .claude/

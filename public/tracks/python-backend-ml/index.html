@@ -3,18 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Python Backend + ML — трек Quillon | 12 месяцев до оффера</title>
-  <meta name="description" content="Стань Python Backend разработчиком с навыками ML. 12 месяцев обучения, 12 часов в неделю. Со 2-го месяца — реальный заказ и первый доход. Вакансий 12 000+, зарплата от 90 000 ₽.">
-  <meta name="keywords" content="python backend обучение, ml разработчик обучение, python с нуля, fastapi обучение, курс python, стажировка python, python junior, claude api обучение">
+  <title>Python Backend + ML — трек Quillon · 12 месяцев до оффера</title>
+  <meta name="description" content="Python Backend + ML за 12 месяцев. FastAPI, PostgreSQL, Claude API, RAG. Со 2-го месяца — оплачиваемые задачи. 12 000+ открытых вакансий, зарплата от 90 000 ₽.">
 
-  <!-- OG Meta -->
   <meta property="og:title" content="Python Backend + ML — трек Quillon">
-  <meta property="og:description" content="12 месяцев до первого оффера. Python + FastAPI + AI (Claude API, RAG). Со 2-го месяца — реальный заказ и первый доход. Рассрочка 0%.">
-  <meta property="og:image" content="https://quillon.ru/assets/images/og-image.png">
+  <meta property="og:description" content="12 месяцев до первого оффера. Python + FastAPI + AI (Claude API, RAG). Со 2-го месяца — реальный заказ и первый доход.">
+  <meta property="og:image" content="https://quillon.ru/v4/assets/brand/logo.svg">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://quillon.ru/tracks/python-backend-ml/">
   <meta property="og:locale" content="ru_RU">
   <meta property="og:site_name" content="Quillon">
+
+  <link rel="canonical" href="https://quillon.ru/tracks/python-backend-ml/">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
   <!-- Schema.org: Course -->
   <script type="application/ld+json">
@@ -41,104 +42,1332 @@
       "courseMode": "online",
       "duration": "P12M",
       "courseWorkload": "PT12H"
-    },
-    "occupationalCredentialAwarded": "Сертификат Python Backend + ML Developer"
+    }
   }
   </script>
 
-  <!-- Yandex.Metrika counter -->
+  <!-- Theme bootstrap: ставим data-theme до загрузки CSS чтобы не было FOUC -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('q-theme');
+        var prefers = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', saved || prefers);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
+  <!-- Yandex.Metrika -->
   <script type="text/javascript">
-      (function(m,e,t,r,i,k,a){
-          m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-          m[i].l=1*new Date();
-          for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-          k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-      })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108311343', 'ym');
-      ym(108311343, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();
+    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108311343', 'ym');
+    ym(108311343, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true});
   </script>
   <noscript><div><img src="https://mc.yandex.ru/watch/108311343" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-  <!-- /Yandex.Metrika counter -->
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-  <link rel="apple-touch-icon" sizes="192x192" href="/favicon-192.png">
-
-  <!-- Canonical -->
-  <link rel="canonical" href="https://quillon.ru/tracks/python-backend-ml/">
-
-  <!-- Preconnect to Google Fonts -->
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="/css/variables.css?v=20260419p23">
-  <link rel="stylesheet" href="/css/base.css?v=20260419p23">
-  <link rel="stylesheet" href="/css/components.css?v=20260419p23">
-  <link rel="stylesheet" href="/css/sections.css?v=20260419p23">
-  <link rel="stylesheet" href="/css/track-sections.css?v=20260419p23">
-  <link rel="stylesheet" href="/css/responsive.css?v=20260419p23">
+  <link rel="stylesheet" href="/v4/css/tokens.css?v=3">
+  <link rel="stylesheet" href="/v4/css/base.css?v=3">
+  <link rel="stylesheet" href="/v4/css/components.css?v=3">
+  <link rel="stylesheet" href="styles.css?v=1">
 </head>
 <body>
 
-  <!-- Navbar -->
-  <nav id="navbar" class="nav">
-    <div class="container nav-inner">
-      <a href="/" class="nav-logo nav-logo-img" aria-label="Quillon">
-        <img class="nav-logo-dark" src="/assets/images/quillon-logo.svg" alt="Quillon" width="135" height="40">
-        <img class="nav-logo-light" src="/assets/images/quillon-logo-light.svg" alt="Quillon" width="135" height="40">
-      </a>
+  <!-- ═══════════════════════════ TOPBAR ═══════════════════════════ -->
+  <header class="q-topbar">
+    <a href="/" class="q-topbar__brand" aria-label="Quillon">
+      <img class="q-topbar__brand-img" src="/v4/assets/brand/logo.svg" alt="Quillon" width="92" height="32">
+    </a>
 
-      <div class="nav-links">
-        <a href="/#tracks">Все направления</a>
-        <a href="#program">Программа</a>
-        <a href="#stack">Стек</a>
-        <a href="#mentors">Преподаватели</a>
-        <a href="#pricing">Цена</a>
-        <a href="#faq">Вопросы</a>
+    <nav class="q-topbar__nav" aria-label="Главная навигация">
+      <a class="q-topbar__link" href="/#products">Треки</a>
+      <a class="q-topbar__link" href="/#format">Формат</a>
+      <a class="q-topbar__link" href="#pricing">Цена</a>
+      <a class="q-topbar__link" href="/#quillon_jobs">Jobs</a>
+      <a class="q-topbar__link" href="#faq">FAQ</a>
+    </nav>
+
+    <div class="q-topbar__actions">
+      <button type="button" class="q-theme-toggle" data-q-theme-toggle aria-label="Переключить тему">
+        <svg class="q-theme-toggle__moon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M14 9.5A6 6 0 1 1 6.5 2a4.5 4.5 0 0 0 7.5 7.5z"/>
+        </svg>
+        <svg class="q-theme-toggle__sun" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="8" cy="8" r="3.2"/>
+          <path d="M8 1.5v1.6M8 12.9v1.6M2.6 2.6l1.1 1.1M12.3 12.3l1.1 1.1M1.5 8h1.6M12.9 8h1.6M2.6 13.4l1.1-1.1M12.3 3.7l1.1-1.1"/>
+        </svg>
+      </button>
+      <a class="q-btn q-btn--link" href="https://lms.quillon.ru" target="_blank" rel="noopener noreferrer">Войти</a>
+      <a class="q-btn q-btn--primary q-btn--sm" href="/quiz">Пройти тест</a>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════ TRACK HERO ═══════════════════════════ -->
+  <section class="q-track-hero">
+    <img src="/v4/images/recolored/probe-colors-animated.svg" alt="" class="q-track-hero__bg-art" loading="lazy" decoding="async">
+
+    <div class="q-container q-track-hero__grid">
+
+      <!-- COPY SIDE -->
+      <div class="q-track-hero__copy">
+
+        <span class="q-track-hero__supertag">Трек · Python Backend + ML</span>
+
+        <h1 class="q-track-hero__title">
+          Python Backend&nbsp;+&nbsp;AI за&nbsp;12&nbsp;месяцев. <em>С&nbsp;4-й недели — за&nbsp;код платят</em>
+        </h1>
+
+        <p class="q-track-hero__subtitle">
+          Production-стек: FastAPI, PostgreSQL, Docker, Celery&nbsp;— закрывает 12&nbsp;000+ вакансий Junior Python. Стажируешься в&nbsp;Quillon&nbsp;Tech на&nbsp;боевых продуктах: ChatAI, Meet, LMS. AI&nbsp;Engineering (Claude&nbsp;API, RAG)&nbsp;— отдельный 12-нед аддон.
+        </p>
+
+        <div class="q-track-hero__stats">
+          <div class="q-track-hero__stat">
+            <div class="q-track-hero__stat__value">12&nbsp;000+</div>
+            <div class="q-track-hero__stat__label">Открытых Junior Python · hh.ru</div>
+          </div>
+          <div class="q-track-hero__stat">
+            <div class="q-track-hero__stat__value">до&nbsp;25&nbsp;000&nbsp;₽</div>
+            <div class="q-track-hero__stat__label">/мес · стажировка со&nbsp;2-го месяца</div>
+          </div>
+          <div class="q-track-hero__stat">
+            <div class="q-track-hero__stat__value">8&nbsp;из&nbsp;10</div>
+            <div class="q-track-hero__stat__label">Получают оффер за&nbsp;3&nbsp;мес после</div>
+          </div>
+        </div>
+
+        <!-- ─── Stack manifesto (закрывает пустоту в левой колонке) ─── -->
+        <div class="q-track-hero__stack">
+          <span class="q-track-hero__stack__eyebrow">Стек · 2026 · production</span>
+          <h2 class="q-track-hero__stack__title">
+            ИИ не заменит инженера, который сам <em>его строит</em>.
+          </h2>
+          <p class="q-track-hero__stack__sub">
+            Учим современный production-стек и AI-инфраструктуру, на которой работает бизнес. Ты не пользователь моделей&nbsp;— ты тот, кто их деплоит в&nbsp;прод.
+          </p>
+          <div class="q-track-hero__stack__chips" aria-label="Технологии трека">
+            <span>Python&nbsp;3.12</span>
+            <span>FastAPI</span>
+            <span>PostgreSQL</span>
+            <span>Redis</span>
+            <span>Docker</span>
+            <span>K8s</span>
+            <span>AWS</span>
+            <span>GitHub&nbsp;Actions</span>
+            <span>LLM-API</span>
+            <span>RAG</span>
+            <span>Vector&nbsp;DB</span>
+          </div>
+        </div>
+
       </div>
 
-      <a href="/quiz" class="btn btn-primary btn-sm nav-cta">Пройти тест &rarr;</a>
+      <!-- ═══ LEAD PANEL — video preview + form ═══ -->
+      <aside class="q-track-hero__lead" aria-label="Демо-урок и заявка на доступ">
 
-      <div class="nav-right">
-        <button class="theme-toggle" aria-label="Переключить тему">
-          <i data-lucide="sun" class="theme-icon-light"></i>
-          <i data-lucide="moon" class="theme-icon-dark"></i>
-        </button>
-        <button class="nav-burger" aria-label="Открыть меню">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+        <!-- VIDEO PREVIEW · LMS Player mockup -->
+        <div class="q-track-hero__video">
+          <div class="q-track-hero__video__chrome">
+            <div class="q-track-hero__video__dots">
+              <span class="q-track-hero__video__dot"></span>
+              <span class="q-track-hero__video__dot"></span>
+              <span class="q-track-hero__video__dot"></span>
+            </div>
+            <span class="q-track-hero__video__title">module-01 · lesson-03 · postgresql</span>
+            <span class="q-track-hero__video__time">12:48</span>
+          </div>
+          <pre class="q-track-hero__video__code">async def get_user(uid: int) -&gt; User | None:
+    async with db.pool() as cn:
+        row = await cn.fetchrow(
+            "SELECT id, email FROM users "
+            "WHERE id = $1",
+            uid,
+        )
+        return User(**row) if row else None
+</pre>
+          <button type="button" class="q-track-hero__video__play" aria-label="Смотреть демо-урок">
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M5 3 L5 13 L13 8 Z"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- FORM -->
+        <form class="q-track-hero__form" data-q-lead-form action="#" method="post">
+
+          <h3 class="q-track-hero__form__title">Открой демо-урок · бесплатно</h3>
+          <p class="q-track-hero__form__sub">
+            Настоящая лекция из&nbsp;Module&nbsp;1, без&nbsp;обрезков и&nbsp;тизеров. Посмотри, как ведём программу.
+          </p>
+
+          <div class="q-track-hero__field">
+            <label class="q-track-hero__field__label" for="lead-name">Как тебя зовут</label>
+            <input id="lead-name" class="q-track-hero__field__input" type="text" name="name" placeholder="Имя" autocomplete="given-name" required>
+          </div>
+
+          <div class="q-track-hero__field">
+            <label class="q-track-hero__field__label" for="lead-tel">Телефон</label>
+            <input id="lead-tel" class="q-track-hero__field__input" type="tel" name="phone" placeholder="+7 (000) 000-00-00" autocomplete="tel">
+          </div>
+
+          <div class="q-track-hero__field">
+            <label class="q-track-hero__field__label" for="lead-email">Email <span>*</span></label>
+            <input id="lead-email" class="q-track-hero__field__input" type="email" name="email" placeholder="name@example.com" autocomplete="email" required>
+          </div>
+
+          <button type="submit" class="q-track-hero__form__submit">
+            Получить доступ
+            <span class="q-track-hero__form__submit__arrow" aria-hidden="true">→</span>
+          </button>
+
+          <label class="q-track-hero__check">
+            <input class="q-track-hero__check__input" type="checkbox" name="consent_pdn" required>
+            <span class="q-track-hero__check__box" aria-hidden="true"></span>
+            <span class="q-track-hero__check__text">
+              <span class="q-req">*</span>Согласен на&nbsp;<a href="/v4/docs/consent-pdn.html" target="_blank" rel="noopener">обработку персональных данных</a>
+            </span>
+          </label>
+
+          <label class="q-track-hero__check">
+            <input class="q-track-hero__check__input" type="checkbox" name="consent_marketing">
+            <span class="q-track-hero__check__box" aria-hidden="true"></span>
+            <span class="q-track-hero__check__text">
+              Хочу получать материалы Quillon — статьи, уроки и&nbsp;разборы кода
+            </span>
+          </label>
+
+          <!-- Sent confirmation (hidden by default, shown via .is-sent) -->
+          <div class="q-track-hero__form__sent" role="status" aria-live="polite">
+            <p class="q-track-hero__form__sent__title">Доступ отправлен&nbsp;→ проверь email</p>
+            <p class="q-track-hero__form__sent__sub">Ссылка на&nbsp;демо-урок и&nbsp;программа курса придут в&nbsp;течение 1–2&nbsp;минут. Если письмо не&nbsp;найдёшь — посмотри в&nbsp;«Промоакции» и&nbsp;«Спам».</p>
+          </div>
+
+        </form>
+
+      </aside>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ PROOF-BENTO ═══════════════════════════ -->
+  <section class="q-proof" id="proof">
+    <div class="q-container">
+
+      <header class="q-proof__head">
+        <span class="q-proof__head__kicker">04 · Происходит внутри</span>
+        <h2 class="q-proof__head__title">Не курс. <em>Production-команда</em>, в&nbsp;которую&nbsp;ты входишь.</h2>
+      </header>
+
+      <div class="q-proof__bento">
+
+        <!-- 01 · LARGE — Стажировка Quillon Tech (главный differentiator) -->
+        <article class="q-proof__card q-proof__card--feat">
+          <span class="q-proof__card__livedot">14 / 15 мест · поток&nbsp;05</span>
+          <div class="q-proof__card__head">
+            <span class="q-proof__card__kicker">01 · Со 2-го месяца</span>
+            <h3 class="q-proof__card__title">До&nbsp;25&nbsp;000&nbsp;₽/мес за&nbsp;код, который видят живые пользователи</h3>
+          </div>
+          <p class="q-proof__card__body">
+            Не&nbsp;учебный TODO-лист. Заказы приходят через биржу <strong style="color:var(--q-text-hi);font-weight:600">Quillon&nbsp;Jobs</strong>&nbsp;— реальные задачи от&nbsp;внешних клиентов и&nbsp;стартапов на&nbsp;стадии MVP. Реализуешь проект вместе с&nbsp;экспертом-наставником.
+          </p>
+          <div class="q-proof__card__meta">
+            <div class="q-proof__card__meta__cell">
+              <span class="q-proof__card__meta__label">Старт оплаты</span>
+              <span class="q-proof__card__meta__value">Неделя&nbsp;05</span>
+            </div>
+            <div class="q-proof__card__meta__cell">
+              <span class="q-proof__card__meta__label">Практика</span>
+              <span class="q-proof__card__meta__value">80% программы</span>
+            </div>
+            <div class="q-proof__card__meta__cell">
+              <span class="q-proof__card__meta__label">Источник заказов</span>
+              <span class="q-proof__card__meta__value">Quillon&nbsp;Jobs</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 02 · WIDE-A — Стек 2026 -->
+        <article class="q-proof__card q-proof__card--wide-a">
+          <div class="q-proof__card__head">
+            <span class="q-proof__card__kicker">02 · Стек</span>
+            <h3 class="q-proof__card__title">FastAPI + PostgreSQL + Docker&nbsp;— production-стек 12&nbsp;000+ вакансий</h3>
+          </div>
+          <p class="q-proof__card__body">
+            Учим ровно тому, что покупает рынок: реальные требования Junior Python из&nbsp;hh.ru, без&nbsp;legacy-балласта. AI-инструменты (Claude&nbsp;API, RAG)&nbsp;— отдельным аддоном для тех, кому нужна глубокая специализация.
+          </p>
+          <div class="q-proof__card__chips">
+            <span class="q-proof__chip q-proof__chip--accent">FastAPI</span>
+            <span class="q-proof__chip q-proof__chip--accent">PostgreSQL</span>
+            <span class="q-proof__chip q-proof__chip--accent">Docker · Compose</span>
+            <span class="q-proof__chip">SQLAlchemy</span>
+            <span class="q-proof__chip">Alembic</span>
+            <span class="q-proof__chip">Redis</span>
+            <span class="q-proof__chip">Celery</span>
+            <span class="q-proof__chip">pytest</span>
+            <span class="q-proof__chip">Gitea Actions</span>
+          </div>
+        </article>
+
+        <!-- 03 · SQ-A — Quilly AI -->
+        <article class="q-proof__card q-proof__card--sq q-proof__card--sq-a">
+          <div class="q-proof__card__head">
+            <span class="q-proof__card__kicker">04 · AI-ментор</span>
+            <h3 class="q-proof__card__title">Quilly&nbsp;AI · 24/7</h3>
+          </div>
+          <p class="q-proof__card__body">
+            Объясняет твой код, ловит баги, готовит к&nbsp;собеседованию. Не&nbsp;ChatGPT&nbsp;— обучен на&nbsp;нашей программе.
+          </p>
+        </article>
+
+        <!-- 04 · SQ-B — Свой стартап (выпускной проект) -->
+        <article class="q-proof__card q-proof__card--sq q-proof__card--sq-b">
+          <div class="q-proof__card__head">
+            <span class="q-proof__card__kicker">05 · Свой стартап</span>
+            <h3 class="q-proof__card__title">Запускаешь собственный продукт на&nbsp;финале программы</h3>
+          </div>
+          <p class="q-proof__card__body">
+            Упаковываешь свою идею в&nbsp;работающий MVP: backend, AI-логика, деплой. Опыт «с&nbsp;нуля до&nbsp;релиза», а&nbsp;не&nbsp;строчку в&nbsp;резюме.
+          </p>
+        </article>
+
+        <!-- 05 · WIDE-B — LaunchPad -->
+        <article class="q-proof__card q-proof__card--wide-b">
+          <div class="q-proof__card__head">
+            <span class="q-proof__card__kicker">03 · Трудоустройство</span>
+            <h3 class="q-proof__card__title">Сопровождаем до&nbsp;первого оффера&nbsp;— без&nbsp;срока давности</h3>
+          </div>
+          <p class="q-proof__card__body">
+            Готовим комплексно: <strong style="color:var(--q-text-hi);font-weight:600">hard-скилы</strong> (алгоритмы, system&nbsp;design, code&nbsp;review с&nbsp;Senior&nbsp;и&nbsp;Team&nbsp;Lead) и&nbsp;<strong style="color:var(--q-text-hi);font-weight:600">soft</strong> (мок-собеседования, переговоры о&nbsp;зарплате, нетворк). Резюме, которое проходит автофильтры HR-систем и&nbsp;попадает к&nbsp;живому рекрутеру.
+          </p>
+          <div class="q-proof__card__meta" style="border-top:none;padding-top:0;">
+            <div class="q-proof__card__meta__cell">
+              <span class="q-proof__card__meta__label">Hard-скилы</span>
+              <span class="q-proof__card__meta__value">Senior + Team&nbsp;Lead</span>
+            </div>
+            <div class="q-proof__card__meta__cell">
+              <span class="q-proof__card__meta__label">Soft + резюме</span>
+              <span class="q-proof__card__meta__value">HR-менеджеры</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 06 · SQ-C — Портфолио GitHub -->
+        <article class="q-proof__card q-proof__card--sq q-proof__card--sq-c">
+          <div class="q-proof__card__head">
+            <span class="q-proof__card__kicker">06 · Портфолио</span>
+            <h3 class="q-proof__card__title"><span style="color:var(--q-accent);">12–18 артефактов</span> в&nbsp;GitHub</h3>
+          </div>
+          <ul class="q-proof__card__bullets">
+            <li><strong>Pulse</strong> · 12 версий, deployed</li>
+            <li>Командный 2-сервисный продукт</li>
+            <li>Свой MVP с&nbsp;бета-юзерами</li>
+            <li>6+ merged PR в&nbsp;OSS</li>
+            <li>Кейсы заказов через Quillon&nbsp;Jobs</li>
+          </ul>
+        </article>
+
+        <!-- 07 · SQ-D — Триал 7 дней -->
+        <article class="q-proof__card q-proof__card--sq q-proof__card--sq-d">
+          <div class="q-proof__card__head">
+            <span class="q-proof__card__kicker">07 · Без риска</span>
+            <div class="q-proof__card__num"><em>7</em>&nbsp;дней</div>
+          </div>
+          <p class="q-proof__card__body">
+            Полный доступ к&nbsp;материалам и&nbsp;Quilly&nbsp;AI. Не&nbsp;подошло — возвращаем 100% без&nbsp;«а&nbsp;почему».
+          </p>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ PROGRAM ═══════════════════════════ -->
+  <section class="q-program" id="program">
+    <div class="q-container">
+
+      <header class="q-program__head">
+        <span class="q-program__head__kicker">05 · Программа · 48 недель · 4 фазы по&nbsp;12&nbsp;нед</span>
+        <h2 class="q-program__head__title">От первого <code style="font-family:'Geist Mono',monospace;font-size:0.92em;color:var(--q-accent);">print()</code> <em>до production-стека</em></h2>
+        <p class="q-program__head__sub">10–12&nbsp;часов в&nbsp;неделю · 80% практики · async + дейлики. Каждая фаза заканчивается Demo&nbsp;Day с&nbsp;живым артефактом, а&nbsp;не&nbsp;тестом на&nbsp;знание теории.</p>
+      </header>
+
+      <div class="q-program__list">
+
+        <!-- ═══ M01 · DISCOVERY (нед. 1–12) ═══ -->
+        <details class="q-program__module" open>
+          <summary>
+            <div class="q-program__module__summary">
+              <div class="q-program__module__rail">
+                <span class="q-program__module__num">M01</span>
+                <span class="q-program__module__period">Недели 1–12</span>
+              </div>
+              <div class="q-program__module__primary">
+                <h3 class="q-program__module__title">Discovery: от&nbsp;первого <code>print()</code> до&nbsp;своего API</h3>
+                <p class="q-program__module__brief"><strong>Telegram-бот на&nbsp;нашем хостинге к&nbsp;нед.&nbsp;5</strong>; CRUD-API с&nbsp;авторизацией и&nbsp;Demo&nbsp;Day к&nbsp;нед.&nbsp;12.</p>
+              </div>
+              <svg class="q-program__module__chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 6 L8 10 L12 6"/>
+              </svg>
+            </div>
+          </summary>
+          <div class="q-program__module__detail">
+            <div class="q-program__module__detail__inner">
+
+              <div class="q-program__phase">
+                <header class="q-program__phase__head">
+                  <span class="q-program__phase__name">Phase 1.1 · Foundation Python</span>
+                  <span class="q-program__phase__period">Нед. 1–6</span>
+                </header>
+                <ol class="q-program__weeks">
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 1</span><span class="q-program__week__body"><span class="q-program__week__theme">Setup, REPL</span><span class="q-program__week__art">@quilly + ide.quillon.ru, первый <code style="font-family:'Geist Mono',monospace">print()</code></span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 2</span><span class="q-program__week__body"><span class="q-program__week__theme">Переменные, типы, операторы</span><span class="q-program__week__art">конвертер величин (CLI)</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 3</span><span class="q-program__week__body"><span class="q-program__week__theme">Условия + циклы</span><span class="q-program__week__art">текстовая мини-игра, FizzBuzz</span></span></li>
+                  <li class="q-program__week q-program__week--milestone"><span class="q-program__week__n">Нед. 4</span><span class="q-program__week__body"><span class="q-program__week__theme">Функции, модули, JSON</span><span class="q-program__week__art"><strong>Pulse v0.1</strong> · CLI-калькулятор привычек, ~30 строк</span></span></li>
+                  <li class="q-program__week q-program__week--milestone"><span class="q-program__week__n">Нед. 5</span><span class="q-program__week__body"><span class="q-program__week__theme">Telegram Bot API + Coolify-деплой</span><span class="q-program__week__art"><strong>Pulse v0.2</strong> · бот на&nbsp;<code style="font-family:'Geist Mono',monospace">&lt;name&gt;-bot.lessons.quillon.ru</code> · открывается доступ к&nbsp;Quillon&nbsp;Jobs</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 6</span><span class="q-program__week__body"><span class="q-program__week__theme">Git + Gitea + ide.quillon.ru</span><span class="q-program__week__art">контрольная точка: <strong>OSS&nbsp;PR&nbsp;#1</strong></span></span></li>
+                </ol>
+              </div>
+
+              <div class="q-program__phase">
+                <header class="q-program__phase__head">
+                  <span class="q-program__phase__name">Phase 1.2 · Web + DB</span>
+                  <span class="q-program__phase__period">Нед. 7–12</span>
+                </header>
+                <ol class="q-program__weeks">
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 7</span><span class="q-program__week__body"><span class="q-program__week__theme">ООП: классы, инкапсуляция, композиция</span><span class="q-program__week__art"><strong>Pulse v0.3</strong> · рефакторинг в&nbsp;TaskService / Storage / Notifier</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 8</span><span class="q-program__week__body"><span class="q-program__week__theme">Коллекции, итераторы, exceptions</span><span class="q-program__week__art">парсер CSV/JSON-логов</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 9</span><span class="q-program__week__body"><span class="q-program__week__theme">SQL основы + PostgreSQL</span><span class="q-program__week__art"><strong>Pulse v0.4</strong> · миграция JSON&nbsp;→&nbsp;Postgres</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 10</span><span class="q-program__week__body"><span class="q-program__week__theme">FastAPI, Pydantic, REST</span><span class="q-program__week__art"><strong>Pulse v0.5</strong> · CRUD-эндпоинты</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 11</span><span class="q-program__week__body"><span class="q-program__week__theme">JWT, hashing, мульти-юзер</span><span class="q-program__week__art"><strong>Pulse v0.6</strong> · авторизация</span></span></li>
+                  <li class="q-program__week q-program__week--milestone"><span class="q-program__week__n">Нед. 12</span><span class="q-program__week__body"><span class="q-program__week__theme">Финал + Demo Day Discovery</span><span class="q-program__week__art"><strong>Pulse v0.7</strong> · публичная демка Todo&nbsp;API</span></span></li>
+                </ol>
+              </div>
+
+              <div class="q-program__demoday">
+                <span class="q-program__demoday__label">Demo Day · нед. 12</span>
+                <p class="q-program__demoday__text"><strong>Pulse v0.7</strong> · Todo&nbsp;API + JWT, публичный live-URL + GitHub-релиз <code style="font-family:'Geist Mono',monospace">v0.7</code></p>
+              </div>
+
+            </div>
+          </div>
+        </details>
+
+        <!-- ═══ M02 · INTENSIVE (нед. 13–24) ═══ -->
+        <details class="q-program__module">
+          <summary>
+            <div class="q-program__module__summary">
+              <div class="q-program__module__rail">
+                <span class="q-program__module__num">M02</span>
+                <span class="q-program__module__period">Недели 13–24</span>
+              </div>
+              <div class="q-program__module__primary">
+                <h3 class="q-program__module__title">Intensive: продакшн-практика</h3>
+                <p class="q-program__module__brief">Сервис с&nbsp;<strong>фоновой обработкой и&nbsp;метриками</strong>, задеплоенный одним <code>docker compose up</code>. Demo&nbsp;Day v1.5.</p>
+              </div>
+              <svg class="q-program__module__chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 6 L8 10 L12 6"/>
+              </svg>
+            </div>
+          </summary>
+          <div class="q-program__module__detail">
+            <div class="q-program__module__detail__inner">
+
+              <div class="q-program__phase">
+                <header class="q-program__phase__head">
+                  <span class="q-program__phase__name">Phase 2.1 · Архитектура и&nbsp;тесты</span>
+                  <span class="q-program__phase__period">Нед. 13–18</span>
+                </header>
+                <ol class="q-program__weeks">
+                  <li class="q-program__week q-program__week--milestone"><span class="q-program__week__n">Нед. 13</span><span class="q-program__week__body"><span class="q-program__week__theme">Слоистая архитектура</span><span class="q-program__week__art"><strong>Pulse v1.0</strong> · routers / services / schemas</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 14</span><span class="q-program__week__body"><span class="q-program__week__theme">Тестирование (pytest, фикстуры, mocks)</span><span class="q-program__week__art">покрытие Pulse&nbsp;≥&nbsp;60%</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 15</span><span class="q-program__week__body"><span class="q-program__week__theme">SQLAlchemy ORM + Alembic-миграции</span><span class="q-program__week__art"><strong>Pulse v1.1</strong></span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 16</span><span class="q-program__week__body"><span class="q-program__week__theme">CI/CD: Gitea Actions, линтеры, pre-commit</span><span class="q-program__week__art">«зелёный пайплайн» Pulse</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 17</span><span class="q-program__week__body"><span class="q-program__week__theme">Docker + docker-compose</span><span class="q-program__week__art"><strong>Pulse v1.2</strong> · app + db + redis</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 18</span><span class="q-program__week__body"><span class="q-program__week__theme">Async/await, httpx, websockets</span><span class="q-program__week__art">контрольная точка: <strong>OSS&nbsp;PR&nbsp;#2</strong></span></span></li>
+                </ol>
+              </div>
+
+              <div class="q-program__phase">
+                <header class="q-program__phase__head">
+                  <span class="q-program__phase__name">Phase 2.2 · Production stack</span>
+                  <span class="q-program__phase__period">Нед. 19–24</span>
+                </header>
+                <ol class="q-program__weeks">
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 19</span><span class="q-program__week__body"><span class="q-program__week__theme">SOLID, design patterns, clean code</span><span class="q-program__week__art">ревью + рефакторинг Pulse</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 20</span><span class="q-program__week__body"><span class="q-program__week__theme">Redis-кэш, rate-limit</span><span class="q-program__week__art"><strong>Pulse v1.3</strong> · SOLID + кэш</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 21</span><span class="q-program__week__body"><span class="q-program__week__theme">Celery + RabbitMQ (фоновые задачи)</span><span class="q-program__week__art">отчёты по&nbsp;расписанию в&nbsp;Pulse</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 22</span><span class="q-program__week__body"><span class="q-program__week__theme">Observability: structlog, Prometheus, OTel</span><span class="q-program__week__art"><code style="font-family:'Geist Mono',monospace">/metrics</code> + дашборд Grafana</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 23</span><span class="q-program__week__body"><span class="q-program__week__theme">Performance + security (n+1, индексы, OWASP)</span><span class="q-program__week__art">аудит + фикс Pulse</span></span></li>
+                  <li class="q-program__week q-program__week--milestone"><span class="q-program__week__n">Нед. 24</span><span class="q-program__week__body"><span class="q-program__week__theme">Demo Day Intensive</span><span class="q-program__week__art"><strong>Pulse v1.5</strong> + <strong>OSS&nbsp;PR&nbsp;#3</strong></span></span></li>
+                </ol>
+              </div>
+
+              <div class="q-program__demoday">
+                <span class="q-program__demoday__label">Demo Day · нед. 24</span>
+                <p class="q-program__demoday__text"><strong>Pulse v1.5</strong> · observability dashboard, docker-compose live · live-URL + Grafana-снимок + GitHub-релиз <code style="font-family:'Geist Mono',monospace">v1.5</code></p>
+              </div>
+
+            </div>
+          </div>
+        </details>
+
+        <!-- ═══ M03 · TEAM (нед. 25–36) ═══ -->
+        <details class="q-program__module">
+          <summary>
+            <div class="q-program__module__summary">
+              <div class="q-program__module__rail">
+                <span class="q-program__module__num">M03</span>
+                <span class="q-program__module__period">Недели 25–36</span>
+              </div>
+              <div class="q-program__module__primary">
+                <h3 class="q-program__module__title">Team: командная разработка</h3>
+                <p class="q-program__module__brief">Минимум <strong>6 merged PR в&nbsp;OSS</strong>, командный 2-сервисный продукт, лид-роль на&nbsp;заказе 100&nbsp;000&nbsp;₽+ через Quillon&nbsp;Jobs.</p>
+              </div>
+              <svg class="q-program__module__chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 6 L8 10 L12 6"/>
+              </svg>
+            </div>
+          </summary>
+          <div class="q-program__module__detail">
+            <div class="q-program__module__detail__inner">
+
+              <div class="q-program__phase">
+                <header class="q-program__phase__head">
+                  <span class="q-program__phase__name">Phase 3.1 · Командные практики</span>
+                  <span class="q-program__phase__period">Нед. 25–30</span>
+                </header>
+                <ol class="q-program__weeks">
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 25–27</span><span class="q-program__week__body"><span class="q-program__week__theme">Scrum, code review, branching, PR-этикет</span><span class="q-program__week__art">форк Pulse → командный fork ИЛИ новый проект 2</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 28–30</span><span class="q-program__week__body"><span class="q-program__week__theme">System design лайт: API-контракты, очереди, идемпотентность</span><span class="q-program__week__art">диаграмма + ADR командного проекта</span></span></li>
+                </ol>
+              </div>
+
+              <div class="q-program__phase">
+                <header class="q-program__phase__head">
+                  <span class="q-program__phase__name">Phase 3.2 · Лид-роль и&nbsp;Demo Day</span>
+                  <span class="q-program__phase__period">Нед. 31–36</span>
+                </header>
+                <ol class="q-program__weeks">
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 31–32</span><span class="q-program__week__body"><span class="q-program__week__theme">Микросервисы: gRPC/REST между сервисами</span><span class="q-program__week__art">2-сервисный командный продукт + <strong>OSS&nbsp;PR&nbsp;#4</strong></span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 33–34</span><span class="q-program__week__body"><span class="q-program__week__theme">Лид-роль в&nbsp;Quillon Jobs: скоупинг, общение с&nbsp;клиентом</span><span class="q-program__week__art">1 крупный клиентский проект 100&nbsp;000&nbsp;₽+</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 35</span><span class="q-program__week__body"><span class="q-program__week__theme">Подготовка к&nbsp;Demo Day, доводка</span><span class="q-program__week__art">видео-демо + README + deploy</span></span></li>
+                  <li class="q-program__week q-program__week--milestone"><span class="q-program__week__n">Нед. 36</span><span class="q-program__week__body"><span class="q-program__week__theme">Demo Day Team</span><span class="q-program__week__art">публичный командный MVP + ретро</span></span></li>
+                </ol>
+              </div>
+
+              <p class="q-program__note">Внутренние недельные блоки M03 утверждаются методистом в&nbsp;deeper-плане; недельные интервалы 25–30 — гипотеза, основанная на&nbsp;контрольных точках roadmap (OSS&nbsp;PR&nbsp;#4 нед.&nbsp;32, лид-роли нед.&nbsp;33–34, Demo&nbsp;Day нед.&nbsp;36).</p>
+
+              <div class="q-program__demoday">
+                <span class="q-program__demoday__label">Demo Day · нед. 36</span>
+                <p class="q-program__demoday__text">Командный MVP · live-URL + видео-демо 2&nbsp;мин + README. Точный формат уточняется методистом.</p>
+              </div>
+
+            </div>
+          </div>
+        </details>
+
+        <!-- ═══ M04 · LAUNCH (нед. 37–48) ═══ -->
+        <details class="q-program__module">
+          <summary>
+            <div class="q-program__module__summary">
+              <div class="q-program__module__rail">
+                <span class="q-program__module__num">M04</span>
+                <span class="q-program__module__period">Недели 37–48</span>
+              </div>
+              <div class="q-program__module__primary">
+                <h3 class="q-program__module__title">Launch: оффер + свой MVP</h3>
+                <p class="q-program__module__brief"><strong>Junior Python оффер</strong> + свой MVP, представленный на&nbsp;Investor Pitch. Победитель Demo&nbsp;Day получает <strong>500&nbsp;000&nbsp;₽</strong>.</p>
+              </div>
+              <svg class="q-program__module__chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 6 L8 10 L12 6"/>
+              </svg>
+            </div>
+          </summary>
+          <div class="q-program__module__detail">
+            <div class="q-program__module__detail__inner">
+
+              <div class="q-program__phase">
+                <header class="q-program__phase__head">
+                  <span class="q-program__phase__name">Phase 4.1 · Discovery + skeleton</span>
+                  <span class="q-program__phase__period">Нед. 37–42</span>
+                </header>
+                <ol class="q-program__weeks">
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 37–39</span><span class="q-program__week__body"><span class="q-program__week__theme">Идея → discovery → проблема-решение</span><span class="q-program__week__art">Lean Canvas, интервью, выбор MVP</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 40</span><span class="q-program__week__body"><span class="q-program__week__theme">Архитектура MVP</span><span class="q-program__week__art">ADR + skeleton-репо + <strong>OSS&nbsp;PR&nbsp;#5</strong></span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 41–42</span><span class="q-program__week__body"><span class="q-program__week__theme">Реализация ключевых фич MVP</span><span class="q-program__week__art">2–3 рабочие фичи (соло или дуэт)</span></span></li>
+                </ol>
+              </div>
+
+              <div class="q-program__phase">
+                <header class="q-program__phase__head">
+                  <span class="q-program__phase__name">Phase 4.2 · Бета + Pitch</span>
+                  <span class="q-program__phase__period">Нед. 43–48</span>
+                </header>
+                <ol class="q-program__weeks">
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 43</span><span class="q-program__week__body"><span class="q-program__week__theme">Доводка MVP, тесты, дизайн</span><span class="q-program__week__art">альфа-релиз</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 44</span><span class="q-program__week__body"><span class="q-program__week__theme">Собес-подготовка: live-coding, system design</span><span class="q-program__week__art">мок-собес от&nbsp;Team Lead</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 45–46</span><span class="q-program__week__body"><span class="q-program__week__theme">Бета-юзеры, фидбек, итерации</span><span class="q-program__week__art">5+ реальных пользователей MVP, метрики</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 47</span><span class="q-program__week__body"><span class="q-program__week__theme">Pitch deck + elevator pitch</span><span class="q-program__week__art">видео-питч 3&nbsp;мин + <strong>OSS&nbsp;PR&nbsp;#6</strong> (последняя точка)</span></span></li>
+                  <li class="q-program__week q-program__week--milestone"><span class="q-program__week__n">Нед. 48</span><span class="q-program__week__body"><span class="q-program__week__theme">Demo Day Launch + Investor Pitch</span><span class="q-program__week__art">public MVP + жюри · 500&nbsp;000&nbsp;₽ победителю</span></span></li>
+                </ol>
+              </div>
+
+              <p class="q-program__note">Внутренние недельные блоки M04 утверждаются методистом; интервалы 37–43 — гипотеза, основанная на&nbsp;контрольных точках roadmap (OSS&nbsp;PR&nbsp;#5 нед.&nbsp;40, Pitch нед.&nbsp;47, Demo&nbsp;Day нед.&nbsp;48).</p>
+
+              <div class="q-program__demoday">
+                <span class="q-program__demoday__label">Demo Day · нед. 48 · Investor Pitch</span>
+                <p class="q-program__demoday__text">Свой MVP с&nbsp;бета-юзерами + pitch-видео 3&nbsp;мин + GitHub-релиз <code style="font-family:'Geist Mono',monospace">v1.0</code>. Победитель — <strong>500&nbsp;000&nbsp;₽</strong> на&nbsp;развитие проекта.</p>
+              </div>
+
+            </div>
+          </div>
+        </details>
+
+      </div>
+
+      <!-- Foot · soft inline CTA → к lead-form в hero -->
+      <div class="q-program__foot">
+        <p class="q-program__foot__text">
+          Полная разбивка по&nbsp;неделям с&nbsp;Pulse-эволюцией, Demo&nbsp;Day-вехами и&nbsp;контрольными точками&nbsp;— приходит вместе с&nbsp;<strong>демо-уроком на&nbsp;email</strong>.
+        </p>
+        <a class="q-program__foot__cta" href="#lead-name">
+          Открыть демо-урок
+          <span class="q-program__foot__cta__arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ PULSE TIMELINE ═══════════════════════════ -->
+  <section class="q-pulse" id="pulse">
+    <div class="q-container">
+
+      <header class="q-pulse__head">
+        <span class="q-pulse__head__kicker">06 · Pulse · сквозной проект</span>
+        <h2 class="q-pulse__head__title">Один продукт. <em>12 версий.</em> 6 месяцев.</h2>
+        <p class="q-pulse__head__sub">
+          Pulse&nbsp;— pet-проект, который ты&nbsp;строишь параллельно с&nbsp;программой. С&nbsp;нед.&nbsp;4 до&nbsp;нед.&nbsp;24 он&nbsp;эволюционирует через все технологии: от&nbsp;CLI-утилиты в&nbsp;30&nbsp;строк до&nbsp;production-стека с&nbsp;Docker, Celery и&nbsp;observability. Это не&nbsp;учебные задачи в&nbsp;вакууме&nbsp;— ты&nbsp;ведёшь свою кодбазу.
+        </p>
+      </header>
+
+      <div class="q-pulse__timeline">
+        <ol class="q-pulse__axis">
+
+          <li class="q-pulse__step q-pulse__step--milestone">
+            <span class="q-pulse__step__ver">v0.1</span>
+            <span class="q-pulse__step__week">Неделя 4</span>
+            <span class="q-pulse__step__title">CLI-утилита</span>
+            <span class="q-pulse__step__note">30 строк Python · аргументы, файлы, логи</span>
+          </li>
+
+          <li class="q-pulse__step q-pulse__step--milestone">
+            <span class="q-pulse__step__ver">v0.2</span>
+            <span class="q-pulse__step__week">Неделя 5</span>
+            <span class="q-pulse__step__title">Telegram-бот</span>
+            <span class="q-pulse__step__note">На&nbsp;нашем хостинге · webhook + команды</span>
+          </li>
+
+          <li class="q-pulse__step">
+            <span class="q-pulse__step__ver">v0.4</span>
+            <span class="q-pulse__step__week">Неделя 9</span>
+            <span class="q-pulse__step__title">+ PostgreSQL</span>
+            <span class="q-pulse__step__note">Хранилище · ORM · миграции</span>
+          </li>
+
+          <li class="q-pulse__step q-pulse__step--milestone">
+            <span class="q-pulse__step__ver">v0.7</span>
+            <span class="q-pulse__step__week">Неделя 12</span>
+            <span class="q-pulse__step__title">CRUD-API + Demo Day</span>
+            <span class="q-pulse__step__note">FastAPI · JWT · публичный endpoint</span>
+          </li>
+
+          <li class="q-pulse__step">
+            <span class="q-pulse__step__ver">v1.0</span>
+            <span class="q-pulse__step__week">Неделя 13</span>
+            <span class="q-pulse__step__title">+ Docker, Redis</span>
+            <span class="q-pulse__step__note">Compose-стек · кэш · async</span>
+          </li>
+
+          <li class="q-pulse__step q-pulse__step--milestone">
+            <span class="q-pulse__step__ver">v1.5</span>
+            <span class="q-pulse__step__week">Неделя 24</span>
+            <span class="q-pulse__step__title">Production-стек</span>
+            <span class="q-pulse__step__note">Celery · observability · Demo Day v1.5</span>
+          </li>
+
+        </ol>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ AI ENGINEERING · АДДОН ═══════════════════════════ -->
+  <section class="q-addon" id="ai-addon">
+    <div class="q-container">
+
+      <header class="q-addon__head">
+        <span class="q-addon__head__kicker">07 · Аддон · в&nbsp;разработке</span>
+        <h2 class="q-addon__head__title">AI-инжиниринг для&nbsp;бэкендеров&nbsp;— <em>готовим к&nbsp;запуску</em></h2>
+      </header>
+
+      <article class="q-addon__card">
+
+        <div class="q-addon__card__main">
+          <span class="q-addon__card__supertag">Ранняя запись · отдельный курс</span>
+          <h3 class="q-addon__card__title">Production AI поверх Backend, а&nbsp;не&nbsp;«генератор демок»</h3>
+          <p class="q-addon__card__body">
+            Когда закончишь основную программу, у&nbsp;тебя уже будет PostgreSQL, FastAPI и&nbsp;продакшн-опыт&nbsp;— фундамент, на&nbsp;котором AI-системы реально строятся. Аддон откроется отдельным курсом для тех, кто хочет специализацию глубже одного туториала. Программу финализируем&nbsp;— оставь email, напишем, когда открываются первые когорты.
+          </p>
+          <div class="q-addon__card__chips">
+            <span class="q-addon__card__chip q-addon__card__chip--accent">RAG-пайплайны</span>
+            <span class="q-addon__card__chip q-addon__card__chip--accent">AI в&nbsp;проде · latency, cost, eval</span>
+            <span class="q-addon__card__chip">LLM-API · Claude&nbsp;/&nbsp;GPT&nbsp;/&nbsp;Llama</span>
+            <span class="q-addon__card__chip">Промпт-инжиниринг</span>
+            <span class="q-addon__card__chip">Embeddings + Vector&nbsp;DB</span>
+            <span class="q-addon__card__chip">LangChain&nbsp;/&nbsp;LlamaIndex</span>
+            <span class="q-addon__card__chip">Function calling · агенты</span>
+            <span class="q-addon__card__chip">Fine-tuning · LoRA</span>
+          </div>
+          <p class="q-addon__card__chips__note">Программа аддона финализируется&nbsp;— точный стек и&nbsp;порядок тем зафиксируем ближе к&nbsp;запуску набора.</p>
+        </div>
+
+        <aside class="q-addon__card__side">
+          <div class="q-addon__card__meta">
+            <div class="q-addon__card__meta__row">
+              <span class="q-addon__card__meta__label">Статус</span>
+              <span class="q-addon__card__meta__value">Программа финализируется</span>
+            </div>
+            <div class="q-addon__card__meta__row">
+              <span class="q-addon__card__meta__label">Когда</span>
+              <span class="q-addon__card__meta__value">Оповестим первыми по&nbsp;email</span>
+            </div>
+            <div class="q-addon__card__meta__row">
+              <span class="q-addon__card__meta__label">Стоимость</span>
+              <span class="q-addon__card__meta__value">При&nbsp;анонсе · ранняя запись&nbsp;— скидка</span>
+            </div>
+          </div>
+          <a class="q-addon__card__cta" href="#lead-name">
+            Сообщить о&nbsp;запуске
+            <span class="q-addon__card__cta__arrow" aria-hidden="true">→</span>
+          </a>
+        </aside>
+
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ PRICING ═══════════════════════════ -->
+  <section class="q-section q-pr" id="pricing">
+    <div class="q-container">
+
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>08</em> · СТОИМОСТЬ</div>
+        <h2 class="q-section-head__title">Открытая цена, без&nbsp;мелкого шрифта</h2>
+      </header>
+
+      <div class="q-pr-hero">
+
+        <div class="q-pr-hero__col q-pr-hero__col--left">
+          <div class="q-pr-hero__price">
+            <div class="q-pr-hero__num"><span>8&nbsp;250</span>&nbsp;<em>₽/мес</em></div>
+            <p class="q-pr-hero__detail"><b>Рассрочка 0%</b> на&nbsp;24&nbsp;месяца · без переплат</p>
+          </div>
+          <hr class="q-pr-hero__sep" />
+          <div class="q-pr-hero__group">
+            <span class="q-pr-hero__kicker">Якорь цены</span>
+            <p class="q-pr-hero__group-text"><b>319 руб</b> за&nbsp;час программы&nbsp;— дешевле, чем час с&nbsp;репетитором по&nbsp;Python (от&nbsp;1&nbsp;500&nbsp;руб).</p>
+          </div>
+          <hr class="q-pr-hero__sep" />
+          <div class="q-pr-hero__group">
+            <span class="q-pr-hero__kicker q-pr-hero__kicker--accent">7&nbsp;дней · возврат 100%</span>
+            <h3 class="q-pr-hero__group-title">Полный доступ ко&nbsp;всему</h3>
+            <p class="q-pr-hero__group-text">Если не&nbsp;подойдёт&nbsp;— <b>вернём 100% без вопросов.</b> Без мелкого шрифта, без «удержания за&nbsp;обработку».</p>
+          </div>
+        </div>
+
+        <div class="q-pr-hero__col q-pr-hero__col--right">
+          <div class="q-pr-incl-head">
+            <h3 class="q-pr-incl-head__title">Что входит в&nbsp;трек</h3>
+            <span class="q-pr-incl-head__count">09 пунктов</span>
+          </div>
+          <ol class="q-pr-incl" aria-label="Что входит в трек">
+            <li class="q-pr-incl__item">
+              <span class="q-pr-incl__num">01</span>
+              <p class="q-pr-incl__text">12&nbsp;месяцев программы&nbsp;— от&nbsp;480&nbsp;часов практики</p>
+            </li>
+            <li class="q-pr-incl__item">
+              <span class="q-pr-incl__num">02</span>
+              <p class="q-pr-incl__text">Трек Python Backend&nbsp;+ ML&nbsp;— FastAPI, PostgreSQL, Docker, AI-инфраструктура</p>
+            </li>
+            <li class="q-pr-incl__item">
+              <span class="q-pr-incl__num">03</span>
+              <p class="q-pr-incl__text">Стажировка на&nbsp;production-продуктах Quillon</p>
+            </li>
+            <li class="q-pr-incl__item">
+              <span class="q-pr-incl__num">04</span>
+              <p class="q-pr-incl__text">Оплачиваемые задачи со&nbsp;2-го месяца, возможность взять коммерческие проекты</p>
+            </li>
+            <li class="q-pr-incl__item">
+              <span class="q-pr-incl__num">05</span>
+              <p class="q-pr-incl__text">Стартап как дипломный проект (до&nbsp;500&nbsp;000&nbsp;руб инвестиций)</p>
+            </li>
+            <li class="q-pr-incl__item">
+              <span class="q-pr-incl__num">06</span>
+              <p class="q-pr-incl__text">AI-помощник Quilly&nbsp;— поддержка 24/7</p>
+            </li>
+            <li class="q-pr-incl__item">
+              <span class="q-pr-incl__num">07</span>
+              <p class="q-pr-incl__text">LaunchPad: помощь до&nbsp;первого оффера</p>
+            </li>
+            <li class="q-pr-incl__item">
+              <span class="q-pr-incl__num">08</span>
+              <p class="q-pr-incl__text">Модули: Prompt Engineering + Vibe Coding + AI-инструменты</p>
+            </li>
+            <li class="q-pr-incl__item">
+              <span class="q-pr-incl__num">09</span>
+              <p class="q-pr-incl__text">Сертификат об&nbsp;окончании программы</p>
+            </li>
+          </ol>
+        </div>
+
+      </div>
+
+      <div class="q-pr-trust">
+        <div class="q-pr-trust__cell">
+          <span class="q-pr-trust__kicker">В&nbsp;подарок</span>
+          <h3 class="q-pr-trust__title">Модуль «AI-разработчик»</h3>
+          <p class="q-pr-trust__text">Prompt Engineering + Vibe Coding + инструменты нового поколения. <b>Для&nbsp;участников текущего набора&nbsp;— бесплатно.</b></p>
+        </div>
+        <div class="q-pr-trust__cell">
+          <span class="q-pr-trust__kicker">Первый заказ · со&nbsp;2-го месяца</span>
+          <h3 class="q-pr-trust__title">Зарабатываешь до&nbsp;выпуска</h3>
+          <p class="q-pr-trust__text">Не&nbsp;ждёшь окончания программы: со&nbsp;2-го месяца берёшь оплачиваемые задачи через <b>Quillon&nbsp;Jobs</b>&nbsp;— парсеры, боты, автоматизации на&nbsp;Python.</p>
+        </div>
+      </div>
+
+      <div class="q-pr-cta">
+        <div class="q-pr-cta__copy">
+          <span class="q-pr-cta__title">Готовы начать?</span>
+          <span class="q-pr-cta__sub">Оставь заявку&nbsp;— разберём твою ситуацию за&nbsp;15&nbsp;минут и&nbsp;покажем расчёт окупаемости.</span>
+        </div>
+        <a class="q-btn q-btn--primary q-btn--lg" href="#contact">
+          Записаться на&nbsp;разбор
+          <span class="q-btn__icon" aria-hidden="true">→</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ FAQ ═══════════════════════════ -->
+  <section class="q-section q-faq" id="faq">
+    <div class="q-container">
+
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>09</em> · ВОПРОСЫ</div>
+        <h2 class="q-section-head__title">Частые вопросы</h2>
+      </header>
+
+      <div class="q-faq-body">
+
+        <aside class="q-faq-aside">
+          <span class="q-faq-aside__kicker"><em>08</em> · ОТВЕТОВ ВНУТРИ</span>
+          <h3 class="q-faq-aside__title">Всё, что обычно спрашивают на&nbsp;консультации.</h3>
+          <p class="q-faq-aside__text">Опыт, формат, гарантии, заработок&nbsp;— ответы на&nbsp;все вопросы до&nbsp;старта.</p>
+        </aside>
+
+        <ul class="q-faq-list" role="list">
+
+          <li class="q-faq-item">
+            <details open>
+              <summary>
+                <span class="q-faq-item__num">01</span>
+                <h3 class="q-faq-item__q">Нужен&nbsp;ли опыт в&nbsp;программировании?</h3>
+                <span class="q-faq-item__plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="q-faq-item__a">
+                <p class="q-faq-item__a-text">Нет. Трек рассчитан на&nbsp;старт без IT-опыта. Первые 8&nbsp;недель&nbsp;— полное погружение в&nbsp;Python с&nbsp;наставником-практиком. <b>80% участников приходят без технического образования.</b> Единственное условие&nbsp;— готовность работать 12&nbsp;часов в&nbsp;неделю.</p>
+              </div>
+            </details>
+          </li>
+
+          <li class="q-faq-item">
+            <details>
+              <summary>
+                <span class="q-faq-item__num">02</span>
+                <h3 class="q-faq-item__q">Можно&nbsp;ли совмещать с&nbsp;работой?</h3>
+                <span class="q-faq-item__plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="q-faq-item__a">
+                <p class="q-faq-item__a-text">Да, программа рассчитана именно на&nbsp;это. <b>12&nbsp;часов в&nbsp;неделю&nbsp;— 2&nbsp;часа в&nbsp;день.</b> Записи доступны 24/7. Командный формат со&nbsp;спринтами структурирует время. Совмещать с&nbsp;работой&nbsp;— стандартный сценарий, а&nbsp;не&nbsp;исключение.</p>
+              </div>
+            </details>
+          </li>
+
+          <li class="q-faq-item">
+            <details>
+              <summary>
+                <span class="q-faq-item__num">03</span>
+                <h3 class="q-faq-item__q">Что если мне не&nbsp;подойдёт?</h3>
+                <span class="q-faq-item__plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="q-faq-item__a">
+                <p class="q-faq-item__a-text">Первые 7&nbsp;дней&nbsp;— полный доступ ко&nbsp;всем материалам. Если решите, что это не&nbsp;ваше&nbsp;— <b>вернём 100% без вопросов.</b> Без мелкого шрифта, без «удержания за&nbsp;обработку». Просто напишите&nbsp;— и&nbsp;деньги вернутся.</p>
+              </div>
+            </details>
+          </li>
+
+          <li class="q-faq-item">
+            <details>
+              <summary>
+                <span class="q-faq-item__num">04</span>
+                <h3 class="q-faq-item__q">Сколько реально можно заработать на&nbsp;коммерческих задачах?</h3>
+                <span class="q-faq-item__plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="q-faq-item__a">
+                <p class="q-faq-item__a-text"><b>От&nbsp;5&nbsp;000 до&nbsp;80&nbsp;000&nbsp;руб за&nbsp;проект</b>&nbsp;— зависит от&nbsp;сложности. Первый заказ доступен со&nbsp;2-го месяца. С&nbsp;3-го&nbsp;— задачи через Quillon&nbsp;Jobs. С&nbsp;7-го&nbsp;— коммерческие проекты через Студию. Вы&nbsp;решаете реальные задачи бизнеса на&nbsp;Python и&nbsp;получаете за&nbsp;это оплату.</p>
+              </div>
+            </details>
+          </li>
+
+          <li class="q-faq-item">
+            <details>
+              <summary>
+                <span class="q-faq-item__num">05</span>
+                <h3 class="q-faq-item__q">Почему именно Python Backend&nbsp;+ ML?</h3>
+                <span class="q-faq-item__plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="q-faq-item__a">
+                <p class="q-faq-item__a-text">Три критерия: <b>максимум вакансий, совместимость с&nbsp;AI-инструментами, реальный production-стек.</b> Python&nbsp;— язык номер 1 для&nbsp;AI и&nbsp;backend. FastAPI + PostgreSQL + Docker&nbsp;— то, что используют компании, а&nbsp;не&nbsp;учебные туториалы. ML-компонент даёт специализацию, которая ценится вдвойне.</p>
+              </div>
+            </details>
+          </li>
+
+          <li class="q-faq-item">
+            <details>
+              <summary>
+                <span class="q-faq-item__num">06</span>
+                <h3 class="q-faq-item__q">Чем Quillon отличается от&nbsp;других онлайн-программ?</h3>
+                <span class="q-faq-item__plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="q-faq-item__a">
+                <p class="q-faq-item__a-text"><b>Первое:</b> работа на&nbsp;production-продуктах компании&nbsp;— не&nbsp;учебные проекты, а&nbsp;код для&nbsp;реальных пользователей. <b>Второе:</b> оплачиваемые задачи со&nbsp;2-го месяца, от&nbsp;5&nbsp;000 до&nbsp;80&nbsp;000&nbsp;руб за&nbsp;проект. <b>Третье:</b> стартап как дипломный проект с&nbsp;инвестицией до&nbsp;500&nbsp;000&nbsp;руб. Ни&nbsp;одна онлайн-программа этого не&nbsp;предлагает.</p>
+              </div>
+            </details>
+          </li>
+
+          <li class="q-faq-item">
+            <details>
+              <summary>
+                <span class="q-faq-item__num">07</span>
+                <h3 class="q-faq-item__q">AI заменит разработчиков&nbsp;— зачем учиться?</h3>
+                <span class="q-faq-item__plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="q-faq-item__a">
+                <p class="q-faq-item__a-text">AI не&nbsp;умеет проектировать архитектуру, понимать бизнес-задачу и&nbsp;нести ответственность за&nbsp;результат. <b>Как калькулятор не&nbsp;заменил бухгалтеров, AI не&nbsp;заменит разработчиков.</b> В&nbsp;Quillon AI встроен в&nbsp;каждый этап&nbsp;— вы&nbsp;выходите как специалист, который умеет и&nbsp;писать код, и&nbsp;управлять AI.</p>
+              </div>
+            </details>
+          </li>
+
+          <li class="q-faq-item">
+            <details>
+              <summary>
+                <span class="q-faq-item__num">08</span>
+                <h3 class="q-faq-item__q">Помогаете&nbsp;ли вы&nbsp;с&nbsp;трудоустройством?</h3>
+                <span class="q-faq-item__plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="q-faq-item__a">
+                <p class="q-faq-item__a-text">Да. <b>LaunchPad</b> включает: индивидуальное резюме, мок-интервью с&nbsp;видеоразбором и&nbsp;рекомендательные письма. Помощь без ограничения по&nbsp;времени после выпуска. Рынок работает в&nbsp;вашу пользу: <b>57&nbsp;400&nbsp;— дефицит IT-специалистов</b> и&nbsp;80% работодателей оценивают по&nbsp;портфолио, а&nbsp;не&nbsp;по&nbsp;дипломам.</p>
+              </div>
+            </details>
+          </li>
+
+        </ul>
+
       </div>
     </div>
+  </section>
 
-    <!-- Mobile menu -->
-    <div class="nav-mobile">
-      <a href="/#tracks">Все направления</a>
-      <a href="#program">Программа</a>
-      <a href="#stack">Стек</a>
-      <a href="#mentors">Преподаватели</a>
-      <a href="#pricing">Цена</a>
-      <a href="#faq">Вопросы</a>
-      <a href="/quiz" class="btn btn-primary" style="margin-top: var(--space-sm); text-align: center;">Пройти тест &rarr;</a>
+  <!-- ═══════════════════════════ CONTACT ═══════════════════════════ -->
+  <section class="q-section q-cf" id="contact">
+    <div class="q-container">
+      <div class="q-cf-grid">
+
+        <aside class="q-cf-aside">
+          <span class="q-cf-aside__num"><em>10</em> · СЛЕДУЮЩИЙ ШАГ</span>
+          <h2 class="q-cf-aside__title">Разберём твою ситуацию за&nbsp;15&nbsp;минут</h2>
+          <p class="q-cf-aside__sub">Расскажешь, где сейчас работаешь и&nbsp;чего хочешь от&nbsp;IT. Подберём темп, покажем расчёт окупаемости, ответим на&nbsp;любые вопросы.</p>
+          <ul class="q-cf-aside__list" role="list">
+            <li class="q-cf-aside__item">
+              <span class="q-cf-aside__item-num">01</span>
+              <p class="q-cf-aside__item-text">Подберём темп и&nbsp;формат под твой график</p>
+            </li>
+            <li class="q-cf-aside__item">
+              <span class="q-cf-aside__item-num">02</span>
+              <p class="q-cf-aside__item-text">Покажем расчёт часов, сроков и&nbsp;окупаемости</p>
+            </li>
+            <li class="q-cf-aside__item">
+              <span class="q-cf-aside__item-num">03</span>
+              <p class="q-cf-aside__item-text">Ответим на&nbsp;любые вопросы по&nbsp;треку</p>
+            </li>
+          </ul>
+        </aside>
+
+        <form class="q-cf-form" id="cf-track-form" action="#" method="post" novalidate>
+
+          <div class="q-cf-field">
+            <label class="q-cf-label" for="cf-name">
+              <span class="q-cf-label__num">01</span>
+              <span class="q-cf-label__text">Имя<span class="q-cf-label__req">*</span></span>
+            </label>
+            <input class="q-cf-input" id="cf-name" name="name" type="text"
+              placeholder="Как к тебе обращаться?" autocomplete="name" required>
+          </div>
+
+          <div class="q-cf-field">
+            <label class="q-cf-label" for="cf-phone">
+              <span class="q-cf-label__num">02</span>
+              <span class="q-cf-label__text">Телефон<span class="q-cf-label__req">*</span></span>
+            </label>
+            <input class="q-cf-input" id="cf-phone" name="phone" type="tel"
+              placeholder="+7 ___ ___ __ __" autocomplete="tel" required>
+          </div>
+
+          <div class="q-cf-field">
+            <label class="q-cf-label" for="cf-email">
+              <span class="q-cf-label__num">03</span>
+              <span class="q-cf-label__text">Email</span>
+            </label>
+            <input class="q-cf-input" id="cf-email" name="email" type="email"
+              placeholder="name@example.com" autocomplete="email">
+          </div>
+
+          <ul class="q-cf-consents" role="list">
+            <li>
+              <label class="q-cf-consent">
+                <input class="q-cf-consent__input" type="checkbox" name="consent_pdn" required>
+                <span class="q-cf-consent__box" aria-hidden="true"></span>
+                <p class="q-cf-consent__text">Даю согласие на&nbsp;обработку <a href="/v4/docs/consent-pdn.html" target="_blank" rel="noopener">персональных данных</a><span class="q-cf-consent__req">*</span></p>
+              </label>
+            </li>
+            <li>
+              <label class="q-cf-consent">
+                <input class="q-cf-consent__input" type="checkbox" name="consent_marketing">
+                <span class="q-cf-consent__box" aria-hidden="true"></span>
+                <p class="q-cf-consent__text">Даю согласие на&nbsp;получение <a href="/v4/docs/consent-marketing.html" target="_blank" rel="noopener">рекламных материалов</a></p>
+              </label>
+            </li>
+          </ul>
+
+          <div class="q-cf-submit">
+            <button class="q-btn q-btn--primary q-btn--lg q-cf-submit__btn" type="submit">
+              Записаться на&nbsp;разбор
+              <span class="q-btn__icon" aria-hidden="true">→</span>
+            </button>
+          </div>
+
+        </form>
+
+      </div>
     </div>
-  </nav>
+  </section>
 
-  <!-- Main content — rendered by renderer.js -->
-  <main id="app" data-page="track" data-track-slug="python-backend-ml"></main>
+  <!-- ═══════════════════════════ FINAL CTA ═══════════════════════════ -->
+  <section class="q-section q-fc" id="final_cta">
 
-  <!-- Footer — rendered by renderer.js -->
-  <footer id="footer"></footer>
+    <img class="q-fc__deco"
+         src="/v4/images/recolored/cta-horizon.svg?v=2"
+         alt="" aria-hidden="true" loading="lazy">
 
-  <!-- Scripts -->
-  <script src="/vendor/lucide.min.js" defer></script>
-  <script src="/js/renderer.js?v=20260419p23" defer></script>
-  <script src="/js/animations.js?v=20260419p23" defer></script>
-  <script src="/js/interactions.js?v=20260419p23" defer></script>
-  <script src="/js/analytics.js?v=20260419p23" defer></script>
+    <div class="q-container">
+
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>11</em> · НАЧАЛО</div>
+      </header>
+
+      <div class="q-fc-grid">
+
+        <div class="q-fc-stack">
+          <h2 class="q-fc-headline">Production-портфолио через&nbsp;<em>12&nbsp;месяцев</em></h2>
+          <p class="q-fc-sub">Оставь заявку&nbsp;— разберём твою ситуацию за&nbsp;<b>15&nbsp;минут</b>. Без оплаты, без обязательств. Подберём темп, покажем план и&nbsp;расчёт окупаемости.</p>
+          <div class="q-fc-cta">
+            <a class="q-btn q-btn--primary q-btn--lg q-fc-cta__btn" href="#contact">
+              Записаться на&nbsp;разбор
+              <span class="q-btn__icon" aria-hidden="true">→</span>
+            </a>
+            <p class="q-fc-cta__micro"><b>15&nbsp;минут</b> · <b>бесплатно</b> · <b>без обязательств</b></p>
+          </div>
+        </div>
+
+        <aside class="q-fc-aside">
+          <h3 class="q-fc-aside__title"><b>8&nbsp;250&nbsp;₽/мес</b> в&nbsp;рассрочку. 7&nbsp;дней с&nbsp;полным возвратом.</h3>
+          <div class="q-fc-aside__meta">
+            <div class="q-fc-aside__meta-cell">
+              <span class="q-fc-aside__meta-num">0%</span>
+              <span class="q-fc-aside__meta-label">Переплат</span>
+            </div>
+            <div class="q-fc-aside__meta-cell">
+              <span class="q-fc-aside__meta-num">100%</span>
+              <span class="q-fc-aside__meta-label">Возврат · 7&nbsp;дней</span>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+  <footer class="q-section q-ft" id="footer">
+    <div class="q-container q-ft-shell">
+
+      <div class="q-ft-top">
+
+        <div class="q-ft-brand">
+          <a class="q-ft-brand__logo" href="/" aria-label="Quillon">
+            <img class="q-ft-brand__img" src="/v4/assets/brand/logo.svg" alt="Quillon" width="103" height="36">
+          </a>
+          <p class="q-ft-brand__tagline">Продукты. Команды. Реальный доход.</p>
+        </div>
+
+        <nav class="q-ft-sitemap" aria-label="Карта сайта">
+
+          <div class="q-ft-col">
+            <h4 class="q-ft-col__title">Продукты</h4>
+            <ul class="q-ft-col__list">
+              <li><a class="q-ft-link" href="/#products">Quilly AI</a></li>
+              <li><a class="q-ft-link" href="https://meet.quillon.ru" target="_blank" rel="noopener">Quillon Meet</a></li>
+              <li><a class="q-ft-link" href="https://lms.quillon.ru" target="_blank" rel="noopener">Quillon LMS</a></li>
+              <li><a class="q-ft-link" href="/#quillon_jobs">Quillon Jobs</a></li>
+            </ul>
+          </div>
+
+          <div class="q-ft-col">
+            <h4 class="q-ft-col__title">Направления</h4>
+            <ul class="q-ft-col__list">
+              <li><a class="q-ft-link" href="/tracks/python-backend-ml/">Python Backend + ML</a></li>
+              <li><a class="q-ft-link" href="/tracks/flutter/">Flutter Developer</a></li>
+              <li><a class="q-ft-link" href="/tracks/qa/">QA Automation</a></li>
+            </ul>
+          </div>
+
+          <div class="q-ft-col">
+            <h4 class="q-ft-col__title">Программа</h4>
+            <ul class="q-ft-col__list">
+              <li><a class="q-ft-link" href="/#format">Формат</a></li>
+              <li><a class="q-ft-link" href="/#launchpad">LaunchPad</a></li>
+              <li><a class="q-ft-link" href="/#pricing">Стоимость</a></li>
+              <li><a class="q-ft-link" href="/#faq">Вопросы</a></li>
+            </ul>
+          </div>
+
+          <div class="q-ft-col">
+            <h4 class="q-ft-col__title">Компания</h4>
+            <ul class="q-ft-col__list">
+              <li><a class="q-ft-link" href="/#products">Продукты</a></li>
+              <li><a class="q-ft-link" href="https://tech.quillon.ru" target="_blank" rel="noopener">IT-студия Quillon Tech</a></li>
+            </ul>
+          </div>
+
+        </nav>
+
+      </div>
+
+      <div class="q-ft-legal">
+
+        <div class="q-ft-legal__col">
+          <span class="q-ft-legal__kicker">Реквизиты</span>
+          <p class="q-ft-legal__line"><b>ООО «Квиллон»</b></p>
+          <p class="q-ft-legal__line">ИНН&nbsp;<b>1660308717</b></p>
+          <p class="q-ft-legal__line">420055, Республика Татарстан,<br>г.&nbsp;Казань, Свободная&nbsp;ул., д.&nbsp;7, офис&nbsp;5</p>
+        </div>
+
+        <div class="q-ft-legal__col">
+          <span class="q-ft-legal__kicker">Документы</span>
+          <ul class="q-ft-legal__links">
+            <li><a class="q-ft-legal__link" href="/v4/docs/oferta.html" target="_blank" rel="noopener">Публичная оферта</a></li>
+            <li><a class="q-ft-legal__link" href="/v4/docs/privacy-policy.html" target="_blank" rel="noopener">Политика конфиденциальности</a></li>
+            <li><a class="q-ft-legal__link" href="/v4/docs/consent-pdn.html" target="_blank" rel="noopener">Согласие на&nbsp;обработку ПД</a></li>
+            <li><a class="q-ft-legal__link" href="/v4/docs/cookies-consent.html" target="_blank" rel="noopener">Согласие на&nbsp;использование cookies</a></li>
+            <li><a class="q-ft-legal__link" href="https://islod.obrnadzor.gov.ru/view/133831" target="_blank" rel="noopener">Образовательная лицензия</a></li>
+          </ul>
+        </div>
+
+        <div class="q-ft-legal__col">
+          <span class="q-ft-legal__kicker">Контакты</span>
+          <ul class="q-ft-legal__links">
+            <li>
+              <a class="q-ft-contact-link" href="mailto:support@quillon.ru">
+                <svg class="q-ft-contact-link__icon" viewBox="0 0 16 16" aria-hidden="true">
+                  <rect x="2" y="3.5" width="12" height="9" rx="0.5"/>
+                  <path d="M2.5 4.2 L8 8.5 L13.5 4.2"/>
+                </svg>
+                <span>support@quillon.ru</span>
+              </a>
+            </li>
+            <li>
+              <a class="q-ft-contact-link" href="https://t.me/quillon_ru" target="_blank" rel="noopener">
+                <svg class="q-ft-contact-link__icon" viewBox="0 0 16 16" aria-hidden="true">
+                  <path d="M14 2.5 L1.8 7.5 L6.5 9.2 L14 2.5 Z"/>
+                  <path d="M6.5 9.2 L8 13 L10.3 10.2"/>
+                  <path d="M6.5 9.2 L14 2.5"/>
+                </svg>
+                <span>@quillon_ru</span>
+              </a>
+            </li>
+            <li>
+              <a class="q-ft-contact-link" href="https://wa.me/79000000000" target="_blank" rel="noopener">
+                <svg class="q-ft-contact-link__icon" viewBox="0 0 16 16" aria-hidden="true">
+                  <path d="M2.2 13.8 L3.3 10.5 A5.3 5.3 0 1 1 5.5 12.7 L2.2 13.8 Z"/>
+                </svg>
+                <span>Написать в&nbsp;WhatsApp</span>
+              </a>
+            </li>
+            <li>
+              <a class="q-ft-contact-link" href="https://vk.com/quillon" target="_blank" rel="noopener">
+                <svg class="q-ft-contact-link__icon q-ft-contact-link__icon--vk" viewBox="0 0 16 16" aria-hidden="true">
+                  <rect x="1.5" y="1.5" width="13" height="13" rx="2.4"/>
+                  <text x="8" y="11" text-anchor="middle" font-size="7.5" font-weight="600">VK</text>
+                </svg>
+                <span>vk.com/quillon</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="q-ft-foot">
+        <span class="q-ft-foot__copy">© 2026 ООО «Квиллон»</span>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ═══ COOKIE BANNER ═══ -->
+  <aside class="q-cookie" id="q-cookie" role="dialog" aria-live="polite" aria-label="Использование cookies">
+    <h3 class="q-cookie__title">Cookies</h3>
+    <p class="q-cookie__text">
+      Мы&nbsp;используем cookies, чтобы улучшать сайт и&nbsp;показывать релевантный контент. Продолжая просмотр, ты&nbsp;соглашаешься с&nbsp;<a href="/v4/docs/cookies-consent.html" target="_blank" rel="noopener">условиями</a>&nbsp;и&nbsp;<a href="/v4/docs/privacy-policy.html" target="_blank" rel="noopener">политикой конфиденциальности</a>.
+    </p>
+    <div class="q-cookie__row">
+      <button class="q-btn q-btn--primary q-btn--sm q-cookie__btn" type="button" data-q-cookie-accept>Принять</button>
+      <button class="q-cookie__dismiss" type="button" data-q-cookie-dismiss>Только&nbsp;необходимые</button>
+    </div>
+  </aside>
+
+  <script>
+    (function () {
+      var KEY = 'q-cookie-ok';
+      var el = document.getElementById('q-cookie');
+      if (!el) return;
+      try { if (localStorage.getItem(KEY)) return; } catch (e) {}
+      setTimeout(function () { el.classList.add('is-visible'); }, 800);
+      function persist(value) {
+        try { localStorage.setItem(KEY, value); } catch (e) {}
+        el.classList.remove('is-visible');
+      }
+      el.querySelector('[data-q-cookie-accept]').addEventListener('click', function () { persist('accept'); });
+      el.querySelector('[data-q-cookie-dismiss]').addEventListener('click', function () { persist('necessary'); });
+    })();
+  </script>
+
+  <!-- ═══ Theme toggle ═══ -->
+  <script>
+    (function () {
+      var btn = document.querySelector('[data-q-theme-toggle]');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        var next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', next);
+        try { localStorage.setItem('q-theme', next); } catch (e) {}
+      });
+    })();
+  </script>
+
+  <!-- ═══ Contact form ═══ -->
+  <script>
+    (function () {
+      var form = document.getElementById('cf-track-form');
+      if (!form) return;
+      form.addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        if (window.ym) { try { window.ym(108311343, 'reachGoal', 'track_contact_submit'); } catch (e) {} }
+        form.classList.add('is-sent');
+        var btn = form.querySelector('button[type="submit"]');
+        if (btn) { btn.textContent = 'Заявка отправлена ✓'; btn.disabled = true; }
+      });
+    })();
+  </script>
+
+  <!-- ═══ Lead form (демо-урок) — UI-only state, backend позже ═══ -->
+  <script>
+    (function () {
+      var form = document.querySelector('[data-q-lead-form]');
+      if (!form) return;
+      form.addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        // TODO: POST на /api/lead когда поднимем бэк
+        // Пока — показываем confirmation state (UX-плейсхолдер)
+        if (window.ym) {
+          try { window.ym(108311343, 'reachGoal', 'lead_form_submit'); } catch (e) {}
+        }
+        form.classList.add('is-sent');
+      });
+    })();
+  </script>
+
+  <!-- ═══ Smooth-scroll ═══ -->
+  <script>
+    (function () {
+      var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var DURATION = 720;
+      function ease(t) { return 1 - Math.pow(1 - t, 4); }
+      function topbarOffset() {
+        var bar = document.querySelector('.q-topbar');
+        return bar ? bar.getBoundingClientRect().height + 8 : 64;
+      }
+      function smoothScrollTo(targetY) {
+        var startY = window.pageYOffset;
+        var dist = targetY - startY;
+        if (Math.abs(dist) < 2) return;
+        if (prefersReduced) { window.scrollTo(0, targetY); return; }
+        var startT = performance.now();
+        function step(now) {
+          var p = Math.min(1, (now - startT) / DURATION);
+          window.scrollTo(0, startY + dist * ease(p));
+          if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+      document.addEventListener('click', function (ev) {
+        var link = ev.target.closest('a[href^="#"]');
+        if (!link) return;
+        var href = link.getAttribute('href');
+        if (!href || href === '#') return;
+        var id = href.slice(1);
+        var target = document.getElementById(id);
+        if (!target) return;
+        ev.preventDefault();
+        var y = target.getBoundingClientRect().top + window.pageYOffset - topbarOffset();
+        smoothScrollTo(y);
+        if (history.replaceState) history.replaceState(null, '', '#' + id);
+      }, { passive: false });
+    })();
+  </script>
+
 </body>
 </html>
