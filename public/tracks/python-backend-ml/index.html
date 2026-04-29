@@ -79,7 +79,23 @@
   <link rel="stylesheet" href="/v4/css/tokens.css?v=3">
   <link rel="stylesheet" href="/v4/css/base.css?v=3">
   <link rel="stylesheet" href="/v4/css/components.css?v=3">
-  <link rel="stylesheet" href="styles.css?v=1">
+
+  <!-- Track-specific styles · разбито на модули для параллельной загрузки -->
+  <link rel="stylesheet" href="styles/_globals.css?v=2">
+  <link rel="stylesheet" href="styles/hero.css?v=2">
+  <link rel="stylesheet" href="styles/proof.css?v=2">
+  <link rel="stylesheet" href="styles/program.css?v=2">
+  <link rel="stylesheet" href="styles/pulse.css?v=2">
+  <link rel="stylesheet" href="styles/addon.css?v=2">
+  <link rel="stylesheet" href="styles/cases.css?v=2">
+  <link rel="stylesheet" href="styles/mentor.css?v=1">
+  <link rel="stylesheet" href="styles/reviews.css?v=1">
+  <link rel="stylesheet" href="styles/pricing.css?v=2">
+  <link rel="stylesheet" href="styles/faq.css?v=2">
+  <link rel="stylesheet" href="styles/contact.css?v=2">
+  <link rel="stylesheet" href="styles/final-cta.css?v=2">
+  <link rel="stylesheet" href="styles/footer.css?v=2">
+  <link rel="stylesheet" href="styles/cookie.css?v=2">
 </head>
 <body>
 
@@ -107,7 +123,7 @@
           <path d="M8 1.5v1.6M8 12.9v1.6M2.6 2.6l1.1 1.1M12.3 12.3l1.1 1.1M1.5 8h1.6M12.9 8h1.6M2.6 13.4l1.1-1.1M12.3 3.7l1.1-1.1"/>
         </svg>
       </button>
-      <a class="q-btn q-btn--link" href="https://lms.quillon.ru" target="_blank" rel="noopener noreferrer">Войти</a>
+      <a class="q-btn q-btn--link" href="/login/">Войти</a>
       <a class="q-btn q-btn--primary q-btn--sm" href="/quiz">Пройти тест</a>
     </div>
   </header>
@@ -769,12 +785,873 @@
     </div>
   </section>
 
+  <!-- ═══════════════════════════ CASES ═══════════════════════════ -->
+  <section class="q-section q-cases" id="cases">
+    <div class="q-container">
+
+      <header class="q-section-head q-cases__head">
+        <div class="q-section-head__num"><em>08</em> · ПРОЕКТЫ</div>
+        <h2 class="q-section-head__title">Не&nbsp;учебные демки&nbsp;— production-кейсы за&nbsp;12&nbsp;месяцев</h2>
+        <p class="q-cases__head__sub">Студенты пишут код для&nbsp;реальных продуктов и&nbsp;коммерческих заказчиков. <b>Со&nbsp;2-го месяца&nbsp;— оплачиваемые задачи через Quillon&nbsp;Jobs. С&nbsp;6-го&nbsp;— стажировка на&nbsp;внутренних продуктах (Meet, Quilly&nbsp;AI, LMS). На&nbsp;выпуске&nbsp;— стартап и&nbsp;гранды лучшим проектам до&nbsp;500&thinsp;000&nbsp;₽.</b></p>
+      </header>
+
+      <!-- ── tabs ── -->
+      <div class="q-cases__tabs" role="tablist" aria-label="Категории кейсов">
+        <button class="q-cases__tab is-active" role="tab" aria-selected="true" aria-controls="q-cases-panel-jobs" id="q-cases-tab-jobs" data-cases-tab>
+          <span class="q-cases__tab__num">01</span>
+          <span class="q-cases__tab__name">Quillon&nbsp;Jobs</span>
+          <span class="q-cases__tab__count">3</span>
+        </button>
+        <button class="q-cases__tab" role="tab" aria-selected="false" aria-controls="q-cases-panel-products" id="q-cases-tab-products" tabindex="-1" data-cases-tab>
+          <span class="q-cases__tab__num">02</span>
+          <span class="q-cases__tab__name">Проекты&nbsp;Quillon</span>
+          <span class="q-cases__tab__count">3</span>
+        </button>
+        <button class="q-cases__tab" role="tab" aria-selected="false" aria-controls="q-cases-panel-internal" id="q-cases-tab-internal" tabindex="-1" data-cases-tab>
+          <span class="q-cases__tab__num">03</span>
+          <span class="q-cases__tab__name">Внутренние</span>
+          <span class="q-cases__tab__count">3</span>
+        </button>
+        <button class="q-cases__tab" role="tab" aria-selected="false" aria-controls="q-cases-panel-os" id="q-cases-tab-os" tabindex="-1" data-cases-tab>
+          <span class="q-cases__tab__num">04</span>
+          <span class="q-cases__tab__name">Open&nbsp;Source</span>
+          <span class="q-cases__tab__count">3</span>
+        </button>
+        <button class="q-cases__tab" role="tab" aria-selected="false" aria-controls="q-cases-panel-startup" id="q-cases-tab-startup" tabindex="-1" data-cases-tab>
+          <span class="q-cases__tab__num">05</span>
+          <span class="q-cases__tab__name">Start&nbsp;Up</span>
+          <span class="q-cases__tab__count">1</span>
+        </button>
+      </div>
+
+      <!-- ── panel · Quillon Jobs (default) ── -->
+      <div class="q-cases__panel is-active" role="tabpanel" id="q-cases-panel-jobs" aria-labelledby="q-cases-tab-jobs">
+        <ul class="q-cases__grid" role="list">
+
+          <!-- 01 · Первый платный заказ -->
+          <li class="q-cases__card">
+            <header class="q-cases__card__head">
+              <span class="q-cases__card__num">01</span>
+              <span class="q-cases__card__chip">M02–M03 · 11&nbsp;ДН</span>
+            </header>
+            <h3 class="q-cases__card__title">Telegram-бот записи на&nbsp;услугу</h3>
+            <p class="q-cases__card__author">Первый платный заказ. <b>Студент · M03</b> · 1&nbsp;исполнитель</p>
+            <pre class="q-cases__card__code"><code><span class="cm"># aiogram 3 + JSON-хранилище</span>
+<span class="kw">from</span> aiogram <span class="kw">import</span> Bot, Dispatcher
+<span class="kw">from</span> aiogram.filters <span class="kw">import</span> Command
+<span class="kw">import</span> json
+
+dp = <span class="fn">Dispatcher</span>()
+slots = json.<span class="fn">load</span>(<span class="fn">open</span>(<span class="str">"slots.json"</span>))
+
+<span class="kw">@dp</span>.message(<span class="fn">Command</span>(<span class="str">"book"</span>))
+<span class="kw">async def</span> <span class="fn">book</span>(msg):
+    slots[<span class="fn">str</span>(msg.from_user.id)] = msg.text
+    json.<span class="fn">dump</span>(slots, <span class="fn">open</span>(<span class="str">"slots.json"</span>, <span class="str">"w"</span>))
+    <span class="kw">await</span> msg.<span class="fn">answer</span>(<span class="str">"Записал. Жду в субботу."</span>)</code></pre>
+            <div class="q-cases__card__metrics">
+              <div class="q-cases__card__metric q-cases__card__metric--accent">
+                <span class="q-cases__card__metric__num">5&nbsp;000&nbsp;₽</span>
+                <span class="q-cases__card__metric__label">первая выплата</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">11&nbsp;дн</span>
+                <span class="q-cases__card__metric__label">от&nbsp;заказа до&nbsp;сдачи</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">1-й</span>
+                <span class="q-cases__card__metric__label">клиент в&nbsp;портфолио</span>
+              </div>
+            </div>
+          </li>
+
+          <!-- 02 · Production backend -->
+          <li class="q-cases__card">
+            <header class="q-cases__card__head">
+              <span class="q-cases__card__num">02</span>
+              <span class="q-cases__card__chip">M07 · 3&nbsp;НЕД</span>
+            </header>
+            <h3 class="q-cases__card__title">API системы онлайн-записи для&nbsp;локального сервисного бизнеса</h3>
+            <p class="q-cases__card__author">Платный заказ через Quillon&nbsp;Jobs. <b>Студент · M07</b> · ментор-ревью перед сдачей</p>
+            <pre class="q-cases__card__code"><code><span class="kw">@router</span>.post(<span class="str">"/bookings"</span>, response_model=BookingOut, status_code=<span class="num">201</span>)
+<span class="kw">def</span> <span class="fn">create_booking</span>(
+    payload: BookingCreate,
+    user: User = <span class="fn">Depends</span>(current_user),
+    db: Session = <span class="fn">Depends</span>(get_db),
+):
+    <span class="kw">if not</span> <span class="fn">slot_is_free</span>(db, payload.slot_id):
+        <span class="kw">raise</span> <span class="fn">HTTPException</span>(<span class="num">409</span>, <span class="str">"Slot already taken"</span>)
+    booking = <span class="fn">Booking</span>(user_id=user.id, slot_id=payload.slot_id)
+    db.<span class="fn">add</span>(booking); db.<span class="fn">commit</span>(); db.<span class="fn">refresh</span>(booking)
+    <span class="kw">return</span> booking</code></pre>
+            <div class="q-cases__card__metrics">
+              <div class="q-cases__card__metric q-cases__card__metric--accent">
+                <span class="q-cases__card__metric__num">45&nbsp;000&nbsp;₽</span>
+                <span class="q-cases__card__metric__label">гонорар студенту</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">11</span>
+                <span class="q-cases__card__metric__label">эндпоинтов FastAPI&nbsp;+ PG</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">3&nbsp;нед</span>
+                <span class="q-cases__card__metric__label">от&nbsp;ТЗ до&nbsp;сдачи</span>
+              </div>
+            </div>
+          </li>
+
+          <!-- 03 · Lead-роль (упрощён: монолит-vs-worker, не gRPC) -->
+          <li class="q-cases__card">
+            <header class="q-cases__card__head">
+              <span class="q-cases__card__num">03</span>
+              <span class="q-cases__card__chip q-cases__card__chip--accent">M10 · LEAD</span>
+            </header>
+            <h3 class="q-cases__card__title">Лид на&nbsp;backend автоматической выгрузки отчётов для&nbsp;торговой сети</h3>
+            <p class="q-cases__card__author">Скоупинг, оценка, демо клиенту. <b>Студент · M10</b> · команда&nbsp;2 · ментор как тех-консультант</p>
+            <pre class="q-cases__card__code"><code><span class="cm"># ADR-001 · Монолит vs выделенный worker для отчётов</span>
+
+Контекст: ночные сводки по 6 точкам ≤ 500 чеков/сутки.
+Решение: один FastAPI-сервис + Celery beat в том же compose.
+Альтернативы:
+  − gRPC-микросервис — отвергнут (overhead на 2-х людях)
+  − Отдельный сервис на Go — отвергнут (вне стека команды)
+Триггер пересмотра: > 5 точек или > 5к чеков/сутки.</code></pre>
+            <div class="q-cases__card__metrics">
+              <div class="q-cases__card__metric q-cases__card__metric--accent">
+                <span class="q-cases__card__metric__num">140&nbsp;000&nbsp;₽</span>
+                <span class="q-cases__card__metric__label">бюджет проекта</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">2</span>
+                <span class="q-cases__card__metric__label">человека в&nbsp;команде</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">5&nbsp;нед</span>
+                <span class="q-cases__card__metric__label">MVP принят клиентом</span>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+      <!-- ── panel · Проекты Quillon (Meet / Quilly / LMS) ── -->
+      <div class="q-cases__panel" role="tabpanel" id="q-cases-panel-products" aria-labelledby="q-cases-tab-products" hidden>
+        <ul class="q-cases__grid" role="list">
+
+          <!-- 01 · Meet -->
+          <li class="q-cases__card">
+            <header class="q-cases__card__head">
+              <span class="q-cases__card__num">01</span>
+              <span class="q-cases__card__chip">MEET · M07</span>
+            </header>
+            <h3 class="q-cases__card__title">Слот-планировщик для&nbsp;созвонов наставник&nbsp;↔&nbsp;студент</h3>
+            <p class="q-cases__card__author">Фича в&nbsp;Quillon&nbsp;Meet. <b>Стажёр · M07</b> · ревью core-разработчика</p>
+            <pre class="q-cases__card__code"><code><span class="kw">@router</span>.get(<span class="str">"/mentors/{mentor_id}/slots"</span>, response_model=<span class="kw">list</span>[SlotOut])
+<span class="kw">def</span> <span class="fn">list_free_slots</span>(
+    mentor_id: <span class="kw">int</span>,
+    week: date = <span class="fn">Query</span>(..., description=<span class="str">"Понедельник недели"</span>),
+    db: Session = <span class="fn">Depends</span>(get_db),
+):
+    busy = db.<span class="fn">execute</span>(
+        <span class="fn">select</span>(Booking.start_at).<span class="fn">where</span>(
+            Booking.mentor_id == mentor_id,
+            Booking.start_at.<span class="fn">between</span>(week, week + <span class="fn">timedelta</span>(days=<span class="num">7</span>)),
+        )
+    ).<span class="fn">scalars</span>().<span class="fn">all</span>()
+    <span class="kw">return</span> <span class="fn">build_grid</span>(mentor_id, week, busy)</code></pre>
+            <div class="q-cases__card__metrics">
+              <div class="q-cases__card__metric q-cases__card__metric--accent">
+                <span class="q-cases__card__metric__num">38</span>
+                <span class="q-cases__card__metric__label">наставников ежедневно</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">−62%</span>
+                <span class="q-cases__card__metric__label">переписок о&nbsp;расписании</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">2&nbsp;PR</span>
+                <span class="q-cases__card__metric__label">смерджены в&nbsp;main</span>
+              </div>
+            </div>
+          </li>
+
+          <!-- 02 · Quilly AI -->
+          <li class="q-cases__card">
+            <header class="q-cases__card__head">
+              <span class="q-cases__card__num">02</span>
+              <span class="q-cases__card__chip">QUILLY · M09</span>
+            </header>
+            <h3 class="q-cases__card__title">RAG-поиск по&nbsp;программе для&nbsp;бота-тьютора</h3>
+            <p class="q-cases__card__author">Quilly&nbsp;AI. <b>Стажёр · M09</b> · парное программирование с&nbsp;тимлидом ИИ-команды</p>
+            <div class="q-cases__card__preview">
+              <img src="img/quilly-ai-profile.jpg" alt="" role="presentation" loading="lazy" />
+              <img src="img/quilly-ai-chats.jpg" alt="" role="presentation" loading="lazy" />
+              <span class="q-cases__card__preview__label">Quilly AI · Beta</span>
+            </div>
+            <div class="q-cases__card__metrics">
+              <div class="q-cases__card__metric q-cases__card__metric--accent">
+                <span class="q-cases__card__metric__num">74%</span>
+                <span class="q-cases__card__metric__label">ответов с&nbsp;источником</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">1&nbsp;200+</span>
+                <span class="q-cases__card__metric__label">вопросов / неделя</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">4&nbsp;нед</span>
+                <span class="q-cases__card__metric__label">от&nbsp;прототипа до&nbsp;прода</span>
+              </div>
+            </div>
+          </li>
+
+          <!-- 03 · LMS -->
+          <li class="q-cases__card">
+            <header class="q-cases__card__head">
+              <span class="q-cases__card__num">03</span>
+              <span class="q-cases__card__chip">LMS · M08</span>
+            </header>
+            <h3 class="q-cases__card__title">Валидатор контента урока перед&nbsp;publish</h3>
+            <p class="q-cases__card__author">Lesson&nbsp;Player&nbsp;admin. <b>Стажёр · M08</b> · ревью методиста и&nbsp;тех-лида</p>
+            <pre class="q-cases__card__code"><code><span class="kw">def</span> <span class="fn">validate_lesson</span>(lesson: Lesson) -> <span class="kw">list</span>[Issue]:
+    issues: <span class="kw">list</span>[Issue] = []
+    <span class="kw">if not</span> lesson.blocks <span class="kw">or</span> lesson.blocks[<span class="num">0</span>].type != <span class="str">"milestone"</span>:
+        issues.<span class="fn">append</span>(<span class="fn">Issue</span>(<span class="str">"missing_intro_milestone"</span>))
+    code_blocks = [b <span class="kw">for</span> b <span class="kw">in</span> lesson.blocks <span class="kw">if</span> b.type == <span class="str">"code"</span>]
+    <span class="kw">for</span> b <span class="kw">in</span> code_blocks:
+        <span class="kw">if not</span> b.tests:
+            issues.<span class="fn">append</span>(<span class="fn">Issue</span>(<span class="str">"code_block_without_tests"</span>, block_id=b.id))
+    <span class="kw">if</span> <span class="fn">interactive_ratio</span>(lesson.blocks) < <span class="num">0.33</span>:
+        issues.<span class="fn">append</span>(<span class="fn">Issue</span>(<span class="str">"too_passive_lesson"</span>))
+    <span class="kw">return</span> issues</code></pre>
+            <div class="q-cases__card__metrics">
+              <div class="q-cases__card__metric q-cases__card__metric--accent">
+                <span class="q-cases__card__metric__num">6</span>
+                <span class="q-cases__card__metric__label">проверок до&nbsp;публикации</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">23</span>
+                <span class="q-cases__card__metric__label">урока через валидатор</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">1&nbsp;PR</span>
+                <span class="q-cases__card__metric__label">в&nbsp;проде</span>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+      <!-- ── panel · Внутренние Quillon (Pulse) ── -->
+      <div class="q-cases__panel" role="tabpanel" id="q-cases-panel-internal" aria-labelledby="q-cases-tab-internal" hidden>
+        <ul class="q-cases__grid" role="list">
+
+          <!-- 01 · Pulse v0.7 -->
+          <li class="q-cases__card">
+            <header class="q-cases__card__head">
+              <span class="q-cases__card__num">01</span>
+              <span class="q-cases__card__chip">PULSE&nbsp;v0.7 · M03</span>
+            </header>
+            <h3 class="q-cases__card__title">Pulse&nbsp;— первый публичный API студента</h3>
+            <p class="q-cases__card__author">Demo&nbsp;Day Discovery, нед.&nbsp;12. <b>Студент · M03</b> · Todo&nbsp;API c&nbsp;JWT и&nbsp;PostgreSQL</p>
+            <pre class="q-cases__card__code"><code><span class="kw">@app</span>.post(<span class="str">"/tasks"</span>, response_model=TaskOut, status_code=<span class="num">201</span>)
+<span class="kw">def</span> <span class="fn">create_task</span>(
+    payload: TaskCreate,
+    user: User = <span class="fn">Depends</span>(current_user),
+    db: Session = <span class="fn">Depends</span>(get_db),
+):
+    task = <span class="fn">Task</span>(title=payload.title, owner_id=user.id)
+    db.<span class="fn">add</span>(task); db.<span class="fn">commit</span>(); db.<span class="fn">refresh</span>(task)
+    <span class="kw">return</span> task</code></pre>
+            <div class="q-cases__card__metrics">
+              <div class="q-cases__card__metric q-cases__card__metric--accent">
+                <span class="q-cases__card__metric__num">12&nbsp;нед</span>
+                <span class="q-cases__card__metric__label">от&nbsp;<code>print(&apos;hello&apos;)</code> до&nbsp;API</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">JWT&nbsp;+ PG</span>
+                <span class="q-cases__card__metric__label">в&nbsp;стеке</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">1</span>
+                <span class="q-cases__card__metric__label">публичный URL для&nbsp;демки</span>
+              </div>
+            </div>
+          </li>
+
+          <!-- 02 · Pulse v1.5 -->
+          <li class="q-cases__card">
+            <header class="q-cases__card__head">
+              <span class="q-cases__card__num">02</span>
+              <span class="q-cases__card__chip">PULSE&nbsp;v1.5 · M06</span>
+            </header>
+            <h3 class="q-cases__card__title">Pulse production-ready: docker-compose и&nbsp;observability</h3>
+            <p class="q-cases__card__author">Demo&nbsp;Day Intensive, нед.&nbsp;24. <b>Студент · M06</b> · 5&nbsp;сервисов в&nbsp;одном compose</p>
+            <pre class="q-cases__card__code"><code><span class="cm"># docker-compose.yml</span>
+services:
+  app:
+    build: .
+    environment:
+      DATABASE_URL: postgresql://pulse:pulse@db:<span class="num">5432</span>/pulse
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://otel:<span class="num">4318</span>
+    depends_on: [db, redis, otel]
+  db:    { image: postgres:<span class="num">16</span> }
+  redis: { image: redis:<span class="num">7</span>-alpine }
+  otel:  { image: otel/opentelemetry-collector-contrib }</code></pre>
+            <div class="q-cases__card__metrics">
+              <div class="q-cases__card__metric q-cases__card__metric--accent">
+                <span class="q-cases__card__metric__num">5</span>
+                <span class="q-cases__card__metric__label">сервисов в&nbsp;одном compose</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">p95 &lt; 180&nbsp;мс</span>
+                <span class="q-cases__card__metric__label">на&nbsp;учебном датасете</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">traces&nbsp;+ logs</span>
+                <span class="q-cases__card__metric__label">в&nbsp;Grafana</span>
+              </div>
+            </div>
+          </li>
+
+          <!-- 03 · Pulse public release -->
+          <li class="q-cases__card">
+            <header class="q-cases__card__head">
+              <span class="q-cases__card__num">03</span>
+              <span class="q-cases__card__chip q-cases__card__chip--accent">PULSE&nbsp;v1.7 · M09</span>
+            </header>
+            <h3 class="q-cases__card__title">Публичный релиз: первые пользователи и&nbsp;GitHub-репо</h3>
+            <p class="q-cases__card__author">TEAM-этап, нед.&nbsp;36. <b>Студент · M09</b> · open source MIT&nbsp;license</p>
+            <pre class="q-cases__card__code"><code><span class="cm"># .github/workflows/release.yml</span>
+on:
+  push:
+    tags: [<span class="str">"v*"</span>]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - <span class="kw">uses</span>: actions/checkout@v4
+      - <span class="kw">uses</span>: docker/build-push-action@v5
+        <span class="kw">with</span>:
+          tags: ghcr.io/${{ github.repository }}:${{ github.ref_name }}
+          push: <span class="kw">true</span></code></pre>
+            <div class="q-cases__card__metrics">
+              <div class="q-cases__card__metric q-cases__card__metric--accent">
+                <span class="q-cases__card__metric__num">12+</span>
+                <span class="q-cases__card__metric__label">beta-пользователей</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">v1.7.0</span>
+                <span class="q-cases__card__metric__label">первый GitHub-релиз</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">MIT</span>
+                <span class="q-cases__card__metric__label">open source</span>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+      <!-- ── panel · Open Source ── -->
+      <div class="q-cases__panel" role="tabpanel" id="q-cases-panel-os" aria-labelledby="q-cases-tab-os" hidden>
+        <ul class="q-cases__grid" role="list">
+
+          <!-- 01 · litestar -->
+          <li class="q-cases__card">
+            <header class="q-cases__card__head">
+              <span class="q-cases__card__num">01</span>
+              <span class="q-cases__card__chip">OSS · M06</span>
+            </header>
+            <h3 class="q-cases__card__title">DTO-адаптер для attrs в&nbsp;<code class="q-cases__card__title__mono">litestar-org/litestar</code></h3>
+            <p class="q-cases__card__author">PR для нового типового адаптера DTOFactory. <b>Команда&nbsp;2 · M06</b> · 6&nbsp;нед от&nbsp;issue до&nbsp;merge</p>
+            <!-- dashboard: API route table — litestar -->
+            <figure class="q-oss-dash" aria-label="Litestar API routes с активным DTOFactory">
+              <div class="q-oss-dash__hd">
+                <span class="q-oss-dash__dot"></span>
+                <span>LITESTAR · API EXPLORER · DTOFactory</span>
+              </div>
+              <div class="q-oss-dash__routes-hd">
+                <span>METHOD</span><span>PATH</span><span>DTO</span><span></span>
+              </div>
+              <div class="q-oss-dash__route q-oss-dash__route--hi">
+                <span class="q-method q-method--post">POST</span>
+                <span class="q-path q-path--hi">/api/books/</span>
+                <span class="q-dto q-dto--post">CreateBookDTO</span>
+                <span class="q-badge-new">NEW</span>
+              </div>
+              <div class="q-oss-dash__route">
+                <span class="q-method q-method--get">GET</span>
+                <span class="q-path">/api/books/{id}/</span>
+                <span class="q-dto q-dto--get">BookResponseDTO</span>
+              </div>
+              <div class="q-oss-dash__route">
+                <span class="q-method q-method--patch">PATCH</span>
+                <span class="q-path">/api/books/{id}/</span>
+                <span class="q-dto q-dto--patch">PatchBookDTO</span>
+              </div>
+              <div class="q-oss-dash__route">
+                <span class="q-method q-method--del">DEL</span>
+                <span class="q-path">/api/books/{id}/</span>
+                <span class="q-dto q-dto--dim">—</span>
+              </div>
+              <div class="q-oss-dash__ft">
+                <span>4 routes</span><span class="sep">·</span><span class="ok">DTOFactory: active</span><span class="sep">·</span><span>Pydantic v2 <span class="ok">✓</span></span>
+              </div>
+            </figure>
+            <pre class="q-cases__card__code"><code><span class="kw">from</span> litestar <span class="kw">import</span> post
+<span class="kw">from</span> litestar.dto <span class="kw">import</span> <span class="fn">DataclassDTO</span>, DTOConfig
+
+<span class="kw">class</span> <span class="fn">CreateBookDTO</span>(DataclassDTO[Book]):
+    config = <span class="fn">DTOConfig</span>(
+        exclude={<span class="str">"created_at"</span>, <span class="str">"internal_id"</span>},
+        rename_fields={<span class="str">"book_title"</span>: <span class="str">"title"</span>},
+    )
+
+<span class="kw">@post</span>(<span class="str">"/api/books/"</span>, dto=CreateBookDTO, return_dto=CreateBookDTO)
+<span class="kw">async def</span> <span class="fn">create_book</span>(data: DTOData[Book]) -> Book:
+    <span class="kw">return await</span> BookRepository.<span class="fn">save</span>(data.<span class="fn">as_builtins</span>())</code></pre>
+            <div class="q-cases__card__metrics">
+              <div class="q-cases__card__metric q-cases__card__metric--accent">
+                <span class="q-cases__card__metric__num">PR</span>
+                <span class="q-cases__card__metric__label">смерджен в&nbsp;main</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">5k+</span>
+                <span class="q-cases__card__metric__label">stars у&nbsp;репозитория</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">1</span>
+                <span class="q-cases__card__metric__label">новый DTO-адаптер</span>
+              </div>
+            </div>
+          </li>
+
+          <!-- 02 · checkov -->
+          <li class="q-cases__card">
+            <header class="q-cases__card__head">
+              <span class="q-cases__card__num">02</span>
+              <span class="q-cases__card__chip">OSS · M08</span>
+            </header>
+            <h3 class="q-cases__card__title">Новый Dockerfile check в&nbsp;<code class="q-cases__card__title__mono">bridgecrewio/checkov</code></h3>
+            <p class="q-cases__card__author">Security check CKV2_DOCKER_007. <b>Команда&nbsp;3 · M08</b> · 4&nbsp;нед от&nbsp;issue до&nbsp;merge</p>
+            <!-- dashboard: security scan results — checkov -->
+            <figure class="q-oss-dash" aria-label="Checkov scan: 16 проверок пройдено, 0 провалено">
+              <div class="q-oss-dash__hd">CHECKOV · DOCKERFILE SCAN · 16 CHECKS</div>
+              <div class="q-oss-dash__stats">
+                <div class="q-oss-dash__stat q-oss-dash__stat--pass">
+                  <span class="q-oss-dash__stat-num">16</span>
+                  <span class="q-oss-dash__stat-lbl">PASSED</span>
+                </div>
+                <div class="q-oss-dash__stat q-oss-dash__stat--fail">
+                  <span class="q-oss-dash__stat-num">0</span>
+                  <span class="q-oss-dash__stat-lbl">FAILED</span>
+                </div>
+                <div class="q-oss-dash__stat q-oss-dash__stat--time">
+                  <span class="q-oss-dash__stat-num">0.34s</span>
+                  <span class="q-oss-dash__stat-lbl">SCAN TIME</span>
+                </div>
+              </div>
+              <div class="q-oss-dash__check">
+                <span class="q-check-icon q-check-icon--pass">✓</span>
+                <span class="q-check-id">CKV_DOCKER_001</span>
+                <span class="q-check-desc">USER not root</span>
+              </div>
+              <div class="q-oss-dash__check">
+                <span class="q-check-icon q-check-icon--pass">✓</span>
+                <span class="q-check-id">CKV_DOCKER_002</span>
+                <span class="q-check-desc">HEALTHCHECK defined</span>
+              </div>
+              <div class="q-oss-dash__check">
+                <span class="q-check-icon q-check-icon--pass">✓</span>
+                <span class="q-check-id">CKV_DOCKER_003</span>
+                <span class="q-check-desc">no apt-get upgrade</span>
+              </div>
+              <div class="q-oss-dash__check q-oss-dash__check--new">
+                <span class="q-check-icon q-check-icon--new">✓</span>
+                <span class="q-check-id">CKV2_DOCKER_007</span>
+                <span class="q-check-desc">no shell injection in CMD</span>
+                <span class="q-badge-new">NEW</span>
+              </div>
+              <div class="q-oss-dash__check">
+                <span class="q-check-icon q-check-icon--pass">✓</span>
+                <span class="q-check-id">CKV_DOCKER_008</span>
+                <span class="q-check-desc">ADD not used for archives</span>
+              </div>
+            </figure>
+            <pre class="q-cases__card__code"><code><span class="kw">class</span> <span class="fn">EnforceExecFormCmd</span>(BaseDockerfileCheck):
+    id   = <span class="str">"CKV2_DOCKER_007"</span>
+    name = <span class="str">"Ensure CMD uses exec form, not shell"</span>
+
+    <span class="kw">def</span> <span class="fn">check_resource_configuration</span>(self, conf, entity_type):
+        cmd = conf.<span class="fn">get</span>(<span class="str">"CMD"</span>, [[]])
+        <span class="cm"># shell form: CMD ["sh","-c","..."] → injection risk</span>
+        <span class="kw">if</span> cmd <span class="kw">and</span> cmd[<span class="num">0</span>][:<span class="num">2</span>] == [<span class="str">"sh"</span>, <span class="str">"-c"</span>]:
+            <span class="kw">return</span> CheckResult.FAILED
+        <span class="kw">return</span> CheckResult.PASSED</code></pre>
+            <div class="q-cases__card__metrics">
+              <div class="q-cases__card__metric q-cases__card__metric--accent">
+                <span class="q-cases__card__metric__num">PR</span>
+                <span class="q-cases__card__metric__label">смерджен в&nbsp;main</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">7k+</span>
+                <span class="q-cases__card__metric__label">stars у&nbsp;репозитория</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">1</span>
+                <span class="q-cases__card__metric__label">новая проверка</span>
+              </div>
+            </div>
+          </li>
+
+          <!-- 03 · evidently -->
+          <li class="q-cases__card">
+            <header class="q-cases__card__head">
+              <span class="q-cases__card__num">03</span>
+              <span class="q-cases__card__chip q-cases__card__chip--accent">OSS · M11</span>
+            </header>
+            <h3 class="q-cases__card__title">PSI-метрика дрейфа в&nbsp;<code class="q-cases__card__title__mono">evidentlyai/evidently</code></h3>
+            <p class="q-cases__card__author">Новая drift metric для числовых признаков. <b>Команда&nbsp;2 · M11</b> · 5&nbsp;нед</p>
+            <!-- dashboard: drift report — evidently -->
+            <figure class="q-oss-dash" aria-label="Evidently drift report: age, PSI=0.18, дрейф не обнаружен">
+              <div class="q-oss-dash__hd">EVIDENTLY · DRIFT REPORT · <span style="color:rgba(232,237,245,.75)">feature: age</span></div>
+              <div class="q-oss-dash__pyramid">
+                <div class="q-oss-dash__pyramid-legend">
+                  <span class="ref">← REFERENCE (10k)</span>
+                  <span class="cur">CURRENT (8.2k) →</span>
+                </div>
+                <div class="q-oss-dash__prow">
+                  <span class="q-prow-lbl">18-30</span>
+                  <div class="q-prow-ref"><div style="width:70px"></div></div>
+                  <div class="q-prow-axis"></div>
+                  <div class="q-prow-cur"><div style="width:55px"></div></div>
+                  <span class="q-prow-delta q-prow-delta--drift">↓</span>
+                </div>
+                <div class="q-oss-dash__prow">
+                  <span class="q-prow-lbl">31-45</span>
+                  <div class="q-prow-ref"><div style="width:55px"></div></div>
+                  <div class="q-prow-axis"></div>
+                  <div class="q-prow-cur"><div style="width:70px"></div></div>
+                  <span class="q-prow-delta q-prow-delta--drift">↑</span>
+                </div>
+                <div class="q-oss-dash__prow">
+                  <span class="q-prow-lbl">46-60</span>
+                  <div class="q-prow-ref"><div style="width:75px"></div></div>
+                  <div class="q-prow-axis"></div>
+                  <div class="q-prow-cur"><div style="width:78px"></div></div>
+                  <span class="q-prow-delta">≈</span>
+                </div>
+                <div class="q-oss-dash__prow">
+                  <span class="q-prow-lbl">61+</span>
+                  <div class="q-prow-ref"><div style="width:50px"></div></div>
+                  <div class="q-prow-axis"></div>
+                  <div class="q-prow-cur"><div style="width:44px"></div></div>
+                  <span class="q-prow-delta">≈</span>
+                </div>
+              </div>
+              <div class="q-oss-dash__psi">
+                <span class="q-oss-dash__psi-label">PSI</span>
+                <span class="q-oss-dash__psi-value">0.18</span>
+                <span class="q-badge-new">NEW</span>
+                <div class="q-oss-dash__psi-track">
+                  <div class="q-oss-dash__psi-track-bar" style="width:72%"></div>
+                </div>
+                <span class="q-oss-dash__psi-threshold">thr&nbsp;0.25</span>
+              </div>
+              <div class="q-oss-dash__status">
+                <span class="q-oss-dash__status-badge">✓ NO DRIFT</span>
+                <span class="q-oss-dash__status-note">PSI 0.18 &lt; 0.25 — distributions stable</span>
+              </div>
+            </figure>
+            <pre class="q-cases__card__code"><code><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">from</span> evidently.metrics.base_metric <span class="kw">import</span> InputData, Metric
+
+<span class="kw">class</span> <span class="fn">PopulationStabilityIndex</span>(Metric):
+    <span class="cm">"""PSI measures how much a distribution has shifted."""</span>
+
+    <span class="kw">def</span> <span class="fn">calculate</span>(self, data: InputData) -> <span class="kw">float</span>:
+        ref = data.reference[<span class="str">"age"</span>].dropna().values
+        cur = data.current[<span class="str">"age"</span>].dropna().values
+        ref_p, edges = np.<span class="fn">histogram</span>(ref, bins=<span class="num">10</span>, density=<span class="kw">True</span>)
+        cur_p, _     = np.<span class="fn">histogram</span>(cur, bins=edges, density=<span class="kw">True</span>)
+        ref_p += <span class="num">1e-8</span>; cur_p += <span class="num">1e-8</span>
+        <span class="kw">return float</span>(np.<span class="fn">sum</span>((cur_p - ref_p) * np.<span class="fn">log</span>(cur_p / ref_p)))</code></pre>
+            <div class="q-cases__card__metrics">
+              <div class="q-cases__card__metric q-cases__card__metric--accent">
+                <span class="q-cases__card__metric__num">PR</span>
+                <span class="q-cases__card__metric__label">смерджен в&nbsp;main</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">5k+</span>
+                <span class="q-cases__card__metric__label">stars у&nbsp;репозитория</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">1</span>
+                <span class="q-cases__card__metric__label">новая ML-метрика</span>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+      <!-- ── panel · Start Up (1 stand-out карточка, новый кейс на Этапе 7) ── -->
+      <div class="q-cases__panel" role="tabpanel" id="q-cases-panel-startup" aria-labelledby="q-cases-tab-startup" hidden>
+        <ul class="q-cases__grid q-cases__grid--single" role="list">
+
+          <!-- 01 · LAUNCH MVP (placeholder под новый stand-out кейс) -->
+          <li class="q-cases__card">
+            <header class="q-cases__card__head">
+              <span class="q-cases__card__num">01</span>
+              <span class="q-cases__card__chip q-cases__card__chip--accent">LAUNCH · M12</span>
+            </header>
+            <h3 class="q-cases__card__title">Demo&nbsp;Day LAUNCH&nbsp;— питч перед инвесторами</h3>
+            <p class="q-cases__card__author">Финальный Demo&nbsp;Day, нед.&nbsp;48. <b>Команда 3–4 · M12</b> · MVP&nbsp;+ investor pitch</p>
+            <pre class="q-cases__card__code"><code><span class="cm"># фича-флаг для cohort A/B в роутере MVP</span>
+<span class="kw">@router</span>.get(<span class="str">"/feed"</span>)
+<span class="kw">def</span> <span class="fn">get_feed</span>(
+    user: User = <span class="fn">Depends</span>(current_user),
+    flags: FeatureFlags = <span class="fn">Depends</span>(get_flags),
+    db: Session = <span class="fn">Depends</span>(get_db),
+):
+    <span class="kw">if</span> flags.<span class="fn">is_on</span>(<span class="str">"ranked_feed"</span>, user.id):
+        <span class="kw">return</span> ranking_service.<span class="fn">rank</span>(user, db)
+    <span class="kw">return</span> <span class="fn">chronological_feed</span>(user, db)</code></pre>
+            <div class="q-cases__card__metrics">
+              <div class="q-cases__card__metric q-cases__card__metric--accent">
+                <span class="q-cases__card__metric__num">до&nbsp;500&thinsp;000&nbsp;₽</span>
+                <span class="q-cases__card__metric__label">гранды лучшим проектам</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">6&nbsp;нед</span>
+                <span class="q-cases__card__metric__label">от&nbsp;идеи до&nbsp;MVP</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">4</span>
+                <span class="q-cases__card__metric__label">человека в&nbsp;команде</span>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════ MENTORS ═══════════════════════════ -->
+  <section class="q-section q-mentors" id="mentors">
+    <div class="q-container">
+
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>09</em> · НАСТАВНИКИ</div>
+        <h2 class="q-section-head__title">Преподаватели, которые&nbsp;сами работают с&nbsp;продуктом</h2>
+      </header>
+
+      <!-- ── hero · Алексей Бирюлин ── -->
+      <article class="q-mentors__hero">
+        <div class="q-mentors__hero__id">
+          <span class="q-mentors__num">01</span>
+          <span class="q-mentors__role">Главный ментор ·&nbsp;архитектор программы</span>
+        </div>
+        <div class="q-mentors__hero__body">
+          <h3 class="q-mentors__name">Алексей Бирюлин</h3>
+          <p class="q-mentors__tagline">5+ лет проектирования образовательных программ по&nbsp;Python и&nbsp;ML</p>
+          <p class="q-mentors__bio">4&thinsp;000+ индивидуальных занятий · потоки 30–70 студентов · программы для бакалавриата, магистратуры и&nbsp;EdTech. Лично проектирует 12-месячную программу Python Backend&nbsp;+ ML и&nbsp;контролирует каждый модуль.</p>
+          <div class="q-mentors__stack">
+            <span class="q-mentors__stack__label">Стек</span>
+            <ul class="q-mentors__stack__list" role="list">
+              <li>Python</li><li>Flask</li><li>PyTorch</li><li>scikit-learn</li>
+              <li>TensorFlow</li><li>NumPy</li><li>Pandas</li><li>NLP</li>
+              <li>SQL</li><li>PostgreSQL</li>
+            </ul>
+          </div>
+        </div>
+        <div class="q-mentors__hero__stats" aria-label="Ключевые факты">
+          <div class="q-mentors__stat">
+            <b class="q-mentors__stat__num">4&thinsp;000+</b>
+            <span class="q-mentors__stat__label">индивидуальных занятий</span>
+          </div>
+          <div class="q-mentors__stat">
+            <b class="q-mentors__stat__num">5+ лет</b>
+            <span class="q-mentors__stat__label">в образовании IT</span>
+          </div>
+          <div class="q-mentors__stat">
+            <b class="q-mentors__stat__num">НИУ МЭИ</b>
+            <span class="q-mentors__stat__label">информатика и&nbsp;вычислительная техника</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── speakers grid ── -->
+      <div class="q-mentors__grid">
+
+        <!-- Александр Асадуллин -->
+        <article class="q-mentors__card">
+          <div class="q-mentors__card__head">
+            <span class="q-mentors__num">02</span>
+            <span class="q-mentors__role">Senior Python Dev · Спикер</span>
+          </div>
+          <h3 class="q-mentors__name">Александр Асадуллин</h3>
+          <p class="q-mentors__bio">Строит высоконагруженные AI-сервисы и&nbsp;LLM-инфраструктуру в&nbsp;production. Ведёт спецмодуль по&nbsp;FastAPI, RAG и&nbsp;системному дизайну.</p>
+          <ul class="q-mentors__facts" role="list">
+            <li><b>18&thinsp;000 RPS</b>&nbsp;— inference-gateway для&nbsp;крупного LLM-API, p99 160&nbsp;мс</li>
+            <li><b>61%→84%</b>&nbsp;точность RAG-сервиса на&nbsp;2&nbsp;млн документов</li>
+            <li><b>5&thinsp;000 req/сут</b>&nbsp;— мультиагентная система в&nbsp;production</li>
+          </ul>
+          <div class="q-mentors__stack">
+            <ul class="q-mentors__stack__list" role="list">
+              <li>FastAPI</li><li>asyncio</li><li>SQLAlchemy&nbsp;2.0</li><li>Postgres</li>
+              <li>Kafka</li><li>Redis</li><li>FAISS</li><li>LangChain</li><li>Kubernetes</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Станислав Иванов -->
+        <article class="q-mentors__card">
+          <div class="q-mentors__card__head">
+            <span class="q-mentors__num">03</span>
+            <span class="q-mentors__role">QA-эксперт · Гость-спикер</span>
+          </div>
+          <h3 class="q-mentors__name">Станислав Иванов</h3>
+          <p class="q-mentors__bio">12+ лет в&nbsp;QA, FinTech и&nbsp;банковском секторе. Рассказывает о&nbsp;тестировании в&nbsp;промышленной разработке: автоматизация, CI/CD, культура качества в&nbsp;команде.</p>
+          <ul class="q-mentors__facts" role="list">
+            <li><b>100+ инженеров</b>&nbsp;— команда QA и&nbsp;DevOps под руководством</li>
+            <li><b>40+ команд</b>&nbsp;приняли его фреймворк автотестов</li>
+            <li><b>150+ проектов</b>&nbsp;покрыты CI/CD-пайплайном</li>
+          </ul>
+          <div class="q-mentors__stack">
+            <ul class="q-mentors__stack__list" role="list">
+              <li>Java</li><li>Selenium</li><li>JUnit</li><li>Jenkins</li>
+              <li>Docker</li><li>GitLab&nbsp;CI</li><li>TestRail</li>
+            </ul>
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ REVIEWS ═══════════════════════════ -->
+  <section class="q-section q-reviews" id="reviews">
+    <div class="q-container">
+
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>10</em> · РЕЗУЛЬТАТЫ</div>
+        <h2 class="q-section-head__title">Что происходит со&nbsp;студентами за&nbsp;12&nbsp;месяцев</h2>
+      </header>
+
+      <div class="q-reviews__grid">
+
+        <!-- ── Кейс #01 · студент без опыта ── -->
+        <article class="q-reviews__card">
+          <div class="q-reviews__card__head">
+            <span class="q-reviews__case">кейс #01</span>
+            <span class="q-reviews__tag">студент · 0 опыта</span>
+          </div>
+          <p class="q-reviews__entry">Вход: <strong>22 года, 4-й курс, непрофильный вуз</strong><br>Python: print и if · цикл for по Stack Overflow</p>
+          <div class="q-reviews__timeline">
+            <div class="q-reviews__trow">
+              <span class="q-reviews__trow__month">M02</span>
+              <div class="q-reviews__trow__dot-wrap"><div class="q-reviews__trow__dot"></div><div class="q-reviews__trow__line"></div></div>
+              <p class="q-reviews__trow__text">Первый «щелчок» — собрал телеграм-бота, который парсит расписание и шлёт напоминания.</p>
+            </div>
+            <div class="q-reviews__trow">
+              <span class="q-reviews__trow__month">M05</span>
+              <div class="q-reviews__trow__dot-wrap"><div class="q-reviews__trow__dot"></div><div class="q-reviews__trow__line"></div></div>
+              <p class="q-reviews__trow__text">Первая задача Quillon Jobs — эндпоинт импорта CSV в FastAPI-сервис. Переделывал дважды после ревью. <span class="earn">+7 000 ₽</span></p>
+            </div>
+            <div class="q-reviews__trow">
+              <span class="q-reviews__trow__month">M10</span>
+              <div class="q-reviews__trow__dot-wrap"><div class="q-reviews__trow__dot q-reviews__trow__dot--result"></div><div class="q-reviews__trow__line"></div></div>
+              <p class="q-reviews__trow__text"><b>Оффер junior backend</b> — после трёх задач на Jobs и двух месяцев стажировки на LMS. 110&nbsp;000&nbsp;₽/мес.</p>
+            </div>
+          </div>
+          <blockquote class="q-reviews__quote">На M04 неделю не мог понять, почему Pydantic ругается на дату. Закрыл ноут, думал — не моё. Открыл утром, прочитал ошибку медленно — писал datetime туда, где ждали date. После этого перестал бояться красного текста.</blockquote>
+          <div class="q-reviews__result">
+            <span class="q-reviews__result__badge">Оффер M10 · 110 000 ₽</span>
+            <span class="q-reviews__result__stack">Python · FastAPI · PostgreSQL · Docker · pytest</span>
+          </div>
+        </article>
+
+        <!-- ── Кейс #02 · смена профессии ── -->
+        <article class="q-reviews__card">
+          <div class="q-reviews__card__head">
+            <span class="q-reviews__case">кейс #02</span>
+            <span class="q-reviews__tag">смена · 29 лет</span>
+          </div>
+          <p class="q-reviews__entry">Вход: <strong>6 лет в логистике, координатор поставок</strong><br>Python базовый (ютуб) · классы пугали</p>
+          <div class="q-reviews__timeline">
+            <div class="q-reviews__trow">
+              <span class="q-reviews__trow__month">M03</span>
+              <div class="q-reviews__trow__dot-wrap"><div class="q-reviews__trow__dot"></div><div class="q-reviews__trow__line"></div></div>
+              <p class="q-reviews__trow__text">Первая SQL-задача с прода — отчёт по складским остаткам для бывшего коллеги. Бесплатно, но впервые получил «ты сэкономил мне день».</p>
+            </div>
+            <div class="q-reviews__trow">
+              <span class="q-reviews__trow__month">M06</span>
+              <div class="q-reviews__trow__dot-wrap"><div class="q-reviews__trow__dot"></div><div class="q-reviews__trow__line"></div></div>
+              <p class="q-reviews__trow__text">Задача на Jobs: Docker Compose + миграции для FastAPI-сервиса. Неделя по вечерам. <span class="earn">+12 000 ₽</span></p>
+            </div>
+            <div class="q-reviews__trow">
+              <span class="q-reviews__trow__month">M11</span>
+              <div class="q-reviews__trow__dot-wrap"><div class="q-reviews__trow__dot q-reviews__trow__dot--result"></div><div class="q-reviews__trow__line"></div></div>
+              <p class="q-reviews__trow__text"><b>Оффер junior backend с ML-уклоном</b> — через стажировку на Quilly AI. 125&nbsp;000&nbsp;₽/мес.</p>
+            </div>
+          </div>
+          <blockquote class="q-reviews__quote">Самое страшное было не питон, а ощущение, что в комнате все младше и быстрее печатают. Я три раза переписывал свой первый PR. На четвёртый раз ревьюер написал: ну вот, теперь нормально.</blockquote>
+          <div class="q-reviews__result">
+            <span class="q-reviews__result__badge">Оффер M11 · 125 000 ₽</span>
+            <span class="q-reviews__result__stack">Python · FastAPI · PostgreSQL · Docker · pandas · sklearn</span>
+          </div>
+        </article>
+
+        <!-- ── Кейс #03 · застрявший джун ── -->
+        <article class="q-reviews__card">
+          <div class="q-reviews__card__head">
+            <span class="q-reviews__case">кейс #03</span>
+            <span class="q-reviews__tag">junior → middle</span>
+          </div>
+          <p class="q-reviews__entry">Вход: <strong>1.5 года junior backend, небольшая студия</strong><br>Django CRUD · без тестов · без роста</p>
+          <div class="q-reviews__timeline">
+            <div class="q-reviews__trow">
+              <span class="q-reviews__trow__month">M02</span>
+              <div class="q-reviews__trow__dot-wrap"><div class="q-reviews__trow__dot"></div><div class="q-reviews__trow__line"></div></div>
+              <p class="q-reviews__trow__text">Понял, что полтора года писал ООП «по образцу», не понимая зачем. Переписал пет-проект — стало вдвое короче.</p>
+            </div>
+            <div class="q-reviews__trow">
+              <span class="q-reviews__trow__month">M04</span>
+              <div class="q-reviews__trow__dot-wrap"><div class="q-reviews__trow__dot"></div><div class="q-reviews__trow__line"></div></div>
+              <p class="q-reviews__trow__text">FastAPI-задача на Jobs с async-интеграцией. Провалил ревью на race condition — переделывал. <span class="earn">+9 000 ₽</span></p>
+            </div>
+            <div class="q-reviews__trow">
+              <span class="q-reviews__trow__month">M09</span>
+              <div class="q-reviews__trow__dot-wrap"><div class="q-reviews__trow__dot q-reviews__trow__dot--result"></div><div class="q-reviews__trow__line"></div></div>
+              <p class="q-reviews__trow__text"><b>Три оффера middle backend</b> — после стажировки на Meet (очереди Redis + Celery). Выбрал 180&nbsp;000&nbsp;₽/мес.</p>
+            </div>
+          </div>
+          <blockquote class="q-reviews__quote">Думал, у меня проблема с алгоритмами. Оказалось — я просто никогда не видел нормального код-ревью. Первое ревью на Quillon было унизительным и полезным одновременно.</blockquote>
+          <div class="q-reviews__result">
+            <span class="q-reviews__result__badge">Оффер M09 · 180 000 ₽</span>
+            <span class="q-reviews__result__stack">Python · FastAPI · async · Redis · Celery · Docker · pytest</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ═══════════════════════════ PRICING ═══════════════════════════ -->
   <section class="q-section q-pr" id="pricing">
     <div class="q-container">
 
       <header class="q-section-head">
-        <div class="q-section-head__num"><em>08</em> · СТОИМОСТЬ</div>
+        <div class="q-section-head__num"><em>11</em> · СТОИМОСТЬ</div>
         <h2 class="q-section-head__title">Открытая цена, без&nbsp;мелкого шрифта</h2>
       </header>
 
@@ -877,7 +1754,7 @@
     <div class="q-container">
 
       <header class="q-section-head">
-        <div class="q-section-head__num"><em>09</em> · ВОПРОСЫ</div>
+        <div class="q-section-head__num"><em>12</em> · ВОПРОСЫ</div>
         <h2 class="q-section-head__title">Частые вопросы</h2>
       </header>
 
@@ -1007,7 +1884,7 @@
       <div class="q-cf-grid">
 
         <aside class="q-cf-aside">
-          <span class="q-cf-aside__num"><em>10</em> · СЛЕДУЮЩИЙ ШАГ</span>
+          <span class="q-cf-aside__num"><em>13</em> · СЛЕДУЮЩИЙ ШАГ</span>
           <h2 class="q-cf-aside__title">Разберём твою ситуацию за&nbsp;15&nbsp;минут</h2>
           <p class="q-cf-aside__sub">Расскажешь, где сейчас работаешь и&nbsp;чего хочешь от&nbsp;IT. Подберём темп, покажем расчёт окупаемости, ответим на&nbsp;любые вопросы.</p>
           <ul class="q-cf-aside__list" role="list">
@@ -1095,7 +1972,7 @@
     <div class="q-container">
 
       <header class="q-section-head">
-        <div class="q-section-head__num"><em>11</em> · НАЧАЛО</div>
+        <div class="q-section-head__num"><em>14</em> · НАЧАЛО</div>
       </header>
 
       <div class="q-fc-grid">
@@ -1269,105 +2146,7 @@
     </div>
   </aside>
 
-  <script>
-    (function () {
-      var KEY = 'q-cookie-ok';
-      var el = document.getElementById('q-cookie');
-      if (!el) return;
-      try { if (localStorage.getItem(KEY)) return; } catch (e) {}
-      setTimeout(function () { el.classList.add('is-visible'); }, 800);
-      function persist(value) {
-        try { localStorage.setItem(KEY, value); } catch (e) {}
-        el.classList.remove('is-visible');
-      }
-      el.querySelector('[data-q-cookie-accept]').addEventListener('click', function () { persist('accept'); });
-      el.querySelector('[data-q-cookie-dismiss]').addEventListener('click', function () { persist('necessary'); });
-    })();
-  </script>
-
-  <!-- ═══ Theme toggle ═══ -->
-  <script>
-    (function () {
-      var btn = document.querySelector('[data-q-theme-toggle]');
-      if (!btn) return;
-      btn.addEventListener('click', function () {
-        var next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', next);
-        try { localStorage.setItem('q-theme', next); } catch (e) {}
-      });
-    })();
-  </script>
-
-  <!-- ═══ Contact form ═══ -->
-  <script>
-    (function () {
-      var form = document.getElementById('cf-track-form');
-      if (!form) return;
-      form.addEventListener('submit', function (ev) {
-        ev.preventDefault();
-        if (window.ym) { try { window.ym(108311343, 'reachGoal', 'track_contact_submit'); } catch (e) {} }
-        form.classList.add('is-sent');
-        var btn = form.querySelector('button[type="submit"]');
-        if (btn) { btn.textContent = 'Заявка отправлена ✓'; btn.disabled = true; }
-      });
-    })();
-  </script>
-
-  <!-- ═══ Lead form (демо-урок) — UI-only state, backend позже ═══ -->
-  <script>
-    (function () {
-      var form = document.querySelector('[data-q-lead-form]');
-      if (!form) return;
-      form.addEventListener('submit', function (ev) {
-        ev.preventDefault();
-        // TODO: POST на /api/lead когда поднимем бэк
-        // Пока — показываем confirmation state (UX-плейсхолдер)
-        if (window.ym) {
-          try { window.ym(108311343, 'reachGoal', 'lead_form_submit'); } catch (e) {}
-        }
-        form.classList.add('is-sent');
-      });
-    })();
-  </script>
-
-  <!-- ═══ Smooth-scroll ═══ -->
-  <script>
-    (function () {
-      var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var DURATION = 720;
-      function ease(t) { return 1 - Math.pow(1 - t, 4); }
-      function topbarOffset() {
-        var bar = document.querySelector('.q-topbar');
-        return bar ? bar.getBoundingClientRect().height + 8 : 64;
-      }
-      function smoothScrollTo(targetY) {
-        var startY = window.pageYOffset;
-        var dist = targetY - startY;
-        if (Math.abs(dist) < 2) return;
-        if (prefersReduced) { window.scrollTo(0, targetY); return; }
-        var startT = performance.now();
-        function step(now) {
-          var p = Math.min(1, (now - startT) / DURATION);
-          window.scrollTo(0, startY + dist * ease(p));
-          if (p < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
-      }
-      document.addEventListener('click', function (ev) {
-        var link = ev.target.closest('a[href^="#"]');
-        if (!link) return;
-        var href = link.getAttribute('href');
-        if (!href || href === '#') return;
-        var id = href.slice(1);
-        var target = document.getElementById(id);
-        if (!target) return;
-        ev.preventDefault();
-        var y = target.getBoundingClientRect().top + window.pageYOffset - topbarOffset();
-        smoothScrollTo(y);
-        if (history.replaceState) history.replaceState(null, '', '#' + id);
-      }, { passive: false });
-    })();
-  </script>
+  <script defer src="js/main.js?v=1"></script>
 
 </body>
 </html>

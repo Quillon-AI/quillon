@@ -1,0 +1,204 @@
+/* ═══════════════════════════════════════════════════════════════
+ * REVIEWS — анонимные кейсы студентов
+ * 3 архетипа: студент / смена профессии / застрявший джун
+ * ═══════════════════════════════════════════════════════════════ */
+
+.q-reviews { padding: var(--q-s-10) 0 var(--q-s-11); }
+
+/* ── grid ──────────────────────────────────────────────────────── */
+.q-reviews__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--q-s-5);
+  margin-top: var(--q-s-8);
+}
+
+/* ── card ──────────────────────────────────────────────────────── */
+.q-reviews__card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--q-s-6);
+  border: 1px solid var(--q-line);
+  background: var(--q-bg-elev);
+  transition: border-color var(--q-dur-base) var(--q-ease);
+}
+.q-reviews__card:hover {
+  border-color: color-mix(in srgb, var(--q-accent) 30%, var(--q-line) 70%);
+}
+
+/* ── card head ─────────────────────────────────────────────────── */
+.q-reviews__card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--q-s-3);
+  padding-bottom: var(--q-s-4);
+  border-bottom: 1px solid var(--q-line);
+  margin-bottom: var(--q-s-5);
+}
+
+.q-reviews__case {
+  font-family: var(--q-font-mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--q-accent-hover);
+  font-variant-numeric: tabular-nums;
+}
+
+.q-reviews__tag {
+  font-family: var(--q-font-mono);
+  font-size: 10px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--q-text-faint);
+  padding: 2px 8px;
+  border: 1px solid var(--q-line);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* ── entry point ───────────────────────────────────────────────── */
+.q-reviews__entry {
+  font-family: var(--q-font-mono);
+  font-size: 10.5px;
+  letter-spacing: .04em;
+  color: var(--q-text-low);
+  margin-bottom: var(--q-s-5);
+  line-height: 1.5;
+}
+.q-reviews__entry strong {
+  color: var(--q-text-mid);
+  font-weight: 500;
+}
+
+/* ── timeline ──────────────────────────────────────────────────── */
+.q-reviews__timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: var(--q-s-5);
+  position: relative;
+}
+
+.q-reviews__trow {
+  display: grid;
+  grid-template-columns: 32px 10px 1fr;
+  gap: 0 var(--q-s-3);
+  align-items: stretch;
+  position: relative;
+}
+
+.q-reviews__trow__month {
+  font-family: var(--q-font-mono);
+  font-size: 10px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--q-text-faint);
+  padding-top: 3px;
+  line-height: 1.2;
+  text-align: right;
+}
+
+/* dot + vertical line */
+.q-reviews__trow__dot-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.q-reviews__trow__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid var(--q-line);
+  background: var(--q-bg-elev);
+  flex-shrink: 0;
+  margin-top: 3px;
+  transition: border-color var(--q-dur-base) var(--q-ease),
+              background var(--q-dur-base) var(--q-ease);
+}
+.q-reviews__trow__dot--result {
+  border-color: var(--q-accent);
+  background: color-mix(in srgb, var(--q-accent) 18%, transparent);
+}
+.q-reviews__card:hover .q-reviews__trow__dot--result {
+  background: color-mix(in srgb, var(--q-accent) 30%, transparent);
+}
+.q-reviews__trow__line {
+  width: 1px;
+  flex: 1;
+  background: var(--q-line);
+  min-height: 16px;
+}
+.q-reviews__trow:last-child .q-reviews__trow__line { display: none; }
+
+.q-reviews__trow__text {
+  font-size: var(--q-t-small);
+  line-height: 1.45;
+  color: var(--q-text-mid);
+  padding-bottom: var(--q-s-4);
+  padding-top: 2px;
+}
+.q-reviews__trow__text b {
+  color: var(--q-text-hi);
+  font-weight: 500;
+}
+.q-reviews__trow__text .earn {
+  font-family: var(--q-font-mono);
+  font-size: 10.5px;
+  color: var(--q-accent-hover);
+  letter-spacing: .02em;
+}
+
+/* ── quote ─────────────────────────────────────────────────────── */
+.q-reviews__quote {
+  margin: 0 0 var(--q-s-5);
+  padding: var(--q-s-4) var(--q-s-4);
+  border-left: 2px solid color-mix(in srgb, var(--q-accent) 40%, transparent);
+  background: color-mix(in srgb, var(--q-accent) 4%, transparent);
+  font-family: var(--q-font-mono);
+  font-size: 11.5px;
+  line-height: 1.65;
+  color: var(--q-text-mid);
+}
+.q-reviews__quote::before {
+  content: '> ';
+  color: var(--q-accent-hover);
+  font-weight: 600;
+}
+
+/* ── result strip ──────────────────────────────────────────────── */
+.q-reviews__result {
+  margin-top: auto;
+  padding-top: var(--q-s-4);
+  border-top: 1px solid var(--q-line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--q-s-2) var(--q-s-3);
+  align-items: center;
+}
+.q-reviews__result__badge {
+  font-family: var(--q-font-mono);
+  font-size: 10px;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--q-accent-hover);
+  padding: 2px 8px;
+  border: 1px solid color-mix(in srgb, var(--q-accent) 35%, var(--q-line));
+  border-radius: 999px;
+}
+.q-reviews__result__stack {
+  font-family: var(--q-font-mono);
+  font-size: 10px;
+  letter-spacing: .04em;
+  color: var(--q-text-faint);
+}
+
+/* ── responsive ─────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .q-reviews__grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .q-reviews__grid { grid-template-columns: 1fr; }
+  .q-reviews { padding: var(--q-s-8) 0 var(--q-s-9); }
+}

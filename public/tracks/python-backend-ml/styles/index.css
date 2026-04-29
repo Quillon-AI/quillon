@@ -1,0 +1,18 @@
+/* Quillon track page · Python Backend + ML
+ * CSS bundle — отдельные модули загружаются параллельно через @import.
+ * При изменении конкретной секции трогаешь один файл, а не 2k-строчный монолит.
+ */
+
+@import url("./_globals.css");
+@import url("./hero.css");
+@import url("./proof.css");
+@import url("./program.css");
+@import url("./pulse.css");
+@import url("./addon.css");
+@import url("./cases.css");
+@import url("./pricing.css");
+@import url("./faq.css");
+@import url("./contact.css");
+@import url("./final-cta.css");
+@import url("./footer.css");
+@import url("./cookie.css");

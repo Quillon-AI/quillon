@@ -1,0 +1,265 @@
+    /* ════════════════════════════════════════════════════════════
+     * PROOF-BENTO — under hero (full-width)
+     *
+     * Sales-структура:
+     *   01 LARGE  · Стажировка Quillon Tech (наш единственный true differentiator)
+     *   02 WIDE   · Стек 2026 (Claude API + RAG)
+     *   03 SQ     · Quilly AI (наш AI-ментор)
+     *   04 SQ     · Налоговый вычет 13%
+     *   05 WIDE   · LaunchPad (трудоустройство)
+     *   06 SQ     · Портфолио GitHub
+     *   07 SQ     · 7 дней триал (без риска)
+     *
+     * Layout:
+     *   feat feat wide-a wide-a
+     *   feat feat sq-a   sq-b
+     *   wide-b wide-b sq-c sq-d
+     * ════════════════════════════════════════════════════════════ */
+
+    .q-proof {
+      padding: var(--q-s-9) 0 var(--q-s-10);
+      background: var(--q-bg-0);
+    }
+
+    .q-proof__head {
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-3);
+      margin-bottom: var(--q-s-7);
+      max-width: 56ch;
+    }
+    .q-proof__head__kicker {
+      font: 500 11px/1 "Geist Mono", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+    .q-proof__head__title {
+      margin: 0;
+      font-family: "Inter Variable", "Inter", sans-serif;
+      font-weight: 600;
+      font-size: clamp(28px, 3.4vw, 38px);
+      line-height: 1.1;
+      letter-spacing: -0.022em;
+      color: var(--q-text-hi);
+    }
+    .q-proof__head__title em {
+      font-style: normal;
+      color: var(--q-accent);
+    }
+
+    .q-proof__bento {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-auto-rows: minmax(180px, auto);
+      gap: var(--q-s-3);
+      grid-template-areas:
+        "feat feat wa wa"
+        "feat feat sa sb"
+        "wb   wb   sc sd";
+    }
+
+    .q-proof__card {
+      position: relative;
+      background: var(--q-bg-1);
+      border: 1px solid var(--q-line);
+      border-radius: var(--q-r-xl);
+      padding: var(--q-s-5);
+      transition:
+        border-color var(--q-dur-med) var(--q-ease),
+        background var(--q-dur-med) var(--q-ease);
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-3);
+      overflow: hidden;
+    }
+    .q-proof__card:hover {
+      border-color: var(--q-line-hover);
+      background: var(--q-bg-2);
+    }
+    .q-proof__card:hover .q-proof__card__head {
+      padding-left: 4px;
+    }
+    .q-proof__card__head {
+      transition: padding-left var(--q-dur-med) var(--q-ease);
+    }
+
+    .q-proof__card__kicker {
+      font: 500 10.5px/1 "Geist Mono", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--q-text-low);
+      display: block;
+    }
+    .q-proof__card__title {
+      margin: var(--q-s-2) 0 0;
+      font-family: "Inter Variable", "Inter", sans-serif;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 1.25;
+      letter-spacing: -0.012em;
+      color: var(--q-text-hi);
+    }
+    .q-proof__card__body {
+      margin: 0;
+      font: 400 13.5px/1.5 "Inter Variable", sans-serif;
+      color: var(--q-text-mid);
+    }
+
+    /* ─── FEATURED card (2×2) — Стажировка ─── */
+    .q-proof__card--feat {
+      grid-area: feat;
+      background:
+        radial-gradient(ellipse at 88% -10%, color-mix(in srgb, var(--q-accent) 14%, transparent), transparent 60%),
+        color-mix(in srgb, var(--q-accent) 4%, var(--q-bg-1));
+      border-color: color-mix(in srgb, var(--q-accent) 22%, var(--q-line));
+      gap: var(--q-s-4);
+      justify-content: space-between;
+    }
+    .q-proof__card--feat:hover {
+      background:
+        radial-gradient(ellipse at 88% -10%, color-mix(in srgb, var(--q-accent) 18%, transparent), transparent 60%),
+        color-mix(in srgb, var(--q-accent) 7%, var(--q-bg-1));
+      border-color: color-mix(in srgb, var(--q-accent) 36%, var(--q-line));
+    }
+    .q-proof__card--feat .q-proof__card__title {
+      font-size: clamp(24px, 2.6vw, 32px);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      max-width: 16ch;
+    }
+    .q-proof__card--feat .q-proof__card__body {
+      font-size: 15px;
+      line-height: 1.55;
+      max-width: 50ch;
+    }
+    .q-proof__card__livedot {
+      position: absolute;
+      top: var(--q-s-5);
+      right: var(--q-s-5);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font: 500 10px/1 "Geist Mono", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--q-text-mid);
+    }
+    .q-proof__card__livedot::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--q-accent);
+    }
+    .q-proof__card__meta {
+      display: flex;
+      gap: var(--q-s-6);
+      padding-top: var(--q-s-4);
+      border-top: 1px solid var(--q-line-soft);
+    }
+    .q-proof__card__meta__cell {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .q-proof__card__meta__label {
+      font: 500 10px/1 "Geist Mono", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+    .q-proof__card__meta__value {
+      font: 500 14px/1.2 "Inter Variable", sans-serif;
+      color: var(--q-text-hi);
+    }
+
+    /* ─── WIDE cards (2×1) ─── */
+    .q-proof__card--wide-a { grid-area: wa; }
+    .q-proof__card--wide-b { grid-area: wb; }
+    .q-proof__card--wide-a,
+    .q-proof__card--wide-b {
+      gap: var(--q-s-3);
+    }
+    .q-proof__card__chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: var(--q-s-2);
+    }
+    .q-proof__chip {
+      padding: 5px 10px;
+      background: var(--q-bg-2);
+      border: 1px solid var(--q-line-soft);
+      border-radius: var(--q-r-pill);
+      font: 500 11px/1 "Geist Mono", monospace;
+      letter-spacing: 0.04em;
+      color: var(--q-text-mid);
+    }
+    .q-proof__chip--accent {
+      background: color-mix(in srgb, var(--q-accent) 12%, var(--q-bg-2));
+      border-color: color-mix(in srgb, var(--q-accent) 30%, var(--q-line));
+      color: var(--q-text-hi);
+    }
+
+    /* ─── SQUARE cards (1×1) ─── */
+    .q-proof__card--sq-a { grid-area: sa; }
+    .q-proof__card--sq-b { grid-area: sb; }
+    .q-proof__card--sq-c { grid-area: sc; }
+    .q-proof__card--sq-d { grid-area: sd; }
+    .q-proof__card--sq {
+      justify-content: space-between;
+    }
+
+    /* Bullet list для sq-карточек (компактная замена «+ separated» текстов) */
+    .q-proof__card__bullets {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .q-proof__card__bullets li {
+      position: relative;
+      padding-left: 14px;
+      font: 400 12.5px/1.4 "Inter Variable", sans-serif;
+      color: var(--q-text-mid);
+    }
+    .q-proof__card__bullets li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.6em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--q-accent);
+    }
+    .q-proof__card__bullets li strong {
+      color: var(--q-text-hi);
+      font-weight: 600;
+    }
+
+    /* Numeric headline для squares (когда уместно) */
+    .q-proof__card__num {
+      font: 600 clamp(28px, 3.4vw, 36px) "Inter Variable", sans-serif;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--q-text-hi);
+    }
+    .q-proof__card__num em {
+      font-style: normal;
+      color: var(--q-accent);
+    }
+
+    /* ─── Light theme adjustments ─── */
+    :root[data-theme="light"] .q-proof {
+      background: var(--q-bg-0);
+    }
+    :root[data-theme="light"] .q-proof__card--feat {
+      background:
+        radial-gradient(ellipse at 88% -10%, color-mix(in srgb, var(--q-accent) 9%, transparent), transparent 60%),
+        color-mix(in srgb, var(--q-accent) 2.5%, var(--q-bg-1));
+      border-color: color-mix(in srgb, var(--q-accent) 18%, var(--q-line));
+    }
