@@ -1,0 +1,135 @@
+    /* ════════════════════════════════════════════════════════════
+     * PULSE TIMELINE — сквозной проект, 6 main milestones
+     * Горизонтальная axis с tick-mark-ами, под каждым:
+     *   version (Geist Mono) · week · что добавилось
+     * ════════════════════════════════════════════════════════════ */
+    .q-pulse {
+      padding: var(--q-s-9) 0 var(--q-s-10);
+      background: var(--q-bg-1);
+      border-top: 1px solid var(--q-line-soft);
+      border-bottom: 1px solid var(--q-line-soft);
+    }
+    .q-pulse__head {
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-3);
+      margin-bottom: var(--q-s-8);
+      max-width: 60ch;
+    }
+    .q-pulse__head__kicker {
+      font: 500 11px/1 "Geist Mono", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+    .q-pulse__head__title {
+      margin: 0;
+      font-family: "Inter Variable", "Inter", sans-serif;
+      font-weight: 600;
+      font-size: clamp(26px, 3vw, 36px);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--q-text-hi);
+    }
+    .q-pulse__head__title em {
+      font-style: normal;
+      color: var(--q-accent);
+    }
+    .q-pulse__head__sub {
+      margin: 4px 0 0;
+      font: 400 14.5px/1.55 "Inter Variable", sans-serif;
+      color: var(--q-text-mid);
+    }
+
+    .q-pulse__timeline {
+      position: relative;
+      padding: var(--q-s-7) 0 var(--q-s-3);
+    }
+    .q-pulse__axis {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 0;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      position: relative;
+    }
+    /* Hairline base axis */
+    .q-pulse__axis::before {
+      content: "";
+      position: absolute;
+      top: 22px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--q-line);
+    }
+    .q-pulse__step {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 38px var(--q-s-3) 0;
+    }
+    /* Tick marker — circle on axis (axis at top:22px, dot center at 22.5px) */
+    .q-pulse__step::before {
+      content: "";
+      position: absolute;
+      top: 17px;
+      left: var(--q-s-3);
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--q-bg-1);
+      border: 2px solid var(--q-text-low);
+      z-index: 1;
+      transition: border-color var(--q-dur-fast) var(--q-ease), background var(--q-dur-fast) var(--q-ease);
+    }
+    .q-pulse__step--milestone::before {
+      border-color: var(--q-accent);
+      background: var(--q-accent);
+    }
+    .q-pulse__step__ver {
+      font: 600 14px/1 "Geist Mono", monospace;
+      letter-spacing: 0.04em;
+      color: var(--q-text-hi);
+    }
+    .q-pulse__step--milestone .q-pulse__step__ver { color: var(--q-accent); }
+    .q-pulse__step__week {
+      font: 500 10px/1 "Geist Mono", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+    .q-pulse__step__title {
+      margin-top: 6px;
+      font: 600 14px/1.3 "Inter Variable", sans-serif;
+      color: var(--q-text-hi);
+      letter-spacing: -0.012em;
+    }
+    .q-pulse__step__note {
+      font: 400 12px/1.4 "Inter Variable", sans-serif;
+      color: var(--q-text-mid);
+    }
+
+    @media (max-width: 960px) {
+      .q-pulse__axis {
+        grid-template-columns: 1fr;
+        gap: var(--q-s-4);
+      }
+      .q-pulse__axis::before {
+        top: 0;
+        bottom: 0;
+        left: 5px;
+        right: auto;
+        width: 1px;
+        height: auto;
+      }
+      .q-pulse__step {
+        padding: 0 0 0 var(--q-s-5);
+      }
+      .q-pulse__step::before {
+        top: 6px;
+        left: 0;
+      }
+    }

@@ -3,18 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QA Automation — трек Quillon | Самый быстрый вход в IT за 12 месяцев</title>
-  <meta name="description" content="Стань QA Automation-инженером за 12 месяцев. Python, Pytest, Playwright, CI/CD и тестирование AI-систем. 6000+ вакансий, зарплата от 75 000 ₽. Со 2-го месяца — реальный заказ и доход.">
-  <meta name="keywords" content="qa automation обучение, тестировщик курс, qa engineer обучение, pytest selenium playwright, тестирование ai, qa с нуля, qa junior, стажировка qa, автотесты python">
+  <title>QA Automation — трек Quillon · 12 месяцев до оффера</title>
+  <meta name="description" content="QA Automation за 12 месяцев. pytest, Playwright, GitHub Actions, Docker. Со 2-го месяца — оплачиваемые задачи. 6 000+ открытых вакансий, зарплата от 75 000 ₽.">
 
-  <!-- OG Meta -->
   <meta property="og:title" content="QA Automation — трек Quillon">
-  <meta property="og:description" content="12 месяцев до первого оффера. Python, Pytest, Playwright, CI/CD + тестирование AI-систем. Со 2-го месяца — реальный заказ и доход. Рассрочка 0%.">
-  <meta property="og:image" content="https://quillon.ru/assets/images/og-image.png">
+  <meta property="og:description" content="12 месяцев до первого оффера. pytest + Playwright + CI/CD. Со 2-го месяца — реальный заказ и первый доход.">
+  <meta property="og:image" content="https://quillon.ru/v4/assets/brand/logo.svg">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://quillon.ru/tracks/qa/">
   <meta property="og:locale" content="ru_RU">
   <meta property="og:site_name" content="Quillon">
+
+  <link rel="canonical" href="https://quillon.ru/tracks/qa/">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
   <!-- Schema.org: Course -->
   <script type="application/ld+json">
@@ -22,7 +23,7 @@
     "@context": "https://schema.org",
     "@type": "Course",
     "name": "QA Automation",
-    "description": "12-месячная программа: автоматизация тестирования на Python, CI/CD-пайплайны, тестирование AI-систем. Стажировка на реальных продуктах Quillon, оплачиваемые задачи со 2-го месяца.",
+    "description": "12-месячная программа: автоматизация тестирования на Python, pytest, Playwright, CI/CD, тестирование AI-систем. Оплачиваемые задачи со 2-го месяца.",
     "provider": {
       "@type": "EducationalOrganization",
       "name": "Quillon",
@@ -41,104 +42,1952 @@
       "courseMode": "online",
       "duration": "P12M",
       "courseWorkload": "PT12H"
-    },
-    "occupationalCredentialAwarded": "Сертификат QA Automation Engineer"
+    }
   }
   </script>
 
-  <!-- Yandex.Metrika counter -->
+  <!-- Theme bootstrap: FOUC prevention -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('q-theme');
+        var prefers = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', saved || prefers);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
+  <!-- Yandex.Metrika -->
   <script type="text/javascript">
-      (function(m,e,t,r,i,k,a){
-          m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-          m[i].l=1*new Date();
-          for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-          k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-      })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108311343', 'ym');
-      ym(108311343, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();
+    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108311343', 'ym');
+    ym(108311343, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true});
   </script>
   <noscript><div><img src="https://mc.yandex.ru/watch/108311343" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-  <!-- /Yandex.Metrika counter -->
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-  <link rel="apple-touch-icon" sizes="192x192" href="/favicon-192.png">
-
-  <!-- Canonical -->
-  <link rel="canonical" href="https://quillon.ru/tracks/qa/">
-
-  <!-- Preconnect to Google Fonts -->
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/v4/css/tokens.css?v=3">
+  <link rel="stylesheet" href="/v4/css/base.css?v=3">
+  <link rel="stylesheet" href="/v4/css/components.css?v=3">
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="/css/variables.css?v=20260419p23">
-  <link rel="stylesheet" href="/css/base.css?v=20260419p23">
-  <link rel="stylesheet" href="/css/components.css?v=20260419p23">
-  <link rel="stylesheet" href="/css/sections.css?v=20260419p23">
-  <link rel="stylesheet" href="/css/track-sections.css?v=20260419p23">
-  <link rel="stylesheet" href="/css/responsive.css?v=20260419p23">
+  <link rel="stylesheet" href="styles/_globals.css?v=1">
+  <link rel="stylesheet" href="styles/hero.css?v=1">
+  <link rel="stylesheet" href="styles/proof.css?v=1">
+  <link rel="stylesheet" href="styles/program.css?v=1">
+  <link rel="stylesheet" href="styles/pulse.css?v=1">
+  <link rel="stylesheet" href="styles/addon.css?v=1">
+  <link rel="stylesheet" href="styles/cases.css?v=1">
+  <link rel="stylesheet" href="styles/mentor.css?v=1">
+  <link rel="stylesheet" href="styles/reviews.css?v=1">
+  <link rel="stylesheet" href="styles/pricing.css?v=1">
+  <link rel="stylesheet" href="styles/faq.css?v=1">
+  <link rel="stylesheet" href="styles/contact.css?v=1">
+  <link rel="stylesheet" href="styles/final-cta.css?v=1">
+  <link rel="stylesheet" href="styles/footer.css?v=1">
+  <link rel="stylesheet" href="styles/cookie.css?v=1">
 </head>
 <body>
 
-  <!-- Navbar -->
-  <nav id="navbar" class="nav">
-    <div class="container nav-inner">
-      <a href="/" class="nav-logo nav-logo-img" aria-label="Quillon">
-        <img class="nav-logo-dark" src="/assets/images/quillon-logo.svg" alt="Quillon" width="135" height="40">
-        <img class="nav-logo-light" src="/assets/images/quillon-logo-light.svg" alt="Quillon" width="135" height="40">
-      </a>
+  <!-- ═══════════════════════════ TOPBAR ═══════════════════════════ -->
+  <header class="q-topbar">
+    <a href="/" class="q-topbar__brand" aria-label="Quillon">
+      <img class="q-topbar__brand-img" src="/v4/assets/brand/logo.svg" alt="Quillon" width="92" height="32">
+    </a>
 
-      <div class="nav-links">
-        <a href="/#tracks">Все направления</a>
-        <a href="#program">Программа</a>
-        <a href="#stack">Стек</a>
-        <a href="#mentors">Преподаватели</a>
-        <a href="#pricing">Цена</a>
-        <a href="#faq">Вопросы</a>
+    <nav class="q-topbar__nav" aria-label="Главная навигация">
+      <a class="q-topbar__link" href="/#products">Треки</a>
+      <a class="q-topbar__link" href="/#format">Формат</a>
+      <a class="q-topbar__link" href="#pricing">Цена</a>
+      <a class="q-topbar__link" href="/#quillon_jobs">Jobs</a>
+      <a class="q-topbar__link" href="#faq">FAQ</a>
+    </nav>
+
+    <div class="q-topbar__actions">
+      <button type="button" class="q-theme-toggle" data-q-theme-toggle aria-label="Переключить тему">
+        <svg class="q-theme-toggle__moon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M14 9.5A6 6 0 1 1 6.5 2a4.5 4.5 0 0 0 7.5 7.5z"/>
+        </svg>
+        <svg class="q-theme-toggle__sun" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="8" cy="8" r="3.2"/>
+          <path d="M8 1.5v1.6M8 12.9v1.6M2.6 2.6l1.1 1.1M12.3 12.3l1.1 1.1M1.5 8h1.6M12.9 8h1.6M2.6 13.4l1.1-1.1M12.3 3.7l1.1-1.1"/>
+        </svg>
+      </button>
+      <a class="q-btn q-btn--link" href="/login/">Войти</a>
+      <a class="q-btn q-btn--primary q-btn--sm" href="/quiz">Пройти тест</a>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════ TRACK HERO ═══════════════════════════ -->
+  <section class="q-track-hero">
+    <img src="/v4/images/recolored/probe-colors-animated.svg" alt="" class="q-track-hero__bg-art" loading="lazy" decoding="async">
+
+    <div class="q-container q-track-hero__grid">
+
+      <!-- COPY SIDE -->
+      <div class="q-track-hero__copy">
+
+        <span class="q-track-hero__supertag">Трек · QA Automation</span>
+
+        <h1 class="q-track-hero__title">
+          QA Automation за&nbsp;12&nbsp;месяцев. <em>С&nbsp;4-й недели — за&nbsp;тест платят</em>
+        </h1>
+
+        <p class="q-track-hero__subtitle">
+          Production-стек: pytest, Playwright, Docker, GitHub&nbsp;Actions&nbsp;— закрывает 6&nbsp;000+ вакансий Junior QA. Тестируешь реальные продукты Quillon&nbsp;Tech с&nbsp;первых месяцев. AI&nbsp;Quality&nbsp;Engineering (DeepEval, ragas, prompt-regression)&nbsp;— отдельный 12-нед аддон.
+        </p>
+
+        <div class="q-track-hero__stats">
+          <div class="q-track-hero__stat">
+            <div class="q-track-hero__stat__value">6&nbsp;000+</div>
+            <div class="q-track-hero__stat__label">Открытых Junior QA · hh.ru</div>
+          </div>
+          <div class="q-track-hero__stat">
+            <div class="q-track-hero__stat__value">до&nbsp;20&nbsp;000&nbsp;₽</div>
+            <div class="q-track-hero__stat__label">/мес · стажировка со&nbsp;2-го месяца</div>
+          </div>
+          <div class="q-track-hero__stat">
+            <div class="q-track-hero__stat__value">8&nbsp;из&nbsp;10</div>
+            <div class="q-track-hero__stat__label">Получают оффер за&nbsp;3&nbsp;мес после</div>
+          </div>
+        </div>
+
+        <div class="q-track-hero__stack">
+          <span class="q-track-hero__stack__eyebrow">Стек · 2026 · production</span>
+          <h2 class="q-track-hero__stack__title">
+            QA-инженер находит то, что <em>разработчик не видит</em>.
+          </h2>
+          <p class="q-track-hero__stack__sub">
+            Учим современный automation-стек и AI-тестирование, на котором строится надёжность продуктов. Ты не кликаешь руками по формам&nbsp;— ты строишь pipeline, который работает за тебя.
+          </p>
+          <div class="q-track-hero__stack__chips" aria-label="Технологии трека">
+            <span>Python&nbsp;3.12</span>
+            <span>pytest</span>
+            <span>Playwright</span>
+            <span>httpx</span>
+            <span>Docker</span>
+            <span>GitHub&nbsp;Actions</span>
+            <span>Allure</span>
+            <span>Locust</span>
+            <span>DeepEval</span>
+            <span>Selenium</span>
+          </div>
+        </div>
+
       </div>
 
-      <a href="/quiz" class="btn btn-primary btn-sm nav-cta">Пройти тест &rarr;</a>
+      <!-- ═══ LEAD PANEL ═══ -->
+      <aside class="q-track-hero__lead" aria-label="Демо-урок и заявка на доступ">
 
-      <div class="nav-right">
-        <button class="theme-toggle" aria-label="Переключить тему">
-          <i data-lucide="sun" class="theme-icon-light"></i>
-          <i data-lucide="moon" class="theme-icon-dark"></i>
+        <div class="q-track-hero__video">
+          <div class="q-track-hero__video__chrome">
+            <div class="q-track-hero__video__dots">
+              <span class="q-track-hero__video__dot"></span>
+              <span class="q-track-hero__video__dot"></span>
+              <span class="q-track-hero__video__dot"></span>
+            </div>
+            <span class="q-track-hero__video__title">module-05 · lesson-02 · playwright</span>
+            <span class="q-track-hero__video__time">14:22</span>
+          </div>
+          <pre class="q-track-hero__video__code">@pytest.mark.asyncio
+async def test_booking_create(
+    client: AsyncClient,
+    auth_headers: dict,
+):
+    resp = await client.post(
+        "/bookings",
+        json={"slot_id": 42},
+        headers=auth_headers,
+    )
+    assert resp.status_code == 201
+    assert resp.json()["slot_id"] == 42
+</pre>
+          <button type="button" class="q-track-hero__video__play" aria-label="Смотреть демо-урок">
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M5 3 L5 13 L13 8 Z"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- FORM -->
+        <form class="q-track-hero__form" data-q-lead-form action="#" method="post">
+
+          <h3 class="q-track-hero__form__title">Открой демо-урок · бесплатно</h3>
+          <p class="q-track-hero__form__sub">
+            Настоящая лекция из&nbsp;Module&nbsp;5, без обрезков и тизеров. Посмотри, как ведём программу.
+          </p>
+
+          <div class="q-track-hero__field">
+            <label class="q-track-hero__field__label" for="lead-name">Как тебя зовут</label>
+            <input id="lead-name" class="q-track-hero__field__input" type="text" name="name" placeholder="Имя" autocomplete="given-name" required>
+          </div>
+
+          <div class="q-track-hero__field">
+            <label class="q-track-hero__field__label" for="lead-tel">Телефон</label>
+            <input id="lead-tel" class="q-track-hero__field__input" type="tel" name="phone" placeholder="+7 (000) 000-00-00" autocomplete="tel">
+          </div>
+
+          <div class="q-track-hero__field">
+            <label class="q-track-hero__field__label" for="lead-email">Email <span>*</span></label>
+            <input id="lead-email" class="q-track-hero__field__input" type="email" name="email" placeholder="name@example.com" autocomplete="email" required>
+          </div>
+
+          <button type="submit" class="q-track-hero__form__submit">
+            Получить доступ
+            <span class="q-track-hero__form__submit__arrow" aria-hidden="true">→</span>
+          </button>
+
+          <label class="q-track-hero__check">
+            <input class="q-track-hero__check__input" type="checkbox" name="consent_pdn" required>
+            <span class="q-track-hero__check__box" aria-hidden="true"></span>
+            <span class="q-track-hero__check__text">
+              <span class="q-req">*</span>Согласен на&nbsp;<a href="/v4/docs/consent-pdn.html" target="_blank" rel="noopener">обработку персональных данных</a>
+            </span>
+          </label>
+
+          <label class="q-track-hero__check">
+            <input class="q-track-hero__check__input" type="checkbox" name="consent_marketing">
+            <span class="q-track-hero__check__box" aria-hidden="true"></span>
+            <span class="q-track-hero__check__text">
+              Хочу получать материалы Quillon — статьи, уроки и разборы тест-кейсов
+            </span>
+          </label>
+
+          <div class="q-track-hero__form__sent" role="status" aria-live="polite">
+            <p class="q-track-hero__form__sent__title">Доступ отправлен&nbsp;→ проверь email</p>
+            <p class="q-track-hero__form__sent__sub">Ссылка на демо-урок и программа курса придут в течение 1–2 минут.</p>
+          </div>
+
+        </form>
+
+      </aside>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ PROOF-BENTO ═══════════════════════════ -->
+  <section class="q-proof" id="proof">
+    <div class="q-container">
+
+      <header class="q-proof__head">
+        <span class="q-proof__head__kicker">04 · Происходит внутри</span>
+        <h2 class="q-proof__head__title">Не курс. <em>QA-команда</em>, в&nbsp;которую&nbsp;ты входишь.</h2>
+      </header>
+
+      <div class="q-proof__bento">
+
+        <!-- 01 · LARGE -->
+        <article class="q-proof__card q-proof__card--feat">
+          <span class="q-proof__card__livedot">14 / 15 мест · поток&nbsp;05</span>
+          <div class="q-proof__card__head">
+            <span class="q-proof__card__kicker">01 · Со 2-го месяца</span>
+            <h3 class="q-proof__card__title">До&nbsp;20&nbsp;000&nbsp;₽/мес за&nbsp;тесты, которые видят живые&nbsp;пользователи</h3>
+          </div>
+          <p class="q-proof__card__body">
+            Не учебные скрипты на todo-листе. Заказы приходят через <strong style="color:var(--q-text-hi);font-weight:600">Quillon&nbsp;Jobs</strong>&nbsp;— реальные задачи от внешних клиентов: тест-планы, API-suite, UI-регресс. Выполняешь с наставником, получаешь оплату.
+          </p>
+          <div class="q-proof__card__meta">
+            <div class="q-proof__card__meta__cell">
+              <span class="q-proof__card__meta__label">Старт оплаты</span>
+              <span class="q-proof__card__meta__value">Неделя&nbsp;05</span>
+            </div>
+            <div class="q-proof__card__meta__cell">
+              <span class="q-proof__card__meta__label">Практика</span>
+              <span class="q-proof__card__meta__value">80% программы</span>
+            </div>
+            <div class="q-proof__card__meta__cell">
+              <span class="q-proof__card__meta__label">Источник заказов</span>
+              <span class="q-proof__card__meta__value">Quillon&nbsp;Jobs</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 02 · WIDE-A -->
+        <article class="q-proof__card q-proof__card--wide-a">
+          <div class="q-proof__card__head">
+            <span class="q-proof__card__kicker">02 · Стек</span>
+            <h3 class="q-proof__card__title">pytest + Playwright + GitHub&nbsp;Actions&nbsp;— production-стек 6&nbsp;000+ вакансий</h3>
+          </div>
+          <p class="q-proof__card__body">
+            Учим ровно то, что покупает рынок: реальные требования Junior QA из hh.ru, без устаревшего Selenium as primary. AI-тестирование (DeepEval, ragas, prompt-regression)&nbsp;— отдельным аддоном.
+          </p>
+          <div class="q-proof__card__chips">
+            <span class="q-proof__chip q-proof__chip--accent">pytest</span>
+            <span class="q-proof__chip q-proof__chip--accent">Playwright</span>
+            <span class="q-proof__chip q-proof__chip--accent">GitHub&nbsp;Actions</span>
+            <span class="q-proof__chip">httpx</span>
+            <span class="q-proof__chip">Allure</span>
+            <span class="q-proof__chip">Docker</span>
+            <span class="q-proof__chip">Locust</span>
+            <span class="q-proof__chip">pytest-asyncio</span>
+            <span class="q-proof__chip">Selenium</span>
+          </div>
+        </article>
+
+        <!-- 03 · SQ-A -->
+        <article class="q-proof__card q-proof__card--sq q-proof__card--sq-a">
+          <div class="q-proof__card__head">
+            <span class="q-proof__card__kicker">04 · AI-ментор</span>
+            <h3 class="q-proof__card__title">Quilly&nbsp;AI · 24/7</h3>
+          </div>
+          <p class="q-proof__card__body">
+            Разбирает твои тест-кейсы, объясняет flaky-тесты, готовит к собеседованию по QA. Обучен на нашей программе.
+          </p>
+        </article>
+
+        <!-- 04 · SQ-B -->
+        <article class="q-proof__card q-proof__card--sq q-proof__card--sq-b">
+          <div class="q-proof__card__head">
+            <span class="q-proof__card__kicker">05 · Дипломный проект</span>
+            <h3 class="q-proof__card__title">Запускаешь собственный QA-фреймворк на&nbsp;финале</h3>
+          </div>
+          <p class="q-proof__card__body">
+            Проектируешь и сдаёшь полную QA-стратегию для реального продукта: API + E2E + CI/CD + отчётность. Не лаб-работа&nbsp;— боевой артефакт для портфолио.
+          </p>
+        </article>
+
+        <!-- 05 · WIDE-B -->
+        <article class="q-proof__card q-proof__card--wide-b">
+          <div class="q-proof__card__head">
+            <span class="q-proof__card__kicker">03 · Трудоустройство</span>
+            <h3 class="q-proof__card__title">Сопровождаем до&nbsp;первого оффера&nbsp;— без&nbsp;срока&nbsp;давности</h3>
+          </div>
+          <p class="q-proof__card__body">
+            Готовим комплексно: <strong style="color:var(--q-text-hi);font-weight:600">hard-скилы</strong> (тестирование API, UI, нагрузки, security; live-coding на собеседовании) и <strong style="color:var(--q-text-hi);font-weight:600">soft</strong> (мок-интервью, переговоры о зарплате, нетворк). Резюме, которое проходит автофильтры HR-систем.
+          </p>
+          <div class="q-proof__card__meta" style="border-top:none;padding-top:0;">
+            <div class="q-proof__card__meta__cell">
+              <span class="q-proof__card__meta__label">Hard-скилы</span>
+              <span class="q-proof__card__meta__value">Senior&nbsp;QA + Team&nbsp;Lead</span>
+            </div>
+            <div class="q-proof__card__meta__cell">
+              <span class="q-proof__card__meta__label">Soft + резюме</span>
+              <span class="q-proof__card__meta__value">HR-менеджеры</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 06 · SQ-C -->
+        <article class="q-proof__card q-proof__card--sq q-proof__card--sq-c">
+          <div class="q-proof__card__head">
+            <span class="q-proof__card__kicker">06 · Портфолио</span>
+            <h3 class="q-proof__card__title"><span style="color:var(--q-accent);">10–15 артефактов</span> в&nbsp;GitHub</h3>
+          </div>
+          <ul class="q-proof__card__bullets">
+            <li><strong>QA-Pulse</strong> · 6 версий, CI green</li>
+            <li>API + E2E suite в продакшн</li>
+            <li>Нагрузочный профиль + Allure</li>
+            <li>4+ merged PR в OSS</li>
+            <li>Кейсы через Quillon&nbsp;Jobs</li>
+          </ul>
+        </article>
+
+        <!-- 07 · SQ-D -->
+        <article class="q-proof__card q-proof__card--sq q-proof__card--sq-d">
+          <div class="q-proof__card__head">
+            <span class="q-proof__card__kicker">07 · Без риска</span>
+            <div class="q-proof__card__num"><em>7</em>&nbsp;дней</div>
+          </div>
+          <p class="q-proof__card__body">
+            Полный доступ к материалам и Quilly&nbsp;AI. Не подошло&nbsp;— возвращаем 100% без «а почему».
+          </p>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ PROGRAM ═══════════════════════════ -->
+  <section class="q-program" id="program">
+    <div class="q-container">
+
+      <header class="q-program__head">
+        <span class="q-program__head__kicker">05 · Программа · 48 недель · 4 фазы по&nbsp;12&nbsp;нед</span>
+        <h2 class="q-program__head__title">От первого <code style="font-family:'Geist Mono',monospace;font-size:0.92em;color:var(--q-accent);">assert</code> <em>до production CI/CD</em></h2>
+        <p class="q-program__head__sub">10–12&nbsp;часов в неделю · 80% практики · async + дейлики. Каждая фаза заканчивается Demo&nbsp;Day с живым артефактом — не тестом на теорию.</p>
+      </header>
+
+      <div class="q-program__list">
+
+        <!-- ═══ M01 · DISCOVERY ═══ -->
+        <details class="q-program__module" open>
+          <summary>
+            <div class="q-program__module__summary">
+              <div class="q-program__module__rail">
+                <span class="q-program__module__num">M01</span>
+                <span class="q-program__module__period">Недели 1–12</span>
+              </div>
+              <div class="q-program__module__primary">
+                <h3 class="q-program__module__title">Discovery: ремесло QA + Python + первые автотесты</h3>
+                <p class="q-program__module__brief"><strong>30 автотестов на pytest к нед.&nbsp;5</strong>; полный API-suite с Allure-отчётом и Demo&nbsp;Day к нед.&nbsp;12.</p>
+              </div>
+              <svg class="q-program__module__chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 6 L8 10 L12 6"/>
+              </svg>
+            </div>
+          </summary>
+          <div class="q-program__module__detail">
+            <div class="q-program__module__detail__inner">
+
+              <div class="q-program__phase">
+                <header class="q-program__phase__head">
+                  <span class="q-program__phase__name">Phase 1.1 · Тестирование + Python</span>
+                  <span class="q-program__phase__period">Нед. 1–6</span>
+                </header>
+                <ol class="q-program__weeks">
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 1</span><span class="q-program__week__body"><span class="q-program__week__theme">Виды тестирования, тест-дизайн, баг-репорты</span><span class="q-program__week__art">30 тест-кейсов для публичного API</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 2</span><span class="q-program__week__body"><span class="q-program__week__theme">Python: переменные, функции, коллекции</span><span class="q-program__week__art">CLI-скрипт проверки JSON-ответа</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 3</span><span class="q-program__week__body"><span class="q-program__week__theme">requests, HTTP, JSON Schema</span><span class="q-program__week__art">первый API-тест вручную через requests</span></span></li>
+                  <li class="q-program__week q-program__week--milestone"><span class="q-program__week__n">Нед. 4</span><span class="q-program__week__body"><span class="q-program__week__theme">pytest: структура, assert, fixtures</span><span class="q-program__week__art"><strong>QA-Pulse v0.1</strong> · 10 тестов, CI на GitHub Actions</span></span></li>
+                  <li class="q-program__week q-program__week--milestone"><span class="q-program__week__n">Нед. 5</span><span class="q-program__week__body"><span class="q-program__week__theme">parametrize, marks, conftest</span><span class="q-program__week__art"><strong>QA-Pulse v0.2</strong> · 30 тестов · открывается доступ к&nbsp;Quillon&nbsp;Jobs</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 6</span><span class="q-program__week__body"><span class="q-program__week__theme">Git, Gitea, ide.quillon.ru</span><span class="q-program__week__art">контрольная точка: <strong>OSS&nbsp;PR&nbsp;#1</strong></span></span></li>
+                </ol>
+              </div>
+
+              <div class="q-program__phase">
+                <header class="q-program__phase__head">
+                  <span class="q-program__phase__name">Phase 1.2 · API Automation</span>
+                  <span class="q-program__phase__period">Нед. 7–12</span>
+                </header>
+                <ol class="q-program__weeks">
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 7</span><span class="q-program__week__body"><span class="q-program__week__theme">httpx + pytest-asyncio</span><span class="q-program__week__art"><strong>QA-Pulse v0.3</strong> · async API tests</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 8</span><span class="q-program__week__body"><span class="q-program__week__theme">Pydantic для схем, контрактное тестирование</span><span class="q-program__week__art">JSON Schema валидация ответов</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 9</span><span class="q-program__week__body"><span class="q-program__week__theme">Allure: шаги, аттачменты, дашборд</span><span class="q-program__week__art"><strong>QA-Pulse v0.4</strong> · Allure-отчёт</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 10</span><span class="q-program__week__body"><span class="q-program__week__theme">CI на GitHub Actions: test + report</span><span class="q-program__week__art">зелёный пайплайн на каждый PR</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 11</span><span class="q-program__week__body"><span class="q-program__week__theme">Edge cases, negative tests, flakiness</span><span class="q-program__week__art"><strong>QA-Pulse v0.5</strong> · 60+ тестов</span></span></li>
+                  <li class="q-program__week q-program__week--milestone"><span class="q-program__week__n">Нед. 12</span><span class="q-program__week__body"><span class="q-program__week__theme">Demo Day Discovery</span><span class="q-program__week__art">API-suite + Allure · live URL + GitHub-релиз <code style="font-family:'Geist Mono',monospace">v0.5</code></span></span></li>
+                </ol>
+              </div>
+
+              <div class="q-program__demoday">
+                <span class="q-program__demoday__label">Demo Day · нед. 12</span>
+                <p class="q-program__demoday__text"><strong>QA-Pulse v0.5</strong> · 60+ тестов, CI green, Allure-дашборд, публичный GitHub-релиз</p>
+              </div>
+
+            </div>
+          </div>
+        </details>
+
+        <!-- ═══ M02 · INTENSIVE ═══ -->
+        <details class="q-program__module">
+          <summary>
+            <div class="q-program__module__summary">
+              <div class="q-program__module__rail">
+                <span class="q-program__module__num">M02</span>
+                <span class="q-program__module__period">Недели 13–24</span>
+              </div>
+              <div class="q-program__module__primary">
+                <h3 class="q-program__module__title">Intensive: UI-автоматизация + CI/CD pipeline</h3>
+                <p class="q-program__module__brief">E2E-suite на Playwright с <strong>Page Object Model</strong>, задеплоенный в CI на каждый пул-реквест. Demo&nbsp;Day v1.0.</p>
+              </div>
+              <svg class="q-program__module__chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 6 L8 10 L12 6"/>
+              </svg>
+            </div>
+          </summary>
+          <div class="q-program__module__detail">
+            <div class="q-program__module__detail__inner">
+
+              <div class="q-program__phase">
+                <header class="q-program__phase__head">
+                  <span class="q-program__phase__name">Phase 2.1 · Playwright</span>
+                  <span class="q-program__phase__period">Нед. 13–18</span>
+                </header>
+                <ol class="q-program__weeks">
+                  <li class="q-program__week q-program__week--milestone"><span class="q-program__week__n">Нед. 13</span><span class="q-program__week__body"><span class="q-program__week__theme">Playwright: setup, локаторы, actions</span><span class="q-program__week__art"><strong>QA-Pulse v0.7</strong> · первые E2E</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 14</span><span class="q-program__week__body"><span class="q-program__week__theme">Page Object Model (POM)</span><span class="q-program__week__art">рефакторинг E2E в POM-архитектуру</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 15</span><span class="q-program__week__body"><span class="q-program__week__theme">Fixtures состояния, test isolation</span><span class="q-program__week__art"><strong>QA-Pulse v0.8</strong> · стабильный suite</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 16</span><span class="q-program__week__body"><span class="q-program__week__theme">Параллелизация, скриншоты, video</span><span class="q-program__week__art">pytest-xdist · 3x скорость</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 17</span><span class="q-program__week__body"><span class="q-program__week__theme">Playwright + API (request context)</span><span class="q-program__week__art">гибридные тесты API + UI</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 18</span><span class="q-program__week__body"><span class="q-program__week__theme">Кросс-браузерность, mobile viewport</span><span class="q-program__week__art">контрольная точка: <strong>OSS&nbsp;PR&nbsp;#2</strong></span></span></li>
+                </ol>
+              </div>
+
+              <div class="q-program__phase">
+                <header class="q-program__phase__head">
+                  <span class="q-program__phase__name">Phase 2.2 · CI/CD + архитектура</span>
+                  <span class="q-program__phase__period">Нед. 19–24</span>
+                </header>
+                <ol class="q-program__weeks">
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 19</span><span class="q-program__week__body"><span class="q-program__week__theme">Docker для тестов, testcontainers</span><span class="q-program__week__art">изолированное окружение per-test</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 20</span><span class="q-program__week__body"><span class="q-program__week__theme">GitHub Actions: matrix, artifacts, retries</span><span class="q-program__week__art"><strong>QA-Pulse v0.9</strong> · полный CI pipeline</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 21</span><span class="q-program__week__body"><span class="q-program__week__theme">Моки внешних сервисов (responses, WireMock)</span><span class="q-program__week__art">тесты без зависимости от внешних API</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 22</span><span class="q-program__week__body"><span class="q-program__week__theme">pytest-bdd: Gherkin-сценарии</span><span class="q-program__week__art">тест-кейсы, читаемые для PM и QA Manual</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 23</span><span class="q-program__week__body"><span class="q-program__week__theme">Первая реальная задача Jobs (UI-suite)</span><span class="q-program__week__art">коммерческий заказ · ментор-ревью перед сдачей</span></span></li>
+                  <li class="q-program__week q-program__week--milestone"><span class="q-program__week__n">Нед. 24</span><span class="q-program__week__body"><span class="q-program__week__theme">Demo Day Intensive</span><span class="q-program__week__art"><strong>QA-Pulse v1.0</strong> · API + E2E + CI green · <strong>OSS&nbsp;PR&nbsp;#3</strong></span></span></li>
+                </ol>
+              </div>
+
+              <div class="q-program__demoday">
+                <span class="q-program__demoday__label">Demo Day · нед. 24</span>
+                <p class="q-program__demoday__text"><strong>QA-Pulse v1.0</strong> · API + E2E Playwright + CI/CD · GitHub-релиз <code style="font-family:'Geist Mono',monospace">v1.0</code></p>
+              </div>
+
+            </div>
+          </div>
+        </details>
+
+        <!-- ═══ M03 · TEAM ═══ -->
+        <details class="q-program__module">
+          <summary>
+            <div class="q-program__module__summary">
+              <div class="q-program__module__rail">
+                <span class="q-program__module__num">M03</span>
+                <span class="q-program__module__period">Недели 25–36</span>
+              </div>
+              <div class="q-program__module__primary">
+                <h3 class="q-program__module__title">Team: Performance + Security + стажировка</h3>
+                <p class="q-program__module__brief">Нагрузочный профиль на&nbsp;Locust, OWASP-чек-лист, <strong>стажировка на&nbsp;реальных продуктах</strong> Quillon со&nbsp;2-й задачей через Jobs 35&nbsp;000&nbsp;₽+.</p>
+              </div>
+              <svg class="q-program__module__chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 6 L8 10 L12 6"/>
+              </svg>
+            </div>
+          </summary>
+          <div class="q-program__module__detail">
+            <div class="q-program__module__detail__inner">
+
+              <div class="q-program__phase">
+                <header class="q-program__phase__head">
+                  <span class="q-program__phase__name">Phase 3.1 · Database + Reporting</span>
+                  <span class="q-program__phase__period">Нед. 25–30</span>
+                </header>
+                <ol class="q-program__weeks">
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 25–27</span><span class="q-program__week__body"><span class="q-program__week__theme">SQL для QA, тестовые сиды, psycopg2</span><span class="q-program__week__art">проверка состояния БД после API-вызовов</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 28–30</span><span class="q-program__week__body"><span class="q-program__week__theme">Метрики flakiness, test debt, дашборды</span><span class="q-program__week__art"><strong>QA-Pulse v1.3</strong> · Allure + метрики + <strong>OSS&nbsp;PR&nbsp;#4</strong></span></span></li>
+                </ol>
+              </div>
+
+              <div class="q-program__phase">
+                <header class="q-program__phase__head">
+                  <span class="q-program__phase__name">Phase 3.2 · Performance + Security</span>
+                  <span class="q-program__phase__period">Нед. 31–36</span>
+                </header>
+                <ol class="q-program__weeks">
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 31–33</span><span class="q-program__week__body"><span class="q-program__week__theme">Locust: user classes, scenarios, RPS / p95 / p99</span><span class="q-program__week__art">нагрузочный профиль Quillon Jobs API</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 34–35</span><span class="q-program__week__body"><span class="q-program__week__theme">OWASP Top-10 для QA, bandit, security checklist</span><span class="q-program__week__art">аудит Pulse · security-отчёт</span></span></li>
+                  <li class="q-program__week q-program__week--milestone"><span class="q-program__week__n">Нед. 36</span><span class="q-program__week__body"><span class="q-program__week__theme">Demo Day Team</span><span class="q-program__week__art"><strong>QA-Pulse v1.5</strong> · load-profile + security-report · <strong>OSS&nbsp;PR&nbsp;#5</strong></span></span></li>
+                </ol>
+              </div>
+
+              <div class="q-program__demoday">
+                <span class="q-program__demoday__label">Demo Day · нед. 36</span>
+                <p class="q-program__demoday__text"><strong>QA-Pulse v1.5</strong> · Locust-профиль + Allure · security-чек-лист · GitHub-релиз</p>
+              </div>
+
+            </div>
+          </div>
+        </details>
+
+        <!-- ═══ M04 · LAUNCH ═══ -->
+        <details class="q-program__module">
+          <summary>
+            <div class="q-program__module__summary">
+              <div class="q-program__module__rail">
+                <span class="q-program__module__num">M04</span>
+                <span class="q-program__module__period">Недели 37–48</span>
+              </div>
+              <div class="q-program__module__primary">
+                <h3 class="q-program__module__title">Launch: AI-тестирование + оффер + диплом</h3>
+                <p class="q-program__module__brief"><strong>Junior QA Automation оффер</strong> + дипломный QA-фреймворк на Demo&nbsp;Day. Лучшим проектам&nbsp;— <strong>до&nbsp;500&nbsp;000&nbsp;₽</strong>.</p>
+              </div>
+              <svg class="q-program__module__chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 6 L8 10 L12 6"/>
+              </svg>
+            </div>
+          </summary>
+          <div class="q-program__module__detail">
+            <div class="q-program__module__detail__inner">
+
+              <div class="q-program__phase">
+                <header class="q-program__phase__head">
+                  <span class="q-program__phase__name">Phase 4.1 · AI Quality Engineering</span>
+                  <span class="q-program__phase__period">Нед. 37–42</span>
+                </header>
+                <ol class="q-program__weeks">
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 37–39</span><span class="q-program__week__body"><span class="q-program__week__theme">Тестирование LLM-фич: недетерминизм, hallucinations, prompt-injection</span><span class="q-program__week__art">eval-suite для Quilly&nbsp;AI</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 40–42</span><span class="q-program__week__body"><span class="q-program__week__theme">DeepEval, ragas, golden datasets через pytest-parametrize</span><span class="q-program__week__art"><strong>QA-Pulse v1.7</strong> · AI-eval модуль · <strong>OSS&nbsp;PR&nbsp;#6</strong></span></span></li>
+                </ol>
+              </div>
+
+              <div class="q-program__phase">
+                <header class="q-program__phase__head">
+                  <span class="q-program__phase__name">Phase 4.2 · Диплом + Career</span>
+                  <span class="q-program__phase__period">Нед. 43–48</span>
+                </header>
+                <ol class="q-program__weeks">
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 43</span><span class="q-program__week__body"><span class="q-program__week__theme">Архитектура QA-стратегии: test pyramid, coverage, ROI</span><span class="q-program__week__art">ADR + QA-стратегия для дипломного проекта</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 44</span><span class="q-program__week__body"><span class="q-program__week__theme">System design для QA-инженера · mock-интервью</span><span class="q-program__week__art">мок-собес от Senior QA + Team Lead</span></span></li>
+                  <li class="q-program__week"><span class="q-program__week__n">Нед. 45–47</span><span class="q-program__week__body"><span class="q-program__week__theme">Финальный QA-фреймворк: API + E2E + load + AI-eval</span><span class="q-program__week__art">для реального продукта (Pulse v2 или клиент)</span></span></li>
+                  <li class="q-program__week q-program__week--milestone"><span class="q-program__week__n">Нед. 48</span><span class="q-program__week__body"><span class="q-program__week__theme">Demo Day Launch</span><span class="q-program__week__art">дипломный QA-фреймворк · презентация · лучшим до&nbsp;500&thinsp;000&nbsp;₽</span></span></li>
+                </ol>
+              </div>
+
+              <div class="q-program__demoday">
+                <span class="q-program__demoday__label">Demo Day · нед. 48</span>
+                <p class="q-program__demoday__text">Полный QA-фреймворк (API + E2E + load + AI) · Allure-отчёт · GitHub <code style="font-family:'Geist Mono',monospace">v2.0</code>. Лучшим проектам&nbsp;— <strong>до&nbsp;500&nbsp;000&nbsp;₽</strong>.</p>
+              </div>
+
+            </div>
+          </div>
+        </details>
+
+      </div>
+
+      <div class="q-program__foot">
+        <p class="q-program__foot__text">
+          Полная разбивка по неделям с QA-Pulse-эволюцией, Demo&nbsp;Day-вехами и контрольными точками&nbsp;— приходит вместе с <strong>демо-уроком на email</strong>.
+        </p>
+        <a class="q-program__foot__cta" href="#lead-name">
+          Открыть демо-урок
+          <span class="q-program__foot__cta__arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ QA-PULSE TIMELINE ═══════════════════════════ -->
+  <section class="q-pulse" id="pulse">
+    <div class="q-container">
+
+      <header class="q-pulse__head">
+        <span class="q-pulse__head__kicker">06 · QA-Pulse · сквозной проект</span>
+        <h2 class="q-pulse__head__title">Один продукт. <em>6 версий.</em> 12 месяцев.</h2>
+        <p class="q-pulse__head__sub">
+          QA-Pulse&nbsp;— твой тестовый фреймворк, который растёт вместе с программой. С нед.&nbsp;4 до нед.&nbsp;42 он эволюционирует от 10 простых assert-тестов до полной QA-стратегии с AI-eval. Ты ведёшь свою кодбазу и тестируешь тот же Pulse, что строят backend-студенты.
+        </p>
+      </header>
+
+      <div class="q-pulse__timeline">
+        <ol class="q-pulse__axis">
+
+          <li class="q-pulse__step q-pulse__step--milestone">
+            <span class="q-pulse__step__ver">v0.1</span>
+            <span class="q-pulse__step__week">Неделя 4</span>
+            <span class="q-pulse__step__title">Первые тесты</span>
+            <span class="q-pulse__step__note">10 pytest-тестов · GitHub Actions green</span>
+          </li>
+
+          <li class="q-pulse__step q-pulse__step--milestone">
+            <span class="q-pulse__step__ver">v0.2</span>
+            <span class="q-pulse__step__week">Неделя 5</span>
+            <span class="q-pulse__step__title">API Test Suite</span>
+            <span class="q-pulse__step__note">30 тестов · открывается Jobs-доступ</span>
+          </li>
+
+          <li class="q-pulse__step q-pulse__step--milestone">
+            <span class="q-pulse__step__ver">v0.5</span>
+            <span class="q-pulse__step__week">Неделя 12</span>
+            <span class="q-pulse__step__title">Allure + CI · Demo Day</span>
+            <span class="q-pulse__step__note">60+ тестов · Allure-дашборд</span>
+          </li>
+
+          <li class="q-pulse__step">
+            <span class="q-pulse__step__ver">v1.0</span>
+            <span class="q-pulse__step__week">Неделя 24</span>
+            <span class="q-pulse__step__title">+ Playwright E2E · Demo Day</span>
+            <span class="q-pulse__step__note">API + UI + Docker + CI · Demo Day v1.0</span>
+          </li>
+
+          <li class="q-pulse__step">
+            <span class="q-pulse__step__ver">v1.5</span>
+            <span class="q-pulse__step__week">Неделя 36</span>
+            <span class="q-pulse__step__title">+ Locust + OWASP</span>
+            <span class="q-pulse__step__note">load-profile · security-чек-лист</span>
+          </li>
+
+          <li class="q-pulse__step q-pulse__step--milestone">
+            <span class="q-pulse__step__ver">v2.0</span>
+            <span class="q-pulse__step__week">Неделя 48</span>
+            <span class="q-pulse__step__title">AI-eval · Диплом</span>
+            <span class="q-pulse__step__note">DeepEval + ragas · Demo Day Launch</span>
+          </li>
+
+        </ol>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ AI QUALITY ENGINEER · АДДОН ═══════════════════════════ -->
+  <section class="q-addon" id="ai-addon">
+    <div class="q-container">
+
+      <header class="q-addon__head">
+        <span class="q-addon__head__kicker">07 · Аддон · в&nbsp;разработке</span>
+        <h2 class="q-addon__head__title">AI Quality Engineer&nbsp;— <em>готовим к&nbsp;запуску</em></h2>
+      </header>
+
+      <article class="q-addon__card">
+
+        <div class="q-addon__card__main">
+          <span class="q-addon__card__supertag">Ранняя запись · отдельный курс</span>
+          <h3 class="q-addon__card__title">Тестирование AI-систем&nbsp;— редкий навык, который уже покупают</h3>
+          <p class="q-addon__card__body">
+            LLM-фичи в продукте сломать легко и незаметно: модель галлюцинирует, теряет контекст, реагирует на prompt-injection. Обычные тесты здесь не работают. Аддон даёт методологию и инструменты для QA AI-продуктов: eval-фреймворки, golden datasets, regression на промптах. Программу финализируем&nbsp;— оставь email, напишем первым.
+          </p>
+          <div class="q-addon__card__chips">
+            <span class="q-addon__card__chip q-addon__card__chip--accent">DeepEval</span>
+            <span class="q-addon__card__chip q-addon__card__chip--accent">ragas · RAG eval</span>
+            <span class="q-addon__card__chip q-addon__card__chip--accent">Promptfoo · red-teaming</span>
+            <span class="q-addon__card__chip">Golden datasets</span>
+            <span class="q-addon__card__chip">pytest-parametrize для LLM</span>
+            <span class="q-addon__card__chip">Метрики: BLEU / embeddings / hallucination rate</span>
+            <span class="q-addon__card__chip">Мониторинг моделей в проде</span>
+            <span class="q-addon__card__chip">Adversarial prompts · injection testing</span>
+          </div>
+          <p class="q-addon__card__chips__note">Программа аддона финализируется&nbsp;— точный стек и порядок тем зафиксируем ближе к запуску.</p>
+        </div>
+
+        <aside class="q-addon__card__side">
+          <div class="q-addon__card__meta">
+            <div class="q-addon__card__meta__row">
+              <span class="q-addon__card__meta__label">Статус</span>
+              <span class="q-addon__card__meta__value">Программа финализируется</span>
+            </div>
+            <div class="q-addon__card__meta__row">
+              <span class="q-addon__card__meta__label">Когда</span>
+              <span class="q-addon__card__meta__value">Оповестим первыми по&nbsp;email</span>
+            </div>
+            <div class="q-addon__card__meta__row">
+              <span class="q-addon__card__meta__label">Стоимость</span>
+              <span class="q-addon__card__meta__value">При анонсе · ранняя запись&nbsp;— скидка</span>
+            </div>
+          </div>
+          <a class="q-addon__card__cta" href="#lead-name">
+            Сообщить о&nbsp;запуске
+            <span class="q-addon__card__cta__arrow" aria-hidden="true">→</span>
+          </a>
+        </aside>
+
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ CASES ═══════════════════════════ -->
+  <section class="q-section q-cases" id="cases">
+    <div class="q-container">
+
+      <header class="q-section-head q-cases__head">
+        <div class="q-section-head__num"><em>08</em> · ПРОЕКТЫ</div>
+        <h2 class="q-section-head__title">Не учебные скрипты&nbsp;— production-кейсы за&nbsp;12&nbsp;месяцев</h2>
+        <p class="q-cases__head__sub">Студенты пишут тесты для реальных продуктов и коммерческих заказчиков. <b>Со 2-го месяца&nbsp;— оплачиваемые задачи через Quillon&nbsp;Jobs. С 7-го&nbsp;— стажировка на внутренних продуктах (Meet, Quilly&nbsp;AI, LMS). На выпуске&nbsp;— дипломный QA-фреймворк и гранды лучшим проектам до&nbsp;500&thinsp;000&nbsp;₽.</b></p>
+      </header>
+
+      <div class="q-cases__tabs" role="tablist" aria-label="Категории кейсов">
+        <button class="q-cases__tab is-active" role="tab" aria-selected="true" aria-controls="q-cases-panel-jobs" id="q-cases-tab-jobs" data-cases-tab>
+          <span class="q-cases__tab__num">01</span>
+          <span class="q-cases__tab__name">Quillon&nbsp;Jobs</span>
+          <span class="q-cases__tab__count">3</span>
         </button>
-        <button class="nav-burger" aria-label="Открыть меню">
-          <span></span>
-          <span></span>
-          <span></span>
+        <button class="q-cases__tab" role="tab" aria-selected="false" aria-controls="q-cases-panel-products" id="q-cases-tab-products" tabindex="-1" data-cases-tab>
+          <span class="q-cases__tab__num">02</span>
+          <span class="q-cases__tab__name">Проекты&nbsp;Quillon</span>
+          <span class="q-cases__tab__count">3</span>
+        </button>
+        <button class="q-cases__tab" role="tab" aria-selected="false" aria-controls="q-cases-panel-internal" id="q-cases-tab-internal" tabindex="-1" data-cases-tab>
+          <span class="q-cases__tab__num">03</span>
+          <span class="q-cases__tab__name">QA-Pulse</span>
+          <span class="q-cases__tab__count">3</span>
+        </button>
+        <button class="q-cases__tab" role="tab" aria-selected="false" aria-controls="q-cases-panel-os" id="q-cases-tab-os" tabindex="-1" data-cases-tab>
+          <span class="q-cases__tab__num">04</span>
+          <span class="q-cases__tab__name">Open&nbsp;Source</span>
+          <span class="q-cases__tab__count">3</span>
+        </button>
+        <button class="q-cases__tab" role="tab" aria-selected="false" aria-controls="q-cases-panel-startup" id="q-cases-tab-startup" tabindex="-1" data-cases-tab>
+          <span class="q-cases__tab__num">05</span>
+          <span class="q-cases__tab__name">Start&nbsp;Up</span>
+          <span class="q-cases__tab__count">1</span>
         </button>
       </div>
+
+      <!-- ── panel · Quillon Jobs ── -->
+      <div class="q-cases__panel is-active" role="tabpanel" id="q-cases-panel-jobs" aria-labelledby="q-cases-tab-jobs">
+        <ul class="q-cases__grid" role="list">
+
+          <li class="q-cases__card">
+            <header class="q-cases__card__head">
+              <span class="q-cases__card__num">01</span>
+              <span class="q-cases__card__chip">M03 · 10&nbsp;ДН</span>
+            </header>
+            <h3 class="q-cases__card__title">Тест-план + автотесты для интернет-магазина</h3>
+            <p class="q-cases__card__author">Первый платный заказ. <b>Студент · M03</b> · 1&nbsp;исполнитель</p>
+            <pre class="q-cases__card__code"><code><span class="cm"># pytest · первые 30 тестов</span>
+<span class="kw">import</span> pytest
+<span class="kw">from</span> httpx <span class="kw">import</span> AsyncClient
+
+<span class="kw">@pytest</span>.mark.asyncio
+<span class="kw">@pytest</span>.mark.<span class="fn">parametrize</span>(<span class="str">"sku"</span>, [<span class="str">"A001"</span>, <span class="str">"A002"</span>, <span class="str">"NONE"</span>])
+<span class="kw">async def</span> <span class="fn">test_product_detail</span>(client: AsyncClient, sku: <span class="kw">str</span>):
+    r = <span class="kw">await</span> client.<span class="fn">get</span>(<span class="str">f"/products/{sku}"</span>)
+    <span class="kw">if</span> sku == <span class="str">"NONE"</span>:
+        <span class="kw">assert</span> r.status_code == <span class="num">404</span>
+    <span class="kw">else</span>:
+        <span class="kw">assert</span> r.status_code == <span class="num">200</span>
+        <span class="kw">assert</span> <span class="str">"price"</span> <span class="kw">in</span> r.<span class="fn">json</span>()</code></pre>
+            <div class="q-cases__card__metrics">
+              <div class="q-cases__card__metric q-cases__card__metric--accent">
+                <span class="q-cases__card__metric__num">8&nbsp;000&nbsp;₽</span>
+                <span class="q-cases__card__metric__label">первая выплата</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">30</span>
+                <span class="q-cases__card__metric__label">автотестов сдано</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">10&nbsp;дн</span>
+                <span class="q-cases__card__metric__label">от заказа до сдачи</span>
+              </div>
+            </div>
+          </li>
+
+          <li class="q-cases__card">
+            <header class="q-cases__card__head">
+              <span class="q-cases__card__num">02</span>
+              <span class="q-cases__card__chip">M07 · 3&nbsp;НЕД</span>
+            </header>
+            <h3 class="q-cases__card__title">API test suite под&nbsp;ключ для SaaS-продукта</h3>
+            <p class="q-cases__card__author">Платный заказ через Quillon&nbsp;Jobs. <b>Студент · M07</b> · ментор-ревью перед сдачей</p>
+            <pre class="q-cases__card__code"><code><span class="kw">@pytest</span>.mark.asyncio
+<span class="kw">async def</span> <span class="fn">test_create_task_returns_201</span>(
+    client: AsyncClient,
+    auth_headers: <span class="kw">dict</span>,
+):
+    resp = <span class="kw">await</span> client.<span class="fn">post</span>(
+        <span class="str">"/tasks"</span>,
+        json={<span class="str">"title"</span>: <span class="str">"Отчёт"</span>, <span class="str">"due"</span>: <span class="str">"2025-06-01"</span>},
+        headers=auth_headers,
+    )
+    <span class="kw">assert</span> resp.status_code == <span class="num">201</span>
+    <span class="kw">assert</span> resp.<span class="fn">json</span>()[<span class="str">"title"</span>] == <span class="str">"Отчёт"</span></code></pre>
+            <div class="q-cases__card__metrics">
+              <div class="q-cases__card__metric q-cases__card__metric--accent">
+                <span class="q-cases__card__metric__num">35&nbsp;000&nbsp;₽</span>
+                <span class="q-cases__card__metric__label">гонорар студенту</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">80+</span>
+                <span class="q-cases__card__metric__label">тестов + Allure</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">3&nbsp;нед</span>
+                <span class="q-cases__card__metric__label">от ТЗ до сдачи</span>
+              </div>
+            </div>
+          </li>
+
+          <li class="q-cases__card">
+            <header class="q-cases__card__head">
+              <span class="q-cases__card__num">03</span>
+              <span class="q-cases__card__chip q-cases__card__chip--accent">M10 · LEAD</span>
+            </header>
+            <h3 class="q-cases__card__title">QA Lead на&nbsp;перформанс-аудите платёжного сервиса</h3>
+            <p class="q-cases__card__author">Скоупинг, нагрузочное тестирование, отчёт. <b>Студент · M10</b> · команда&nbsp;2 · ментор как тех-консультант</p>
+            <pre class="q-cases__card__code"><span class="cm"># ADR-002 · Перформанс-аудит /checkout</span>
+
+Цель: p95 ≤ 800ms на 2 000 VU.
+Текущий baseline: p95 = 4.1s.
+
+Инструмент: Locust (команда знает Python).
+Сценарии: 3 user-класса (guest, auth, admin).
+Результат: найден N+1 на /cart/validate.
+Фикс: индекс + eager loading.
+Итог: p95 = 620ms на 2 000 VU. ✓</pre>
+            <div class="q-cases__card__metrics">
+              <div class="q-cases__card__metric q-cases__card__metric--accent">
+                <span class="q-cases__card__metric__num">120&nbsp;000&nbsp;₽</span>
+                <span class="q-cases__card__metric__label">бюджет проекта</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">p95 620&nbsp;мс</span>
+                <span class="q-cases__card__metric__label">было 4.1с</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">4&nbsp;нед</span>
+                <span class="q-cases__card__metric__label">аудит принят</span>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+      <!-- ── panel · Проекты Quillon ── -->
+      <div class="q-cases__panel" role="tabpanel" id="q-cases-panel-products" aria-labelledby="q-cases-tab-products" hidden>
+        <ul class="q-cases__grid" role="list">
+
+          <li class="q-cases__card">
+            <header class="q-cases__card__head">
+              <span class="q-cases__card__num">01</span>
+              <span class="q-cases__card__chip">MEET · M07</span>
+            </header>
+            <h3 class="q-cases__card__title">E2E-регресс слот-планировщика Quillon&nbsp;Meet</h3>
+            <p class="q-cases__card__author">Playwright suite для бронирования созвонов. <b>Стажёр · M07</b> · ревью senior QA</p>
+            <pre class="q-cases__card__code"><code><span class="kw">from</span> playwright.async_api <span class="kw">import</span> Page
+<span class="kw">import</span> pytest
+
+<span class="kw">@pytest</span>.mark.asyncio
+<span class="kw">async def</span> <span class="fn">test_schedule_session</span>(page: Page, base_url: <span class="kw">str</span>):
+    <span class="kw">await</span> page.<span class="fn">goto</span>(<span class="str">f"{base_url}/mentor/slots"</span>)
+    <span class="kw">await</span> page.<span class="fn">get_by_role</span>(<span class="str">"button"</span>, name=<span class="str">"Выбрать слот"</span>).first.<span class="fn">click</span>()
+    <span class="kw">await</span> page.<span class="fn">get_by_label</span>(<span class="str">"Тема"</span>).<span class="fn">fill</span>(<span class="str">"Разбор кода M05"</span>)
+    <span class="kw">await</span> page.<span class="fn">get_by_role</span>(<span class="str">"button"</span>, name=<span class="str">"Подтвердить"</span>).<span class="fn">click</span>()
+    <span class="kw">await</span> page.<span class="fn">wait_for_selector</span>(<span class="str">".session-confirmed"</span>)
+    <span class="kw">assert</span> <span class="str">"запланирована"</span> <span class="kw">in await</span> page.<span class="fn">title</span>()</code></pre>
+            <div class="q-cases__card__metrics">
+              <div class="q-cases__card__metric q-cases__card__metric--accent">
+                <span class="q-cases__card__metric__num">24</span>
+                <span class="q-cases__card__metric__label">E2E-сценария в CI</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">−70%</span>
+                <span class="q-cases__card__metric__label">ручных регрессов</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">2&nbsp;PR</span>
+                <span class="q-cases__card__metric__label">смерджены в main</span>
+              </div>
+            </div>
+          </li>
+
+          <li class="q-cases__card">
+            <header class="q-cases__card__head">
+              <span class="q-cases__card__num">02</span>
+              <span class="q-cases__card__chip">QUILLY · M09</span>
+            </header>
+            <h3 class="q-cases__card__title">Eval-suite для&nbsp;Quilly&nbsp;AI: тестирование LLM-ответов</h3>
+            <p class="q-cases__card__author">DeepEval + golden dataset. <b>Стажёр · M09</b> · пара с AI-командой</p>
+            <pre class="q-cases__card__code"><code><span class="kw">from</span> deepeval <span class="kw">import</span> evaluate
+<span class="kw">from</span> deepeval.metrics <span class="kw">import</span> AnswerRelevancyMetric
+
+<span class="kw">@pytest</span>.mark.<span class="fn">parametrize</span>(<span class="str">"question"</span>, [
+    <span class="str">"Как установить pytest?"</span>,
+    <span class="str">"Что такое fixture?"</span>,
+])
+<span class="kw">def</span> <span class="fn">test_quilly_relevant</span>(question, quilly_client):
+    actual = quilly_client.<span class="fn">ask</span>(question)
+    test_case = <span class="fn">LLMTestCase</span>(
+        input=question, actual_output=actual
+    )
+    metric = <span class="fn">AnswerRelevancyMetric</span>(threshold=<span class="num">0.8</span>)
+    <span class="fn">evaluate</span>([test_case], [metric])</code></pre>
+            <div class="q-cases__card__metrics">
+              <div class="q-cases__card__metric q-cases__card__metric--accent">
+                <span class="q-cases__card__metric__num">120</span>
+                <span class="q-cases__card__metric__label">golden-кейсов в датасете</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">0.84</span>
+                <span class="q-cases__card__metric__label">relevancy score</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">3&nbsp;нед</span>
+                <span class="q-cases__card__metric__label">до прода</span>
+              </div>
+            </div>
+          </li>
+
+          <li class="q-cases__card">
+            <header class="q-cases__card__head">
+              <span class="q-cases__card__num">03</span>
+              <span class="q-cases__card__chip">LMS · M08</span>
+            </header>
+            <h3 class="q-cases__card__title">Регрессионный suite для&nbsp;Lesson&nbsp;Player перед релизами</h3>
+            <p class="q-cases__card__author">API + UI smoke перед каждым деплоем. <b>Стажёр · M08</b> · ревью тех-лида</p>
+            <pre class="q-cases__card__code"><code><span class="kw">def</span> <span class="fn">test_lesson_publish_blocked_without_tests</span>(
+    lesson_factory,
+):
+    lesson = lesson_factory(blocks=[
+        {<span class="str">"type"</span>: <span class="str">"code"</span>, <span class="str">"tests"</span>: []},
+    ])
+    issues = <span class="fn">validate_lesson</span>(lesson)
+    <span class="kw">assert</span> <span class="fn">any</span>(
+        i.code == <span class="str">"code_block_without_tests"</span>
+        <span class="kw">for</span> i <span class="kw">in</span> issues
+    )</code></pre>
+            <div class="q-cases__card__metrics">
+              <div class="q-cases__card__metric q-cases__card__metric--accent">
+                <span class="q-cases__card__metric__num">45</span>
+                <span class="q-cases__card__metric__label">тестов в CI pipeline</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">0</span>
+                <span class="q-cases__card__metric__label">регрессий после деплоя</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">2&nbsp;PR</span>
+                <span class="q-cases__card__metric__label">в проде</span>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+      <!-- ── panel · QA-Pulse (internal) ── -->
+      <div class="q-cases__panel" role="tabpanel" id="q-cases-panel-internal" aria-labelledby="q-cases-tab-internal" hidden>
+        <ul class="q-cases__grid" role="list">
+
+          <li class="q-cases__card">
+            <header class="q-cases__card__head">
+              <span class="q-cases__card__num">01</span>
+              <span class="q-cases__card__chip">QA-PULSE&nbsp;v0.5 · M03</span>
+            </header>
+            <h3 class="q-cases__card__title">QA-Pulse&nbsp;— первый публичный API-suite студента</h3>
+            <p class="q-cases__card__author">Demo&nbsp;Day Discovery, нед.&nbsp;12. <b>Студент · M03</b> · 60 тестов + Allure + GitHub Actions</p>
+            <pre class="q-cases__card__code"><code><span class="kw">@pytest</span>.fixture
+<span class="kw">async def</span> <span class="fn">client</span>(app):
+    <span class="kw">async with</span> AsyncClient(
+        app=app, base_url=<span class="str">"http://test"</span>
+    ) <span class="kw">as</span> c:
+        <span class="kw">yield</span> c
+
+<span class="kw">async def</span> <span class="fn">test_task_list_empty</span>(client):
+    r = <span class="kw">await</span> client.<span class="fn">get</span>(<span class="str">"/tasks"</span>)
+    <span class="kw">assert</span> r.status_code == <span class="num">200</span>
+    <span class="kw">assert</span> r.<span class="fn">json</span>() == []</code></pre>
+            <div class="q-cases__card__metrics">
+              <div class="q-cases__card__metric q-cases__card__metric--accent">
+                <span class="q-cases__card__metric__num">12&nbsp;нед</span>
+                <span class="q-cases__card__metric__label">от 0 до API-suite</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">Allure&nbsp;+ CI</span>
+                <span class="q-cases__card__metric__label">в стеке</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">1</span>
+                <span class="q-cases__card__metric__label">публичный GitHub-релиз</span>
+              </div>
+            </div>
+          </li>
+
+          <li class="q-cases__card">
+            <header class="q-cases__card__head">
+              <span class="q-cases__card__num">02</span>
+              <span class="q-cases__card__chip">QA-PULSE&nbsp;v1.0 · M06</span>
+            </header>
+            <h3 class="q-cases__card__title">QA-Pulse: Playwright POM + CI на каждый PR</h3>
+            <p class="q-cases__card__author">Demo&nbsp;Day Intensive, нед.&nbsp;24. <b>Студент · M06</b> · API + E2E + Docker</p>
+            <pre class="q-cases__card__code"><code><span class="kw">class</span> <span class="fn">DashboardPage</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, page: Page):
+        self.page = page
+        self.add_btn = page.<span class="fn">get_by_role</span>(
+            <span class="str">"button"</span>, name=<span class="str">"Добавить"</span>
+        )
+
+    <span class="kw">async def</span> <span class="fn">create_task</span>(self, title: <span class="kw">str</span>) -> <span class="kw">None</span>:
+        <span class="kw">await</span> self.add_btn.<span class="fn">click</span>()
+        <span class="kw">await</span> self.page.<span class="fn">get_by_label</span>(<span class="str">"Название"</span>).<span class="fn">fill</span>(title)
+        <span class="kw">await</span> self.page.<span class="fn">get_by_role</span>(<span class="str">"button"</span>, name=<span class="str">"Сохранить"</span>).<span class="fn">click</span>()</code></pre>
+            <div class="q-cases__card__metrics">
+              <div class="q-cases__card__metric q-cases__card__metric--accent">
+                <span class="q-cases__card__metric__num">API&nbsp;+ E2E</span>
+                <span class="q-cases__card__metric__label">в одном suite</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">CI green</span>
+                <span class="q-cases__card__metric__label">на каждый PR</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">v1.0</span>
+                <span class="q-cases__card__metric__label">GitHub-релиз</span>
+              </div>
+            </div>
+          </li>
+
+          <li class="q-cases__card">
+            <header class="q-cases__card__head">
+              <span class="q-cases__card__num">03</span>
+              <span class="q-cases__card__chip q-cases__card__chip--accent">QA-PULSE&nbsp;v1.5 · M09</span>
+            </header>
+            <h3 class="q-cases__card__title">QA-Pulse: Locust-профиль + GitHub Actions matrix</h3>
+            <p class="q-cases__card__author">Demo&nbsp;Day Team, нед.&nbsp;36. <b>Студент · M09</b> · load + security + Allure</p>
+            <pre class="q-cases__card__code"><span class="cm"># .github/workflows/qa.yml</span>
+name: QA Pipeline
+on: [push, pull_request]
+jobs:
+  tests:
+    strategy:
+      matrix:
+        browser: [chromium, firefox]
+    steps:
+      - name: API tests
+        run: pytest tests/api -n auto
+      - name: E2E (${{ matrix.browser }})
+        run: pytest tests/e2e --browser ${{ matrix.browser }}
+      - name: Load (Locust headless)
+        run: locust --headless -u 200 -r 20 -t 60s</pre>
+            <div class="q-cases__card__metrics">
+              <div class="q-cases__card__metric q-cases__card__metric--accent">
+                <span class="q-cases__card__metric__num">3</span>
+                <span class="q-cases__card__metric__label">типа тестов в CI</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">p95&nbsp;340&nbsp;мс</span>
+                <span class="q-cases__card__metric__label">на 200 VU</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">MIT</span>
+                <span class="q-cases__card__metric__label">open source</span>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+      <!-- ── panel · Open Source ── -->
+      <div class="q-cases__panel" role="tabpanel" id="q-cases-panel-os" aria-labelledby="q-cases-tab-os" hidden>
+        <ul class="q-cases__grid" role="list">
+
+          <li class="q-cases__card">
+            <header class="q-cases__card__head">
+              <span class="q-cases__card__num">01</span>
+              <span class="q-cases__card__chip">OSS · M05</span>
+            </header>
+            <h3 class="q-cases__card__title">Новый параметр <code class="q-cases__card__title__mono">--screenshot</code> в&nbsp;<code class="q-cases__card__title__mono">pytest-playwright</code></h3>
+            <p class="q-cases__card__author">PR в официальный плагин Playwright. <b>Студент · M05</b> · 4&nbsp;нед от&nbsp;issue до&nbsp;merge</p>
+            <pre class="q-cases__card__code"><code><span class="kw">def</span> <span class="fn">pytest_addoption</span>(parser: Parser) -> <span class="kw">None</span>:
+    parser.<span class="fn">addoption</span>(
+        <span class="str">"--screenshot"</span>,
+        choices=[<span class="str">"on"</span>, <span class="str">"off"</span>, <span class="str">"only-on-failure"</span>],
+        default=<span class="str">"off"</span>,
+        help=<span class="str">"Screenshot mode for all tests"</span>,
+    )
+
+<span class="cm"># используется в conftest.py</span>
+<span class="kw">@pytest</span>.fixture(scope=<span class="str">"function"</span>)
+<span class="kw">async def</span> <span class="fn">page</span>(context, pytestconfig):
+    mode = pytestconfig.<span class="fn">getoption</span>(<span class="str">"--screenshot"</span>)
+    page = <span class="kw">await</span> context.<span class="fn">new_page</span>()
+    <span class="kw">yield</span> page
+    <span class="kw">if</span> mode == <span class="str">"on"</span>:
+        <span class="kw">await</span> page.<span class="fn">screenshot</span>(path=<span class="str">f"screenshots/{page.url}.png"</span>)</code></pre>
+            <div class="q-cases__card__metrics">
+              <div class="q-cases__card__metric q-cases__card__metric--accent">
+                <span class="q-cases__card__metric__num">PR</span>
+                <span class="q-cases__card__metric__label">смерджен в&nbsp;main</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">9k+</span>
+                <span class="q-cases__card__metric__label">stars у репозитория</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">1</span>
+                <span class="q-cases__card__metric__label">новый CLI-параметр</span>
+              </div>
+            </div>
+          </li>
+
+          <li class="q-cases__card">
+            <header class="q-cases__card__head">
+              <span class="q-cases__card__num">02</span>
+              <span class="q-cases__card__chip">OSS · M08</span>
+            </header>
+            <h3 class="q-cases__card__title">Фикс flaky-детектора в&nbsp;<code class="q-cases__card__title__mono">allure-pytest</code></h3>
+            <p class="q-cases__card__author">Баг: повторные запуски не маркировались как flaky. <b>Студент · M08</b> · 3&nbsp;нед</p>
+            <pre class="q-cases__card__code"><code><span class="cm"># до фикса: повтор теста не проставлял FLAKY</span>
+<span class="kw">def</span> <span class="fn">_mark_flaky</span>(self, result: TestResult) -> <span class="kw">None</span>:
+    history = self._storage.<span class="fn">get_history</span>(result.test_case_id)
+    has_pass = <span class="fn">any</span>(r.status == Status.PASSED  <span class="kw">for</span> r <span class="kw">in</span> history)
+    has_fail = <span class="fn">any</span>(r.status == Status.FAILED  <span class="kw">for</span> r <span class="kw">in</span> history)
+    <span class="cm"># фикс: включаем текущий результат в проверку</span>
+    has_pass |= result.status == Status.PASSED
+    has_fail |= result.status == Status.FAILED
+    <span class="kw">if</span> has_pass <span class="kw">and</span> has_fail:
+        result.labels.<span class="fn">append</span>(<span class="fn">Label</span>(name=<span class="str">"tag"</span>, value=<span class="str">"flaky"</span>))</code></pre>
+            <div class="q-cases__card__metrics">
+              <div class="q-cases__card__metric q-cases__card__metric--accent">
+                <span class="q-cases__card__metric__num">PR</span>
+                <span class="q-cases__card__metric__label">смерджен в&nbsp;main</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">4k+</span>
+                <span class="q-cases__card__metric__label">stars у репозитория</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">1</span>
+                <span class="q-cases__card__metric__label">баг закрыт</span>
+              </div>
+            </div>
+          </li>
+
+          <li class="q-cases__card">
+            <header class="q-cases__card__head">
+              <span class="q-cases__card__num">03</span>
+              <span class="q-cases__card__chip q-cases__card__chip--accent">OSS · M11</span>
+            </header>
+            <h3 class="q-cases__card__title">G-Eval метрика для русского языка в&nbsp;<code class="q-cases__card__title__mono">deepeval</code></h3>
+            <p class="q-cases__card__author">Кастомная оценка связности RU-текста. <b>Студент · M11</b> · 4&nbsp;нед</p>
+            <pre class="q-cases__card__code"><code><span class="kw">from</span> deepeval.metrics <span class="kw">import</span> GEval
+<span class="kw">from</span> deepeval.test_case <span class="kw">import</span> LLMTestCaseParams
+
+coherence_ru = <span class="fn">GEval</span>(
+    name=<span class="str">"Связность (ru)"</span>,
+    criteria=<span class="str">"Оцени связность и грамматику "</span>
+             <span class="str">"ответа на русском языке по шкале 0–1"</span>,
+    evaluation_params=[
+        LLMTestCaseParams.ACTUAL_OUTPUT
+    ],
+    threshold=<span class="num">0.75</span>,
+)</code></pre>
+            <div class="q-cases__card__metrics">
+              <div class="q-cases__card__metric q-cases__card__metric--accent">
+                <span class="q-cases__card__metric__num">PR</span>
+                <span class="q-cases__card__metric__label">смерджен в&nbsp;main</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">5k+</span>
+                <span class="q-cases__card__metric__label">stars у репозитория</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">1</span>
+                <span class="q-cases__card__metric__label">новая RU-метрика</span>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+      <!-- ── panel · Start Up ── -->
+      <div class="q-cases__panel" role="tabpanel" id="q-cases-panel-startup" aria-labelledby="q-cases-tab-startup" hidden>
+        <ul class="q-cases__grid q-cases__grid--single" role="list">
+
+          <li class="q-cases__card">
+            <header class="q-cases__card__head">
+              <span class="q-cases__card__num">01</span>
+              <span class="q-cases__card__chip q-cases__card__chip--accent">LAUNCH · M12</span>
+            </header>
+            <h3 class="q-cases__card__title">TestFlare&nbsp;— SaaS для хранения и анализа Allure-отчётов</h3>
+            <p class="q-cases__card__author">Финальный Demo&nbsp;Day, нед.&nbsp;48. <b>Команда&nbsp;3 · M12</b> · MVP&nbsp;+ investor pitch</p>
+            <pre class="q-cases__card__code"><code><span class="cm"># TestFlare: агрегирует Allure из CI, строит тренды flakiness</span>
+<span class="kw">@router</span>.post(<span class="str">"/reports/upload"</span>, status_code=<span class="num">202</span>)
+<span class="kw">async def</span> <span class="fn">upload_allure_report</span>(
+    project_id: <span class="kw">int</span>,
+    files: <span class="kw">list</span>[UploadFile],
+    bg: BackgroundTasks,
+):
+    <span class="cm"># парсим XML, строим trend по ветке и дате</span>
+    bg.<span class="fn">add_task</span>(<span class="fn">parse_and_store</span>, project_id, files)
+    <span class="kw">return</span> {<span class="str">"status"</span>: <span class="str">"queued"</span>}</code></pre>
+            <div class="q-cases__card__metrics">
+              <div class="q-cases__card__metric q-cases__card__metric--accent">
+                <span class="q-cases__card__metric__num">до&nbsp;500&thinsp;000&nbsp;₽</span>
+                <span class="q-cases__card__metric__label">гранды лучшим проектам</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">6&nbsp;нед</span>
+                <span class="q-cases__card__metric__label">от идеи до MVP</span>
+              </div>
+              <div class="q-cases__card__metric">
+                <span class="q-cases__card__metric__num">3</span>
+                <span class="q-cases__card__metric__label">человека в команде</span>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
     </div>
+  </section>
 
-    <!-- Mobile menu -->
-    <div class="nav-mobile">
-      <a href="/#tracks">Все направления</a>
-      <a href="#program">Программа</a>
-      <a href="#stack">Стек</a>
-      <a href="#mentors">Преподаватели</a>
-      <a href="#pricing">Цена</a>
-      <a href="#faq">Вопросы</a>
-      <a href="/quiz" class="btn btn-primary" style="margin-top: var(--space-sm); text-align: center;">Пройти тест &rarr;</a>
+  <!-- ═══════════════════════════ MENTORS ═══════════════════════════ -->
+  <section class="q-section q-mentors" id="mentors">
+    <div class="q-container">
+
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>09</em> · НАСТАВНИКИ</div>
+        <h2 class="q-section-head__title">Преподаватели, которые сами работают с продуктом</h2>
+      </header>
+
+      <article class="q-mentors__hero">
+        <div class="q-mentors__hero__id">
+          <span class="q-mentors__num">01</span>
+          <span class="q-mentors__role">Главный ментор · архитектор программы</span>
+        </div>
+        <div class="q-mentors__hero__body">
+          <h3 class="q-mentors__name">Алексей Бирюлин</h3>
+          <p class="q-mentors__tagline">5+ лет проектирования образовательных программ по&nbsp;Python и&nbsp;тестированию</p>
+          <p class="q-mentors__bio">4&thinsp;000+ индивидуальных занятий · потоки 30–70 студентов · программы для бакалавриата, магистратуры и&nbsp;EdTech. Лично проектирует 12-месячную программу QA&nbsp;Automation и&nbsp;контролирует каждый модуль.</p>
+          <div class="q-mentors__stack">
+            <span class="q-mentors__stack__label">Стек</span>
+            <ul class="q-mentors__stack__list" role="list">
+              <li>Python</li><li>pytest</li><li>Playwright</li><li>Selenium</li>
+              <li>CI/CD</li><li>SQL</li><li>PostgreSQL</li><li>Linux</li>
+            </ul>
+          </div>
+        </div>
+        <div class="q-mentors__hero__stats" aria-label="Ключевые факты">
+          <div class="q-mentors__stat">
+            <b class="q-mentors__stat__num">4&thinsp;000+</b>
+            <span class="q-mentors__stat__label">индивидуальных занятий</span>
+          </div>
+          <div class="q-mentors__stat">
+            <b class="q-mentors__stat__num">5+ лет</b>
+            <span class="q-mentors__stat__label">в образовании IT</span>
+          </div>
+          <div class="q-mentors__stat">
+            <b class="q-mentors__stat__num">НИУ МЭИ</b>
+            <span class="q-mentors__stat__label">информатика и&nbsp;вычислительная техника</span>
+          </div>
+        </div>
+      </article>
+
+      <div class="q-mentors__grid">
+
+        <article class="q-mentors__card">
+          <div class="q-mentors__card__head">
+            <span class="q-mentors__num">02</span>
+            <span class="q-mentors__role">Senior Python Dev · Спикер</span>
+          </div>
+          <h3 class="q-mentors__name">Александр Асадуллин</h3>
+          <p class="q-mentors__bio">Строит высоконагруженные AI-сервисы в&nbsp;production. Ведёт спецмодуль по&nbsp;тестированию AI-систем: DeepEval, ragas, eval-пайплайны.</p>
+          <ul class="q-mentors__facts" role="list">
+            <li><b>18&thinsp;000 RPS</b>&nbsp;— inference-gateway для&nbsp;крупного LLM-API</li>
+            <li><b>61%→84%</b>&nbsp;точность RAG-сервиса на&nbsp;2&nbsp;млн документов</li>
+            <li><b>5&thinsp;000 req/сут</b>&nbsp;— мультиагентная система в&nbsp;production</li>
+          </ul>
+          <div class="q-mentors__stack">
+            <ul class="q-mentors__stack__list" role="list">
+              <li>FastAPI</li><li>asyncio</li><li>DeepEval</li><li>ragas</li>
+              <li>LangChain</li><li>FAISS</li><li>Postgres</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="q-mentors__card">
+          <div class="q-mentors__card__head">
+            <span class="q-mentors__num">03</span>
+            <span class="q-mentors__role">QA-эксперт · Гость-спикер</span>
+          </div>
+          <h3 class="q-mentors__name">Станислав Иванов</h3>
+          <p class="q-mentors__bio">12+ лет в&nbsp;QA, FinTech и&nbsp;банковском секторе. Рассказывает о&nbsp;тестировании в&nbsp;промышленной разработке: автоматизация, CI/CD, культура качества в&nbsp;команде.</p>
+          <ul class="q-mentors__facts" role="list">
+            <li><b>100+ инженеров</b>&nbsp;— команда QA под&nbsp;руководством</li>
+            <li><b>40+ команд</b>&nbsp;приняли его фреймворк автотестов</li>
+            <li><b>150+ проектов</b>&nbsp;покрыты CI/CD-пайплайном</li>
+          </ul>
+          <div class="q-mentors__stack">
+            <ul class="q-mentors__stack__list" role="list">
+              <li>Selenium</li><li>pytest</li><li>Jenkins</li><li>Docker</li>
+              <li>GitLab&nbsp;CI</li><li>TestRail</li><li>Allure</li>
+            </ul>
+          </div>
+        </article>
+
+      </div>
+
     </div>
-  </nav>
+  </section>
 
-  <!-- Main content — rendered by renderer.js -->
-  <main id="app" data-page="track" data-track-slug="qa"></main>
+  <!-- ═══════════════════════════ REVIEWS ═══════════════════════════ -->
+  <section class="q-section q-reviews" id="reviews">
+    <div class="q-container">
 
-  <!-- Footer — rendered by renderer.js -->
-  <footer id="footer"></footer>
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>10</em> · РЕЗУЛЬТАТЫ</div>
+        <h2 class="q-section-head__title">Что происходит со&nbsp;студентами за&nbsp;12&nbsp;месяцев</h2>
+      </header>
 
-  <!-- Scripts -->
-  <script src="/vendor/lucide.min.js" defer></script>
-  <script src="/js/renderer.js?v=20260419p23" defer></script>
-  <script src="/js/animations.js?v=20260419p23" defer></script>
-  <script src="/js/interactions.js?v=20260419p23" defer></script>
-  <script src="/js/analytics.js?v=20260419p23" defer></script>
+      <div class="q-reviews__grid">
+
+        <!-- ── Кейс #01 · студент без опыта ── -->
+        <article class="q-reviews__card">
+          <div class="q-reviews__card__head">
+            <span class="q-reviews__case">кейс #01</span>
+            <span class="q-reviews__tag">студент · 0 опыта</span>
+          </div>
+          <p class="q-reviews__entry">Вход: <strong>21 год, 3-й курс, непрофильный вуз</strong><br>Python: не было · нашёл через Telegram-канал</p>
+          <div class="q-reviews__timeline">
+            <div class="q-reviews__trow">
+              <span class="q-reviews__trow__month">M02</span>
+              <div class="q-reviews__trow__dot-wrap"><div class="q-reviews__trow__dot"></div><div class="q-reviews__trow__line"></div></div>
+              <p class="q-reviews__trow__text">Первый Jobs-заказ — мануальный регресс мобильного приложения. Переделывал баг-репорты дважды. <span class="earn">+8 000 ₽</span></p>
+            </div>
+            <div class="q-reviews__trow">
+              <span class="q-reviews__trow__month">M05</span>
+              <div class="q-reviews__trow__dot-wrap"><div class="q-reviews__trow__dot"></div><div class="q-reviews__trow__line"></div></div>
+              <p class="q-reviews__trow__text">Первый Playwright-suite в портфолио. Начал откликаться на стажировки через LinkedIn.</p>
+            </div>
+            <div class="q-reviews__trow">
+              <span class="q-reviews__trow__month">M08</span>
+              <div class="q-reviews__trow__dot-wrap"><div class="q-reviews__trow__dot q-reviews__trow__dot--result"></div><div class="q-reviews__trow__line"></div></div>
+              <p class="q-reviews__trow__text"><b>Стажировка в продуктовой команде</b> part-time. 40 000 ₽/мес.</p>
+            </div>
+            <div class="q-reviews__trow">
+              <span class="q-reviews__trow__month">M12</span>
+              <div class="q-reviews__trow__dot-wrap"><div class="q-reviews__trow__dot q-reviews__trow__dot--result"></div></div>
+              <p class="q-reviews__trow__text"><b>Оффер Junior QA Automation Engineer</b> в продуктовой компании. 130 000 ₽/мес.</p>
+            </div>
+          </div>
+          <blockquote class="q-reviews__quote">На M03 три дня не мог понять, почему тест зеленый, хотя баг явно есть. Оказалось — assert сравнивал строку с None. После этого читаю падение теста медленно, сначала сам assert.</blockquote>
+          <div class="q-reviews__result">
+            <span class="q-reviews__result__badge">Оффер M12 · 130 000 ₽</span>
+            <span class="q-reviews__result__stack">Python · pytest · Playwright · httpx · GitHub&nbsp;Actions · Allure</span>
+          </div>
+        </article>
+
+        <!-- ── Кейс #02 · смена профессии ── -->
+        <article class="q-reviews__card">
+          <div class="q-reviews__card__head">
+            <span class="q-reviews__case">кейс #02</span>
+            <span class="q-reviews__tag">смена · 28 лет</span>
+          </div>
+          <p class="q-reviews__entry">Вход: <strong>6 лет администратор салона</strong><br>Python базовый (ютуб) · выбрала QA как «вход с минимальной математикой»</p>
+          <div class="q-reviews__timeline">
+            <div class="q-reviews__trow">
+              <span class="q-reviews__trow__month">M03</span>
+              <div class="q-reviews__trow__dot-wrap"><div class="q-reviews__trow__dot"></div><div class="q-reviews__trow__line"></div></div>
+              <p class="q-reviews__trow__text">Первые автотесты — переломный момент: «я могу писать код». Пять тестов специально падали по заданию — починила за вечер.</p>
+            </div>
+            <div class="q-reviews__trow">
+              <span class="q-reviews__trow__month">M05</span>
+              <div class="q-reviews__trow__dot-wrap"><div class="q-reviews__trow__dot"></div><div class="q-reviews__trow__line"></div></div>
+              <p class="q-reviews__trow__text">Jobs-заказ: API-регресс для SaaS-стартапа. Первая неделя с реальным заказчиком. <span class="earn">+15 000 ₽</span></p>
+            </div>
+            <div class="q-reviews__trow">
+              <span class="q-reviews__trow__month">M08</span>
+              <div class="q-reviews__trow__dot-wrap"><div class="q-reviews__trow__dot q-reviews__trow__dot--result"></div><div class="q-reviews__trow__line"></div></div>
+              <p class="q-reviews__trow__text"><b>Стажировка в финтех-команде</b> через партнёрскую сеть Quillon. 60 000 ₽/мес.</p>
+            </div>
+            <div class="q-reviews__trow">
+              <span class="q-reviews__trow__month">M11</span>
+              <div class="q-reviews__trow__dot-wrap"><div class="q-reviews__trow__dot q-reviews__trow__dot--result"></div></div>
+              <p class="q-reviews__trow__text"><b>Оффер Junior+ QA Automation</b> в финтехе. 160 000 ₽/мес.</p>
+            </div>
+          </div>
+          <blockquote class="q-reviews__quote">Самое страшное было не питон, а ощущение что в комнате все знают это уже 10 лет. На третьем месяце поняла: никто не знает — все гуглят. Просто кто-то гуглит быстрее.</blockquote>
+          <div class="q-reviews__result">
+            <span class="q-reviews__result__badge">Оффер M11 · 160 000 ₽</span>
+            <span class="q-reviews__result__stack">Python · pytest · Playwright · Locust · Docker · CI/CD · Allure</span>
+          </div>
+        </article>
+
+        <!-- ── Кейс #03 · застрявший мануальщик ── -->
+        <article class="q-reviews__card">
+          <div class="q-reviews__card__head">
+            <span class="q-reviews__case">кейс #03</span>
+            <span class="q-reviews__tag">manual → auto</span>
+          </div>
+          <p class="q-reviews__entry">Вход: <strong>2 года мануальный QA, аутсорс, 95 000 ₽</strong><br>Selenium пытался — бросил · роста нет</p>
+          <div class="q-reviews__timeline">
+            <div class="q-reviews__trow">
+              <span class="q-reviews__trow__month">M02</span>
+              <div class="q-reviews__trow__dot-wrap"><div class="q-reviews__trow__dot"></div><div class="q-reviews__trow__line"></div></div>
+              <p class="q-reviews__trow__text">Фаст-трек: M01 засчитан по скринингу, стартовал сразу с Python и pytest. За первую неделю написал больше, чем за год с Selenium.</p>
+            </div>
+            <div class="q-reviews__trow">
+              <span class="q-reviews__trow__month">M04</span>
+              <div class="q-reviews__trow__dot-wrap"><div class="q-reviews__trow__dot"></div><div class="q-reviews__trow__line"></div></div>
+              <p class="q-reviews__trow__text">Первый коммерческий API-suite на текущей работе. Переговоры о повышении с боссом — показал живой Allure-отчёт. <span class="earn">+9 000 ₽ бонус</span></p>
+            </div>
+            <div class="q-reviews__trow">
+              <span class="q-reviews__trow__month">M07</span>
+              <div class="q-reviews__trow__dot-wrap"><div class="q-reviews__trow__dot q-reviews__trow__dot--result"></div><div class="q-reviews__trow__line"></div></div>
+              <p class="q-reviews__trow__text"><b>Переход внутри компании</b> — Middle QA Automation. 180 000 ₽/мес.</p>
+            </div>
+            <div class="q-reviews__trow">
+              <span class="q-reviews__trow__month">M11</span>
+              <div class="q-reviews__trow__dot-wrap"><div class="q-reviews__trow__dot q-reviews__trow__dot--result"></div></div>
+              <p class="q-reviews__trow__text"><b>Оффер в продуктовый стартап</b>. 240 000 ₽/мес. Выбрал из трёх предложений.</p>
+            </div>
+          </div>
+          <blockquote class="q-reviews__quote">Думал, у меня проблема с языком программирования. Оказалось — проблема была с Selenium. Playwright — другой мир: локаторы работают, async работает, CI не падает случайно.</blockquote>
+          <div class="q-reviews__result">
+            <span class="q-reviews__result__badge">Оффер M11 · 240 000 ₽</span>
+            <span class="q-reviews__result__stack">Python · pytest · Playwright · Selenium · Locust · OWASP · DeepEval</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ PRICING ═══════════════════════════ -->
+  <section class="q-section q-pr" id="pricing">
+    <div class="q-container">
+
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>11</em> · СТОИМОСТЬ</div>
+        <h2 class="q-section-head__title">Открытая цена, без&nbsp;мелкого шрифта</h2>
+      </header>
+
+      <div class="q-pr-hero">
+
+        <div class="q-pr-hero__col q-pr-hero__col--left">
+          <div class="q-pr-hero__price">
+            <div class="q-pr-hero__num"><span>8&nbsp;250</span>&nbsp;<em>₽/мес</em></div>
+            <p class="q-pr-hero__detail"><b>Рассрочка 0%</b> на&nbsp;24&nbsp;месяца · без переплат</p>
+          </div>
+          <hr class="q-pr-hero__sep" />
+          <div class="q-pr-hero__group">
+            <span class="q-pr-hero__kicker">Якорь цены</span>
+            <p class="q-pr-hero__group-text"><b>319 руб</b> за&nbsp;час программы&nbsp;— дешевле, чем час с&nbsp;репетитором по&nbsp;Python (от&nbsp;1&nbsp;500&nbsp;руб).</p>
+          </div>
+          <hr class="q-pr-hero__sep" />
+          <div class="q-pr-hero__group">
+            <span class="q-pr-hero__kicker q-pr-hero__kicker--accent">7&nbsp;дней · возврат 100%</span>
+            <h3 class="q-pr-hero__group-title">Полный доступ ко&nbsp;всему</h3>
+            <p class="q-pr-hero__group-text">Если не&nbsp;подойдёт&nbsp;— <b>вернём 100% без вопросов.</b> Без мелкого шрифта, без «удержания за&nbsp;обработку».</p>
+          </div>
+        </div>
+
+        <div class="q-pr-hero__col q-pr-hero__col--right">
+          <div class="q-pr-incl-head">
+            <h3 class="q-pr-incl-head__title">Что входит в&nbsp;трек</h3>
+            <span class="q-pr-incl-head__count">09 пунктов</span>
+          </div>
+          <ol class="q-pr-incl" aria-label="Что входит в трек">
+            <li class="q-pr-incl__item">
+              <span class="q-pr-incl__num">01</span>
+              <p class="q-pr-incl__text">12&nbsp;месяцев программы&nbsp;— от&nbsp;480&nbsp;часов практики</p>
+            </li>
+            <li class="q-pr-incl__item">
+              <span class="q-pr-incl__num">02</span>
+              <p class="q-pr-incl__text">Трек QA&nbsp;Automation&nbsp;— pytest, Playwright, Docker, GitHub&nbsp;Actions, Allure, Locust</p>
+            </li>
+            <li class="q-pr-incl__item">
+              <span class="q-pr-incl__num">03</span>
+              <p class="q-pr-incl__text">Стажировка на&nbsp;production-продуктах Quillon с&nbsp;7-го месяца</p>
+            </li>
+            <li class="q-pr-incl__item">
+              <span class="q-pr-incl__num">04</span>
+              <p class="q-pr-incl__text">Оплачиваемые задачи со&nbsp;2-го месяца, коммерческие проекты через Quillon&nbsp;Jobs</p>
+            </li>
+            <li class="q-pr-incl__item">
+              <span class="q-pr-incl__num">05</span>
+              <p class="q-pr-incl__text">Дипломный QA-фреймворк на&nbsp;Demo&nbsp;Day (гранды лучшим до&nbsp;500&nbsp;000&nbsp;₽)</p>
+            </li>
+            <li class="q-pr-incl__item">
+              <span class="q-pr-incl__num">06</span>
+              <p class="q-pr-incl__text">AI-помощник Quilly&nbsp;— поддержка 24/7</p>
+            </li>
+            <li class="q-pr-incl__item">
+              <span class="q-pr-incl__num">07</span>
+              <p class="q-pr-incl__text">LaunchPad: сопровождение до&nbsp;первого оффера без&nbsp;срока давности</p>
+            </li>
+            <li class="q-pr-incl__item">
+              <span class="q-pr-incl__num">08</span>
+              <p class="q-pr-incl__text">Модули: Prompt Engineering + AI-инструменты для&nbsp;QA</p>
+            </li>
+            <li class="q-pr-incl__item">
+              <span class="q-pr-incl__num">09</span>
+              <p class="q-pr-incl__text">Сертификат QA Automation Engineer</p>
+            </li>
+          </ol>
+        </div>
+
+      </div>
+
+      <div class="q-pr-trust">
+        <div class="q-pr-trust__cell">
+          <span class="q-pr-trust__kicker">В&nbsp;подарок</span>
+          <h3 class="q-pr-trust__title">Модуль «AI-разработчик»</h3>
+          <p class="q-pr-trust__text">Prompt Engineering + Vibe Coding + инструменты нового поколения. <b>Для&nbsp;участников текущего набора&nbsp;— бесплатно.</b></p>
+        </div>
+        <div class="q-pr-trust__cell">
+          <span class="q-pr-trust__kicker">Первый заказ · со&nbsp;2-го месяца</span>
+          <h3 class="q-pr-trust__title">Зарабатываешь до&nbsp;выпуска</h3>
+          <p class="q-pr-trust__text">Не&nbsp;ждёшь окончания программы: со&nbsp;2-го месяца берёшь оплачиваемые задачи через <b>Quillon&nbsp;Jobs</b>&nbsp;— тест-планы, автотесты, регрессы для реального бизнеса.</p>
+        </div>
+      </div>
+
+      <div class="q-pr-cta">
+        <div class="q-pr-cta__copy">
+          <span class="q-pr-cta__title">Готовы начать?</span>
+          <span class="q-pr-cta__sub">Оставь заявку&nbsp;— разберём твою ситуацию за&nbsp;15&nbsp;минут и&nbsp;покажем расчёт окупаемости.</span>
+        </div>
+        <a class="q-btn q-btn--primary q-btn--lg" href="#contact">
+          Записаться на&nbsp;разбор
+          <span class="q-btn__icon" aria-hidden="true">→</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ FAQ ═══════════════════════════ -->
+  <section class="q-section q-faq" id="faq">
+    <div class="q-container">
+
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>12</em> · ВОПРОСЫ</div>
+        <h2 class="q-section-head__title">Частые вопросы</h2>
+      </header>
+
+      <div class="q-faq-body">
+
+        <aside class="q-faq-aside">
+          <span class="q-faq-aside__kicker"><em>08</em> · ОТВЕТОВ ВНУТРИ</span>
+          <h3 class="q-faq-aside__title">Всё, что обычно спрашивают на&nbsp;консультации.</h3>
+          <p class="q-faq-aside__text">Опыт, формат, гарантии, заработок и&nbsp;перспективы QA&nbsp;— ответы до&nbsp;старта.</p>
+        </aside>
+
+        <ul class="q-faq-list" role="list">
+
+          <li class="q-faq-item">
+            <details open>
+              <summary>
+                <span class="q-faq-item__num">01</span>
+                <h3 class="q-faq-item__q">У меня нулевой опыт в IT. Хватит ли 12 месяцев?</h3>
+                <span class="q-faq-item__plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="q-faq-item__a">
+                <p class="q-faq-item__a-text">Да, программа спроектирована с расчётом на ноль. Первые два месяца&nbsp;— Python и основы тестирования без предполагаемых знаний. <b>~70% выпускников без опыта получают первый оффер в течение 2 месяцев после диплома.</b></p>
+              </div>
+            </details>
+          </li>
+
+          <li class="q-faq-item">
+            <details>
+              <summary>
+                <span class="q-faq-item__num">02</span>
+                <h3 class="q-faq-item__q">Можно&nbsp;ли совмещать с&nbsp;работой?</h3>
+                <span class="q-faq-item__plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="q-faq-item__a">
+                <p class="q-faq-item__a-text">Да, программа рассчитана именно на это. <b>12–15 часов в неделю&nbsp;— 2 часа в день.</b> Уроки в плеере 24/7. Стажировка с M07&nbsp;— 8 часов/неделя, тоже совместима с full-time работой. Совмещать&nbsp;— стандартный сценарий, а не исключение.</p>
+              </div>
+            </details>
+          </li>
+
+          <li class="q-faq-item">
+            <details>
+              <summary>
+                <span class="q-faq-item__num">03</span>
+                <h3 class="q-faq-item__q">Чем QA-автоматизация лучше обычного разработчика?</h3>
+                <span class="q-faq-item__plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="q-faq-item__a">
+                <p class="q-faq-item__a-text">Порог входа ниже: на джуна-разработчика рынок 2025 закрылся, на джуна QA&nbsp;Auto&nbsp;— открыт. <b>6 000+ вакансий против 12 000+</b>, но конкуренция ниже в разы. Зарплатный потолок чуть ниже разработки на старте, через 1.5 года разница исчезает.</p>
+              </div>
+            </details>
+          </li>
+
+          <li class="q-faq-item">
+            <details>
+              <summary>
+                <span class="q-faq-item__num">04</span>
+                <h3 class="q-faq-item__q">У меня 2 года мануального тестирования. Не будет ли скучно первые месяцы?</h3>
+                <span class="q-faq-item__plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="q-faq-item__a">
+                <p class="q-faq-item__a-text">Для тебя есть фаст-трек: M01 засчитывается по результатам входного скрининга, стартуешь сразу с Python и pytest. <b>Смотри кейс #03</b>&nbsp;— это типичная траектория мануальщика у нас: оффер Middle уже к M07.</p>
+              </div>
+            </details>
+          </li>
+
+          <li class="q-faq-item">
+            <details>
+              <summary>
+                <span class="q-faq-item__num">05</span>
+                <h3 class="q-faq-item__q">Что если не получу оффер к концу программы?</h3>
+                <span class="q-faq-item__plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="q-faq-item__a">
+                <p class="q-faq-item__a-text">Бесплатное продление на 3 месяца с дополнительной mock-интервью практикой и доступом к закрытому каналу вакансий Quillon. <b>Без дополнительной оплаты</b>. Сопровождаем до результата.</p>
+              </div>
+            </details>
+          </li>
+
+          <li class="q-faq-item">
+            <details>
+              <summary>
+                <span class="q-faq-item__num">06</span>
+                <h3 class="q-faq-item__q">Почему именно Playwright, а не Selenium?</h3>
+                <span class="q-faq-item__plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="q-faq-item__a">
+                <p class="q-faq-item__a-text">Playwright&nbsp;— современный стандарт 2024–2025: быстрее, стабильнее, async из коробки, лучше работает с SPA. <b>Selenium даём в M06 на уровне «читай legacy»</b>&nbsp;— чтобы понимать старые проекты на собеседованиях. На новых проектах в РФ 75%&nbsp;— Playwright.</p>
+              </div>
+            </details>
+          </li>
+
+          <li class="q-faq-item">
+            <details>
+              <summary>
+                <span class="q-faq-item__num">07</span>
+                <h3 class="q-faq-item__q">Что такое тестирование AI-систем и зачем оно мне?</h3>
+                <span class="q-faq-item__plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="q-faq-item__a">
+                <p class="q-faq-item__a-text">Редкий и быстро растущий навык: тестирование LLM-фич, RAG-систем, чат-ботов. Недетерминизм моделей ломает классические подходы&nbsp;— нужны eval-фреймворки и golden datasets. <b>С 2024 года добавляет 20–30к к офферу</b>. M11 покрывает базу, аддон&nbsp;— углубление.</p>
+              </div>
+            </details>
+          </li>
+
+          <li class="q-faq-item">
+            <details>
+              <summary>
+                <span class="q-faq-item__num">08</span>
+                <h3 class="q-faq-item__q">Что если не подойдёт?</h3>
+                <span class="q-faq-item__plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="q-faq-item__a">
+                <p class="q-faq-item__a-text">Первые 7 дней&nbsp;— полный доступ ко всем материалам. Если решите, что это не ваше&nbsp;— <b>вернём 100% без вопросов.</b> Без мелкого шрифта, без «удержания за обработку». Просто напишите&nbsp;— и деньги вернутся.</p>
+              </div>
+            </details>
+          </li>
+
+        </ul>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ CONTACT ═══════════════════════════ -->
+  <section class="q-section q-cf" id="contact">
+    <div class="q-container">
+      <div class="q-cf-grid">
+
+        <aside class="q-cf-aside">
+          <span class="q-cf-aside__num"><em>13</em> · СЛЕДУЮЩИЙ ШАГ</span>
+          <h2 class="q-cf-aside__title">Разберём твою ситуацию за&nbsp;15&nbsp;минут</h2>
+          <p class="q-cf-aside__sub">Расскажешь, где сейчас работаешь и чего хочешь от IT. Подберём темп, покажем расчёт окупаемости, ответим на любые вопросы.</p>
+          <ul class="q-cf-aside__list" role="list">
+            <li class="q-cf-aside__item">
+              <span class="q-cf-aside__item-num">01</span>
+              <p class="q-cf-aside__item-text">Подберём темп и формат под твой график</p>
+            </li>
+            <li class="q-cf-aside__item">
+              <span class="q-cf-aside__item-num">02</span>
+              <p class="q-cf-aside__item-text">Покажем расчёт часов, сроков и окупаемости</p>
+            </li>
+            <li class="q-cf-aside__item">
+              <span class="q-cf-aside__item-num">03</span>
+              <p class="q-cf-aside__item-text">Ответим на любые вопросы по треку QA</p>
+            </li>
+          </ul>
+        </aside>
+
+        <form class="q-cf-form" id="cf-track-form" action="#" method="post" novalidate>
+
+          <div class="q-cf-field">
+            <label class="q-cf-label" for="cf-name">
+              <span class="q-cf-label__num">01</span>
+              <span class="q-cf-label__text">Имя<span class="q-cf-label__req">*</span></span>
+            </label>
+            <input class="q-cf-input" id="cf-name" name="name" type="text"
+              placeholder="Как к тебе обращаться?" autocomplete="name" required>
+          </div>
+
+          <div class="q-cf-field">
+            <label class="q-cf-label" for="cf-phone">
+              <span class="q-cf-label__num">02</span>
+              <span class="q-cf-label__text">Телефон<span class="q-cf-label__req">*</span></span>
+            </label>
+            <input class="q-cf-input" id="cf-phone" name="phone" type="tel"
+              placeholder="+7 ___ ___ __ __" autocomplete="tel" required>
+          </div>
+
+          <div class="q-cf-field">
+            <label class="q-cf-label" for="cf-email">
+              <span class="q-cf-label__num">03</span>
+              <span class="q-cf-label__text">Email</span>
+            </label>
+            <input class="q-cf-input" id="cf-email" name="email" type="email"
+              placeholder="name@example.com" autocomplete="email">
+          </div>
+
+          <ul class="q-cf-consents" role="list">
+            <li>
+              <label class="q-cf-consent">
+                <input class="q-cf-consent__input" type="checkbox" name="consent_pdn" required>
+                <span class="q-cf-consent__box" aria-hidden="true"></span>
+                <p class="q-cf-consent__text">Даю согласие на&nbsp;обработку <a href="/v4/docs/consent-pdn.html" target="_blank" rel="noopener">персональных данных</a><span class="q-cf-consent__req">*</span></p>
+              </label>
+            </li>
+            <li>
+              <label class="q-cf-consent">
+                <input class="q-cf-consent__input" type="checkbox" name="consent_marketing">
+                <span class="q-cf-consent__box" aria-hidden="true"></span>
+                <p class="q-cf-consent__text">Даю согласие на&nbsp;получение <a href="/v4/docs/consent-marketing.html" target="_blank" rel="noopener">рекламных материалов</a></p>
+              </label>
+            </li>
+          </ul>
+
+          <div class="q-cf-submit">
+            <button class="q-btn q-btn--primary q-btn--lg q-cf-submit__btn" type="submit">
+              Записаться на&nbsp;разбор
+              <span class="q-btn__icon" aria-hidden="true">→</span>
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ FINAL CTA ═══════════════════════════ -->
+  <section class="q-section q-fc" id="final_cta">
+    <img class="q-fc__deco" src="/v4/images/recolored/cta-horizon.svg?v=2" alt="" aria-hidden="true" loading="lazy">
+    <div class="q-container">
+      <header class="q-section-head">
+        <div class="q-section-head__num"><em>14</em> · НАЧАЛО</div>
+      </header>
+      <div class="q-fc-grid">
+        <div class="q-fc-stack">
+          <h2 class="q-fc-headline">Production QA-портфолио через&nbsp;<em>12&nbsp;месяцев</em></h2>
+          <p class="q-fc-sub">Оставь заявку&nbsp;— разберём твою ситуацию за&nbsp;<b>15&nbsp;минут</b>. Без оплаты, без обязательств. Подберём темп, покажем план и расчёт окупаемости.</p>
+          <div class="q-fc-cta">
+            <a class="q-btn q-btn--primary q-btn--lg q-fc-cta__btn" href="#contact">
+              Записаться на&nbsp;разбор
+              <span class="q-btn__icon" aria-hidden="true">→</span>
+            </a>
+            <p class="q-fc-cta__micro"><b>15&nbsp;минут</b> · <b>бесплатно</b> · <b>без обязательств</b></p>
+          </div>
+        </div>
+        <aside class="q-fc-aside">
+          <h3 class="q-fc-aside__title"><b>8&nbsp;250&nbsp;₽/мес</b> в&nbsp;рассрочку. 7&nbsp;дней с&nbsp;полным возвратом.</h3>
+          <div class="q-fc-aside__meta">
+            <div class="q-fc-aside__meta-cell">
+              <span class="q-fc-aside__meta-num">0%</span>
+              <span class="q-fc-aside__meta-label">Переплат</span>
+            </div>
+            <div class="q-fc-aside__meta-cell">
+              <span class="q-fc-aside__meta-num">100%</span>
+              <span class="q-fc-aside__meta-label">Возврат · 7&nbsp;дней</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+  <footer class="q-section q-ft" id="footer">
+    <div class="q-container q-ft-shell">
+      <div class="q-ft-top">
+        <div class="q-ft-brand">
+          <a class="q-ft-brand__logo" href="/" aria-label="Quillon">
+            <img class="q-ft-brand__img" src="/v4/assets/brand/logo.svg" alt="Quillon" width="103" height="36">
+          </a>
+          <p class="q-ft-brand__tagline">Продукты. Команды. Реальный доход.</p>
+        </div>
+        <nav class="q-ft-sitemap" aria-label="Карта сайта">
+          <div class="q-ft-col">
+            <h4 class="q-ft-col__title">Продукты</h4>
+            <ul class="q-ft-col__list">
+              <li><a class="q-ft-link" href="/#products">Quilly AI</a></li>
+              <li><a class="q-ft-link" href="https://meet.quillon.ru" target="_blank" rel="noopener">Quillon Meet</a></li>
+              <li><a class="q-ft-link" href="https://lms.quillon.ru" target="_blank" rel="noopener">Quillon LMS</a></li>
+              <li><a class="q-ft-link" href="/#quillon_jobs">Quillon Jobs</a></li>
+            </ul>
+          </div>
+          <div class="q-ft-col">
+            <h4 class="q-ft-col__title">Направления</h4>
+            <ul class="q-ft-col__list">
+              <li><a class="q-ft-link" href="/tracks/python-backend-ml/">Python Backend + ML</a></li>
+              <li><a class="q-ft-link" href="/tracks/flutter/">Flutter Developer</a></li>
+              <li><a class="q-ft-link" href="/tracks/qa/">QA Automation</a></li>
+            </ul>
+          </div>
+          <div class="q-ft-col">
+            <h4 class="q-ft-col__title">Программа</h4>
+            <ul class="q-ft-col__list">
+              <li><a class="q-ft-link" href="/#format">Формат</a></li>
+              <li><a class="q-ft-link" href="/#launchpad">LaunchPad</a></li>
+              <li><a class="q-ft-link" href="/#pricing">Стоимость</a></li>
+              <li><a class="q-ft-link" href="/#faq">Вопросы</a></li>
+            </ul>
+          </div>
+          <div class="q-ft-col">
+            <h4 class="q-ft-col__title">Компания</h4>
+            <ul class="q-ft-col__list">
+              <li><a class="q-ft-link" href="/#products">Продукты</a></li>
+              <li><a class="q-ft-link" href="https://tech.quillon.ru" target="_blank" rel="noopener">IT-студия Quillon Tech</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <div class="q-ft-legal">
+        <div class="q-ft-legal__col">
+          <span class="q-ft-legal__kicker">Реквизиты</span>
+          <p class="q-ft-legal__line"><b>ООО «Квиллон»</b></p>
+          <p class="q-ft-legal__line">ИНН&nbsp;<b>1660308717</b></p>
+          <p class="q-ft-legal__line">420055, Республика Татарстан,<br>г.&nbsp;Казань, Свободная&nbsp;ул., д.&nbsp;7, офис&nbsp;5</p>
+        </div>
+        <div class="q-ft-legal__col">
+          <span class="q-ft-legal__kicker">Документы</span>
+          <ul class="q-ft-legal__links">
+            <li><a class="q-ft-legal__link" href="/v4/docs/oferta.html" target="_blank" rel="noopener">Публичная оферта</a></li>
+            <li><a class="q-ft-legal__link" href="/v4/docs/privacy-policy.html" target="_blank" rel="noopener">Политика конфиденциальности</a></li>
+            <li><a class="q-ft-legal__link" href="/v4/docs/consent-pdn.html" target="_blank" rel="noopener">Согласие на&nbsp;обработку ПД</a></li>
+            <li><a class="q-ft-legal__link" href="/v4/docs/cookies-consent.html" target="_blank" rel="noopener">Согласие на&nbsp;использование cookies</a></li>
+            <li><a class="q-ft-legal__link" href="https://islod.obrnadzor.gov.ru/view/133831" target="_blank" rel="noopener">Образовательная лицензия</a></li>
+          </ul>
+        </div>
+        <div class="q-ft-legal__col">
+          <span class="q-ft-legal__kicker">Контакты</span>
+          <ul class="q-ft-legal__links">
+            <li>
+              <a class="q-ft-contact-link" href="mailto:support@quillon.ru">
+                <svg class="q-ft-contact-link__icon" viewBox="0 0 16 16" aria-hidden="true">
+                  <rect x="2" y="3.5" width="12" height="9" rx="0.5"/>
+                  <path d="M2.5 4.2 L8 8.5 L13.5 4.2"/>
+                </svg>
+                <span>support@quillon.ru</span>
+              </a>
+            </li>
+            <li>
+              <a class="q-ft-contact-link" href="https://t.me/quillon_ru" target="_blank" rel="noopener">
+                <svg class="q-ft-contact-link__icon" viewBox="0 0 16 16" aria-hidden="true">
+                  <path d="M14 2.5 L1.8 7.5 L6.5 9.2 L14 2.5 Z"/>
+                  <path d="M6.5 9.2 L8 13 L10.3 10.2"/>
+                  <path d="M6.5 9.2 L14 2.5"/>
+                </svg>
+                <span>@quillon_ru</span>
+              </a>
+            </li>
+            <li>
+              <a class="q-ft-contact-link" href="https://vk.com/quillon" target="_blank" rel="noopener">
+                <svg class="q-ft-contact-link__icon q-ft-contact-link__icon--vk" viewBox="0 0 16 16" aria-hidden="true">
+                  <rect x="1.5" y="1.5" width="13" height="13" rx="2.4"/>
+                  <text x="8" y="11" text-anchor="middle" font-size="7.5" font-weight="600">VK</text>
+                </svg>
+                <span>vk.com/quillon</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="q-ft-foot">
+        <span class="q-ft-foot__copy">© 2026 ООО «Квиллон»</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══ COOKIE BANNER ═══ -->
+  <aside class="q-cookie" id="q-cookie" role="dialog" aria-live="polite" aria-label="Использование cookies">
+    <h3 class="q-cookie__title">Cookies</h3>
+    <p class="q-cookie__text">
+      Мы&nbsp;используем cookies, чтобы улучшать сайт и&nbsp;показывать релевантный контент. Продолжая просмотр, ты&nbsp;соглашаешься с&nbsp;<a href="/v4/docs/cookies-consent.html" target="_blank" rel="noopener">условиями</a>&nbsp;и&nbsp;<a href="/v4/docs/privacy-policy.html" target="_blank" rel="noopener">политикой конфиденциальности</a>.
+    </p>
+    <div class="q-cookie__row">
+      <button class="q-btn q-btn--primary q-btn--sm q-cookie__btn" type="button" data-q-cookie-accept>Принять</button>
+      <button class="q-cookie__dismiss" type="button" data-q-cookie-dismiss>Только&nbsp;необходимые</button>
+    </div>
+  </aside>
+
+  <script defer src="js/main.js?v=1"></script>
+
 </body>
 </html>

@@ -1,0 +1,341 @@
+    /* ════════════════════════════════════════════════════════════
+     * PROGRAM — editorial rail-list, 5 modules, 48 weeks
+     *
+     * Каждый модуль = строка:
+     *   [M-num + period]  |  [title + chips тем]  |  [outcome →]
+     *
+     * Линии — hairline dividers. Никаких карточек/коробок.
+     * Outcome имеет accent-arrow «→» и highlighted strong-фразу.
+     * ════════════════════════════════════════════════════════════ */
+
+    .q-program {
+      padding: var(--q-s-10) 0 var(--q-s-11);
+      border-top: 1px solid var(--q-line-soft);
+      background: var(--q-bg-0);
+    }
+
+    .q-program__head {
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-3);
+      margin-bottom: var(--q-s-9);
+      max-width: 64ch;
+    }
+    .q-program__head__kicker {
+      font: 500 11px/1 "Geist Mono", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+    .q-program__head__title {
+      margin: 0;
+      font-family: "Inter Variable", "Inter", sans-serif;
+      font-weight: 600;
+      font-size: clamp(28px, 3.6vw, 42px);
+      line-height: 1.08;
+      letter-spacing: -0.024em;
+      color: var(--q-text-hi);
+    }
+    .q-program__head__title em {
+      font-style: normal;
+      color: var(--q-accent);
+    }
+    .q-program__head__sub {
+      margin: 4px 0 0;
+      font: 400 15px/1.55 "Inter Variable", sans-serif;
+      color: var(--q-text-mid);
+      max-width: 56ch;
+    }
+
+    /* ─── Module list — native <details>/<summary> accordion ─── */
+    .q-program__list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      border-top: 1px solid var(--q-line);
+    }
+    .q-program__module {
+      border-bottom: 1px solid var(--q-line-soft);
+    }
+    .q-program__module:last-child {
+      border-bottom-color: var(--q-line);
+    }
+    .q-program__module > summary { list-style: none; }
+    .q-program__module > summary::-webkit-details-marker { display: none; }
+
+    /* Summary — кликабельный заголовок строки */
+    .q-program__module__summary {
+      display: grid;
+      grid-template-columns: minmax(140px, 18%) 1fr auto;
+      gap: var(--q-s-8);
+      padding: var(--q-s-7) 0;
+      cursor: pointer;
+      align-items: start;
+      transition: padding-left var(--q-dur-med) var(--q-ease);
+    }
+    .q-program__module:hover > .q-program__module__summary {
+      padding-left: 6px;
+    }
+    .q-program__module[open] > .q-program__module__summary {
+      padding-bottom: var(--q-s-3);
+    }
+
+    /* Rail — M-num + period */
+    .q-program__module__rail {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .q-program__module__num {
+      font: 600 14px/1 "Geist Mono", monospace;
+      letter-spacing: 0.04em;
+      color: var(--q-text-hi);
+      font-feature-settings: "tnum" 1;
+    }
+    .q-program__module__period {
+      font: 500 11px/1.3 "Geist Mono", monospace;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+
+    /* Primary — title + brief outcome */
+    .q-program__module__primary {
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-3);
+    }
+    .q-program__module__title {
+      margin: 0;
+      font: 600 clamp(20px, 2.2vw, 26px)/1.2 "Inter Variable", sans-serif;
+      letter-spacing: -0.018em;
+      color: var(--q-text-hi);
+      max-width: 36ch;
+    }
+    .q-program__module__title code {
+      font-family: "Geist Mono", monospace;
+      font-size: 0.9em;
+      color: var(--q-accent);
+    }
+    .q-program__module__brief {
+      margin: 0;
+      font: 400 14px/1.55 "Inter Variable", sans-serif;
+      color: var(--q-text-mid);
+      max-width: 64ch;
+    }
+    .q-program__module__brief strong {
+      color: var(--q-text-hi);
+      font-weight: 500;
+    }
+
+    /* Chevron */
+    .q-program__module__chevron {
+      width: 16px;
+      height: 16px;
+      color: var(--q-text-low);
+      margin-top: 6px;
+      transition: transform var(--q-dur-med) var(--q-ease), color var(--q-dur-fast) var(--q-ease);
+      flex-shrink: 0;
+    }
+    .q-program__module[open] .q-program__module__chevron {
+      transform: rotate(180deg);
+      color: var(--q-text-hi);
+    }
+    .q-program__module:hover .q-program__module__chevron { color: var(--q-text-mid); }
+
+    /* ─── Detail (open state) ─── */
+    .q-program__module__detail {
+      display: grid;
+      grid-template-columns: minmax(140px, 18%) 1fr;
+      gap: var(--q-s-8);
+      padding: 0 0 var(--q-s-7);
+    }
+    .q-program__module__detail::before { content: ""; }
+    .q-program__module__detail__inner {
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-6);
+    }
+
+    /* Phase — sub-фаза по 6 нед */
+    .q-program__phase {
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-3);
+    }
+    .q-program__phase__head {
+      display: flex;
+      align-items: baseline;
+      gap: var(--q-s-3);
+      padding-bottom: 4px;
+      border-bottom: 1px solid var(--q-line-soft);
+    }
+    .q-program__phase__name {
+      font: 600 13px/1.2 "Geist Mono", monospace;
+      letter-spacing: 0.02em;
+      color: var(--q-text-hi);
+    }
+    .q-program__phase__period {
+      font: 500 10.5px/1 "Geist Mono", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+
+    /* Weeks list */
+    .q-program__weeks {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .q-program__week {
+      display: grid;
+      grid-template-columns: minmax(60px, 70px) minmax(0, 1fr);
+      gap: var(--q-s-4);
+      padding: 6px 0;
+      align-items: baseline;
+    }
+    .q-program__week__n {
+      font: 500 11.5px/1.3 "Geist Mono", monospace;
+      letter-spacing: 0.04em;
+      color: var(--q-text-low);
+      font-feature-settings: "tnum" 1;
+    }
+    .q-program__week__body {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 8px;
+      font: 400 13.5px/1.5 "Inter Variable", sans-serif;
+      color: var(--q-text-mid);
+    }
+    .q-program__week__theme {
+      color: var(--q-text-hi);
+      font-weight: 500;
+    }
+    .q-program__week__art {
+      color: var(--q-text-mid);
+    }
+    .q-program__week__art::before {
+      content: "·";
+      margin-right: 6px;
+      color: var(--q-text-low);
+    }
+    .q-program__week__art strong {
+      color: var(--q-accent);
+      font-weight: 500;
+    }
+    .q-program__week--milestone .q-program__week__n {
+      color: var(--q-accent);
+      font-weight: 600;
+    }
+
+    /* Demo Day footer of expanded module */
+    .q-program__demoday {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: var(--q-s-4);
+      border: 1px solid color-mix(in srgb, var(--q-accent) 22%, var(--q-line));
+      border-radius: var(--q-r-md);
+      background: color-mix(in srgb, var(--q-accent) 4%, var(--q-bg-1));
+    }
+    .q-program__demoday__label {
+      font: 500 10px/1 "Geist Mono", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--q-accent);
+    }
+    .q-program__demoday__text {
+      margin: 0;
+      font: 400 13.5px/1.5 "Inter Variable", sans-serif;
+      color: var(--q-text-mid);
+    }
+    .q-program__demoday__text strong {
+      color: var(--q-text-hi);
+      font-weight: 600;
+    }
+
+    /* Annotation note (для гипотез M03/M04) */
+    .q-program__note {
+      margin: 0;
+      padding: 8px 12px;
+      border-left: 2px solid var(--q-line);
+      font: 400 12.5px/1.5 "Inter Variable", sans-serif;
+      color: var(--q-text-low);
+      font-style: italic;
+    }
+
+    /* Foot — bottom signal under list */
+    .q-program__foot {
+      margin-top: var(--q-s-7);
+      padding: var(--q-s-5);
+      border: 1px solid var(--q-line-soft);
+      border-radius: var(--q-r-lg);
+      background: var(--q-bg-1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--q-s-5);
+      flex-wrap: wrap;
+    }
+    .q-program__foot__text {
+      font: 400 14px/1.5 "Inter Variable", sans-serif;
+      color: var(--q-text-mid);
+      max-width: 56ch;
+    }
+    .q-program__foot__text strong {
+      color: var(--q-text-hi);
+      font-weight: 600;
+    }
+    .q-program__foot__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      border: 1px solid var(--q-line);
+      border-radius: var(--q-r-md);
+      font: 500 13px/1 "Inter Variable", sans-serif;
+      color: var(--q-text-hi);
+      text-decoration: none;
+      transition: border-color var(--q-dur-fast) var(--q-ease), background var(--q-dur-fast) var(--q-ease);
+    }
+    .q-program__foot__cta:hover {
+      border-color: var(--q-line-hover);
+      background: var(--q-bg-2);
+    }
+    .q-program__foot__cta__arrow {
+      transition: transform var(--q-dur-fast) var(--q-ease);
+    }
+    .q-program__foot__cta:hover .q-program__foot__cta__arrow {
+      transform: translateX(3px);
+    }
+
+    /* Program responsive */
+    @media (max-width: 960px) {
+      .q-program__module__summary {
+        grid-template-columns: 1fr auto;
+        gap: var(--q-s-4);
+      }
+      .q-program__module__rail {
+        flex-direction: row;
+        gap: 12px;
+        align-items: baseline;
+        grid-column: 1 / -1;
+      }
+      .q-program__module__primary {
+        grid-column: 1 / 2;
+        grid-row: 2;
+      }
+      .q-program__module__chevron {
+        grid-column: 2 / 3;
+        grid-row: 2;
+      }
+      .q-program__module__detail {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      .q-program__module__detail::before { display: none; }
+    }
