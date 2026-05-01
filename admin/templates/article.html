@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{TITLE}} — Quillon</title>
+  <meta name="description" content="{{DESCRIPTION}}">
+  <meta name="keywords" content="{{KEYWORDS}}">
+  <link rel="canonical" href="{{URL}}">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="{{TITLE}}">
+  <meta property="og:description" content="{{DESCRIPTION}}">
+  <meta property="og:url" content="{{URL}}">
+  <meta property="og:image" content="{{OG_IMAGE}}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Quillon">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="article:published_time" content="{{PUBLISHED_ISO}}">
+  <meta property="article:modified_time" content="{{UPDATED_ISO}}">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{TITLE}}">
+  <meta name="twitter:description" content="{{DESCRIPTION}}">
+  <meta name="twitter:image" content="{{OG_IMAGE}}">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/favicon/favicon-16x16.png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png">
+
+  <!-- Fonts (self-hosted) -->
+  <link rel="preload" href="/fonts/HostGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/HostGrotesk-Medium.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="Блог Quillon" href="/blog/rss.xml">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+{{SCHEMA_ORG}}
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://quillon.ru/" },
+      { "@type": "ListItem", "position": 2, "name": "Блог", "item": "https://quillon.ru/blog/" },
+      { "@type": "ListItem", "position": 3, "name": "{{TITLE}}", "item": "{{URL}}" }
+    ]
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink-00: #04070C;
+      --ink-05: #06090F;
+      --ink-10: #0A0F18;
+      --ink-15: #0E1420;
+      --text: #E8EDF5;
+      --text-soft: #C3CBD9;
+      --text-muted: #6B7687;
+      --mint: #5EF2A1;
+      --rule: rgba(232,237,245,.10);
+      --ff: "Host Grotesk", system-ui, sans-serif;
+      --ff-mono: "JetBrains Mono", ui-monospace, monospace;
+    }
+
+    @font-face {
+      font-family: "Host Grotesk";
+      src: url("/fonts/HostGrotesk-Regular.woff2") format("woff2");
+      font-weight: 400; font-display: swap;
+    }
+    @font-face {
+      font-family: "Host Grotesk";
+      src: url("/fonts/HostGrotesk-Medium.woff2") format("woff2");
+      font-weight: 500; font-display: swap;
+    }
+
+    body {
+      background: var(--ink-00);
+      color: var(--text);
+      font-family: var(--ff);
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .topbar {
+      border-bottom: 1px solid var(--rule);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .topbar a { color: var(--mint); text-decoration: none; font-weight: 500; letter-spacing: -0.01em; }
+    .topbar nav { display: flex; gap: 20px; }
+    .topbar nav a { color: var(--text-muted); font-size: 14px; }
+    .topbar nav a:hover { color: var(--text); }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+    .article-meta {
+      padding: 48px 0 24px;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 40px;
+    }
+    .breadcrumb {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-family: var(--ff-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 20px;
+    }
+    .breadcrumb a { color: var(--text-muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--mint); }
+    .breadcrumb span { margin: 0 6px; }
+
+    h1 {
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 500;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .article-desc {
+      font-size: 18px;
+      color: var(--text-soft);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .article-date {
+      font-size: 12px;
+      font-family: var(--ff-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    .article-content { padding-bottom: 80px; }
+
+    .article-content h2 {
+      font-size: clamp(20px, 2.5vw, 28px);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin: 48px 0 16px;
+      color: var(--text);
+    }
+    .article-content h3 {
+      font-size: 18px;
+      font-weight: 500;
+      margin: 32px 0 12px;
+      color: var(--text);
+    }
+    .article-content p { margin-bottom: 20px; color: var(--text-soft); }
+    .article-content ul, .article-content ol { padding-left: 24px; margin-bottom: 20px; color: var(--text-soft); }
+    .article-content li { margin-bottom: 8px; }
+    .article-content strong { color: var(--text); font-weight: 500; }
+    .article-content a { color: var(--mint); text-decoration: underline; text-decoration-color: rgba(94,242,161,.3); }
+    .article-content a:hover { text-decoration-color: var(--mint); }
+    .article-content blockquote {
+      border-left: 2px solid var(--mint);
+      padding: 12px 20px;
+      margin: 24px 0;
+      background: var(--ink-10);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-soft);
+      font-style: italic;
+    }
+    .article-content pre {
+      background: var(--ink-15);
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      padding: 20px;
+      overflow-x: auto;
+      margin: 24px 0;
+      font-family: var(--ff-mono);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .article-content code {
+      font-family: var(--ff-mono);
+      font-size: 13px;
+      background: var(--ink-10);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--mint);
+    }
+    .article-content pre code { background: none; padding: 0; color: inherit; }
+    .article-content hr { border: none; border-top: 1px solid var(--rule); margin: 40px 0; }
+
+    .cta-block {
+      background: var(--ink-10);
+      border: 1px solid var(--rule);
+      border-top: 2px solid var(--mint);
+      border-radius: 14px;
+      padding: 32px;
+      margin: 48px 0;
+      text-align: center;
+    }
+    .cta-block h3 { color: var(--text); font-size: 20px; margin-bottom: 12px; }
+    .cta-block p { color: var(--text-muted); margin-bottom: 20px; }
+    .cta-btn {
+      display: inline-block;
+      background: var(--mint);
+      color: #04070C;
+      font-weight: 500;
+      font-size: 15px;
+      padding: 12px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 140ms;
+    }
+    .cta-btn:hover { background: #7DFFB3; }
+
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    footer a { color: var(--text-muted); text-decoration: none; }
+    footer a:hover { color: var(--mint); }
+
+    /* highlight.js token colors */
+    .hljs-keyword { color: var(--mint); }
+    .hljs-string { color: #F5B544; }
+    .hljs-number { color: #F06B8E; }
+    .hljs-comment { color: var(--text-muted); font-style: italic; }
+    .hljs-built_in, .hljs-name { color: #9BCBFF; }
+
+    @media (max-width: 640px) {
+      .topbar { padding: 16px; }
+      .container { padding: 0 16px; }
+      .cta-block { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <a href="/">Quillon</a>
+  <nav>
+    <a href="/blog/">Блог</a>
+    <a href="/#tracks">Треки</a>
+    <a href="/#contact">Записаться</a>
+  </nav>
+</header>
+
+<main id="main" class="container">
+  <div class="article-meta">
+    <nav class="breadcrumb" aria-label="Хлебные крошки">
+      <a href="/">Главная</a><span>→</span>
+      <a href="/blog/">Блог</a><span>→</span>
+      <span>{{TITLE}}</span>
+    </nav>
+    <h1>{{TITLE}}</h1>
+    <p class="article-desc">{{DESCRIPTION}}</p>
+    <time class="article-date" datetime="{{PUBLISHED_ISO}}">{{PUBLISHED_DATE}}</time>
+  </div>
+
+  <article class="article-content">
+    {{CONTENT_HTML}}
+  </article>
+
+  <div class="cta-block">
+    <h3>Хочешь войти в IT за 12 месяцев?</h3>
+    <p>Выбери трек — Python, Flutter или QA — и начни с бесплатного вводного урока</p>
+    <a href="/#tracks" class="cta-btn">Выбрать трек</a>
+  </div>
+</main>
+
+<footer>
+  <p>&copy; 2025 Quillon · <a href="/">quillon.ru</a> · <a href="/blog/rss.xml">RSS</a></p>
+</footer>
+
+<!-- Яндекс.Метрика -->
+<script type="text/javascript">
+  (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+  m[i].l=1*new Date();
+  for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
+  k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+  (window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
+  ym(108311343,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/108311343" style="position:absolute;left:-9999px;" alt=""/></div></noscript>
+
+</body>
+</html>

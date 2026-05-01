@@ -5,6 +5,9 @@ const bcrypt = require('bcryptjs');
 const fs = require('fs');
 const path = require('path');
 
+const blogRoutes = require('./routes/blog');
+const generateRoutes = require('./routes/generate');
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-change-me';
@@ -154,6 +157,10 @@ app.post('/api/sites/:siteId/:file/restore/:backup', auth, (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+// Blog API (auth required) — must be before SPA fallback
+app.use('/api/blog', auth, blogRoutes);
+app.use('/api/generate', auth, generateRoutes);
 
 // SPA fallback
 app.get('*', (req, res) => {

@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Quillon Admin</title>
+  <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css">
+  <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/theme/toastui-editor-dark.min.css">
   <style>
     :root {
       --bg: #0a0e1a;
@@ -16,6 +18,8 @@
       --blue-hover: #2563EB;
       --green: #10B981;
       --red: #EF4444;
+      --yellow: #F59E0B;
+      --mint: #5EF2A1;
       --radius: 8px;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -50,12 +54,16 @@
     .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text2); }
     .btn-outline:hover { border-color: var(--text2); color: var(--text); }
     .btn-danger { background: var(--red); color: #fff; }
+    .btn-mint { background: var(--mint); color: #04070C; font-weight: 600; }
+    .btn-mint:hover { background: #7DFFB3; }
+    .btn-yellow { background: var(--yellow); color: #111; }
 
     /* Layout */
     .app { display: none; }
     .header {
       display: flex; align-items: center; justify-content: space-between;
       padding: 16px 24px; background: var(--surface); border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 50;
     }
     .header h1 { font-size: 18px; }
     .header-right { display: flex; align-items: center; gap: 12px; }
@@ -67,6 +75,7 @@
     }
     .tab:hover { color: var(--text); }
     .tab.active { color: var(--blue); border-bottom-color: var(--blue); }
+    .tab.tab-blog.active { color: var(--mint); border-bottom-color: var(--mint); }
 
     .content { padding: 24px; max-width: 1000px; margin: 0 auto; }
 
@@ -110,7 +119,7 @@
     .toast {
       position: fixed; bottom: 24px; right: 24px; padding: 12px 20px;
       border-radius: var(--radius); color: #fff; font-size: 14px;
-      transform: translateY(100px); opacity: 0; transition: all 0.3s; z-index: 100;
+      transform: translateY(100px); opacity: 0; transition: all 0.3s; z-index: 200;
     }
     .toast.show { transform: translateY(0); opacity: 1; }
     .toast.success { background: var(--green); }
@@ -138,39 +147,281 @@
     .file-tab.active { background: var(--blue); border-color: var(--blue); color: #fff; }
 
     .unsaved { color: var(--red); font-size: 12px; margin-left: 8px; }
+
+    /* ── Blog Panel ── */
+    #blogPanel { display: none; }
+
+    .blog-toolbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 24px; background: var(--surface); border-bottom: 1px solid var(--border);
+      gap: 12px; flex-wrap: wrap;
+    }
+    .blog-filters { display: flex; gap: 8px; }
+    .filter-btn {
+      padding: 6px 14px; background: transparent; border: 1px solid var(--border);
+      border-radius: 20px; color: var(--text2); cursor: pointer; font-size: 13px;
+    }
+    .filter-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+    .filter-btn.filter-mint.active { background: var(--mint); border-color: var(--mint); color: #111; }
+
+    .blog-table-wrap { padding: 24px; }
+    .blog-table { width: 100%; border-collapse: collapse; }
+    .blog-table th { text-align: left; font-size: 12px; color: var(--text2); padding: 8px 12px; border-bottom: 1px solid var(--border); }
+    .blog-table td { padding: 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .blog-table tr:hover td { background: var(--surface); }
+    .blog-table .article-title { font-size: 14px; font-weight: 500; cursor: pointer; color: var(--blue); }
+    .blog-table .article-title:hover { color: var(--blue-hover); text-decoration: underline; }
+    .blog-table .article-slug { font-size: 12px; color: var(--text2); font-family: monospace; }
+
+    .badge {
+      display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 11px; font-weight: 600;
+    }
+    .badge-draft { background: var(--surface2); color: var(--text2); border: 1px solid var(--border); }
+    .badge-review { background: rgba(245,158,11,.15); color: var(--yellow); border: 1px solid rgba(245,158,11,.3); }
+    .badge-published { background: rgba(94,242,161,.12); color: var(--mint); border: 1px solid rgba(94,242,161,.3); }
+    .badge-archived { background: rgba(239,68,68,.1); color: var(--red); border: 1px solid rgba(239,68,68,.3); }
+
+    .seo-score {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 50%; font-size: 11px; font-weight: 700;
+    }
+    .seo-score.good { background: rgba(16,185,129,.2); color: var(--green); }
+    .seo-score.ok { background: rgba(245,158,11,.2); color: var(--yellow); }
+    .seo-score.bad { background: rgba(239,68,68,.15); color: var(--red); }
+
+    /* Article editor */
+    #articleEditor { display: none; padding: 0; }
+
+    .editor-topbar {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 12px 24px; background: var(--surface); border-bottom: 1px solid var(--border);
+      position: sticky; top: 57px; z-index: 40; flex-wrap: wrap;
+    }
+    .editor-topbar-left { display: flex; align-items: center; gap: 10px; }
+    .editor-topbar-right { display: flex; align-items: center; gap: 8px; }
+
+    .editor-layout {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      height: calc(100vh - 57px - 53px);
+    }
+
+    .md-pane {
+      display: flex; flex-direction: column;
+      border-right: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .seo-pane {
+      overflow-y: auto; padding: 20px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+
+    .seo-panel-toggle {
+      display: flex; gap: 4px; background: var(--surface2); border-radius: 6px; padding: 2px; margin-bottom: 4px;
+    }
+    .seo-panel-toggle button {
+      flex: 1; padding: 6px 8px; border-radius: 4px; font-size: 12px;
+      background: transparent; color: var(--text2); border: none; cursor: pointer;
+    }
+    .seo-panel-toggle button.active { background: var(--blue); color: #fff; }
+
+    .seo-block { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+    .seo-block h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text2); margin-bottom: 10px; }
+
+    .score-circle {
+      width: 64px; height: 64px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; font-weight: 700; margin: 0 auto 12px;
+    }
+    .score-circle.good { background: rgba(16,185,129,.2); color: var(--green); border: 2px solid var(--green); }
+    .score-circle.ok { background: rgba(245,158,11,.2); color: var(--yellow); border: 2px solid var(--yellow); }
+    .score-circle.bad { background: rgba(239,68,68,.1); color: var(--red); border: 2px solid var(--red); }
+
+    .check-item { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; padding: 4px 0; }
+    .check-item .icon { width: 16px; flex-shrink: 0; margin-top: 1px; font-style: normal; }
+    .check-item.pass { color: var(--green); }
+    .check-item.fail { color: var(--text2); }
+
+    .serp-preview {
+      background: #fff; border-radius: 8px; padding: 14px; font-family: Arial, sans-serif;
+    }
+    .serp-url { font-size: 12px; color: #1a0dab; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .serp-title { font-size: 18px; color: #1a0dab; margin-bottom: 4px; line-height: 1.3; cursor: pointer; }
+    .serp-desc { font-size: 13px; color: #4d5156; line-height: 1.4; }
+    .serp-len { font-size: 11px; margin-top: 4px; }
+    .serp-len span.ok { color: var(--green); }
+    .serp-len span.bad { color: var(--red); }
+
+    .meta-fields-pane { display: flex; flex-direction: column; gap: 10px; }
+    .meta-fields-pane label { margin-top: 0; }
+
+    /* Generate wizard */
+    #generateModal {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 150;
+      align-items: center; justify-content: center;
+    }
+    #generateModal.open { display: flex; }
+    .modal-box {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+      width: 640px; max-width: 95vw; max-height: 90vh; overflow-y: auto; padding: 32px;
+    }
+    .modal-box h2 { font-size: 20px; margin-bottom: 6px; }
+    .modal-box .sub { color: var(--text2); font-size: 14px; margin-bottom: 24px; }
+
+    .step-indicator { display: flex; gap: 8px; margin-bottom: 24px; align-items: center; }
+    .step-dot { width: 28px; height: 28px; border-radius: 50%; background: var(--surface2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--text2); }
+    .step-dot.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+    .step-dot.done { background: var(--green); border-color: var(--green); color: #fff; }
+    .step-line { flex: 1; height: 1px; background: var(--border); }
+
+    .suggestion-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .chip {
+      padding: 4px 12px; background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 20px; font-size: 12px; color: var(--text2); cursor: pointer;
+    }
+    .chip:hover { border-color: var(--blue); color: var(--blue); }
+    .chip.selected { background: var(--blue); border-color: var(--blue); color: #fff; }
+
+    .outline-section { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 14px; margin-bottom: 10px; }
+    .outline-section h4 { font-size: 14px; margin-bottom: 6px; }
+    .outline-section ul { padding-left: 18px; color: var(--text2); font-size: 13px; }
+
+    .cannibalization-warn {
+      background: rgba(245,158,11,.1); border: 1px solid rgba(245,158,11,.3);
+      border-radius: 8px; padding: 12px; font-size: 13px; color: var(--yellow); margin-top: 12px;
+    }
+
+    .spinner {
+      display: inline-block; width: 20px; height: 20px;
+      border: 2px solid var(--border); border-top-color: var(--blue);
+      border-radius: 50%; animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; }
+
+    .empty-blog { text-align: center; padding: 60px 24px; color: var(--text2); }
+    .empty-blog p { font-size: 16px; margin-bottom: 16px; }
+
+    /* Revisions panel */
+    .rev-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px;
+    }
+    .rev-time { color: var(--text2); font-size: 12px; }
+
+    /* Toast UI Editor — dark + Quillon overrides */
+    #mdEditorHost { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+    #mdEditorHost .toastui-editor-defaultUI {
+      flex: 1; min-height: 0; display: flex; flex-direction: column;
+      border: none; border-radius: 0; background: var(--bg);
+    }
+    #mdEditorHost .toastui-editor-toolbar {
+      background: var(--surface2) !important; border-bottom: 1px solid var(--border) !important;
+    }
+    #mdEditorHost .toastui-editor-main {
+      background: var(--bg); flex: 1; min-height: 0;
+    }
+    #mdEditorHost .toastui-editor-mode-switch {
+      background: var(--surface) !important; border-top: 1px solid var(--border) !important;
+    }
+    #mdEditorHost .toastui-editor-md-container,
+    #mdEditorHost .toastui-editor-ww-container { background: var(--bg) !important; }
+    #mdEditorHost .ProseMirror,
+    #mdEditorHost .toastui-editor-contents {
+      color: var(--text) !important;
+      font-family: 'Inter', -apple-system, sans-serif !important;
+      font-size: 15px !important; line-height: 1.7 !important;
+      padding: 20px 28px !important;
+    }
+    /* Rich heading sizes in WYSIWYG */
+    #mdEditorHost .toastui-editor-contents h1,
+    #mdEditorHost .ProseMirror h1 { font-size: 30px !important; font-weight: 700 !important; line-height: 1.25 !important; margin: 8px 0 14px !important; color: var(--text) !important; border-bottom: none !important; }
+    #mdEditorHost .toastui-editor-contents h2,
+    #mdEditorHost .ProseMirror h2 { font-size: 24px !important; font-weight: 700 !important; line-height: 1.3 !important; margin: 24px 0 12px !important; color: var(--text) !important; border-bottom: none !important; }
+    #mdEditorHost .toastui-editor-contents h3,
+    #mdEditorHost .ProseMirror h3 { font-size: 19px !important; font-weight: 600 !important; margin: 20px 0 10px !important; color: var(--text) !important; }
+    #mdEditorHost .toastui-editor-contents h4,
+    #mdEditorHost .ProseMirror h4 { font-size: 16px !important; font-weight: 600 !important; margin: 16px 0 8px !important; color: var(--text) !important; }
+    #mdEditorHost .toastui-editor-contents p,
+    #mdEditorHost .ProseMirror p { margin: 0 0 14px !important; color: var(--text) !important; }
+    #mdEditorHost .toastui-editor-contents strong,
+    #mdEditorHost .ProseMirror strong { color: #fff !important; font-weight: 700 !important; }
+    #mdEditorHost .toastui-editor-contents em,
+    #mdEditorHost .ProseMirror em { color: var(--text) !important; font-style: italic !important; }
+    #mdEditorHost .toastui-editor-contents a,
+    #mdEditorHost .ProseMirror a { color: var(--blue-hover) !important; text-decoration: underline !important; }
+    #mdEditorHost .toastui-editor-contents code,
+    #mdEditorHost .ProseMirror code {
+      background: var(--surface2) !important; color: var(--mint) !important;
+      font-family: 'JetBrains Mono', monospace !important; font-size: 13px !important;
+      padding: 2px 6px !important; border-radius: 4px !important;
+    }
+    #mdEditorHost .toastui-editor-contents pre,
+    #mdEditorHost .ProseMirror pre {
+      background: var(--surface) !important; border: 1px solid var(--border) !important;
+      border-radius: 8px !important; padding: 14px 16px !important; margin: 14px 0 !important;
+    }
+    #mdEditorHost .toastui-editor-contents pre code,
+    #mdEditorHost .ProseMirror pre code { background: none !important; color: var(--text) !important; padding: 0 !important; }
+    #mdEditorHost .toastui-editor-contents blockquote,
+    #mdEditorHost .ProseMirror blockquote {
+      border-left: 3px solid var(--mint) !important; background: var(--surface) !important;
+      color: var(--text2) !important; padding: 8px 16px !important; border-radius: 0 6px 6px 0 !important;
+      margin: 12px 0 !important;
+    }
+    #mdEditorHost .toastui-editor-contents ul,
+    #mdEditorHost .toastui-editor-contents ol,
+    #mdEditorHost .ProseMirror ul,
+    #mdEditorHost .ProseMirror ol { padding-left: 26px !important; margin-bottom: 14px !important; }
+    #mdEditorHost .toastui-editor-contents li,
+    #mdEditorHost .ProseMirror li { margin-bottom: 6px !important; color: var(--text) !important; }
+    #mdEditorHost .toastui-editor-contents img,
+    #mdEditorHost .ProseMirror img { max-width: 100%; border-radius: 8px; margin: 12px 0; }
+    #mdEditorHost .toastui-editor-contents hr,
+    #mdEditorHost .ProseMirror hr { border: none; border-top: 1px solid var(--border) !important; margin: 24px 0; }
+
+    @media (max-width: 900px) {
+      .editor-layout { grid-template-columns: 1fr; }
+      .seo-pane { display: none; }
+    }
   </style>
 </head>
 <body>
-  <!-- Login -->
-  <div class="login-wrap" id="loginScreen">
-    <div class="login-box">
-      <h1>Quillon Admin</h1>
-      <p>Управление контентом сайтов</p>
-      <div class="error" id="loginError">Неверный логин или пароль</div>
-      <div class="field-group">
-        <label>Логин</label>
-        <input type="text" id="loginUser" value="admin" autocomplete="username">
-      </div>
-      <div class="field-group">
-        <label>Пароль</label>
-        <input type="password" id="loginPass" autocomplete="current-password">
-      </div>
-      <button class="btn-primary" onclick="login()">Войти</button>
+
+<!-- Login -->
+<div class="login-wrap" id="loginScreen">
+  <div class="login-box">
+    <h1>Quillon Admin</h1>
+    <p>Управление контентом сайтов</p>
+    <div class="error" id="loginError">Неверный логин или пароль</div>
+    <div class="field-group">
+      <label>Логин</label>
+      <input type="text" id="loginUser" value="admin" autocomplete="username">
+    </div>
+    <div class="field-group">
+      <label>Пароль</label>
+      <input type="password" id="loginPass" autocomplete="current-password">
+    </div>
+    <button class="btn-primary" onclick="login()">Войти</button>
+  </div>
+</div>
+
+<!-- App -->
+<div class="app" id="app">
+  <div class="header">
+    <h1>Quillon Admin</h1>
+    <div class="header-right">
+      <span id="unsavedBadge" class="unsaved" style="display:none">Есть несохранённые изменения</span>
+      <button class="btn-sm btn-outline" onclick="logout()">Выйти</button>
     </div>
   </div>
 
-  <!-- App -->
-  <div class="app" id="app">
-    <div class="header">
-      <h1>Quillon Admin</h1>
-      <div class="header-right">
-        <span id="unsavedBadge" class="unsaved" style="display:none">Есть несохранённые изменения</span>
-        <button class="btn-sm btn-outline" onclick="logout()">Выйти</button>
-      </div>
-    </div>
+  <div class="tabs" id="siteTabs"></div>
 
-    <div class="tabs" id="siteTabs"></div>
-
+  <!-- Content editor panel -->
+  <div id="contentPanel">
     <div class="content">
       <div class="file-tabs" id="fileTabs"></div>
 
@@ -196,363 +447,1070 @@
     </div>
   </div>
 
-  <div class="toast" id="toast"></div>
+  <!-- Blog panel -->
+  <div id="blogPanel">
+    <!-- Article list view -->
+    <div id="blogList">
+      <div class="blog-toolbar">
+        <div class="blog-filters">
+          <button class="filter-btn active" onclick="filterBlog(null, this)">Все</button>
+          <button class="filter-btn" onclick="filterBlog('draft', this)">Черновики</button>
+          <button class="filter-btn" onclick="filterBlog('review', this)">На проверке</button>
+          <button class="filter-btn filter-mint" onclick="filterBlog('published', this)">Опубликованы</button>
+          <button class="filter-btn" onclick="filterBlog('archived', this)">Архив</button>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn-sm btn-outline" onclick="openGenerateWizard()">✦ Сгенерировать статью</button>
+          <button class="btn-sm btn-save" onclick="openArticleEditor(null)">+ Новая статья</button>
+        </div>
+      </div>
 
-  <script>
-    let token = localStorage.getItem('quillon_token');
-    let sites = [];
-    let currentSite = null;
-    let currentFile = null;
-    let contentData = null;
-    let currentSection = null;
-    let editMode = 'visual';
-    let hasUnsaved = false;
+      <div class="blog-table-wrap">
+        <div id="blogTableContainer">
+          <div style="text-align:center;padding:40px;color:var(--text2)">
+            <div class="spinner"></div>
+            <p style="margin-top:12px">Загрузка статей...</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    // Init
-    if (token) loadApp();
+    <!-- Article editor view -->
+    <div id="articleEditor">
+      <div class="editor-topbar">
+        <div class="editor-topbar-left">
+          <button class="btn-sm btn-outline" onclick="closeBlogEditor()">← К списку</button>
+          <span id="editorArticleTitle" style="font-size:14px;color:var(--text2)">Новая статья</span>
+          <span id="editorStatus" class="badge badge-draft">draft</span>
+        </div>
+        <div class="editor-topbar-right">
+          <button class="btn-sm btn-outline" onclick="showRevisions()">История</button>
+          <button class="btn-sm btn-mint" onclick="generateOrRegenerate()" id="generateBtnEditor">✦ Сгенерировать</button>
+          <button class="btn-sm btn-outline" onclick="runAutoSEO()" id="autoSeoBtn">Auto SEO</button>
+          <button class="btn-sm btn-yellow" id="reviewBtn" onclick="changeStatus('review')" style="display:none">На проверку</button>
+          <button class="btn-sm btn-save" onclick="saveCurrentArticle()">Сохранить</button>
+          <button class="btn-sm btn-mint" id="publishBtn" onclick="publishCurrentArticle()">Опубликовать</button>
+          <button class="btn-sm btn-outline" id="archiveBtn" onclick="changeStatus('archived')" style="display:none">В архив</button>
+        </div>
+      </div>
 
-    async function login() {
-      const user = document.getElementById('loginUser').value;
-      const pass = document.getElementById('loginPass').value;
-      try {
-        const res = await api('POST', '/api/login', { username: user, password: pass });
-        token = res.token;
-        localStorage.setItem('quillon_token', token);
-        loadApp();
-      } catch {
-        document.getElementById('loginError').style.display = 'block';
-      }
+      <!-- Meta fields -->
+      <div style="padding:16px 24px;background:var(--surface);border-bottom:1px solid var(--border)">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+          <div>
+            <label style="margin-top:0">Slug (URL)</label>
+            <input type="text" id="artSlug" placeholder="python-dlya-nachinayushchih" oninput="markBlogUnsaved()">
+          </div>
+          <div>
+            <label style="margin-top:0">Заголовок (title)</label>
+            <input type="text" id="artTitle" placeholder="Заголовок 40-70 символов" oninput="markBlogUnsaved();updateSEOPanel()">
+          </div>
+          <div>
+            <label style="margin-top:0">Ключевые слова (через запятую)</label>
+            <input type="text" id="artKeywords" placeholder="python, обучение, it" oninput="markBlogUnsaved();updateSEOPanel()">
+          </div>
+          <div style="grid-column:1/-1">
+            <label style="margin-top:0">Описание (description)</label>
+            <input type="text" id="artDesc" placeholder="Мета-описание 120-160 символов" oninput="markBlogUnsaved();updateSEOPanel()">
+          </div>
+        </div>
+      </div>
+
+      <div class="editor-layout">
+        <!-- Markdown editor -->
+        <div class="md-pane">
+          <div id="mdEditorHost"></div>
+        </div>
+
+        <!-- SEO sidebar -->
+        <div class="seo-pane" id="seoPaneSidebar">
+          <div class="seo-panel-toggle">
+            <button class="active" onclick="setSeoTab('seo',this)">SEO</button>
+            <button onclick="setSeoTab('meta',this)">Мета</button>
+            <button onclick="setSeoTab('revisions',this)" id="revisionsTabBtn">История</button>
+          </div>
+
+          <!-- SEO tab -->
+          <div id="seoTab">
+            <div class="seo-block">
+              <h4>Оценка SEO</h4>
+              <div class="score-circle bad" id="scoreCircle">0</div>
+              <div id="seoChecks"></div>
+            </div>
+            <div class="seo-block">
+              <h4>SERP Preview</h4>
+              <div class="serp-preview">
+                <div class="serp-url" id="serpUrl">quillon.ru › blog › slug</div>
+                <div class="serp-title" id="serpTitle">Заголовок статьи</div>
+                <div class="serp-desc" id="serpDesc">Описание появится здесь</div>
+                <div class="serp-len">
+                  Заголовок: <span id="titleLen">0</span> сим.
+                  Описание: <span id="descLen">0</span> сим.
+                </div>
+              </div>
+            </div>
+            <div class="seo-block">
+              <h4>Плотность ключевых слов</h4>
+              <div id="keywordDensity" style="font-size:13px;color:var(--text2)">—</div>
+            </div>
+          </div>
+
+          <!-- Meta tab -->
+          <div id="metaTab" style="display:none">
+            <div class="seo-block meta-fields-pane">
+              <h4>OG Image</h4>
+              <div style="display:flex;gap:8px;align-items:center">
+                <input type="url" id="artOgImage" placeholder="https://..." oninput="markBlogUnsaved()" style="flex:1">
+                <label style="display:flex;align-items:center;gap:4px;margin-top:0;white-space:nowrap;cursor:pointer">
+                  <input type="checkbox" id="artOgAuto" onchange="markBlogUnsaved()" style="width:auto"> Авто
+                </label>
+              </div>
+              <h4 style="margin-top:12px">Кластер (для каннибализации)</h4>
+              <input type="text" id="artCluster" placeholder="python-обучение" oninput="markBlogUnsaved()">
+              <h4 style="margin-top:12px">Автор</h4>
+              <input type="text" id="artAuthor" value="quillon" oninput="markBlogUnsaved()">
+            </div>
+          </div>
+
+          <!-- Revisions tab -->
+          <div id="revisionsTab" style="display:none">
+            <div class="seo-block">
+              <h4>История изменений</h4>
+              <div id="revisionsList"><p style="color:var(--text2);font-size:13px">Нет сохранённых версий</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Generate wizard modal -->
+<div id="generateModal">
+  <div class="modal-box">
+    <h2>Генерация статьи</h2>
+    <p class="sub">AI-пайплайн: Research → Outline → Статья</p>
+
+    <div class="step-indicator">
+      <div class="step-dot active" id="stepDot1">1</div>
+      <div class="step-line"></div>
+      <div class="step-dot" id="stepDot2">2</div>
+      <div class="step-line"></div>
+      <div class="step-dot" id="stepDot3">3</div>
+    </div>
+
+    <!-- Step 1: Topic research -->
+    <div id="genStep1">
+      <label>Тема статьи</label>
+      <input type="text" id="genTopic" placeholder="Python для начинающих" oninput="clearGenSuggestions()">
+      <div style="margin-top:12px;display:flex;gap:8px">
+        <button class="btn-sm btn-outline" onclick="runResearch()" id="researchBtn">Исследовать тему</button>
+        <span id="researchSpinner" style="display:none"><div class="spinner"></div></span>
+      </div>
+      <div id="cannibalizationWarn"></div>
+      <div id="suggestionArea" style="display:none">
+        <p style="margin-top:16px;font-size:13px;color:var(--text2)">Популярные запросы:</p>
+        <div class="suggestion-chips" id="suggestionChips"></div>
+        <p style="margin-top:12px;font-size:13px;color:var(--text2)">Вопросы аудитории:</p>
+        <div id="paaList" style="font-size:13px;color:var(--text2);margin-top:6px"></div>
+      </div>
+    </div>
+
+    <!-- Step 2: Outline review -->
+    <div id="genStep2" style="display:none">
+      <p style="font-size:13px;color:var(--text2);margin-bottom:12px">Проверьте структуру статьи:</p>
+      <div id="outlinePreview"></div>
+      <div id="outlineMeta" style="margin-top:12px;font-size:13px;color:var(--text2)"></div>
+    </div>
+
+    <!-- Step 3: Generating -->
+    <div id="genStep3" style="display:none">
+      <div style="text-align:center;padding:32px">
+        <div class="spinner" style="width:40px;height:40px;border-width:3px;margin:0 auto 16px"></div>
+        <p id="genProgress" style="color:var(--text2)">Генерирую статью...</p>
+        <p style="font-size:12px;color:var(--text2);margin-top:8px">Обычно занимает 30-60 секунд</p>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-sm btn-outline" onclick="closeGenerateModal()">Отмена</button>
+      <button class="btn-sm btn-save" id="genNextBtn" onclick="genNext()" disabled>Далее →</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script>
+  /* ─── State ─── */
+  let token = localStorage.getItem('quillon_token');
+  let sites = [];
+  let currentSite = null;
+  let currentFile = null;
+  let contentData = null;
+  let currentSection = null;
+  let editMode = 'visual';
+  let hasUnsaved = false;
+
+  /* Blog state */
+  let blogFilter = null;
+  let currentArticleId = null;
+  let blogHasUnsaved = false;
+  let genResearchData = null;
+  let genOutlineData = null;
+  let genStep = 1;
+
+  /* ─── Init ─── */
+  if (token) loadApp();
+
+  /* ─── Auth ─── */
+  async function login() {
+    const user = document.getElementById('loginUser').value;
+    const pass = document.getElementById('loginPass').value;
+    try {
+      const res = await api('POST', '/api/login', { username: user, password: pass });
+      token = res.token;
+      localStorage.setItem('quillon_token', token);
+      loadApp();
+    } catch {
+      document.getElementById('loginError').style.display = 'block';
     }
+  }
 
-    function logout() {
-      token = null;
-      localStorage.removeItem('quillon_token');
-      document.getElementById('loginScreen').style.display = 'flex';
-      document.getElementById('app').style.display = 'none';
-    }
+  function logout() {
+    token = null;
+    localStorage.removeItem('quillon_token');
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('app').style.display = 'none';
+  }
 
-    async function loadApp() {
-      document.getElementById('loginScreen').style.display = 'none';
-      document.getElementById('app').style.display = 'block';
-      try {
-        sites = await api('GET', '/api/sites');
-        renderSiteTabs();
-        if (sites.length) selectSite(sites[0].id);
-      } catch {
-        logout();
-      }
-    }
-
-    function renderSiteTabs() {
-      const el = document.getElementById('siteTabs');
-      el.innerHTML = sites.map(s =>
-        `<div class="tab ${currentSite === s.id ? 'active' : ''}" onclick="selectSite('${s.id}')">${s.name}</div>`
-      ).join('');
-    }
-
-    async function selectSite(siteId) {
-      currentSite = siteId;
-      const site = sites.find(s => s.id === siteId);
+  async function loadApp() {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    try {
+      sites = await api('GET', '/api/sites');
       renderSiteTabs();
-      renderFileTabs(site.files);
-      await selectFile(site.files[0]);
+      if (sites.length) selectSite(sites[0].id);
+    } catch {
+      logout();
+    }
+  }
+
+  /* ─── Site tabs ─── */
+  function renderSiteTabs() {
+    const el = document.getElementById('siteTabs');
+    const siteBtns = sites.map(s =>
+      `<div class="tab ${currentSite === s.id ? 'active' : ''}" onclick="selectSite('${s.id}')">${s.name}</div>`
+    ).join('');
+    el.innerHTML = siteBtns + `<div class="tab tab-blog ${currentSite === 'blog' ? 'active' : ''}" onclick="selectSite('blog')"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:6px"><path d="M11.5 2.5l2 2L5 13l-3 1 1-3z"/><line x1="10" y1="4" x2="12" y2="6"/></svg>Блог</div>`;
+  }
+
+  async function selectSite(siteId) {
+    currentSite = siteId;
+    renderSiteTabs();
+
+    if (siteId === 'blog') {
+      document.getElementById('contentPanel').style.display = 'none';
+      document.getElementById('blogPanel').style.display = 'block';
+      document.getElementById('blogList').style.display = 'block';
+      document.getElementById('articleEditor').style.display = 'none';
+      loadBlogArticles();
+      return;
     }
 
-    function renderFileTabs(files) {
-      const el = document.getElementById('fileTabs');
-      if (files.length <= 1) { el.innerHTML = ''; return; }
-      el.innerHTML = files.map(f =>
-        `<div class="file-tab ${currentFile === f ? 'active' : ''}" onclick="selectFile('${f}')">${f}</div>`
-      ).join('');
-    }
+    document.getElementById('contentPanel').style.display = 'block';
+    document.getElementById('blogPanel').style.display = 'none';
 
-    async function selectFile(file) {
-      currentFile = file;
-      const site = sites.find(s => s.id === currentSite);
-      renderFileTabs(site.files);
-      contentData = await api('GET', `/api/sites/${currentSite}/${file}`);
-      currentSection = null;
-      renderSections();
-      // Auto-select first section
-      const sections = getSections();
-      if (sections.length) selectSection(sections[0]);
-    }
+    const site = sites.find(s => s.id === siteId);
+    renderFileTabs(site.files);
+    await selectFile(site.files[0]);
+  }
 
-    function getSections() {
-      if (!contentData) return [];
-      if (Array.isArray(contentData)) return ['(array)'];
-      return Object.keys(contentData);
-    }
+  /* ─── Content editor (existing) ─── */
+  function renderFileTabs(files) {
+    const el = document.getElementById('fileTabs');
+    if (files.length <= 1) { el.innerHTML = ''; return; }
+    el.innerHTML = files.map(f =>
+      `<div class="file-tab ${currentFile === f ? 'active' : ''}" onclick="selectFile('${f}')">${f}</div>`
+    ).join('');
+  }
 
-    function renderSections() {
-      const nav = document.getElementById('sectionNav');
-      const sections = getSections();
-      nav.innerHTML = sections.map(s =>
-        `<div class="section-btn ${currentSection === s ? 'active' : ''}" onclick="selectSection('${s}')">${s}</div>`
-      ).join('');
-    }
+  async function selectFile(file) {
+    currentFile = file;
+    const site = sites.find(s => s.id === currentSite);
+    renderFileTabs(site.files);
+    contentData = await api('GET', `/api/sites/${currentSite}/${file}`);
+    currentSection = null;
+    renderSections();
+    const sections = getSections();
+    if (sections.length) selectSection(sections[0]);
+  }
 
-    function selectSection(section) {
-      currentSection = section;
-      renderSections();
-      renderEditor();
-    }
+  function getSections() {
+    if (!contentData) return [];
+    if (Array.isArray(contentData)) return ['(array)'];
+    return Object.keys(contentData);
+  }
 
-    function setMode(mode) {
-      editMode = mode;
-      document.getElementById('modeVisual').classList.toggle('active', mode === 'visual');
-      document.getElementById('modeJson').classList.toggle('active', mode === 'json');
+  function renderSections() {
+    const nav = document.getElementById('sectionNav');
+    const sections = getSections();
+    nav.innerHTML = sections.map(s =>
+      `<div class="section-btn ${currentSection === s ? 'active' : ''}" onclick="selectSection('${s}')">${s}</div>`
+    ).join('');
+  }
 
-      if (mode === 'json') {
-        document.getElementById('visualEditor').style.display = 'none';
-        const je = document.getElementById('jsonEditor');
-        je.style.display = 'block';
-        const data = currentSection === '(array)' ? contentData : contentData[currentSection];
-        je.value = JSON.stringify(data, null, 2);
-      } else {
-        document.getElementById('visualEditor').style.display = 'block';
-        document.getElementById('jsonEditor').style.display = 'none';
-        // Apply JSON changes back
-        try {
-          const je = document.getElementById('jsonEditor');
-          const parsed = JSON.parse(je.value);
-          if (currentSection === '(array)') {
-            contentData = parsed;
-          } else {
-            contentData[currentSection] = parsed;
-          }
-        } catch {}
-        renderEditor();
-      }
-    }
+  function selectSection(section) {
+    currentSection = section;
+    renderSections();
+    renderEditor();
+  }
 
-    function renderEditor() {
-      const title = document.getElementById('editorTitle');
-      const editor = document.getElementById('visualEditor');
+  function setMode(mode) {
+    editMode = mode;
+    document.getElementById('modeVisual').classList.toggle('active', mode === 'visual');
+    document.getElementById('modeJson').classList.toggle('active', mode === 'json');
 
-      if (!currentSection) {
-        title.textContent = 'Выберите секцию';
-        editor.innerHTML = '<p style="color:var(--text2)">Выберите секцию для редактирования</p>';
-        return;
-      }
-
-      title.textContent = currentSection;
+    if (mode === 'json') {
+      document.getElementById('visualEditor').style.display = 'none';
+      const je = document.getElementById('jsonEditor');
+      je.style.display = 'block';
       const data = currentSection === '(array)' ? contentData : contentData[currentSection];
-      editor.innerHTML = renderFields(data, '');
-    }
-
-    function renderFields(obj, path) {
-      if (obj === null || obj === undefined) return '';
-      if (typeof obj !== 'object') return renderScalarField(path, obj);
-
-      if (Array.isArray(obj)) {
-        return renderArray(obj, path);
-      }
-
-      let html = '';
-      const keys = Object.keys(obj);
-      for (const key of keys) {
-        const val = obj[key];
-        const fullPath = path ? `${path}.${key}` : key;
-
-        if (val === null || val === undefined) {
-          html += renderScalarField(fullPath, '', key);
-        } else if (Array.isArray(val)) {
-          html += `<div style="margin-top:16px"><h4 style="color:var(--text2);font-size:13px;margin-bottom:8px">${key}</h4>`;
-          html += renderArray(val, fullPath);
-          html += `</div>`;
-        } else if (typeof val === 'object') {
-          html += `<div style="margin-top:16px;padding:16px;background:var(--surface2);border-radius:var(--radius)">`;
-          html += `<h4 style="color:var(--text2);font-size:13px;margin-bottom:8px">${key}</h4>`;
-          html += renderFields(val, fullPath);
-          html += `</div>`;
-        } else {
-          html += renderScalarField(fullPath, val, key);
-        }
-      }
-      return html;
-    }
-
-    function renderScalarField(path, value, displayName) {
-      const name = displayName || path.split('.').pop();
-      const strVal = String(value ?? '').replace(/"/g, '&quot;');
-      const isLong = strVal.length > 100;
-      const isBool = typeof value === 'boolean';
-
-      if (isBool) {
-        return `<div class="field-group">
-          <label>${name}</label>
-          <select data-path="${path}" onchange="updateField('${path}', this.value === 'true')">
-            <option value="true" ${value ? 'selected' : ''}>true</option>
-            <option value="false" ${!value ? 'selected' : ''}>false</option>
-          </select>
-        </div>`;
-      }
-
-      if (isLong) {
-        return `<div class="field-group">
-          <label>${name}</label>
-          <textarea data-path="${path}" oninput="updateField('${path}', this.value)" rows="3">${strVal}</textarea>
-        </div>`;
-      }
-
-      return `<div class="field-group">
-        <label>${name}</label>
-        <input type="text" data-path="${path}" value="${strVal}" oninput="updateField('${path}', this.value)">
-      </div>`;
-    }
-
-    function renderArray(arr, path) {
-      let html = '';
-      for (let i = 0; i < arr.length; i++) {
-        const item = arr[i];
-        const itemPath = `${path}[${i}]`;
-        if (typeof item === 'object' && item !== null) {
-          const itemTitle = item.title || item.name || item.question || item.text || `#${i + 1}`;
-          html += `<div class="array-item">
-            <button class="remove-btn" onclick="removeArrayItem('${path}', ${i})" title="Удалить">&times;</button>
-            <div style="font-size:13px;color:var(--blue);margin-bottom:8px;font-weight:500">${itemTitle}</div>
-            ${renderFields(item, itemPath)}
-          </div>`;
-        } else {
-          html += `<div class="array-item">
-            <button class="remove-btn" onclick="removeArrayItem('${path}', ${i})">&times;</button>
-            <input type="text" value="${String(item).replace(/"/g, '&quot;')}" oninput="updateField('${itemPath}', this.value)">
-          </div>`;
-        }
-      }
-      html += `<button class="add-btn" onclick="addArrayItem('${path}')">+ Добавить элемент</button>`;
-      return html;
-    }
-
-    function getByPath(obj, path) {
-      return path.replace(/\[(\d+)\]/g, '.$1').split('.').filter(Boolean).reduce((o, k) => o?.[k], obj);
-    }
-
-    function setByPath(obj, path, value) {
-      const parts = path.replace(/\[(\d+)\]/g, '.$1').split('.').filter(Boolean);
-      let current = obj;
-      for (let i = 0; i < parts.length - 1; i++) {
-        current = current[parts[i]];
-      }
-      const lastKey = parts[parts.length - 1];
-      // Preserve number type
-      if (typeof current[lastKey] === 'number' && !isNaN(Number(value))) {
-        current[lastKey] = Number(value);
-      } else {
-        current[lastKey] = value;
-      }
-    }
-
-    function updateField(path, value) {
-      const root = currentSection === '(array)' ? contentData : contentData[currentSection];
-      setByPath(root, path, value);
-      markUnsaved();
-    }
-
-    function removeArrayItem(path, index) {
-      const root = currentSection === '(array)' ? contentData : contentData[currentSection];
-      const arr = getByPath(root, path);
-      if (arr && Array.isArray(arr)) {
-        arr.splice(index, 1);
-        markUnsaved();
-        renderEditor();
-      }
-    }
-
-    function addArrayItem(path) {
-      const root = currentSection === '(array)' ? contentData : contentData[currentSection];
-      const arr = getByPath(root, path);
-      if (!arr || !Array.isArray(arr)) return;
-
-      if (arr.length > 0) {
-        const template = arr[arr.length - 1];
-        if (typeof template === 'object' && template !== null) {
-          const newItem = JSON.parse(JSON.stringify(template));
-          clearObject(newItem);
-          arr.push(newItem);
-        } else {
-          arr.push('');
-        }
-      } else {
-        arr.push('');
-      }
-      markUnsaved();
+      je.value = JSON.stringify(data, null, 2);
+    } else {
+      document.getElementById('visualEditor').style.display = 'block';
+      document.getElementById('jsonEditor').style.display = 'none';
+      try {
+        const je = document.getElementById('jsonEditor');
+        const parsed = JSON.parse(je.value);
+        if (currentSection === '(array)') { contentData = parsed; }
+        else { contentData[currentSection] = parsed; }
+      } catch {}
       renderEditor();
     }
+  }
 
-    function clearObject(obj) {
-      for (const key of Object.keys(obj)) {
-        if (typeof obj[key] === 'string') obj[key] = '';
-        else if (typeof obj[key] === 'number') obj[key] = 0;
-        else if (typeof obj[key] === 'boolean') obj[key] = false;
-        else if (Array.isArray(obj[key])) obj[key] = [];
-        else if (typeof obj[key] === 'object' && obj[key] !== null) clearObject(obj[key]);
+  function renderEditor() {
+    const title = document.getElementById('editorTitle');
+    const editor = document.getElementById('visualEditor');
+    if (!currentSection) {
+      title.textContent = 'Выберите секцию';
+      editor.innerHTML = '<p style="color:var(--text2)">Выберите секцию для редактирования</p>';
+      return;
+    }
+    title.textContent = currentSection;
+    const data = currentSection === '(array)' ? contentData : contentData[currentSection];
+    editor.innerHTML = renderFields(data, '');
+  }
+
+  function renderFields(obj, path) {
+    if (obj === null || obj === undefined) return '';
+    if (typeof obj !== 'object') return renderScalarField(path, obj);
+    if (Array.isArray(obj)) return renderArray(obj, path);
+    let html = '';
+    for (const key of Object.keys(obj)) {
+      const val = obj[key];
+      const fullPath = path ? `${path}.${key}` : key;
+      if (val === null || val === undefined) {
+        html += renderScalarField(fullPath, '', key);
+      } else if (Array.isArray(val)) {
+        html += `<div style="margin-top:16px"><h4 style="color:var(--text2);font-size:13px;margin-bottom:8px">${key}</h4>`;
+        html += renderArray(val, fullPath);
+        html += `</div>`;
+      } else if (typeof val === 'object') {
+        html += `<div style="margin-top:16px;padding:16px;background:var(--surface2);border-radius:var(--radius)">`;
+        html += `<h4 style="color:var(--text2);font-size:13px;margin-bottom:8px">${key}</h4>`;
+        html += renderFields(val, fullPath);
+        html += `</div>`;
+      } else {
+        html += renderScalarField(fullPath, val, key);
       }
     }
+    return html;
+  }
 
-    function markUnsaved() {
-      hasUnsaved = true;
-      document.getElementById('unsavedBadge').style.display = 'inline';
+  function renderScalarField(path, value, displayName) {
+    const name = displayName || path.split('.').pop();
+    const strVal = String(value ?? '').replace(/"/g, '&quot;');
+    const isLong = strVal.length > 100;
+    const isBool = typeof value === 'boolean';
+    if (isBool) {
+      return `<div class="field-group"><label>${name}</label>
+        <select data-path="${path}" onchange="updateField('${path}', this.value === 'true')">
+          <option value="true" ${value ? 'selected' : ''}>true</option>
+          <option value="false" ${!value ? 'selected' : ''}>false</option>
+        </select></div>`;
+    }
+    if (isLong) {
+      return `<div class="field-group"><label>${name}</label>
+        <textarea data-path="${path}" oninput="updateField('${path}', this.value)" rows="3">${strVal}</textarea></div>`;
+    }
+    return `<div class="field-group"><label>${name}</label>
+      <input type="text" data-path="${path}" value="${strVal}" oninput="updateField('${path}', this.value)"></div>`;
+  }
+
+  function renderArray(arr, path) {
+    let html = '';
+    for (let i = 0; i < arr.length; i++) {
+      const item = arr[i];
+      const itemPath = `${path}[${i}]`;
+      if (typeof item === 'object' && item !== null) {
+        const itemTitle = item.title || item.name || item.question || item.text || `#${i + 1}`;
+        html += `<div class="array-item">
+          <button class="remove-btn" onclick="removeArrayItem('${path}', ${i})">&times;</button>
+          <div style="font-size:13px;color:var(--blue);margin-bottom:8px;font-weight:500">${itemTitle}</div>
+          ${renderFields(item, itemPath)}
+        </div>`;
+      } else {
+        html += `<div class="array-item">
+          <button class="remove-btn" onclick="removeArrayItem('${path}', ${i})">&times;</button>
+          <input type="text" value="${String(item).replace(/"/g,'&quot;')}" oninput="updateField('${itemPath}', this.value)">
+        </div>`;
+      }
+    }
+    html += `<button class="add-btn" onclick="addArrayItem('${path}')">+ Добавить элемент</button>`;
+    return html;
+  }
+
+  function getByPath(obj, path) {
+    return path.replace(/\[(\d+)\]/g, '.$1').split('.').filter(Boolean).reduce((o, k) => o?.[k], obj);
+  }
+
+  function setByPath(obj, path, value) {
+    const parts = path.replace(/\[(\d+)\]/g, '.$1').split('.').filter(Boolean);
+    let current = obj;
+    for (let i = 0; i < parts.length - 1; i++) current = current[parts[i]];
+    const lastKey = parts[parts.length - 1];
+    if (typeof current[lastKey] === 'number' && !isNaN(Number(value))) current[lastKey] = Number(value);
+    else current[lastKey] = value;
+  }
+
+  function updateField(path, value) {
+    const root = currentSection === '(array)' ? contentData : contentData[currentSection];
+    setByPath(root, path, value);
+    markUnsaved();
+  }
+
+  function removeArrayItem(path, index) {
+    const root = currentSection === '(array)' ? contentData : contentData[currentSection];
+    const arr = getByPath(root, path);
+    if (arr && Array.isArray(arr)) { arr.splice(index, 1); markUnsaved(); renderEditor(); }
+  }
+
+  function addArrayItem(path) {
+    const root = currentSection === '(array)' ? contentData : contentData[currentSection];
+    const arr = getByPath(root, path);
+    if (!arr || !Array.isArray(arr)) return;
+    if (arr.length > 0) {
+      const template = arr[arr.length - 1];
+      if (typeof template === 'object' && template !== null) {
+        const newItem = JSON.parse(JSON.stringify(template));
+        clearObject(newItem);
+        arr.push(newItem);
+      } else { arr.push(''); }
+    } else { arr.push(''); }
+    markUnsaved();
+    renderEditor();
+  }
+
+  function clearObject(obj) {
+    for (const key of Object.keys(obj)) {
+      if (typeof obj[key] === 'string') obj[key] = '';
+      else if (typeof obj[key] === 'number') obj[key] = 0;
+      else if (typeof obj[key] === 'boolean') obj[key] = false;
+      else if (Array.isArray(obj[key])) obj[key] = [];
+      else if (typeof obj[key] === 'object' && obj[key] !== null) clearObject(obj[key]);
+    }
+  }
+
+  function markUnsaved() {
+    hasUnsaved = true;
+    document.getElementById('unsavedBadge').style.display = 'inline';
+  }
+
+  async function save() {
+    if (editMode === 'json') {
+      try {
+        const parsed = JSON.parse(document.getElementById('jsonEditor').value);
+        if (currentSection === '(array)') contentData = parsed;
+        else contentData[currentSection] = parsed;
+      } catch (e) { toast('Ошибка в JSON: ' + e.message, 'error'); return; }
+    }
+    try {
+      await api('PUT', `/api/sites/${currentSite}/${currentFile}`, contentData);
+      hasUnsaved = false;
+      document.getElementById('unsavedBadge').style.display = 'none';
+      toast('Сохранено', 'success');
+    } catch (e) { toast('Ошибка сохранения: ' + e.message, 'error'); }
+  }
+
+  /* ─── Blog: list ─── */
+  async function loadBlogArticles() {
+    try {
+      const params = blogFilter ? `?status=${blogFilter}` : '';
+      const data = await api('GET', '/api/blog' + params);
+      renderBlogTable(data.articles, data.total);
+    } catch (e) {
+      document.getElementById('blogTableContainer').innerHTML =
+        `<p style="color:var(--red);padding:24px">Ошибка: ${e.message}</p>`;
+    }
+  }
+
+  function filterBlog(status, btn) {
+    blogFilter = status;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    loadBlogArticles();
+  }
+
+  function renderBlogTable(articles, total) {
+    const container = document.getElementById('blogTableContainer');
+    if (!articles || !articles.length) {
+      container.innerHTML = `<div class="empty-blog">
+        <p>Статей нет</p>
+        <button class="btn-sm btn-save" onclick="openArticleEditor(null)">Создать первую статью</button>
+      </div>`;
+      return;
     }
 
-    async function save() {
-      if (editMode === 'json') {
-        try {
-          const parsed = JSON.parse(document.getElementById('jsonEditor').value);
-          if (currentSection === '(array)') {
-            contentData = parsed;
-          } else {
-            contentData[currentSection] = parsed;
+    const rows = articles.map(a => {
+      const scoreCls = a.seo_score >= 70 ? 'good' : a.seo_score >= 40 ? 'ok' : 'bad';
+      const statusBadge = `<span class="badge badge-${a.status}">${a.status}</span>`;
+      const date = a.updated_at ? new Date(a.updated_at).toLocaleDateString('ru-RU') : '—';
+      return `<tr>
+        <td>
+          <div class="article-title" onclick="openArticleEditor(${a.id})">${escHtml(a.title)}</div>
+          <div class="article-slug">/blog/${a.slug}/</div>
+        </td>
+        <td>${statusBadge}</td>
+        <td><div class="seo-score ${scoreCls}">${a.seo_score || 0}</div></td>
+        <td style="font-size:13px;color:var(--text2)">${date}</td>
+        <td style="white-space:nowrap">
+          <button class="btn-sm btn-outline" onclick="openArticleEditor(${a.id})">Редактировать</button>
+        </td>
+      </tr>`;
+    }).join('');
+
+    container.innerHTML = `
+      <p style="font-size:13px;color:var(--text2);margin-bottom:12px">${total} статей</p>
+      <table class="blog-table">
+        <thead><tr>
+          <th>Статья</th><th>Статус</th><th>SEO</th><th>Изменено</th><th></th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  }
+
+  /* ─── Blog: editor ─── */
+  async function openArticleEditor(id) {
+    currentArticleId = id;
+    blogHasUnsaved = false;
+    document.getElementById('blogList').style.display = 'none';
+    document.getElementById('articleEditor').style.display = 'block';
+
+    ensureMDE();
+
+    if (id) {
+      try {
+        const a = await api('GET', `/api/blog/${id}`);
+        fillEditor(a);
+        loadRevisions(id);
+      } catch (e) { toast('Ошибка загрузки статьи', 'error'); }
+    } else {
+      clearEditor();
+    }
+    updateSEOPanel();
+    updateGenerateBtnLabel();
+  }
+
+  function fillEditor(a) {
+    document.getElementById('artSlug').value = a.slug || '';
+    document.getElementById('artTitle').value = a.title || '';
+    document.getElementById('artDesc').value = a.description || '';
+    document.getElementById('artKeywords').value = (a.keywords || []).join(', ');
+    document.getElementById('artOgImage').value = a.og_image_url || '';
+    document.getElementById('artOgAuto').checked = a.og_image_auto !== false;
+    document.getElementById('artCluster').value = a.cluster || '';
+    document.getElementById('artAuthor').value = a.author || 'quillon';
+    setMdValue(a.content_md || '');
+    document.getElementById('editorArticleTitle').textContent = a.title || 'Без названия';
+    updateStatusBadge(a.status);
+  }
+
+  function clearEditor() {
+    ['artSlug','artTitle','artDesc','artKeywords','artOgImage','artCluster'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    document.getElementById('artOgAuto').checked = true;
+    document.getElementById('artAuthor').value = 'quillon';
+    setMdValue('');
+    document.getElementById('editorArticleTitle').textContent = 'Новая статья';
+    updateStatusBadge('draft');
+  }
+
+  function updateStatusBadge(status) {
+    const el = document.getElementById('editorStatus');
+    el.className = `badge badge-${status}`;
+    el.textContent = status;
+    document.getElementById('reviewBtn').style.display = status === 'draft' ? 'block' : 'none';
+    document.getElementById('publishBtn').style.display = ['draft','review'].includes(status) ? 'block' : 'none';
+    document.getElementById('archiveBtn').style.display = status === 'published' ? 'block' : 'none';
+  }
+
+  function closeBlogEditor() {
+    if (blogHasUnsaved && !confirm('Есть несохранённые изменения. Выйти?')) return;
+    document.getElementById('blogList').style.display = 'block';
+    document.getElementById('articleEditor').style.display = 'none';
+    currentArticleId = null;
+    blogHasUnsaved = false;
+    loadBlogArticles();
+  }
+
+  function markBlogUnsaved() { blogHasUnsaved = true; }
+
+  function getEditorData() {
+    return {
+      slug: document.getElementById('artSlug').value.trim(),
+      title: document.getElementById('artTitle').value.trim(),
+      description: document.getElementById('artDesc').value.trim(),
+      keywords: document.getElementById('artKeywords').value.split(',').map(k => k.trim()).filter(Boolean),
+      og_image_url: document.getElementById('artOgImage').value.trim() || null,
+      og_image_auto: document.getElementById('artOgAuto').checked,
+      cluster: document.getElementById('artCluster').value.trim() || null,
+      author: document.getElementById('artAuthor').value.trim() || 'quillon',
+      content_md: getMdValue(),
+    };
+  }
+
+  async function saveCurrentArticle() {
+    const data = getEditorData();
+    try {
+      if (currentArticleId) {
+        const updated = await api('PATCH', `/api/blog/${currentArticleId}`, data);
+        document.getElementById('editorArticleTitle').textContent = updated.title;
+        updateStatusBadge(updated.status);
+        toast('Сохранено', 'success');
+      } else {
+        const created = await api('POST', '/api/blog', data);
+        currentArticleId = created.id;
+        updateStatusBadge(created.status);
+        toast('Статья создана', 'success');
+      }
+      blogHasUnsaved = false;
+      updateSEOPanel();
+    } catch (e) {
+      toast('Ошибка: ' + e.message, 'error');
+    }
+  }
+
+  async function publishCurrentArticle() {
+    if (!currentArticleId) { toast('Сначала сохраните статью', 'error'); return; }
+    if (!confirm('Опубликовать статью? Будет сгенерирован статический HTML.')) return;
+    try {
+      const updated = await api('POST', `/api/blog/${currentArticleId}/publish`);
+      updateStatusBadge(updated.status);
+      toast('Статья опубликована!', 'success');
+    } catch (e) {
+      toast('Ошибка публикации: ' + e.message, 'error');
+    }
+  }
+
+  async function changeStatus(status) {
+    if (!currentArticleId) return;
+    try {
+      if (status === 'archived') {
+        await api('POST', `/api/blog/${currentArticleId}/archive`);
+      } else {
+        await api('PATCH', `/api/blog/${currentArticleId}`, { status });
+      }
+      updateStatusBadge(status);
+      toast('Статус обновлён', 'success');
+    } catch (e) {
+      toast('Ошибка: ' + e.message, 'error');
+    }
+  }
+
+  async function generateOrRegenerate() {
+    const btn = document.getElementById('generateBtnEditor');
+    const hasContent = (getMdValue() || '').trim().length > 100;
+
+    if (currentArticleId && hasContent) {
+      if (!confirm('Перегенерировать содержимое статьи через Opus? Текущий текст заменится, но останется в истории версий.')) return;
+      btn.disabled = true;
+      btn.textContent = '✦ Регенерирую...';
+      try {
+        const updated = await api('POST', `/api/generate/${currentArticleId}/regenerate`);
+        fillEditor(updated);
+        updateSEOPanel();
+        toast('Статья перегенерирована (Opus)', 'success');
+      } catch (e) {
+        toast('Ошибка регенерации: ' + e.message, 'error');
+      } finally {
+        btn.disabled = false;
+        updateGenerateBtnLabel();
+      }
+    } else {
+      openGenerateWizard();
+    }
+  }
+
+  function updateGenerateBtnLabel() {
+    const btn = document.getElementById('generateBtnEditor');
+    if (!btn) return;
+    const hasContent = (getMdValue() || '').trim().length > 100;
+    btn.textContent = (currentArticleId && hasContent) ? '✦ Перегенерировать' : '✦ Сгенерировать';
+  }
+
+  async function runAutoSEO() {
+    if (!currentArticleId) { toast('Сначала сохраните статью', 'error'); return; }
+    document.getElementById('autoSeoBtn').textContent = '...';
+    try {
+      const updated = await api('POST', `/api/generate/${currentArticleId}/autoseo`);
+      fillEditor(updated);
+      updateSEOPanel();
+      toast('SEO-поля заполнены', 'success');
+    } catch (e) {
+      toast('Ошибка Auto SEO: ' + e.message, 'error');
+    } finally {
+      document.getElementById('autoSeoBtn').textContent = 'Auto SEO';
+    }
+  }
+
+  /* ─── SEO panel ─── */
+  function setSeoTab(tab, btn) {
+    document.querySelectorAll('.seo-panel-toggle button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('seoTab').style.display = tab === 'seo' ? 'block' : 'none';
+    document.getElementById('metaTab').style.display = tab === 'meta' ? 'block' : 'none';
+    document.getElementById('revisionsTab').style.display = tab === 'revisions' ? 'block' : 'none';
+  }
+
+  function showRevisions() {
+    setSeoTab('revisions', document.getElementById('revisionsTabBtn'));
+  }
+
+  async function loadRevisions(articleId) {
+    try {
+      const revs = await api('GET', `/api/blog/${articleId}/revisions`);
+      const el = document.getElementById('revisionsList');
+      if (!revs.length) { el.innerHTML = '<p style="color:var(--text2);font-size:13px">Нет версий</p>'; return; }
+      el.innerHTML = revs.map(r => `<div class="rev-item">
+        <span class="rev-time">${new Date(r.saved_at).toLocaleString('ru-RU')}</span>
+        <button class="btn-sm btn-outline" onclick="restoreRevision(${r.id})">Восстановить</button>
+      </div>`).join('');
+    } catch {}
+  }
+
+  async function restoreRevision(revId) {
+    if (!confirm('Восстановить эту версию? Текущие изменения будут потеряны.')) return;
+    try {
+      await api('POST', `/api/blog/${currentArticleId}/revisions/${revId}/restore`);
+      const a = await api('GET', `/api/blog/${currentArticleId}`);
+      fillEditor(a);
+      toast('Версия восстановлена', 'success');
+    } catch (e) {
+      toast('Ошибка: ' + e.message, 'error');
+    }
+  }
+
+  function updateSEOPanel() {
+    const title = document.getElementById('artTitle').value;
+    const desc = document.getElementById('artDesc').value;
+    const slug = document.getElementById('artSlug').value;
+    const kw = document.getElementById('artKeywords').value.split(',')[0]?.trim() || '';
+    const content = getMdValue();
+
+    // SERP preview
+    document.getElementById('serpUrl').textContent = `quillon.ru › blog › ${slug || 'slug'}`;
+    document.getElementById('serpTitle').textContent = title || 'Заголовок статьи';
+    document.getElementById('serpDesc').textContent = desc || 'Описание появится здесь';
+    const tLen = title.length, dLen = desc.length;
+    document.getElementById('titleLen').innerHTML = `<span class="${tLen>=40&&tLen<=70?'ok':'bad'}">${tLen}</span>`;
+    document.getElementById('descLen').innerHTML = `<span class="${dLen>=120&&dLen<=160?'ok':'bad'}">${dLen}</span>`;
+
+    // Score (client-side estimate)
+    const keywords = document.getElementById('artKeywords').value.split(',').map(k=>k.trim()).filter(Boolean);
+    const wordCount = content.split(/\s+/).filter(Boolean).length;
+    const h2count = (content.match(/^##\s/gm)||[]).length;
+    let score = 0;
+    const checks = [];
+    if (tLen>=40&&tLen<=70){score+=15;checks.push({ok:true,msg:`Title ${tLen} сим.`});}
+    else checks.push({ok:false,msg:`Title ${tLen} сим. (нужно 40-70)`});
+    if (dLen>=120&&dLen<=160){score+=15;checks.push({ok:true,msg:`Description ${dLen} сим.`});}
+    else checks.push({ok:false,msg:`Description ${dLen} сим. (нужно 120-160)`});
+    if (keywords.length>=3){score+=10;checks.push({ok:true,msg:'Ключевые слова заданы'});}
+    else checks.push({ok:false,msg:'Нужно ≥3 ключевых слова'});
+    if (wordCount>=1500){score+=20;checks.push({ok:true,msg:`${wordCount} слов`});}
+    else checks.push({ok:false,msg:`${wordCount} слов (нужно 1500+)`});
+    if (h2count>=3){score+=10;checks.push({ok:true,msg:`${h2count} заголовков H2`});}
+    else checks.push({ok:false,msg:`${h2count} заголовков H2 (нужно ≥3)`});
+    if (kw&&title.toLowerCase().includes(kw.toLowerCase())){score+=15;checks.push({ok:true,msg:'Ключевое слово в title'});}
+    else checks.push({ok:false,msg:'Ключевое слово отсутствует в title'});
+    const ogImg = document.getElementById('artOgImage').value;
+    if (ogImg){score+=15;checks.push({ok:true,msg:'OG Image задан'});}
+    else checks.push({ok:false,msg:'Нет OG Image'});
+
+    const scoreCls = score>=70?'good':score>=40?'ok':'bad';
+    const circle = document.getElementById('scoreCircle');
+    circle.className = `score-circle ${scoreCls}`;
+    circle.textContent = score;
+
+    document.getElementById('seoChecks').innerHTML = checks.map(c =>
+      `<div class="check-item ${c.ok?'pass':'fail'}">
+        <i class="icon">${c.ok?'✓':'○'}</i>
+        <span>${c.msg}</span>
+      </div>`
+    ).join('');
+
+    // Keyword density
+    if (kw && content) {
+      const words = content.split(/\s+/).length;
+      const matches = (content.toLowerCase().match(new RegExp(kw.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'g'))||[]).length;
+      const density = words > 0 ? ((matches/words)*100).toFixed(1) : 0;
+      document.getElementById('keywordDensity').innerHTML =
+        `«${escHtml(kw)}» — ${density}% (${matches} из ${words} слов)`;
+    } else {
+      document.getElementById('keywordDensity').innerHTML =
+        `<a href="#" onclick="event.preventDefault();document.getElementById('artKeywords').focus()" style="color:var(--blue-hover);text-decoration:underline">Введите ключевое слово →</a>`;
+    }
+  }
+
+  /* ─── Toast UI Editor instance ─── */
+  let mde = null;
+
+  function ensureMDE() {
+    if (mde) return mde;
+    const host = document.getElementById('mdEditorHost');
+    mde = new toastui.Editor({
+      el: host,
+      height: '100%',
+      initialEditType: 'wysiwyg',
+      previewStyle: 'tab',
+      theme: 'dark',
+      placeholder: 'Пишите статью — заголовки, **жирный**, _курсив_, списки и код применяются сразу.',
+      hideModeSwitch: false,
+      usageStatistics: false,
+      toolbarItems: [
+        ['heading', 'bold', 'italic', 'strike'],
+        ['hr', 'quote'],
+        ['ul', 'ol', 'task'],
+        ['table', 'image', 'link'],
+        ['code', 'codeblock'],
+      ],
+      events: {
+        change: () => {
+          markBlogUnsaved();
+          updateSEOPanel();
+          updateGenerateBtnLabel();
+        },
+      },
+      hooks: {
+        addImageBlobHook: async (blob, callback) => {
+          try {
+            toast('Загружаю изображение...', 'success');
+            const formData = new FormData();
+            formData.append('image', blob, blob.name || `image-${Date.now()}.png`);
+            const res = await fetch('/api/blog/upload-image', {
+              method: 'POST',
+              headers: { 'Authorization': `Bearer ${token}` },
+              body: formData,
+            });
+            if (!res.ok) {
+              const err = await res.json().catch(() => ({}));
+              throw new Error(err.error || 'Upload failed');
+            }
+            const { url } = await res.json();
+            callback(url, blob.name || 'image');
+            toast('Изображение загружено', 'success');
+          } catch (e) {
+            toast('Ошибка загрузки: ' + e.message, 'error');
           }
-        } catch (e) {
-          toast('Ошибка в JSON: ' + e.message, 'error');
-          return;
-        }
+        },
+      },
+    });
+    return mde;
+  }
+
+  function getMdValue() { return mde ? mde.getMarkdown() : ''; }
+  function setMdValue(v) {
+    ensureMDE();
+    mde.setMarkdown(v || '');
+  }
+
+  /* ─── Generate wizard ─── */
+  function openGenerateWizard() {
+    genStep = 1;
+    genResearchData = null;
+    genOutlineData = null;
+    document.getElementById('genTopic').value = '';
+    document.getElementById('suggestionArea').style.display = 'none';
+    document.getElementById('cannibalizationWarn').innerHTML = '';
+    document.getElementById('genStep1').style.display = 'block';
+    document.getElementById('genStep2').style.display = 'none';
+    document.getElementById('genStep3').style.display = 'none';
+    updateStepDots();
+    document.getElementById('genNextBtn').disabled = true;
+    document.getElementById('genNextBtn').textContent = 'Далее →';
+    document.getElementById('generateModal').classList.add('open');
+  }
+
+  function closeGenerateModal() {
+    document.getElementById('generateModal').classList.remove('open');
+  }
+
+  function clearGenSuggestions() {
+    document.getElementById('suggestionArea').style.display = 'none';
+    document.getElementById('genNextBtn').disabled = true;
+  }
+
+  function updateStepDots() {
+    for (let i = 1; i <= 3; i++) {
+      const dot = document.getElementById(`stepDot${i}`);
+      dot.className = 'step-dot' + (i < genStep ? ' done' : i === genStep ? ' active' : '');
+    }
+  }
+
+  async function runResearch() {
+    const topic = document.getElementById('genTopic').value.trim();
+    if (!topic) return;
+    document.getElementById('researchBtn').disabled = true;
+    document.getElementById('researchSpinner').style.display = 'inline-block';
+    document.getElementById('cannibalizationWarn').innerHTML = '';
+    try {
+      const data = await api('POST', '/api/generate/research', { topic });
+      genResearchData = data;
+
+      if (data.cannibalization_warning?.length) {
+        document.getElementById('cannibalizationWarn').innerHTML =
+          `<div class="cannibalization-warn">⚠ Похожая статья уже есть: "${data.cannibalization_warning[0].title}" (${data.cannibalization_warning[0].status}). Рассмотрите редактирование существующей.</div>`;
       }
+
+      document.getElementById('suggestionChips').innerHTML = data.suggestions.map(s =>
+        `<div class="chip" onclick="this.classList.toggle('selected')">${escHtml(s)}</div>`
+      ).join('');
+      document.getElementById('paaList').innerHTML = data.paa.map(p => `<p>• ${escHtml(p)}</p>`).join('');
+      document.getElementById('suggestionArea').style.display = 'block';
+      document.getElementById('genNextBtn').disabled = false;
+    } catch (e) {
+      toast('Ошибка исследования: ' + e.message, 'error');
+    } finally {
+      document.getElementById('researchBtn').disabled = false;
+      document.getElementById('researchSpinner').style.display = 'none';
+    }
+  }
+
+  async function genNext() {
+    if (genStep === 1) {
+      // Move to step 2: generate outline
+      genStep = 2;
+      updateStepDots();
+      document.getElementById('genStep1').style.display = 'none';
+      document.getElementById('genStep2').style.display = 'block';
+      document.getElementById('genNextBtn').disabled = true;
+      document.getElementById('genNextBtn').textContent = 'Генерирую outline...';
+      document.getElementById('outlinePreview').innerHTML = '<div style="text-align:center;padding:20px"><div class="spinner"></div></div>';
 
       try {
-        await api('PUT', `/api/sites/${currentSite}/${currentFile}`, contentData);
-        hasUnsaved = false;
-        document.getElementById('unsavedBadge').style.display = 'none';
-        toast('Сохранено', 'success');
+        const outline = await api('POST', '/api/generate/outline', {
+          topic: document.getElementById('genTopic').value.trim(),
+          research: genResearchData,
+        });
+        genOutlineData = outline;
+        renderOutlinePreview(outline);
+        document.getElementById('genNextBtn').disabled = false;
+        document.getElementById('genNextBtn').textContent = 'Сгенерировать статью →';
       } catch (e) {
-        toast('Ошибка сохранения: ' + e.message, 'error');
+        toast('Ошибка генерации outline: ' + e.message, 'error');
+        document.getElementById('genNextBtn').textContent = 'Далее →';
+      }
+
+    } else if (genStep === 2) {
+      // Move to step 3: generate article
+      genStep = 3;
+      updateStepDots();
+      document.getElementById('genStep2').style.display = 'none';
+      document.getElementById('genStep3').style.display = 'block';
+      document.getElementById('genNextBtn').disabled = true;
+
+      try {
+        document.getElementById('genProgress').textContent = 'Генерирую статью... (30-60 сек)';
+        const article = await api('POST', '/api/generate/article', {
+          topic: document.getElementById('genTopic').value.trim(),
+          outline: genOutlineData,
+        });
+        closeGenerateModal();
+        await openArticleEditor(article.id);
+        toast('Статья сгенерирована! Проверьте и опубликуйте.', 'success');
+      } catch (e) {
+        if (e.message.includes('Cannibalization')) {
+          toast('Конфликт: похожая статья уже существует', 'error');
+        } else {
+          toast('Ошибка генерации: ' + e.message, 'error');
+        }
+        genStep = 2;
+        updateStepDots();
+        document.getElementById('genStep2').style.display = 'block';
+        document.getElementById('genStep3').style.display = 'none';
+        document.getElementById('genNextBtn').disabled = false;
+        document.getElementById('genNextBtn').textContent = 'Сгенерировать статью →';
       }
     }
+  }
 
-    function toast(msg, type = 'success') {
-      const el = document.getElementById('toast');
-      el.textContent = msg;
-      el.className = `toast ${type} show`;
-      setTimeout(() => el.classList.remove('show'), 3000);
+  function renderOutlinePreview(outline) {
+    const meta = `<strong>${escHtml(outline.title)}</strong><br>
+      <span style="color:var(--text2);font-size:13px">${escHtml(outline.description)}</span><br>
+      <span style="color:var(--text2);font-size:12px">Кластер: ${escHtml(outline.cluster||'—')} · Ключевые слова: ${(outline.keywords||[]).join(', ')}</span>`;
+    document.getElementById('outlineMeta').innerHTML = meta;
+
+    document.getElementById('outlinePreview').innerHTML = (outline.sections || []).map(s =>
+      `<div class="outline-section">
+        <h4>${escHtml(s.h2)}</h4>
+        <ul>${(s.points||[]).map(p=>`<li>${escHtml(p)}</li>`).join('')}</ul>
+      </div>`
+    ).join('') + (outline.faq?.length ? `<div class="outline-section">
+        <h4>FAQ (${outline.faq.length} вопросов)</h4>
+        <ul>${outline.faq.map(f=>`<li>${escHtml(f.q)}</li>`).join('')}</ul>
+      </div>` : '');
+  }
+
+  /* ─── Helpers ─── */
+  function toast(msg, type = 'success') {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className = `toast ${type} show`;
+    setTimeout(() => el.classList.remove('show'), 3500);
+  }
+
+  function escHtml(str) {
+    return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  async function api(method, url, body) {
+    const opts = { method, headers: { 'Content-Type': 'application/json' } };
+    if (token) opts.headers.Authorization = `Bearer ${token}`;
+    if (body) opts.body = JSON.stringify(body);
+    const res = await fetch(url, opts);
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: res.statusText }));
+      throw new Error(err.error || 'Request failed');
     }
+    return res.json();
+  }
 
-    async function api(method, url, body) {
-      const opts = {
-        method,
-        headers: { 'Content-Type': 'application/json' }
-      };
-      if (token) opts.headers.Authorization = `Bearer ${token}`;
-      if (body) opts.body = JSON.stringify(body);
+  window.addEventListener('beforeunload', (e) => {
+    if (hasUnsaved || blogHasUnsaved) { e.preventDefault(); e.returnValue = ''; }
+  });
 
-      const res = await fetch(url, opts);
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({ error: res.statusText }));
-        throw new Error(err.error || 'Request failed');
-      }
-      return res.json();
-    }
+  document.getElementById('loginPass').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') login();
+  });
 
-    // Prevent accidental navigation with unsaved changes
-    window.addEventListener('beforeunload', (e) => {
-      if (hasUnsaved) { e.preventDefault(); e.returnValue = ''; }
-    });
-
-    // Enter to login
-    document.getElementById('loginPass').addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') login();
-    });
-  </script>
+  // Close modal on backdrop click
+  document.getElementById('generateModal').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) closeGenerateModal();
+  });
+</script>
 </body>
 </html>
