@@ -4,7 +4,8 @@ const { marked } = require('marked');
 const hljs = require('highlight.js');
 const db = require('../db');
 
-const BLOG_DIR = path.join(__dirname, '..', '..', 'public', 'blog');
+const BLOG_DIR = process.env.BLOG_PUBLIC_DIR
+  || path.join(__dirname, '..', '..', 'public', 'blog');
 const TEMPLATE_PATH = path.join(__dirname, '..', 'templates', 'article.html');
 
 // Configure marked with syntax highlighting

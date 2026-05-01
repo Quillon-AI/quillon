@@ -1,7 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
-const RSS_PATH = path.join(__dirname, '..', '..', 'public', 'blog', 'rss.xml');
+const BLOG_DIR = process.env.BLOG_PUBLIC_DIR
+  || path.join(__dirname, '..', '..', 'public', 'blog');
+const RSS_PATH = path.join(BLOG_DIR, 'rss.xml');
 const SITE = 'https://quillon.ru';
 
 function escapeXML(str) {
