@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вход в аккаунт · Quillon</title>
+  <meta name="description" content="Войдите в личный кабинет Quillon — программы, стажировка и доступ к LMS.">
+  <link rel="canonical" href="https://quillon.ru/login/">
+
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('q-theme');
+        var prefers = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', saved || prefers);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/v4/css/tokens.css?v=4">
+  <link rel="stylesheet" href="/v4/css/base.css?v=4">
+  <link rel="stylesheet" href="/v4/css/components.css?v=4">
+
+  <style>
+    /* Login · v4 DS — split layout, border-first, один accent-halo */
+    .q-login-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: clip;
+    }
+
+    .q-login-page::before {
+      content: "";
+      position: fixed;
+      top: -40%;
+      left: -25%;
+      width: min(80vw, 720px);
+      height: min(80vw, 720px);
+      background: radial-gradient(circle, rgba(94, 106, 210, 0.11), transparent 62%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .q-login-top {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      padding: 0 var(--q-s-6);
+      border-bottom: 1px solid var(--q-line);
+      background: color-mix(in srgb, var(--q-bg-0) 88%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .q-login-top__inner {
+      max-width: var(--q-container);
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--q-s-4);
+    }
+
+    .q-login-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--q-s-3);
+      font-weight: var(--q-fw-medium);
+      font-size: var(--q-t-small);
+      color: var(--q-text-hi);
+    }
+
+    .q-login-brand img { flex-shrink: 0; }
+
+    .q-login-top-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--q-s-1);
+    }
+
+    .q-login-main {
+      flex: 1;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      padding: var(--q-s-10) var(--q-s-6) var(--q-s-11);
+    }
+
+    .q-login-grid {
+      max-width: 1040px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(280px, 400px);
+      gap: var(--q-s-11);
+      align-items: center;
+    }
+
+    .q-login-aside__eyebrow {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--q-accent-hover);
+      margin: 0 0 var(--q-s-4);
+    }
+
+    .q-login-aside__title {
+      font-family: var(--q-font-display);
+      font-size: clamp(1.875rem, 3.2vw, 2.5rem);
+      font-weight: var(--q-fw-linear);
+      letter-spacing: -0.022em;
+      line-height: 1.1;
+      color: var(--q-text-hi);
+      margin: 0 0 var(--q-s-5);
+      max-width: 16ch;
+    }
+
+    .q-login-aside__lead {
+      font-size: var(--q-t-lead);
+      line-height: 1.55;
+      color: var(--q-text-mid);
+      margin: 0 0 var(--q-s-7);
+      max-width: 42ch;
+    }
+
+    .q-login-facts {
+      list-style: none;
+      margin: 0;
+      padding: var(--q-s-6) 0 0;
+      border-top: 1px solid var(--q-line);
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-5);
+    }
+
+    .q-login-fact {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      column-gap: var(--q-s-3);
+      align-items: baseline;
+    }
+
+    .q-login-fact__n {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      color: var(--q-text-low);
+      font-weight: var(--q-fw-medium);
+      font-feature-settings: "tnum" 1;
+    }
+
+    .q-login-fact__t {
+      margin: 0;
+      font-size: var(--q-t-body);
+      line-height: 1.45;
+      color: var(--q-text-hi);
+      max-width: 40ch;
+    }
+
+    .q-login-card.q-card {
+      padding: var(--q-s-8);
+    }
+
+    .q-login-card__head {
+      margin-bottom: var(--q-s-7);
+    }
+
+    .q-login-card__h {
+      font-family: var(--q-font-display);
+      font-size: var(--q-t-h3);
+      font-weight: var(--q-fw-linear);
+      letter-spacing: var(--q-tracking-h3);
+      line-height: 1.2;
+      margin: 0 0 var(--q-s-2);
+      color: var(--q-text-hi);
+    }
+
+    .q-login-card__sub {
+      margin: 0;
+      font-size: var(--q-t-small);
+      line-height: 1.5;
+      color: var(--q-text-mid);
+    }
+
+    .q-login-fields {
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-5);
+    }
+
+    .q-login-field label {
+      display: block;
+      font-family: var(--q-font-mono);
+      font-size: 11px;
+      font-weight: var(--q-fw-medium);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--q-text-low);
+      margin-bottom: var(--q-s-2);
+    }
+
+    .q-login-pass-wrap {
+      position: relative;
+    }
+
+    .q-login-pass-wrap .q-input {
+      padding-right: 44px;
+    }
+
+    .q-login-pass-toggle {
+      position: absolute;
+      right: 4px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 32px;
+      border-radius: var(--q-r-sm);
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--q-text-low);
+      font-family: var(--q-font-mono);
+      font-size: 10px;
+      font-weight: var(--q-fw-medium);
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: color var(--q-dur-fast) var(--q-ease), background var(--q-dur-fast) var(--q-ease), border-color var(--q-dur-fast) var(--q-ease);
+    }
+
+    .q-login-pass-toggle:hover {
+      color: var(--q-text-hi);
+      background: var(--q-bg-3);
+      border-color: var(--q-line);
+    }
+
+    .q-login-error {
+      margin: 0 0 var(--q-s-4);
+      padding: var(--q-s-4);
+      border-radius: var(--q-r-md);
+      border: 1px solid rgba(248, 113, 113, 0.35);
+      background: rgba(248, 113, 113, 0.08);
+      color: #FCA5A5;
+      font-size: var(--q-t-small);
+      line-height: 1.5;
+    }
+
+    .q-login-actions {
+      margin-top: var(--q-s-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-4);
+    }
+
+    .q-login-actions .q-btn--primary {
+      width: 100%;
+    }
+
+    .q-login-meta {
+      margin-top: var(--q-s-6);
+      padding-top: var(--q-s-6);
+      border-top: 1px solid var(--q-line);
+      font-size: var(--q-t-xs);
+      line-height: 1.55;
+      color: var(--q-text-low);
+      text-align: center;
+    }
+
+    .q-login-meta a {
+      color: var(--q-accent-hover);
+      font-weight: var(--q-fw-medium);
+    }
+
+    .q-login-meta a:hover {
+      color: var(--q-text-hi);
+    }
+
+    .q-login-foot {
+      position: relative;
+      z-index: 1;
+      padding: var(--q-s-5) var(--q-s-6) var(--q-s-7);
+      border-top: 1px solid var(--q-line-soft);
+    }
+
+    .q-login-foot__inner {
+      max-width: var(--q-container);
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--q-s-3) var(--q-s-6);
+      justify-content: center;
+      font-size: var(--q-t-xs);
+      color: var(--q-text-low);
+    }
+
+    .q-login-foot__inner a {
+      color: var(--q-text-mid);
+    }
+
+    .q-login-foot__inner a:hover {
+      color: var(--q-text-hi);
+    }
+
+    @media (max-width: 900px) {
+      .q-login-grid {
+        grid-template-columns: 1fr;
+        gap: var(--q-s-9);
+      }
+      .q-login-aside__title { max-width: none; }
+      .q-login-aside__lead { max-width: none; }
+      .q-login-fact__t { max-width: none; }
+    }
+
+    @media (max-width: 640px) {
+      .q-login-top { padding: 0 var(--q-s-4); }
+      .q-login-main { padding: var(--q-s-8) var(--q-s-4) var(--q-s-10); }
+      .q-login-card.q-card { padding: var(--q-s-6); border-radius: var(--q-r-lg); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="q-login-page">
+    <header class="q-login-top">
+      <div class="q-login-top__inner">
+        <a href="/" class="q-login-brand" aria-label="Quillon — на главную">
+          <img src="/v4/assets/brand/logo.svg" alt="Quillon" width="92" height="32" decoding="async">
+        </a>
+        <div class="q-login-top-actions">
+          <button type="button" class="q-theme-toggle" data-q-theme-toggle aria-label="Переключить тему">
+            <svg class="q-theme-toggle__moon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14 9.5A6 6 0 1 1 6.5 2a4.5 4.5 0 0 0 7.5 7.5z"/>
+            </svg>
+            <svg class="q-theme-toggle__sun" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="8" cy="8" r="3.2"/>
+              <path d="M8 1.5v1.6M8 12.9v1.6M2.6 2.6l1.1 1.1M12.3 12.3l1.1 1.1M1.5 8h1.6M12.9 8h1.6M2.6 13.4l1.1-1.1M12.3 3.7l1.1-1.1"/>
+            </svg>
+          </button>
+          <a class="q-btn q-btn--link q-btn--sm" href="mailto:support@quillon.ru">Поддержка</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="q-login-main" id="main">
+      <div class="q-login-grid">
+        <div class="q-login-aside">
+          <p class="q-login-aside__eyebrow">Личный кабинет</p>
+          <h1 class="q-login-aside__title">Вход в программу</h1>
+          <p class="q-login-aside__lead">
+            Один аккаунт — доступ к материалам, заданиям и LMS. Если вы только оформляли набор, используйте email из договора.
+          </p>
+          <ul class="q-login-facts" aria-label="Что даёт аккаунт">
+            <li class="q-login-fact">
+              <span class="q-login-fact__n">01</span>
+              <p class="q-login-fact__t">Уроки, прогресс и обратная связь в одном месте.</p>
+            </li>
+            <li class="q-login-fact">
+              <span class="q-login-fact__n">02</span>
+              <p class="q-login-fact__t">Стажировочные задачи и биржа Quillon&nbsp;Jobs после контрольных точек.</p>
+            </li>
+            <li class="q-login-fact">
+              <span class="q-login-fact__n">03</span>
+              <p class="q-login-fact__t">Безопасный вход: пароль шифруется при передаче (HTTPS).</p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="q-card q-card--elevated q-login-card">
+          <div class="q-login-card__head">
+            <h2 class="q-login-card__h">Войти</h2>
+            <p class="q-login-card__sub">Email и пароль от личного кабинета Quillon.</p>
+          </div>
+
+          <div id="quillon-login-error" class="q-login-error" role="alert" hidden></div>
+
+          <form id="quillon-login-form" novalidate>
+            <div class="q-login-fields">
+              <div class="q-login-field">
+                <label for="quillon-login-email">Email</label>
+                <input class="q-input" type="email" id="quillon-login-email" name="email" autocomplete="email" required placeholder="you@example.com" inputmode="email">
+              </div>
+              <div class="q-login-field">
+                <label for="quillon-login-password">Пароль</label>
+                <div class="q-login-pass-wrap">
+                  <input class="q-input" type="password" id="quillon-login-password" name="password" autocomplete="current-password" required placeholder="••••••••">
+                  <button type="button" class="q-login-pass-toggle" id="quillon-login-password-toggle" aria-pressed="false" aria-label="Показать пароль">Показать</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="q-login-actions">
+              <button type="submit" class="q-btn q-btn--primary q-btn--lg" id="quillon-login-submit" aria-busy="false">
+                <span class="q-login-submit__text">Войти</span>
+              </button>
+            </div>
+          </form>
+
+          <p class="q-login-meta">
+            Нет доступа или забыли пароль — напишите на
+            <a href="mailto:support@quillon.ru">support@quillon.ru</a>.
+            <br>
+            <a id="quillon-login-lms-fallback" href="https://lms.quillon.ru/login" rel="noopener noreferrer">Открыть классический вход LMS</a>
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <footer class="q-login-foot">
+      <div class="q-login-foot__inner">
+        <span>© Quillon</span>
+        <a href="/v4/docs/privacy-policy.html">Политика персональных данных</a>
+        <a href="/">На главную</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/js/quillon-login.js" defer></script>
+  <script>
+    (function () {
+      var btn = document.querySelector('[data-q-theme-toggle]');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        var next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', next);
+        try { localStorage.setItem('q-theme', next); } catch (e) {}
+      });
+    })();
+  </script>
+</body>
+</html>
