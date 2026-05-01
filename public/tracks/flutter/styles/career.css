@@ -1,0 +1,132 @@
+/* ── Career path section ────────────────────────────────────────── */
+.q-career { padding: clamp(64px,10vw,120px) 0; }
+
+.q-career__head { margin-bottom: 56px; }
+
+.q-career__levels {
+  list-style: none;
+  margin: 0; padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.q-career__level {
+  display: grid;
+  grid-template-columns: 140px 1fr 220px;
+  gap: 32px;
+  align-items: start;
+  padding: 36px 0;
+  border-top: 1px solid var(--rule);
+  transition: padding-left var(--dur-med) var(--ease-out),
+              border-top-color var(--dur-med) var(--ease-out);
+}
+.q-career__level:last-child { border-bottom: 1px solid var(--rule); }
+.q-career__level:hover { padding-left: 12px; border-top-color: var(--mint); }
+
+.q-career__level__rail {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.q-career__level__code {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.q-career__level__name {
+  font-size: clamp(18px, 2.5vw, 24px);
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.q-career__level__period {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-top: 4px;
+}
+
+.q-career__level__body { display: flex; flex-direction: column; gap: 8px; }
+
+.q-career__level__desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-soft);
+  margin: 0;
+}
+
+.q-career__level__market {
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.q-career__pay {
+  text-align: right;
+}
+.q-career__pay__num {
+  display: block;
+  font-size: clamp(26px, 3vw, 38px);
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1;
+}
+.q-career__level--senior .q-career__pay__num { color: var(--mint); }
+.q-career__pay__label {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* Adjacent directions */
+.q-career__adjacent {
+  margin-top: 56px;
+  padding-top: 40px;
+  border-top: 1px solid var(--rule);
+}
+
+.q-career__adjacent__kicker {
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 20px;
+}
+
+.q-career__adjacent__list {
+  list-style: none;
+  margin: 0; padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.q-career__adjacent__item {
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--ink-10);
+  border: 1px solid var(--rule-faint);
+  padding: 6px 12px;
+}
+
+@media (max-width: 768px) {
+  .q-career__level { grid-template-columns: 100px 1fr; }
+  .q-career__pay { display: none; }
+}

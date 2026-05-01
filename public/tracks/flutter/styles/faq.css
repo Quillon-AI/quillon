@@ -1,0 +1,83 @@
+    /* ═══════════════════════════════════════════════════════════════
+     * FAQ
+     * ═══════════════════════════════════════════════════════════════ */
+    .q-faq { position: relative; padding: var(--q-s-10) 0 var(--q-s-11); }
+    .q-faq::before {
+      content: "";
+      position: absolute; top: -200px; left: -240px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(94,106,210,.06), transparent 62%);
+      pointer-events: none; z-index: 0;
+    }
+    .q-faq .q-container { position: relative; z-index: 1; }
+    .q-faq .q-section-head { max-width: 800px; margin-bottom: var(--q-s-9); }
+
+    .q-faq-body { display: grid; grid-template-columns: minmax(0,4fr) minmax(0,8fr); gap: var(--q-s-8); align-items: start; }
+
+    .q-faq-aside {
+      position: sticky; top: var(--q-s-7);
+      display: flex; flex-direction: column; gap: var(--q-s-5);
+      padding-right: var(--q-s-6);
+    }
+    .q-faq-aside__kicker {
+      font-family: var(--q-font-mono); font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono); text-transform: uppercase; color: var(--q-text-low);
+    }
+    .q-faq-aside__kicker em { color: var(--q-accent-hover); font-style: normal; font-weight: var(--q-fw-medium); }
+    .q-faq-aside__title {
+      font-family: var(--q-font-display); font-size: clamp(1.5rem,2vw,1.875rem);
+      font-weight: var(--q-fw-linear); letter-spacing: -.02em; line-height: 1.2;
+      color: var(--q-text-hi); margin: 0; max-width: 22ch;
+    }
+    .q-faq-aside__text { font-size: var(--q-t-base); line-height: 1.55; color: var(--q-text-mid); margin: 0; max-width: 32ch; }
+
+    .q-faq-list { list-style: none; margin: 0; padding: 0; }
+    .q-faq-item { border-bottom: 1px solid var(--q-line); }
+    .q-faq-item:last-child { border-bottom: 0; }
+    .q-faq-item summary {
+      display: grid; grid-template-columns: 56px 1fr 32px;
+      column-gap: var(--q-s-4); align-items: baseline;
+      padding: var(--q-s-5) 0; cursor: pointer; list-style: none; user-select: none;
+      transition: background var(--q-dur-fast) var(--q-ease);
+    }
+    .q-faq-item summary::-webkit-details-marker { display: none; }
+    .q-faq-item summary::marker { display: none; content: ''; }
+    .q-faq-item summary:hover { background: rgba(94,106,210,.03); }
+    .q-faq-item summary:focus-visible { outline: 1px dashed var(--q-accent); outline-offset: 4px; }
+
+    .q-faq-item__num {
+      font-family: var(--q-font-mono); font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono); color: var(--q-text-low); font-weight: var(--q-fw-medium);
+    }
+    .q-faq-item__q {
+      font-family: var(--q-font-display); font-size: clamp(1.0625rem,1.4vw,1.25rem);
+      font-weight: var(--q-fw-medium); letter-spacing: -.014em;
+      color: var(--q-text-hi); line-height: 1.4; margin: 0;
+    }
+    .q-faq-item__plus {
+      font-family: var(--q-font-mono); font-size: 1.5rem; line-height: 1;
+      color: var(--q-text-mid); justify-self: center; align-self: center;
+      transition: transform var(--q-dur-base) var(--q-ease), color var(--q-dur-base) var(--q-ease);
+    }
+    .q-faq-item[open] .q-faq-item__plus { transform: rotate(45deg); color: var(--q-accent-hover); }
+    .q-faq-item summary:hover .q-faq-item__plus { color: var(--q-text-hi); }
+
+    .q-faq-item__a {
+      display: grid; grid-template-columns: 56px 1fr 32px;
+      column-gap: var(--q-s-4); padding: 0 0 var(--q-s-6);
+    }
+    .q-faq-item__a-text {
+      grid-column: 2; font-size: var(--q-t-base); line-height: 1.65;
+      color: var(--q-text-mid); margin: 0; max-width: 64ch;
+    }
+    .q-faq-item__a-text b { color: var(--q-text-hi); font-weight: var(--q-fw-medium); }
+
+    @media (max-width: 1024px) {
+      .q-faq-body { grid-template-columns: 1fr; gap: var(--q-s-7); }
+      .q-faq-aside { position: static; padding-right: 0; padding-bottom: var(--q-s-6); border-bottom: 1px solid var(--q-line); }
+    }
+    @media (max-width: 720px) {
+      .q-faq { padding: var(--q-s-8) 0 var(--q-s-9); }
+      .q-faq-item summary, .q-faq-item__a { grid-template-columns: 36px 1fr 28px; column-gap: var(--q-s-3); }
+      .q-faq-item summary { padding: var(--q-s-4) 0; }
+    }

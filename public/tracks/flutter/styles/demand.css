@@ -1,0 +1,77 @@
+/* ── Demand: market section ─────────────────────────────────────── */
+.q-demand { padding: clamp(64px,10vw,120px) 0; }
+
+.q-demand__head { margin-bottom: 56px; }
+
+.q-demand__list {
+  list-style: none;
+  margin: 0; padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.q-demand__row {
+  display: grid;
+  grid-template-columns: 56px 1fr 180px;
+  gap: 32px;
+  align-items: start;
+  padding: 32px 0;
+  border-top: 1px solid var(--rule);
+  transition: padding-left var(--dur-med) var(--ease-out),
+              border-top-color var(--dur-med) var(--ease-out);
+}
+.q-demand__row:last-child { border-bottom: 1px solid var(--rule); }
+.q-demand__row:hover {
+  padding-left: 12px;
+  border-top-color: var(--mint);
+}
+
+.q-demand__num {
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding-top: 4px;
+}
+
+.q-demand__body { display: flex; flex-direction: column; gap: 8px; }
+
+.q-demand__theme {
+  font-size: clamp(16px, 2vw, 20px);
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.25;
+}
+
+.q-demand__desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-soft);
+  max-width: 60ch;
+}
+
+.q-demand__metric {
+  text-align: right;
+  padding-top: 2px;
+}
+.q-demand__metric__val {
+  display: block;
+  font-size: clamp(28px, 3.5vw, 40px);
+  font-weight: 500;
+  color: var(--mint);
+  line-height: 1;
+}
+.q-demand__metric__label {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+@media (max-width: 768px) {
+  .q-demand__row { grid-template-columns: 40px 1fr; }
+  .q-demand__metric { display: none; }
+}

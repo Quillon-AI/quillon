@@ -1,0 +1,92 @@
+/* ── Portfolio: 5 Flutter apps ──────────────────────────────────── */
+.q-portfolio { padding: clamp(64px,10vw,120px) 0; }
+
+.q-portfolio__head { margin-bottom: 56px; }
+
+.q-portfolio__list {
+  list-style: none;
+  margin: 0; padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.q-portfolio__item {
+  background: var(--ink-10);
+  border: 1px solid var(--rule);
+  padding: 32px;
+  transition: border-color var(--dur-med) var(--ease-out),
+              padding-left var(--dur-med) var(--ease-out);
+}
+.q-portfolio__item:hover {
+  border-color: color-mix(in srgb, var(--mint) 40%, transparent);
+  padding-left: 40px;
+}
+
+/* wide item spans 2 columns (for item #5 — startup) */
+.q-portfolio__item--wide { grid-column: 1 / -1; }
+
+.q-portfolio__item__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.q-portfolio__num {
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--mint);
+}
+
+.q-portfolio__badge {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--ink-15);
+  border: 1px solid var(--rule);
+  padding: 3px 8px;
+}
+
+.q-portfolio__name {
+  font-size: clamp(16px, 2vw, 20px);
+  font-weight: 500;
+  color: var(--text);
+  margin: 0 0 10px;
+  line-height: 1.25;
+}
+
+.q-portfolio__brief {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-soft);
+  margin: 0 0 20px;
+}
+
+.q-portfolio__stack {
+  list-style: none;
+  margin: 0; padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.q-portfolio__chip {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--ink-15);
+  border: 1px solid var(--rule-faint);
+  padding: 4px 8px;
+}
+
+@media (max-width: 640px) {
+  .q-portfolio__list { grid-template-columns: 1fr; }
+  .q-portfolio__item--wide { grid-column: auto; }
+}
