@@ -60,11 +60,49 @@
 
     body { background: var(--ink-00); color: var(--text); font-family: var(--ff); -webkit-font-smoothing: antialiased; }
 
-    .topbar { border-bottom: 1px solid var(--rule); padding: 20px 24px; display: flex; align-items: center; gap: 24px; }
-    .topbar a { color: var(--mint); text-decoration: none; font-weight: 500; }
-    .topbar nav { display: flex; gap: 20px; }
-    .topbar nav a { color: var(--text-muted); font-size: 14px; text-decoration: none; }
-    .topbar nav a:hover { color: var(--text); }
+    .topbar {
+      border-bottom: 1px solid var(--rule);
+      padding: 18px clamp(20px, 4vw, 56px);
+      display: flex; align-items: center;
+      gap: clamp(20px, 3vw, 40px);
+      background: var(--ink-05);
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(8px);
+    }
+    .topbar__brand img { height: 28px; width: auto; display: block; }
+    .topbar nav { display: flex; gap: 24px; flex: 1; }
+    .topbar nav a {
+      color: var(--text-soft); font-size: 14px; font-weight: 500;
+      text-decoration: none; letter-spacing: -0.005em; transition: color 140ms;
+    }
+    .topbar nav a:hover, .topbar nav a.is-active { color: var(--mint); }
+    .topbar__cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--mint); color: #04070C;
+      font-size: 13px; font-weight: 600; padding: 8px 16px;
+      border-radius: 8px; text-decoration: none; transition: background 140ms;
+    }
+    .topbar__cta:hover { background: #7DFFB3; }
+    .topbar__login { color: var(--text-soft); font-size: 13px; font-weight: 500; text-decoration: none; padding: 8px 12px; }
+    .topbar__login:hover { color: var(--mint); }
+
+    /* Footer — Quillon brand */
+    footer.q-ft { border-top: 1px solid var(--rule); padding: 56px clamp(20px, 4vw, 56px) 32px; background: var(--ink-05); color: var(--text-muted); font-size: 13px; }
+    .ft-grid { display: grid; grid-template-columns: 1.2fr repeat(3, 1fr); gap: 48px 40px; max-width: 1200px; margin: 0 auto 40px; }
+    .ft-brand img { height: 32px; width: auto; }
+    .ft-brand p { margin-top: 12px; color: var(--text-muted); font-size: 13px; line-height: 1.5; max-width: 240px; }
+    .ft-col h4 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 14px; font-weight: 500; font-family: var(--ff-mono); }
+    .ft-col ul { list-style: none; padding: 0; margin: 0; }
+    .ft-col li { margin-bottom: 8px; }
+    .ft-col a { color: var(--text-soft); text-decoration: none; font-size: 13px; transition: color 140ms; }
+    .ft-col a:hover { color: var(--mint); }
+    .ft-legal { max-width: 1200px; margin: 0 auto; padding-top: 24px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; font-size: 12px; color: var(--text-muted); }
+    .ft-legal a { color: var(--text-muted); text-decoration: none; }
+    .ft-legal a:hover { color: var(--mint); }
+    .ft-legal__col p { margin-bottom: 4px; }
+    .ft-legal__links { display: flex; gap: 16px; flex-wrap: wrap; }
+    @media (max-width: 768px) { .ft-grid { grid-template-columns: 1fr 1fr; gap: 32px 24px; } .ft-brand { grid-column: 1 / -1; } }
+    @media (max-width: 480px) { .ft-grid { grid-template-columns: 1fr; } }
 
     .container { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
 
@@ -98,22 +136,23 @@
     .empty-state { padding: 80px 0; text-align: center; color: var(--text-muted); }
     .empty-state p { font-size: 16px; }
 
-    footer { border-top: 1px solid var(--rule); padding: 32px 24px; text-align: center; font-size: 13px; color: var(--text-muted); }
-    footer a { color: var(--text-muted); text-decoration: none; }
-    footer a:hover { color: var(--mint); }
-
     @media (max-width: 640px) { .blog-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
 
 <header class="topbar">
-  <a href="/">Quillon</a>
+  <a href="/" class="topbar__brand" aria-label="Quillon">
+    <img src="/v4/assets/brand/logo.svg" alt="Quillon" width="92" height="32">
+  </a>
   <nav>
-    <a href="/blog/">Блог</a>
-    <a href="/#tracks">Треки</a>
-    <a href="/#contact">Записаться</a>
+    <a href="/blog/" class="is-active">Блог</a>
+    <a href="/#products">Треки</a>
+    <a href="/#quillon_jobs">Jobs</a>
+    <a href="/#faq">FAQ</a>
   </nav>
+  <a href="/login/" class="topbar__login">Войти</a>
+  <a href="/quiz" class="topbar__cta">Пройти тест</a>
 </header>
 
 <main id="main" class="container">
@@ -132,8 +171,51 @@
   </div>
 </main>
 
-<footer>
-  <p>&copy; 2025 Quillon · <a href="/">quillon.ru</a> · <a href="/blog/rss.xml">RSS</a></p>
+<footer class="q-ft">
+  <div class="ft-grid">
+    <div class="ft-brand">
+      <a href="/" aria-label="Quillon"><img src="/v4/assets/brand/logo.svg" alt="Quillon" width="103" height="36"></a>
+      <p>Продукты. Команды. Реальный доход.</p>
+    </div>
+    <div class="ft-col">
+      <h4>Направления</h4>
+      <ul>
+        <li><a href="/tracks/python-backend-ml/">Python Backend + ML</a></li>
+        <li><a href="/tracks/flutter/">Flutter Developer</a></li>
+        <li><a href="/tracks/qa/">QA Automation</a></li>
+      </ul>
+    </div>
+    <div class="ft-col">
+      <h4>Компания</h4>
+      <ul>
+        <li><a href="/blog/">Блог</a></li>
+        <li><a href="/#products">Продукты</a></li>
+        <li><a href="https://tech.quillon.ru" target="_blank" rel="noopener">Quillon Tech</a></li>
+        <li><a href="/blog/rss.xml">RSS</a></li>
+      </ul>
+    </div>
+    <div class="ft-col">
+      <h4>Программа</h4>
+      <ul>
+        <li><a href="/#format">Формат</a></li>
+        <li><a href="/#pricing">Стоимость</a></li>
+        <li><a href="/#faq">Вопросы</a></li>
+        <li><a href="/quiz">Пройти тест</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft-legal">
+    <div class="ft-legal__col">
+      <p><b>ООО «Квиллон»</b> · ИНН 1660308717</p>
+      <p>420055, Казань, ул. Свободная, 7, оф. 5</p>
+    </div>
+    <div class="ft-legal__links">
+      <a href="/v4/docs/oferta.html" target="_blank" rel="noopener">Оферта</a>
+      <a href="/v4/docs/privacy-policy.html" target="_blank" rel="noopener">Политика</a>
+      <a href="/v4/docs/consent-pdn.html" target="_blank" rel="noopener">Согласие на ПД</a>
+      <a href="https://islod.obrnadzor.gov.ru/view/133831" target="_blank" rel="noopener">Лицензия</a>
+    </div>
+  </div>
 </footer>
 
 <script>
