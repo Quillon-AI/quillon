@@ -89,7 +89,12 @@
 
     @media (max-width: 900px) {
       .q-404 { padding-top: var(--q-s-7); padding-bottom: var(--q-s-7); }
-      .q-404__art { width: 280px; aspect-ratio: 4 / 5; }
+      /* card stretches to container width; SVG inside auto-letterboxes via preserveAspectRatio meet */
+      .q-404__art {
+        width: 100%;
+        max-width: 600px;
+        aspect-ratio: 16 / 10;
+      }
       .q-404__links { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 480px) {
