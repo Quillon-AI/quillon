@@ -57,8 +57,11 @@
   <style>
     /* ── About-specific layout ── */
     .q-about-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: var(--q-s-9);
       padding: var(--q-s-10) 0 var(--q-s-9);
-      border-bottom: 1px solid var(--q-line);
+      align-items: center;
     }
     .q-about-hero__eyebrow {
       font-family: var(--q-font-mono);
@@ -85,8 +88,25 @@
       max-width: 56ch;
       margin: 0;
     }
+    .q-about-hero__art {
+      margin: 0;
+      border-radius: var(--q-r-xl);
+      overflow: hidden;
+      aspect-ratio: 4 / 5;
+      background: var(--q-bg-1);
+      box-shadow: 0 0 0 1px var(--q-line), 0 12px 48px -16px rgba(0, 0, 0, 0.6);
+    }
+    .q-about-hero__svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    @media (max-width: 900px) {
+      .q-about-hero { grid-template-columns: 1fr; gap: var(--q-s-7); }
+      .q-about-hero__art { aspect-ratio: 16 / 10; max-width: 600px; }
+    }
 
-    /* Two-col text section */
+    /* Two-col text section (для блоков с богатым текстом справа) */
     .q-about-cols {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
@@ -100,6 +120,26 @@
       color: var(--q-text-hi);
       margin: 0;
       max-width: 14ch;
+    }
+
+    /* Stacked head (title + lede) — для секций где справа грид */
+    .q-about-stack {
+      margin-bottom: var(--q-s-7);
+      max-width: 720px;
+    }
+    .q-about-stack h2 {
+      font-size: clamp(28px, 3vw, 40px);
+      font-weight: var(--q-fw-medium);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--q-text-hi);
+      margin: 0 0 var(--q-s-3);
+    }
+    .q-about-lede {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--q-text-mid);
+      margin: 0;
     }
     .q-about-cols__body p {
       font-size: 16px;
@@ -168,23 +208,24 @@
       border: 1px solid var(--q-line);
     }
 
-    /* Products grid */
+    /* Products grid — discrete bordered cards */
     .q-products-about {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1px;
+      gap: var(--q-s-3);
       margin-top: var(--q-s-7);
-      border: 1px solid var(--q-line);
-      border-radius: var(--q-r-xl);
-      overflow: hidden;
-      background: var(--q-line);
     }
     .q-product-about {
-      background: var(--q-bg-0);
+      background: var(--q-bg-1);
+      border: 1px solid var(--q-line);
+      border-radius: var(--q-r-md);
       padding: var(--q-s-6);
-      transition: background var(--q-dur-fast) var(--q-ease);
+      transition: border-color var(--q-dur-fast) var(--q-ease), background var(--q-dur-fast) var(--q-ease);
     }
-    .q-product-about:hover { background: var(--q-bg-1); }
+    .q-product-about:hover {
+      background: var(--q-bg-2);
+      border-color: var(--q-line-hover);
+    }
     .q-product-about__name {
       font-size: 18px;
       font-weight: var(--q-fw-medium);
@@ -271,16 +312,16 @@
     .q-stat-rail {
       display: flex;
       flex-direction: column;
-      border-top: 1px solid var(--q-line);
     }
     .q-stat-rail__row {
       display: grid;
-      grid-template-columns: 32px minmax(0, 1fr) auto;
+      grid-template-columns: 32px minmax(0, 1fr) 96px;
       align-items: baseline;
       gap: var(--q-s-4);
       padding: var(--q-s-5) 0;
       border-bottom: 1px solid var(--q-line);
     }
+    .q-stat-rail__row:first-child { padding-top: 0; }
     .q-stat-rail__index {
       font-family: var(--q-font-mono);
       font-size: 11px;
@@ -305,6 +346,8 @@
       letter-spacing: -0.025em;
       color: var(--q-text-hi);
       white-space: nowrap;
+      text-align: right;
+      justify-self: end;
     }
     .q-stat-rail__value sub {
       font-family: var(--q-font-mono);
@@ -313,7 +356,7 @@
       text-transform: uppercase;
       color: var(--q-text-low);
       vertical-align: baseline;
-      margin-left: 6px;
+      margin-right: 6px;
       font-weight: var(--q-fw-regular);
     }
 
@@ -321,7 +364,6 @@
     .q-about-cta {
       text-align: center;
       padding: var(--q-s-10) 0;
-      border-top: 1px solid var(--q-line);
     }
     .q-about-cta h2 {
       font-size: clamp(28px, 4vw, 44px);
@@ -361,13 +403,152 @@
   <!-- ─── HERO ─── -->
   <section class="q-section">
     <div class="q-container q-about-hero">
-      <p class="q-about-hero__eyebrow">О нас</p>
-      <h1 class="q-about-hero__title">
-        IT-образование, <span>которое доводит до оффера</span>
-      </h1>
-      <p class="q-about-hero__lede">
-        Quillon — школа внутри действующей IT-студии. Мы учим тех, кто не учился в IT, и сразу подключаем к&nbsp;реальным продуктам в&nbsp;production. За&nbsp;12&nbsp;месяцев — от&nbsp;первой строки кода до&nbsp;первого оффера.
-      </p>
+      <div class="q-about-hero__copy">
+        <p class="q-about-hero__eyebrow">О нас</p>
+        <h1 class="q-about-hero__title">
+          IT-образование, <span>которое доводит до оффера</span>
+        </h1>
+        <p class="q-about-hero__lede">
+          Quillon — школа внутри действующей IT-студии. Мы учим тех, кто не учился в IT, и сразу подключаем к&nbsp;реальным продуктам в&nbsp;production. За&nbsp;12&nbsp;месяцев — от&nbsp;первой строки кода до&nbsp;первого оффера.
+        </p>
+      </div>
+      <figure class="q-about-hero__art">
+        <svg class="q-about-hero__svg"
+             viewBox="0 0 400 500"
+             xmlns="http://www.w3.org/2000/svg"
+             role="img"
+             aria-label="Архитектурная карта пяти продуктов Quillon: LMS в центре, вокруг — Quilly AI, Meet, Chat, Tech">
+          <defs>
+            <pattern id="qDotGrid" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+              <circle cx="0.6" cy="0.6" r="0.6" fill="var(--q-line-strong)"/>
+            </pattern>
+            <radialGradient id="qMintPulse" cx="50%" cy="50%" r="50%">
+              <stop offset="0%"  stop-color="#5EF2A1" stop-opacity="0.55"/>
+              <stop offset="60%" stop-color="#5EF2A1" stop-opacity="0.08"/>
+              <stop offset="100%" stop-color="#5EF2A1" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+
+          <rect width="400" height="500" fill="var(--q-bg-1)"/>
+          <rect width="400" height="500" fill="url(#qDotGrid)"/>
+
+          <rect x="24" y="24" width="352" height="452" fill="none"
+                stroke="var(--q-line-strong)" stroke-width="1"/>
+          <g stroke="var(--q-line-strong)" stroke-width="1">
+            <line x1="24"  y1="40"  x2="32"  y2="40"/>
+            <line x1="24"  y1="80"  x2="32"  y2="80"/>
+            <line x1="24"  y1="460" x2="32"  y2="460"/>
+            <line x1="368" y1="40"  x2="376" y2="40"/>
+            <line x1="368" y1="460" x2="376" y2="460"/>
+            <line x1="40"  y1="24"  x2="40"  y2="32"/>
+            <line x1="200" y1="24"  x2="200" y2="32"/>
+            <line x1="360" y1="24"  x2="360" y2="32"/>
+          </g>
+
+          <g font-family="ui-monospace, 'JetBrains Mono', monospace"
+             font-size="8" fill="var(--q-text-low)" letter-spacing="0.08em">
+            <text x="32" y="20">Q.STUDIO / 5 MODULES</text>
+            <text x="296" y="488">v3.0 · 04:05</text>
+          </g>
+
+          <g stroke="var(--q-line)" stroke-width="1" stroke-dasharray="2 4">
+            <line x1="200" y1="60"  x2="200" y2="440"/>
+            <line x1="50"  y1="250" x2="350" y2="250"/>
+          </g>
+
+          <g fill="none" stroke="var(--q-line-strong)" stroke-width="1">
+            <path d="M200,228 L200,140"/>
+            <path d="M200,272 L200,360"/>
+            <path d="M178,250 L88,250"/>
+            <path d="M222,250 L312,250"/>
+            <path d="M88,250 Q88,140 178,118" stroke="var(--q-line)"/>
+            <path d="M312,250 Q312,360 222,382" stroke="var(--q-line)"/>
+          </g>
+
+          <g fill="var(--q-bg-1)" stroke="var(--q-line-strong)" stroke-width="1">
+            <circle cx="200" cy="190" r="2.5"/>
+            <circle cx="200" cy="312" r="2.5"/>
+            <circle cx="135" cy="250" r="2.5"/>
+            <circle cx="265" cy="250" r="2.5"/>
+          </g>
+
+          <!-- TOP: Quilly AI (mint signal) -->
+          <g>
+            <circle cx="200" cy="118" r="44" fill="url(#qMintPulse)"/>
+            <rect x="170" y="98" width="60" height="40" rx="4"
+                  fill="var(--q-bg-2)" stroke="#5EF2A1" stroke-width="1"/>
+            <circle cx="200" cy="118" r="3" fill="#5EF2A1"/>
+            <text x="200" y="86" text-anchor="middle"
+                  font-family="ui-monospace, 'JetBrains Mono', monospace"
+                  font-size="9" fill="var(--q-text-hi)" letter-spacing="0.06em">QUILLY · AI</text>
+          </g>
+
+          <!-- LEFT: Meet -->
+          <g>
+            <rect x="44" y="230" width="44" height="40" rx="3"
+                  fill="var(--q-bg-2)" stroke="var(--q-line-strong)" stroke-width="1"/>
+            <line x1="52" y1="244" x2="80" y2="244" stroke="var(--q-line-strong)"/>
+            <line x1="52" y1="252" x2="72" y2="252" stroke="var(--q-line-strong)"/>
+            <line x1="52" y1="260" x2="76" y2="260" stroke="var(--q-line-strong)"/>
+            <text x="66" y="222" text-anchor="middle"
+                  font-family="ui-monospace, 'JetBrains Mono', monospace"
+                  font-size="9" fill="var(--q-text-mid)" letter-spacing="0.06em">MEET</text>
+          </g>
+
+          <!-- CENTER: LMS core -->
+          <g>
+            <rect x="158" y="218" width="84" height="64" rx="4"
+                  fill="var(--q-bg-2)" stroke="var(--q-line-hover)" stroke-width="1"/>
+            <line x1="158" y1="240" x2="242" y2="240" stroke="var(--q-line-strong)"/>
+            <g stroke="var(--q-line-strong)" stroke-width="1">
+              <line x1="170" y1="254" x2="230" y2="254"/>
+              <line x1="170" y1="262" x2="214" y2="262"/>
+              <line x1="170" y1="270" x2="222" y2="270"/>
+            </g>
+            <circle cx="166" cy="227" r="1.5" fill="var(--q-accent)"/>
+            <circle cx="173" cy="227" r="1.5" fill="var(--q-text-low)"/>
+            <circle cx="180" cy="227" r="1.5" fill="var(--q-text-low)"/>
+            <text x="200" y="306" text-anchor="middle"
+                  font-family="ui-monospace, 'JetBrains Mono', monospace"
+                  font-size="9" fill="var(--q-text-hi)" letter-spacing="0.06em">LMS · CORE</text>
+          </g>
+
+          <!-- RIGHT: Chat -->
+          <g>
+            <path d="M312,232 h44 a3,3 0 0 1 3,3 v26 a3,3 0 0 1 -3,3 h-32 l-12,10 v-10 a3,3 0 0 1 -3,-3 v-26 a3,3 0 0 1 3,-3 z"
+                  fill="var(--q-bg-2)" stroke="var(--q-line-strong)" stroke-width="1"/>
+            <line x1="320" y1="246" x2="350" y2="246" stroke="var(--q-line-strong)"/>
+            <line x1="320" y1="254" x2="344" y2="254" stroke="var(--q-line-strong)"/>
+            <text x="334" y="222" text-anchor="middle"
+                  font-family="ui-monospace, 'JetBrains Mono', monospace"
+                  font-size="9" fill="var(--q-text-mid)" letter-spacing="0.06em">CHAT</text>
+          </g>
+
+          <!-- BOTTOM: Tech studio -->
+          <g>
+            <rect x="170" y="362" width="60" height="40" rx="3"
+                  fill="var(--q-bg-2)" stroke="var(--q-line-strong)" stroke-width="1"/>
+            <g stroke="var(--q-line-strong)" stroke-width="1" fill="none">
+              <rect x="178" y="370" width="14" height="10"/>
+              <rect x="196" y="370" width="14" height="10"/>
+              <rect x="214" y="370" width="8"  height="10"/>
+              <rect x="178" y="384" width="22" height="10"/>
+              <rect x="204" y="384" width="18" height="10"/>
+            </g>
+            <text x="200" y="420" text-anchor="middle"
+                  font-family="ui-monospace, 'JetBrains Mono', monospace"
+                  font-size="9" fill="var(--q-text-mid)" letter-spacing="0.06em">TECH · STUDIO</text>
+          </g>
+
+          <g font-family="ui-monospace, 'JetBrains Mono', monospace"
+             font-size="8" fill="var(--q-text-low)" letter-spacing="0.1em">
+            <text x="40" y="460">[01] AI  [02] MEET  [03] LMS  [04] CHAT  [05] TECH</text>
+          </g>
+
+          <circle cx="60" cy="440" r="2" fill="#5EF2A1"/>
+          <circle cx="60" cy="440" r="6" fill="none" stroke="#5EF2A1" stroke-opacity="0.35"/>
+        </svg>
+      </figure>
     </div>
   </section>
 
@@ -431,7 +612,7 @@
               <div class="q-stat-rail__row">
                 <span class="q-stat-rail__index">02</span>
                 <span class="q-stat-rail__label">до первой оплачиваемой задачи</span>
-                <span class="q-stat-rail__value">2<sub>мес.</sub></span>
+                <span class="q-stat-rail__value"><sub>мес.</sub>2</span>
               </div>
               <div class="q-stat-rail__row">
                 <span class="q-stat-rail__index">03</span>
@@ -559,9 +740,9 @@
         </article>
 
         <article class="q-product-about">
-          <h3 class="q-product-about__name">Блог Quillon</h3>
-          <p class="q-product-about__desc">Статьи без воды о реальной разработке: путь джуна, выбор стека, что ждёт после первой работы.</p>
-          <a class="q-product-about__link" href="/blog/">Читать блог</a>
+          <h3 class="q-product-about__name">Quillon Chat</h3>
+          <p class="q-product-about__desc">Корпоративный мессенджер на&nbsp;базе Mattermost: каналы команд, треды, интеграции с&nbsp;LMS и&nbsp;Jobs.</p>
+          <a class="q-product-about__link" href="https://chat.quillon.ru" target="_blank" rel="noopener">chat.quillon.ru</a>
         </article>
       </div>
     </div>

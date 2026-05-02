@@ -134,12 +134,14 @@
 
     .q-cases__card {
       display: flex; flex-direction: column;
+      min-width: 0;
       padding: var(--q-s-7);
       background: var(--q-bg-elev);
       border: 1px solid var(--q-line);
       transition: border-color var(--q-dur-base) var(--q-ease),
                   background var(--q-dur-base) var(--q-ease);
     }
+    .q-cases__card > * { min-width: 0; }
     .q-cases__card:hover {
       border-color: color-mix(in srgb, var(--q-accent) 32%, var(--q-line) 68%);
       background: var(--q-bg-elev-hi, var(--q-bg-elev));

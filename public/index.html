@@ -685,12 +685,12 @@
 
     @media (max-width: 960px) {
       .q-hero__grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
         gap: var(--q-s-8);
       }
       .q-hero__title { max-width: 100%; }
       .q-tagbar {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
         gap: var(--q-s-4);
       }
     }
@@ -5539,96 +5539,6 @@
       .q-cookie { left: var(--q-s-3); right: var(--q-s-3); bottom: var(--q-s-3); width: auto; max-width: none; }
     }
   
-/* ═══════════════════════════════════════════════════════════════
-     * 18 · FOOTER — sitemap + реквизиты + правовые
-     *
-     * Структура (по прод-content.json `.footer` + ИНН/адрес от пользователя):
-     *   • Top: brand-stack (logo + tagline) | sitemap (4 cols)
-     *   • Mid: contacts strip (email, telegram, whatsapp, vk)
-     *   • Bottom: legal-grid (компания + ИНН + адрес | правовые ссылки)
-     *   • Foot: copyright + made-with mono-line
-     *
-     * Anti-AI:
-     *   • Никаких social-icon glyphs (feather/material) — текстовые ссылки.
-     *   • Hairline-сетка между ярусами, без card-shadow.
-     *   • Editorial-list, не AI bullet-grid.
-     * ═══════════════════════════════════════════════════════════════ */
-
-    .q-ft {
-      position: relative;
-      padding: var(--q-s-10) 0 var(--q-s-7);
-      background: var(--q-bg);
-      border-top: 1px solid var(--q-line);
-    }
-    .q-ft .q-container { position: relative; }
-
-    /* ═══════════════════════════════════════════════════════════════
-     * TOP · brand | sitemap-grid
-     * ═══════════════════════════════════════════════════════════════ */
-    .q-ft-top {
-      display: grid;
-      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
-      gap: var(--q-s-8);
-      padding-bottom: var(--q-s-8);
-      border-bottom: 1px solid var(--q-line);
-    }
-
-    /* ─── BRAND ─── */
-    .q-ft-brand { display: flex; flex-direction: column; gap: var(--q-s-4); }
-    .q-ft-brand__logo {
-      display: inline-flex;
-      align-items: center;
-      text-decoration: none;
-    }
-    .q-ft-brand__img {
-      height: 36px;
-      width: auto;
-      display: block;
-    }
-    .q-ft-brand__tagline {
-      font-family: var(--q-font-display);
-      font-size: var(--q-t-base);
-      line-height: 1.45;
-      color: var(--q-text-mid);
-      margin: 0;
-      max-width: 28ch;
-    }
-
-    /* ─── SITEMAP GRID 4-col ─── */
-    .q-ft-sitemap {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: var(--q-s-6);
-    }
-    .q-ft-col { display: flex; flex-direction: column; gap: var(--q-s-3); }
-    .q-ft-col__title {
-      font-family: var(--q-font-mono);
-      font-size: var(--q-t-mono);
-      letter-spacing: var(--q-tracking-mono);
-      text-transform: uppercase;
-      color: var(--q-text-low);
-      margin: 0 0 var(--q-s-2);
-    }
-    .q-ft-col__list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      gap: var(--q-s-2);
-    }
-    .q-ft-link {
-      display: inline-block;
-      font-size: var(--q-t-base);
-      color: var(--q-text-mid);
-      text-decoration: none;
-      transition: color var(--q-dur-fast) var(--q-ease);
-    }
-    .q-ft-link:hover { color: var(--q-text-hi); }
-
-    /* ═══════════════════════════════════════════════════════════════
-     * MID · contacts strip
-     * ═══════════════════════════════════════════════════════════════ */
     /* ═══════════════════════════════════════════════════════════════
      * COOKIE CONSENT BANNER (fixed bottom-left, dismissible)
      *   Управляется JS: показывается если в localStorage нет q-cookie-ok.
