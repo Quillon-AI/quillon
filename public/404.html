@@ -1,55 +1,226 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="dark">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>404 — страница не найдена · Quillon</title>
-  <meta name="description" content="Такой страницы на quillon.ru нет. Вернёмся на главную — там всё, ради чего ты пришёл.">
+  <meta name="description" content="Такой страницы на quillon.ru нет. Вернёмся на главную или посмотрим треки.">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#080B14">
 
-  <link rel="icon" href="/assets/favicon.ico" sizes="any">
-  <link rel="icon" href="/assets/favicon-32.png" type="image/png" sizes="32x32">
-  <link rel="apple-touch-icon" href="/assets/favicon-192.png">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/v4/css/tokens.css">
+  <link rel="stylesheet" href="/v4/css/base.css">
+  <link rel="stylesheet" href="/v4/css/components.css">
+  <script src="/v4/components/quillon-ui.js" defer></script>
 
-  <link rel="stylesheet" href="/404/404.css">
+  <style>
+    .q-404 {
+      min-height: calc(100vh - 60px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: var(--q-s-9);
+      padding-top: var(--q-s-10);
+      padding-bottom: var(--q-s-10);
+      align-items: center;
+    }
+    .q-404__copy { display: flex; flex-direction: column; gap: var(--q-s-5); max-width: 540px; }
+    .q-404__eyebrow {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-accent);
+      display: inline-flex; align-items: center; gap: var(--q-s-2);
+    }
+    .q-404__eyebrow::before {
+      content: ""; width: 6px; height: 6px;
+      background: #5EF2A1; border-radius: 50%;
+      box-shadow: 0 0 12px #5EF2A1;
+    }
+    .q-404__title {
+      font-size: clamp(48px, 8vw, 96px);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      color: var(--q-text-hi);
+      margin: 0;
+    }
+    .q-404__title span { color: var(--q-text-low); }
+    .q-404__lede {
+      font-size: clamp(16px, 1.4vw, 18px);
+      line-height: 1.6;
+      color: var(--q-text-mid);
+      margin: 0;
+    }
+    .q-404__actions { display: flex; gap: var(--q-s-3); flex-wrap: wrap; margin-top: var(--q-s-3); }
+
+    .q-404__art {
+      border-radius: var(--q-r-xl);
+      overflow: hidden;
+      aspect-ratio: 4 / 5;
+      background: var(--q-bg-1);
+      box-shadow: 0 0 0 1px var(--q-line), 0 12px 48px -16px rgba(0, 0, 0, 0.6);
+    }
+    .q-404__svg { width: 100%; height: 100%; display: block; }
+
+    .q-404__links {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--q-s-3);
+      margin-bottom: var(--q-s-10);
+    }
+    .q-404__link {
+      display: flex; flex-direction: column; gap: var(--q-s-2);
+      padding: var(--q-s-5);
+      background: var(--q-bg-1);
+      border: 1px solid var(--q-line);
+      border-radius: var(--q-r-md);
+      text-decoration: none;
+      transition: border-color var(--q-dur-fast) var(--q-ease), background var(--q-dur-fast) var(--q-ease);
+    }
+    .q-404__link:hover { border-color: var(--q-line-hover); background: var(--q-bg-2); }
+    .q-404__link__index {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+    .q-404__link__name { font-size: 15px; font-weight: var(--q-fw-medium); color: var(--q-text-hi); }
+    .q-404__link__desc { font-size: 12px; color: var(--q-text-low); line-height: 1.4; }
+    .q-404__link::after {
+      content: "↗"; align-self: flex-end; margin-top: auto;
+      font-family: var(--q-font-mono); color: var(--q-text-low);
+      transition: color var(--q-dur-fast) var(--q-ease), transform var(--q-dur-fast) var(--q-ease);
+    }
+    .q-404__link:hover::after { color: var(--q-accent); transform: translate(2px, -2px); }
+
+    @media (max-width: 900px) {
+      .q-404 { grid-template-columns: minmax(0, 1fr); padding-top: var(--q-s-8); padding-bottom: var(--q-s-8); }
+      .q-404__art { aspect-ratio: 16 / 10; max-width: 600px; }
+      .q-404__links { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .q-404__links { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
-<canvas data-particles></canvas>
-<div class="e404-glow"></div>
+<quillon-header></quillon-header>
 
-<main class="e404-wrap">
-  <div class="e404-tag">
-    <span class="dot"></span>error · 404 · not found
-  </div>
+<main id="main">
+  <section class="q-section">
+    <div class="q-container q-404">
+      <div class="q-404__copy">
+        <p class="q-404__eyebrow">Error 404 / Not Found</p>
+        <h1 class="q-404__title">Тут <span>пусто</span></h1>
+        <p class="q-404__lede">
+          Адрес с&nbsp;опечаткой, ссылка устарела, или мы&nbsp;ещё&nbsp;не написали такую страницу. Внизу — куда ещё можно сходить, чтобы не возвращаться обратно.
+        </p>
+        <div class="q-404__actions">
+          <a href="/" class="q-btn q-btn--primary q-btn--lg">← На главную</a>
+          <a href="/blog/" class="q-btn q-btn--ghost q-btn--lg">Читать блог</a>
+        </div>
+      </div>
 
-  <h1 class="e404-code"><span class="text-gradient">404</span></h1>
+      <figure class="q-404__art">
+        <svg class="q-404__svg" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="404 — заглушка">
+          <defs>
+            <pattern id="dotGrid404" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+              <circle cx="0.6" cy="0.6" r="0.6" fill="var(--q-line-strong)"/>
+            </pattern>
+          </defs>
+          <rect width="400" height="500" fill="var(--q-bg-1)"/>
+          <rect width="400" height="500" fill="url(#dotGrid404)"/>
 
-  <h2 class="e404-title">Такой страницы у нас нет</h2>
+          <rect x="24" y="24" width="352" height="452" fill="none" stroke="var(--q-line-strong)" stroke-width="1"/>
+          <g stroke="var(--q-line-strong)" stroke-width="1">
+            <line x1="24" y1="40" x2="32" y2="40"/>
+            <line x1="24" y1="80" x2="32" y2="80"/>
+            <line x1="368" y1="40" x2="376" y2="40"/>
+            <line x1="40" y1="24" x2="40" y2="32"/>
+            <line x1="200" y1="24" x2="200" y2="32"/>
+          </g>
+          <g font-family="ui-monospace, 'JetBrains Mono', monospace" font-size="8" fill="var(--q-text-low)" letter-spacing="0.08em">
+            <text x="32" y="20">Q.STUDIO / NOT FOUND</text>
+            <text x="280" y="488">404 · OBJECT MISSING</text>
+          </g>
 
-  <p class="e404-sub">
-    Ссылка устарела, опечатка в адресе или мы ещё не успели написать эту страницу.<br>
-    Вернёмся на главную — там всё, ради чего ты пришёл.
-  </p>
+          <g stroke="var(--q-line)" stroke-width="1" stroke-dasharray="2 4">
+            <line x1="200" y1="60" x2="200" y2="440"/>
+            <line x1="50" y1="250" x2="350" y2="250"/>
+          </g>
 
-  <div class="e404-actions">
-    <a href="/"><button class="btn-primary">← На главную</button></a>
-  </div>
+          <g font-family="ui-monospace, 'JetBrains Mono', monospace"
+             font-weight="500" font-size="156" fill="none"
+             stroke="var(--q-text-mid)" stroke-width="1.5"
+             text-anchor="middle" dominant-baseline="middle">
+            <text x="200" y="250">404</text>
+          </g>
 
-  <div class="e404-links">
-    <a href="/">quillon.ru</a>
-    <span>·</span>
-    <a href="https://tech.quillon.ru">tech.quillon.ru</a>
-    <span>·</span>
-    <a href="mailto:support@quillon.ru">support@quillon.ru</a>
-  </div>
+          <circle cx="306" cy="160" r="3" fill="#5EF2A1"/>
+          <circle cx="306" cy="160" r="9" fill="none" stroke="#5EF2A1" stroke-opacity="0.4"/>
+          <circle cx="306" cy="160" r="14" fill="none" stroke="#5EF2A1" stroke-opacity="0.15"/>
+
+          <g>
+            <rect x="120" y="380" width="160" height="60" rx="4"
+                  fill="var(--q-bg-2)" stroke="var(--q-line-strong)" stroke-width="1" stroke-dasharray="4 4"/>
+            <line x1="125" y1="385" x2="275" y2="435" stroke="var(--q-line-strong)" stroke-width="1"/>
+            <line x1="275" y1="385" x2="125" y2="435" stroke="var(--q-line-strong)" stroke-width="1"/>
+          </g>
+          <g font-family="ui-monospace, 'JetBrains Mono', monospace" font-size="9"
+             fill="var(--q-text-low)" letter-spacing="0.08em" text-anchor="middle">
+            <text x="200" y="465">[PAGE_NOT_FOUND]</text>
+          </g>
+        </svg>
+      </figure>
+    </div>
+  </section>
+
+  <section class="q-section">
+    <div class="q-container">
+      <div class="q-404__links">
+        <a class="q-404__link" href="/">
+          <span class="q-404__link__index">01 / Главная</span>
+          <span class="q-404__link__name">Quillon</span>
+          <span class="q-404__link__desc">Школа внутри IT-студии. 12 месяцев до оффера.</span>
+        </a>
+        <a class="q-404__link" href="/blog/">
+          <span class="q-404__link__index">02 / Блог</span>
+          <span class="q-404__link__name">Статьи</span>
+          <span class="q-404__link__desc">Без воды о реальной разработке: путь джуна, выбор стека.</span>
+        </a>
+        <a class="q-404__link" href="/about/">
+          <span class="q-404__link__index">03 / О нас</span>
+          <span class="q-404__link__name">Кто мы и зачем</span>
+          <span class="q-404__link__desc">Менторы, продукты, манифест.</span>
+        </a>
+        <a class="q-404__link" href="/quiz">
+          <span class="q-404__link__index">04 / Тест</span>
+          <span class="q-404__link__name">Профориентация</span>
+          <span class="q-404__link__desc">5 минут — узнаешь свой трек: Python, QA или Flutter.</span>
+        </a>
+      </div>
+    </div>
+  </section>
 </main>
 
-<script src="/shared/particles.js"></script>
+<quillon-footer></quillon-footer>
+
+<script type="text/javascript">
+  (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+  m[i].l=1*new Date();
+  for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
+  k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+  (window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
+  ym(108311343,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/108311343" style="position:absolute;left:-9999px;" alt=""/></div></noscript>
+
 </body>
 </html>
