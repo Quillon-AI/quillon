@@ -687,3 +687,108 @@
   .q-card          { padding: var(--q-s-5); border-radius: var(--q-r-lg); }
   .q-card--lg      { padding: var(--q-s-6); }
 }
+
+
+/* ═══════════════════════════════════════════════════════════════════
+ * FOOTER — <quillon-footer>
+ *   4-col sitemap (Направления / Компания / Программа / Документы)
+ *   below: © Quillon, 2026
+ * ═══════════════════════════════════════════════════════════════════ */
+.q-ft {
+  position: relative;
+  padding: var(--q-s-10) 0 var(--q-s-7);
+  background: var(--q-bg-1);
+  border-top: 1px solid var(--q-line);
+}
+.q-ft .q-container { position: relative; }
+
+.q-ft-top {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  gap: var(--q-s-8);
+  padding-bottom: var(--q-s-8);
+  border-bottom: 1px solid var(--q-line);
+}
+
+.q-ft-brand { display: flex; flex-direction: column; gap: var(--q-s-4); }
+.q-ft-brand__logo { display: inline-flex; align-items: center; text-decoration: none; }
+.q-ft-brand__img { height: 36px; width: auto; display: block; }
+.q-ft-brand__tagline {
+  font-family: var(--q-font-sans);
+  font-size: var(--q-t-base);
+  line-height: 1.45;
+  color: var(--q-text-mid);
+  margin: 0;
+  max-width: 28ch;
+}
+
+.q-ft-sitemap {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--q-s-6);
+}
+.q-ft-col { display: flex; flex-direction: column; gap: var(--q-s-3); }
+.q-ft-col__title {
+  font-family: var(--q-font-mono);
+  font-size: var(--q-t-mono);
+  letter-spacing: var(--q-tracking-mono);
+  text-transform: uppercase;
+  color: var(--q-text-low);
+  margin: 0 0 var(--q-s-2);
+}
+.q-ft-col__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--q-s-2); }
+
+.q-ft-link {
+  display: inline-block;
+  font-size: var(--q-t-base);
+  color: var(--q-text-mid);
+  text-decoration: none;
+  transition: color var(--q-dur-fast) var(--q-ease);
+}
+.q-ft-link:hover { color: var(--q-text-hi); }
+
+/* External-doc link with ↗ arrow */
+.q-ft-link--ext {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--q-s-2);
+}
+.q-ft-link--ext svg {
+  flex-shrink: 0;
+  color: var(--q-text-low);
+  transition: color var(--q-dur-fast) var(--q-ease);
+}
+.q-ft-link--ext:hover svg { color: var(--q-accent); }
+
+/* Bottom: just © Quillon, 2026 */
+.q-ft-legal {
+  padding-top: var(--q-s-6);
+  font-family: var(--q-font-mono);
+  font-size: var(--q-t-mono);
+  letter-spacing: var(--q-tracking-mono);
+  text-transform: uppercase;
+  color: var(--q-text-low);
+}
+.q-ft-legal__copy { margin: 0; }
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .q-ft-sitemap { grid-template-columns: repeat(2, 1fr); gap: var(--q-s-6); }
+}
+@media (max-width: 900px) {
+  .q-ft-top { grid-template-columns: 1fr; gap: var(--q-s-6); }
+}
+@media (max-width: 600px) {
+  .q-ft { padding: var(--q-s-8) 0 var(--q-s-6); }
+  .q-ft-sitemap { grid-template-columns: 1fr; gap: var(--q-s-5); }
+}
+
+/* Mint accent (blog) */
+.q-ft[data-accent="mint"] .q-ft-link:hover { color: #5EF2A1; }
+.q-ft[data-accent="mint"] .q-ft-link--ext:hover svg { color: #5EF2A1; }
+
+/* Header mint accent */
+.q-topbar[data-accent="mint"] .q-topbar__link:hover { color: #5EF2A1; background: var(--q-bg-2); }
+.q-topbar[data-accent="mint"] .q-topbar__link[aria-current="page"] { color: #5EF2A1; }
+.q-topbar[data-accent="mint"] .q-btn--primary { background: #5EF2A1; color: #04070C; }
+.q-topbar[data-accent="mint"] .q-btn--primary:hover { background: #7DFFB3; }
