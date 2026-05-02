@@ -504,17 +504,59 @@
 
 .q-drawer {
   position: fixed;
-  top: 60px; left: 0; right: 0; bottom: 0;
+  inset: 0;
   background: var(--q-bg-0);
-  z-index: 90;
+  z-index: 200;
   overflow-y: auto;
+  animation: q-drawer-bg-in 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 .q-drawer[hidden] { display: none; }
+
+@keyframes q-drawer-bg-in {
+  from { opacity: 0; backdrop-filter: blur(0); }
+  to   { opacity: 1; backdrop-filter: blur(0); }
+}
+
+.q-drawer__header {
+  position: sticky; top: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 var(--q-s-4);
+  height: 60px;
+  border-bottom: 1px solid var(--q-line);
+  background: var(--q-bg-0);
+  z-index: 1;
+}
+.q-drawer__brand img { height: 28px; width: auto; display: block; }
+.q-drawer__close {
+  width: 40px; height: 40px;
+  background: transparent;
+  border: 1px solid var(--q-line);
+  border-radius: var(--q-r-sm);
+  color: var(--q-text-hi);
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: border-color var(--q-dur-fast) var(--q-ease), background var(--q-dur-fast) var(--q-ease);
+}
+.q-drawer__close:hover {
+  background: var(--q-bg-2);
+  border-color: var(--q-line-hover);
+}
+
 .q-drawer__nav {
   display: flex;
   flex-direction: column;
-  padding: var(--q-s-5) var(--q-s-5);
+  padding: var(--q-s-5);
   gap: var(--q-s-2);
+}
+.q-drawer__item {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: q-drawer-item-in 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(60ms + var(--i, 0) * 32ms);
+}
+@keyframes q-drawer-item-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 .q-drawer__link {
   display: block;
@@ -525,19 +567,35 @@
   text-decoration: none;
   border-radius: var(--q-r-md);
   letter-spacing: -0.01em;
+  transition: background var(--q-dur-fast) var(--q-ease), color var(--q-dur-fast) var(--q-ease), transform var(--q-dur-fast) var(--q-ease);
 }
 .q-drawer__link:hover, .q-drawer__link:focus { background: var(--q-bg-2); }
+.q-drawer__link:active { transform: scale(0.98); }
 .q-drawer__link--muted { color: var(--q-text-mid); font-size: 15px; }
 .q-drawer__link--cta {
   background: linear-gradient(180deg, var(--q-accent-hover) 0%, var(--q-accent) 100%);
   color: #FFFFFF;
   text-align: center;
   margin-top: var(--q-s-2);
+  box-shadow: 0 0 0 1px rgba(94, 106, 210, 0.6),
+              0 1px 0 0 rgba(255, 255, 255, 0.12) inset,
+              0 6px 20px -8px rgba(94, 106, 210, 0.55);
+}
+.q-drawer__link--cta:hover {
+  background: linear-gradient(180deg, #7E8AE8 0%, var(--q-accent-hover) 100%);
 }
 .q-drawer__divider {
   height: 1px;
   background: var(--q-line);
   margin: var(--q-s-4) var(--q-s-3);
+  opacity: 0;
+  animation: q-drawer-item-in 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(60ms + var(--i, 0) * 32ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .q-drawer, .q-drawer__item, .q-drawer__divider { animation: none; }
+  .q-drawer__item, .q-drawer__divider { opacity: 1; transform: none; }
 }
 
 /* Mint accent variant for drawer */

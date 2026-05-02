@@ -95,11 +95,21 @@
         </header>
 
         <div class="q-drawer" id="q-drawer" hidden>
+          <div class="q-drawer__header">
+            <a href="/" class="q-drawer__brand" aria-label="Quillon">
+              <img src="${logo}" alt="Quillon" width="92" height="32">
+            </a>
+            <button class="q-drawer__close" type="button" aria-label="Закрыть меню">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                <line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/>
+              </svg>
+            </button>
+          </div>
           <nav class="q-drawer__nav" aria-label="Мобильное меню">
-            ${drawerItems}
-            <div class="q-drawer__divider"></div>
-            <a class="q-drawer__link q-drawer__link--muted" href="/login/">Войти</a>
-            <a class="q-drawer__link q-drawer__link--cta" href="/quiz">Пройти тест →</a>
+            ${drawerItems.split('</a>').filter(s => s.trim()).map((s, i) => `<div class="q-drawer__item" style="--i:${i}">${s}</a></div>`).join('')}
+            <div class="q-drawer__divider" style="--i:${NAV.length + TRACKS.length - 1}"></div>
+            <div class="q-drawer__item" style="--i:${NAV.length + TRACKS.length}"><a class="q-drawer__link q-drawer__link--muted" href="/login/">Войти</a></div>
+            <div class="q-drawer__item" style="--i:${NAV.length + TRACKS.length + 1}"><a class="q-drawer__link q-drawer__link--cta" href="/quiz">Пройти тест →</a></div>
           </nav>
         </div>
       `;
@@ -107,25 +117,33 @@
       // Drawer toggle
       const burger = this.querySelector('.q-topbar__burger');
       const drawer = this.querySelector('.q-drawer');
+      const closeBtn = this.querySelector('.q-drawer__close');
+
+      const closeDrawer = () => {
+        drawer.setAttribute('hidden', '');
+        burger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      };
+      const openDrawer = () => {
+        drawer.removeAttribute('hidden');
+        burger.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+      };
+
       burger?.addEventListener('click', () => {
-        const open = drawer.hasAttribute('hidden') === false;
-        if (open) {
-          drawer.setAttribute('hidden', '');
-          burger.setAttribute('aria-expanded', 'false');
-          document.body.style.overflow = '';
-        } else {
-          drawer.removeAttribute('hidden');
-          burger.setAttribute('aria-expanded', 'true');
-          document.body.style.overflow = 'hidden';
-        }
+        if (drawer.hasAttribute('hidden')) openDrawer();
+        else closeDrawer();
       });
+      closeBtn?.addEventListener('click', closeDrawer);
+
       // Close on link click
       this.querySelectorAll('.q-drawer__link').forEach(a => {
-        a.addEventListener('click', () => {
-          drawer.setAttribute('hidden', '');
-          burger.setAttribute('aria-expanded', 'false');
-          document.body.style.overflow = '';
-        });
+        a.addEventListener('click', closeDrawer);
+      });
+
+      // Close on Escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !drawer.hasAttribute('hidden')) closeDrawer();
       });
     }
   }
