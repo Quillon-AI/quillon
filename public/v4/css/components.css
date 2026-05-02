@@ -725,7 +725,7 @@
 .q-ft-sitemap {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--q-s-6);
+  gap: var(--q-s-8);
 }
 .q-ft-col { display: flex; flex-direction: column; gap: var(--q-s-3); }
 .q-ft-col__title {

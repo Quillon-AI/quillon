@@ -63,16 +63,38 @@ router.post('/article', async (req, res) => {
     // Slug from title: transliterate + lowercase + hyphens
     const slug = translitSlug(outline.title);
 
+    // Auto-generate cover via Recraft (best-effort, doesn't fail the pipeline)
+    let coverUrl = null;
+    try {
+      const recraft = require('../services/recraft');
+      const coverPrompt = outline.cover_prompt
+        || `${outline.title}. Abstract conceptual visual, geometric forms representing the topic`;
+      const cover = await recraft.generateAndUpload(coverPrompt, slug);
+      coverUrl = cover.url;
+      console.log(`[recraft] cover ${(cover.bytes/1024).toFixed(0)}KB`);
+    } catch (e) {
+      console.warn('[recraft] cover gen failed:', e.message);
+    }
+
+    // Build flat keywords array for legacy DB column: primary first, then secondary, then long-tail
+    const keywordsFlat = outline.keywords && Array.isArray(outline.keywords)
+      ? outline.keywords
+      : [
+          outline.primary_keyword,
+          ...(outline.secondary_keywords || []),
+          ...(outline.longtail_queries || []),
+        ].filter(Boolean);
+
     const result = await db.query(
       `INSERT INTO blog_articles
-         (slug, title, description, keywords, content_md, content_html, schema_org, seo_score, topic, cluster, outline_json, generation_params)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
+         (slug, title, description, keywords, content_md, content_html, schema_org, seo_score, topic, cluster, outline_json, generation_params, og_image_url, og_image_auto)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
        RETURNING *`,
       [
         slug,
         outline.title,
         outline.description,
-        outline.keywords || [],
+        keywordsFlat,
         content_md,
         content_html,
         schemaOrg,
@@ -80,7 +102,9 @@ router.post('/article', async (req, res) => {
         topic || outline.title,
         outline.cluster || null,
         JSON.stringify(outline),
-        JSON.stringify({ generated_at: new Date().toISOString() }),
+        JSON.stringify({ generated_at: new Date().toISOString(), cover_via: coverUrl ? 'recraft' : 'none' }),
+        coverUrl,
+        coverUrl ? false : true,
       ]
     );
 

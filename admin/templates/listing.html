@@ -45,7 +45,7 @@
     .q-blog-listing { max-width: 1040px; margin: 0 auto; padding: 0 var(--q-s-6); }
 
     .q-blog-listing__hero {
-      padding: 64px 0 48px;
+      padding: 16px 0 14px;
       border-bottom: 1px solid var(--q-line);
     }
     .q-blog-listing__eyebrow {
@@ -54,7 +54,7 @@
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: #5EF2A1;
-      margin-bottom: 16px;
+      margin-bottom: 4px;
     }
     .q-blog-listing__title {
       font-size: clamp(32px, 5vw, 56px);
@@ -62,6 +62,7 @@
       letter-spacing: -0.025em;
       line-height: 1.05;
       color: var(--q-text-hi);
+      margin-top: -2px;
     }
     .q-blog-listing__title span { color: var(--q-text-low); }
     .q-blog-listing__count {
@@ -76,7 +77,7 @@
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 1px;
       border: 1px solid var(--q-line);
-      margin: 48px 0;
+      margin: 24px 0 48px;
       border-radius: 14px;
       overflow: hidden;
     }
@@ -101,7 +102,7 @@
 <main id="main" class="q-blog-listing">
   <div class="q-blog-listing__hero">
     <p class="q-blog-listing__eyebrow">Блог Quillon</p>
-    <h1 class="q-blog-listing__title">IT-образование<br><span>без воды</span></h1>
+    <h1 class="q-blog-listing__title">IT-образование <span>без&nbsp;воды</span></h1>
     <p class="q-blog-listing__count">{{COUNT}} статей</p>
   </div>
 

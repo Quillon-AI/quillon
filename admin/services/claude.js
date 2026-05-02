@@ -52,7 +52,7 @@ async function complete(systemPrompt, userPrompt, options = {}) {
     user: userPrompt,
     system: systemPrompt,
     model: options.model || DEFAULT_MODEL,
-  });
+  }, options.timeoutMs || 600000);
 
   if (typeof result.cost_usd === 'number') {
     console.log(`[claude] cost=$${result.cost_usd.toFixed(4)} model=${result.model}`);

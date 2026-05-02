@@ -210,6 +210,50 @@ router.post('/:id/revisions/:revId/restore', async (req, res) => {
   }
 });
 
+// Generate cover via Recraft (no save) — preview only
+router.post('/recraft', async (req, res) => {
+  try {
+    const { prompt, style, substyle, size, slug } = req.body;
+    if (!prompt) return res.status(400).json({ error: 'prompt required' });
+    const recraft = require('../services/recraft');
+    const result = await recraft.generateAndUpload(
+      prompt,
+      slug || `preview-${Date.now()}`,
+      { style, substyle, size }
+    );
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Generate cover and save it to article's og_image_url
+router.post('/:id/cover', async (req, res) => {
+  try {
+    const { prompt, style, substyle } = req.body;
+    if (!prompt) return res.status(400).json({ error: 'prompt required' });
+    const article = await db.query('SELECT id, slug FROM blog_articles WHERE id = $1', [req.params.id]);
+    if (!article.rows[0]) return res.status(404).json({ error: 'Not found' });
+
+    const recraft = require('../services/recraft');
+    const result = await recraft.generateAndUpload(
+      prompt,
+      article.rows[0].slug,
+      { style, substyle }
+    );
+
+    await db.query(
+      'UPDATE blog_articles SET og_image_url = $1, og_image_auto = false WHERE id = $2',
+      [result.url, article.rows[0].id]
+    );
+
+    const updated = await db.query('SELECT * FROM blog_articles WHERE id = $1', [article.rows[0].id]);
+    res.json({ ...result, article: updated.rows[0] });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Upload inline image → S3
 router.post('/upload-image', upload.single('image'), async (req, res) => {
   try {

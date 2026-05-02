@@ -558,14 +558,45 @@
           <!-- Meta tab -->
           <div id="metaTab" style="display:none">
             <div class="seo-block meta-fields-pane">
-              <h4>OG Image</h4>
-              <div style="display:flex;gap:8px;align-items:center">
-                <input type="url" id="artOgImage" placeholder="https://..." oninput="markBlogUnsaved()" style="flex:1">
+              <h4>Обложка статьи</h4>
+              <div id="coverPreview" style="margin-bottom:10px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;aspect-ratio:1.78;display:flex;align-items:center;justify-content:center;overflow:hidden;color:var(--text2);font-size:12px">
+                Не задана
+              </div>
+              <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+                <input type="url" id="artOgImage" placeholder="https://..." oninput="markBlogUnsaved();updateCoverPreview()" style="flex:1">
                 <label style="display:flex;align-items:center;gap:4px;margin-top:0;white-space:nowrap;cursor:pointer">
                   <input type="checkbox" id="artOgAuto" onchange="markBlogUnsaved()" style="width:auto"> Авто
                 </label>
               </div>
-              <h4 style="margin-top:12px">Кластер (для каннибализации)</h4>
+
+              <h4 style="margin-top:14px;display:flex;align-items:center;gap:8px">
+                ✦ Recraft AI
+                <span style="font-weight:400;color:var(--text2);font-size:11px;text-transform:none;letter-spacing:0">генерация в фирменном стиле</span>
+              </h4>
+              <textarea id="recraftPrompt" placeholder="Опиши обложку — суть статьи в визуальной форме. Например: «Python код в виде потока змеиных линий, абстрактные структуры данных, серверная архитектура»" rows="3" style="margin-bottom:8px"></textarea>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+                <select id="recraftStyle" style="flex:1;min-width:140px">
+                  <option value="digital_illustration">digital_illustration</option>
+                  <option value="vector_illustration">vector_illustration</option>
+                  <option value="realistic_image">realistic_image</option>
+                </select>
+                <select id="recraftSubstyle" style="flex:1;min-width:140px">
+                  <option value="">— substyle (default) —</option>
+                  <option value="2d_art_poster_2">2d_art_poster_2</option>
+                  <option value="engraving_color">engraving_color</option>
+                  <option value="hand_drawn">hand_drawn</option>
+                  <option value="line_art">line_art (vector)</option>
+                  <option value="line_circuit">line_circuit (vector)</option>
+                  <option value="engraving">engraving (vector)</option>
+                </select>
+              </div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <button class="btn-sm btn-outline" onclick="suggestRecraftPrompt()" type="button" style="flex:1">Из заголовка</button>
+                <button class="btn-sm btn-mint" onclick="generateCover()" type="button" id="recraftGenBtn" style="flex:1.5">✦ Сгенерировать</button>
+              </div>
+              <p id="recraftStatus" style="margin-top:8px;font-size:12px;color:var(--text2)"></p>
+
+              <h4 style="margin-top:14px">Кластер (для каннибализации)</h4>
               <input type="text" id="artCluster" placeholder="python-обучение" oninput="markBlogUnsaved()">
               <h4 style="margin-top:12px">Автор</h4>
               <input type="text" id="artAuthor" value="quillon" oninput="markBlogUnsaved()">
@@ -1036,6 +1067,7 @@
     setMdValue(a.content_md || '');
     document.getElementById('editorArticleTitle').textContent = a.title || 'Без названия';
     updateStatusBadge(a.status);
+    updateCoverPreview();
   }
 
   function clearEditor() {
@@ -1162,6 +1194,66 @@
     btn.textContent = (currentArticleId && hasContent) ? '✦ Перегенерировать' : '✦ Сгенерировать';
   }
 
+  /* ─── Recraft cover generation ─── */
+  function updateCoverPreview() {
+    const url = document.getElementById('artOgImage').value.trim();
+    const el = document.getElementById('coverPreview');
+    if (url) {
+      el.innerHTML = `<img src="${escHtml(url)}" alt="Cover" style="width:100%;height:100%;object-fit:cover">`;
+    } else {
+      el.textContent = 'Не задана';
+    }
+  }
+
+  function suggestRecraftPrompt() {
+    const title = document.getElementById('artTitle').value.trim();
+    const desc = document.getElementById('artDesc').value.trim();
+    const kw = document.getElementById('artKeywords').value.split(',')[0]?.trim() || '';
+    if (!title) { toast('Сначала заголовок', 'error'); return; }
+    const seed = `${title}${desc ? ' — ' + desc : ''}${kw ? '. Ключ: ' + kw : ''}. Абстрактная обложка статьи: визуально передай тему через геометрические формы и метафоры, без текста.`;
+    document.getElementById('recraftPrompt').value = seed;
+    document.getElementById('recraftPrompt').focus();
+  }
+
+  async function generateCover() {
+    const prompt = document.getElementById('recraftPrompt').value.trim();
+    if (!prompt) { toast('Опиши обложку в поле prompt', 'error'); return; }
+
+    const btn = document.getElementById('recraftGenBtn');
+    const status = document.getElementById('recraftStatus');
+    btn.disabled = true;
+    btn.textContent = '✦ Генерирую (10-20 сек)...';
+    status.textContent = 'Recraft AI создаёт изображение...';
+
+    const style = document.getElementById('recraftStyle').value || undefined;
+    const sub = document.getElementById('recraftSubstyle').value;
+    const substyle = sub === '' ? null : sub;
+
+    try {
+      let result;
+      if (currentArticleId) {
+        result = await api('POST', `/api/blog/${currentArticleId}/cover`, { prompt, style, substyle });
+        if (result.article) fillEditor(result.article);
+      } else {
+        result = await api('POST', '/api/blog/recraft', { prompt, style, substyle });
+        document.getElementById('artOgImage').value = result.url;
+        document.getElementById('artOgAuto').checked = false;
+        markBlogUnsaved();
+        updateCoverPreview();
+      }
+      status.textContent = `Готово (${(result.bytes/1024).toFixed(0)} KB). URL подставлен в OG Image.`;
+      status.style.color = 'var(--green)';
+      toast('Обложка сгенерирована', 'success');
+    } catch (e) {
+      status.textContent = 'Ошибка: ' + e.message;
+      status.style.color = 'var(--red)';
+      toast('Ошибка Recraft: ' + e.message, 'error');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '✦ Сгенерировать';
+    }
+  }
+
   async function runAutoSEO() {
     if (!currentArticleId) { toast('Сначала сохраните статью', 'error'); return; }
     document.getElementById('autoSeoBtn').textContent = '...';
@@ -1263,13 +1355,61 @@
       </div>`
     ).join('');
 
-    // Keyword density
-    if (kw && content) {
-      const words = content.split(/\s+/).length;
-      const matches = (content.toLowerCase().match(new RegExp(kw.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'g'))||[]).length;
-      const density = words > 0 ? ((matches/words)*100).toFixed(1) : 0;
-      document.getElementById('keywordDensity').innerHTML =
-        `«${escHtml(kw)}» — ${density}% (${matches} из ${words} слов)`;
+    // Keyword density — primary / secondary / long-tail с разными targets
+    if (content && (kw || keywords.length)) {
+      const lcContent = content.toLowerCase();
+      const words = content.split(/\s+/).filter(Boolean).length || 1;
+      const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const countMatches = (term) => (lcContent.match(new RegExp(esc(term.toLowerCase()), 'g')) || []).length;
+
+      // First keyword = primary (target 1.5-2.5%, count 30-50 in 2000 words)
+      // 2-5th = secondary (target 5-15 mentions each)
+      // 6+ = long-tail (target ≥1 in H2/FAQ — fuzzy check via title H2 markers)
+      const primaryTerm = kw || keywords[0] || '';
+      const secondaryTerms = keywords.slice(1, 6);
+      const longtailTerms = keywords.slice(6);
+
+      const primaryCount = primaryTerm ? countMatches(primaryTerm) : 0;
+      const primaryDensity = ((primaryCount / words) * 100).toFixed(2);
+      const primaryStatus = primaryCount === 0 ? 'bad' :
+        (primaryDensity >= 1.5 && primaryDensity <= 3.0) ? 'good' :
+        (primaryDensity >= 0.8) ? 'ok' : 'bad';
+
+      const statusColor = { good: 'var(--green)', ok: 'var(--yellow)', bad: 'var(--red)' };
+
+      let html = `<div style="margin-bottom:8px"><strong style="color:${statusColor[primaryStatus]};font-size:13px">«${escHtml(primaryTerm)}»</strong>
+        <div style="font-size:12px;color:var(--text2);margin-top:2px">
+          ${primaryCount} раз · ${primaryDensity}% · target 1.5-2.5%
+        </div></div>`;
+
+      if (secondaryTerms.length) {
+        html += `<div style="margin-top:10px;padding-top:8px;border-top:1px dashed var(--border)">
+          <div style="font-size:11px;color:var(--text2);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:6px">Secondary (target 5-15)</div>`;
+        for (const term of secondaryTerms) {
+          const c = countMatches(term);
+          const ok = c >= 5 ? 'good' : (c >= 2 ? 'ok' : 'bad');
+          html += `<div style="font-size:12px;display:flex;justify-content:space-between;padding:2px 0">
+            <span style="color:var(--text2)">${escHtml(term)}</span>
+            <span style="color:${statusColor[ok]}">${c}</span>
+          </div>`;
+        }
+        html += `</div>`;
+      }
+
+      if (longtailTerms.length) {
+        html += `<div style="margin-top:10px;padding-top:8px;border-top:1px dashed var(--border)">
+          <div style="font-size:11px;color:var(--text2);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:6px">Long-tail (≥1 раз)</div>`;
+        for (const term of longtailTerms) {
+          const c = countMatches(term);
+          html += `<div style="font-size:12px;display:flex;justify-content:space-between;padding:2px 0">
+            <span style="color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:240px">${escHtml(term)}</span>
+            <span style="color:${c >= 1 ? 'var(--green)' : 'var(--red)'}">${c >= 1 ? '✓' : '✗'}</span>
+          </div>`;
+        }
+        html += `</div>`;
+      }
+
+      document.getElementById('keywordDensity').innerHTML = html;
     } else {
       document.getElementById('keywordDensity').innerHTML =
         `<a href="#" onclick="event.preventDefault();document.getElementById('artKeywords').focus()" style="color:var(--blue-hover);text-decoration:underline">Введите ключевое слово →</a>`;

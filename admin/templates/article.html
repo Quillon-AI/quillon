@@ -104,6 +104,16 @@
       color: var(--q-text-low);
     }
 
+    .q-blog-cover {
+      margin: 32px 0 40px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--q-line);
+      aspect-ratio: 1.78;
+      background: var(--q-bg-2);
+    }
+    .q-blog-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
     .q-blog-content { padding-bottom: 80px; color: var(--q-text-mid); font-size: 16px; line-height: 1.7; }
     .q-blog-content h2 {
       font-size: clamp(20px, 2.5vw, 28px);
@@ -211,6 +221,8 @@
     <p class="q-blog-article__desc">{{DESCRIPTION}}</p>
     <time class="q-blog-article__date" datetime="{{PUBLISHED_ISO}}">{{PUBLISHED_DATE}}</time>
   </div>
+
+  {{COVER_HTML}}
 
   <article class="q-blog-content">
     {{CONTENT_HTML}}

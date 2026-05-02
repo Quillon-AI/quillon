@@ -33,6 +33,10 @@ function renderArticle(article, template) {
     ? new Date(article.published_at).toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric' })
     : '';
 
+  const coverHtml = article.og_image_url
+    ? `<figure class="q-blog-cover"><img src="${escapeHtml(article.og_image_url)}" alt="${escapeHtml(article.title)}" loading="eager"></figure>`
+    : '';
+
   return template
     .replace(/{{TITLE}}/g, escapeHtml(article.title))
     .replace(/{{DESCRIPTION}}/g, escapeHtml(article.description || ''))
@@ -43,6 +47,7 @@ function renderArticle(article, template) {
     .replace(/{{PUBLISHED_DATE}}/g, publishedDate)
     .replace(/{{PUBLISHED_ISO}}/g, article.published_at || article.created_at)
     .replace(/{{UPDATED_ISO}}/g, article.updated_at)
+    .replace(/{{COVER_HTML}}/g, coverHtml)
     .replace(/{{CONTENT_HTML}}/g, article.content_html)
     .replace(/{{SCHEMA_ORG}}/g, JSON.stringify(schemaOrg, null, 2));
 }
