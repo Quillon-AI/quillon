@@ -135,22 +135,10 @@
                 <div class="q-ft-col">
                   <h4 class="q-ft-col__title">Документы</h4>
                   <ul class="q-ft-col__list">
-                    <li><a class="q-ft-link q-ft-link--ext" href="/v4/docs/oferta.html" target="_blank" rel="noopener">
-                      <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="12" x2="12" y2="4"/><polyline points="6 4 12 4 12 10"/></svg>
-                      <span>Оферта</span>
-                    </a></li>
-                    <li><a class="q-ft-link q-ft-link--ext" href="/v4/docs/privacy-policy.html" target="_blank" rel="noopener">
-                      <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="12" x2="12" y2="4"/><polyline points="6 4 12 4 12 10"/></svg>
-                      <span>Политика</span>
-                    </a></li>
-                    <li><a class="q-ft-link q-ft-link--ext" href="/v4/docs/consent-pdn.html" target="_blank" rel="noopener">
-                      <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="12" x2="12" y2="4"/><polyline points="6 4 12 4 12 10"/></svg>
-                      <span>Согласие на&nbsp;ПД</span>
-                    </a></li>
-                    <li><a class="q-ft-link q-ft-link--ext" href="https://islod.obrnadzor.gov.ru/view/133831" target="_blank" rel="noopener">
-                      <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="12" x2="12" y2="4"/><polyline points="6 4 12 4 12 10"/></svg>
-                      <span>Лицензия</span>
-                    </a></li>
+                    <li><a class="q-ft-link q-ft-link--ext" href="/v4/docs/oferta.html" target="_blank" rel="noopener">Оферта</a></li>
+                    <li><a class="q-ft-link q-ft-link--ext" href="/v4/docs/privacy-policy.html" target="_blank" rel="noopener">Политика</a></li>
+                    <li><a class="q-ft-link q-ft-link--ext" href="/v4/docs/consent-pdn.html" target="_blank" rel="noopener">Согласие на&nbsp;ПД</a></li>
+                    <li><a class="q-ft-link q-ft-link--ext" href="https://islod.obrnadzor.gov.ru/view/133831" target="_blank" rel="noopener">Лицензия</a></li>
                   </ul>
                 </div>
               </nav>

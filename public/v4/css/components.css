@@ -749,16 +749,20 @@
 
 /* External-doc link with ↗ arrow */
 .q-ft-link--ext {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--q-s-2);
+  display: inline-block;
+  white-space: nowrap;
 }
-.q-ft-link--ext svg {
-  flex-shrink: 0;
+.q-ft-link--ext::before {
+  content: "↗";
+  display: inline-block;
+  margin-right: 6px;
+  font-family: var(--q-font-mono);
+  font-size: 0.85em;
   color: var(--q-text-low);
   transition: color var(--q-dur-fast) var(--q-ease);
+  vertical-align: 1px;
 }
-.q-ft-link--ext:hover svg { color: var(--q-accent); }
+.q-ft-link--ext:hover::before { color: var(--q-accent); }
 
 /* Bottom: just © Quillon, 2026 */
 .q-ft-legal {
