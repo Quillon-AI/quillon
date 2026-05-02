@@ -478,6 +478,79 @@
 
 .q-topbar__actions { display: inline-flex; align-items: center; gap: var(--q-s-2); }
 
+/* ─── Mobile burger + drawer ─── */
+.q-topbar__burger {
+  display: none;
+  width: 36px; height: 36px;
+  background: transparent;
+  border: 1px solid var(--q-line);
+  border-radius: var(--q-r-sm);
+  cursor: pointer;
+  padding: 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+.q-topbar__burger span {
+  display: block;
+  width: 16px; height: 1.5px;
+  background: var(--q-text-hi);
+  transition: transform var(--q-dur-fast) var(--q-ease), opacity var(--q-dur-fast) var(--q-ease);
+}
+.q-topbar__burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+.q-topbar__burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.q-topbar__burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+
+.q-drawer {
+  position: fixed;
+  top: 60px; left: 0; right: 0; bottom: 0;
+  background: var(--q-bg-0);
+  z-index: 90;
+  overflow-y: auto;
+}
+.q-drawer[hidden] { display: none; }
+.q-drawer__nav {
+  display: flex;
+  flex-direction: column;
+  padding: var(--q-s-5) var(--q-s-5);
+  gap: var(--q-s-2);
+}
+.q-drawer__link {
+  display: block;
+  padding: var(--q-s-4) var(--q-s-3);
+  font-size: 17px;
+  font-weight: var(--q-fw-medium);
+  color: var(--q-text-hi);
+  text-decoration: none;
+  border-radius: var(--q-r-md);
+  letter-spacing: -0.01em;
+}
+.q-drawer__link:hover, .q-drawer__link:focus { background: var(--q-bg-2); }
+.q-drawer__link--muted { color: var(--q-text-mid); font-size: 15px; }
+.q-drawer__link--cta {
+  background: linear-gradient(180deg, var(--q-accent-hover) 0%, var(--q-accent) 100%);
+  color: #FFFFFF;
+  text-align: center;
+  margin-top: var(--q-s-2);
+}
+.q-drawer__divider {
+  height: 1px;
+  background: var(--q-line);
+  margin: var(--q-s-4) var(--q-s-3);
+}
+
+/* Mint accent variant for drawer */
+.q-topbar[data-accent="mint"] + .q-drawer .q-drawer__link--cta {
+  background: #5EF2A1; color: #04070C;
+}
+
+/* Hide login button on smaller screens (drawer has it) */
+@media (max-width: 640px) {
+  .q-topbar__login { display: none; }
+  .q-topbar__burger { display: inline-flex; }
+}
+
 
 /* ═══════════════════════════════════════════════════════════════════
  * INPUT / CODE / CALLOUT
