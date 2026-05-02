@@ -19,53 +19,41 @@
 
   <style>
     .q-404 {
-      min-height: calc(100vh - 60px);
-      display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-      gap: var(--q-s-9);
-      padding-top: var(--q-s-10);
-      padding-bottom: var(--q-s-10);
+      display: flex;
+      flex-direction: column;
       align-items: center;
+      text-align: center;
+      gap: var(--q-s-5);
+      padding-top: var(--q-s-9);
+      padding-bottom: var(--q-s-8);
     }
-    .q-404__copy { display: flex; flex-direction: column; gap: var(--q-s-5); max-width: 540px; }
-    .q-404__eyebrow {
-      font-family: var(--q-font-mono);
-      font-size: var(--q-t-mono);
-      letter-spacing: var(--q-tracking-mono);
-      text-transform: uppercase;
-      color: var(--q-accent);
-      display: inline-flex; align-items: center; gap: var(--q-s-2);
+    .q-404__art {
+      width: 240px;
+      aspect-ratio: 4 / 5;
+      border-radius: var(--q-r-xl);
+      overflow: hidden;
+      background: var(--q-bg-1);
+      box-shadow: 0 0 0 1px var(--q-line), 0 12px 48px -16px rgba(0, 0, 0, 0.6);
+      margin: 0 0 var(--q-s-3);
     }
-    .q-404__eyebrow::before {
-      content: ""; width: 6px; height: 6px;
-      background: #5EF2A1; border-radius: 50%;
-      box-shadow: 0 0 12px #5EF2A1;
-    }
+    .q-404__svg { width: 100%; height: 100%; display: block; }
     .q-404__title {
-      font-size: clamp(48px, 8vw, 96px);
+      font-size: clamp(40px, 6vw, 72px);
       font-weight: var(--q-fw-medium);
-      letter-spacing: -0.04em;
-      line-height: 0.95;
+      letter-spacing: -0.035em;
+      line-height: 1;
       color: var(--q-text-hi);
       margin: 0;
     }
     .q-404__title span { color: var(--q-text-low); }
     .q-404__lede {
-      font-size: clamp(16px, 1.4vw, 18px);
+      font-size: clamp(15px, 1.2vw, 17px);
       line-height: 1.6;
       color: var(--q-text-mid);
       margin: 0;
+      max-width: 52ch;
     }
-    .q-404__actions { display: flex; gap: var(--q-s-3); flex-wrap: wrap; margin-top: var(--q-s-3); }
-
-    .q-404__art {
-      border-radius: var(--q-r-xl);
-      overflow: hidden;
-      aspect-ratio: 4 / 5;
-      background: var(--q-bg-1);
-      box-shadow: 0 0 0 1px var(--q-line), 0 12px 48px -16px rgba(0, 0, 0, 0.6);
-    }
-    .q-404__svg { width: 100%; height: 100%; display: block; }
+    .q-404__actions { display: flex; gap: var(--q-s-3); flex-wrap: wrap; justify-content: center; margin-top: var(--q-s-3); }
 
     .q-404__links {
       display: grid;
@@ -116,18 +104,6 @@
 <main id="main">
   <section class="q-section">
     <div class="q-container q-404">
-      <div class="q-404__copy">
-        <p class="q-404__eyebrow">Error 404 / Not Found</p>
-        <h1 class="q-404__title">Тут <span>пусто</span></h1>
-        <p class="q-404__lede">
-          Адрес с&nbsp;опечаткой, ссылка устарела, или мы&nbsp;ещё&nbsp;не написали такую страницу. Внизу — куда ещё можно сходить, чтобы не возвращаться обратно.
-        </p>
-        <div class="q-404__actions">
-          <a href="/" class="q-btn q-btn--primary q-btn--lg">← На главную</a>
-          <a href="/blog/" class="q-btn q-btn--ghost q-btn--lg">Читать блог</a>
-        </div>
-      </div>
-
       <figure class="q-404__art">
         <svg class="q-404__svg" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="404 — заглушка">
           <defs>
@@ -179,6 +155,15 @@
           </g>
         </svg>
       </figure>
+
+      <h1 class="q-404__title">Тут <span>пусто</span></h1>
+      <p class="q-404__lede">
+        Адрес с&nbsp;опечаткой, ссылка устарела, или мы&nbsp;ещё&nbsp;не написали такую страницу. Внизу — куда ещё можно сходить, чтобы не возвращаться обратно.
+      </p>
+      <div class="q-404__actions">
+        <a href="/" class="q-btn q-btn--primary q-btn--lg">← На главную</a>
+        <a href="/blog/" class="q-btn q-btn--ghost q-btn--lg">Читать блог</a>
+      </div>
     </div>
   </section>
 
