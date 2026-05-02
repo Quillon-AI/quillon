@@ -27,7 +27,7 @@
     { id: 'blog',     label: 'Блог',      href: '/blog/' },
     { id: 'tech',     label: 'Tech',      href: 'https://tech.quillon.ru', external: true },
     { id: 'projects', label: 'Проекты',   href: '/#products' },
-    { id: 'about',    label: 'О нас',     href: '/#about' },
+    { id: 'about',    label: 'О нас',     href: '/about/' },
   ];
 
   function logoFor(accent) {

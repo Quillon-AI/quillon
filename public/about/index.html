@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>О Quillon — IT-образование, которое доводит до оффера</title>
+  <meta name="description" content="Quillon — это IT-школа внутри действующей IT-студии. 12-месячные треки по Python, Flutter и QA с реальными проектами в production и стажировкой.">
+  <link rel="canonical" href="https://quillon.ru/about/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="О Quillon — IT-образование, которое доводит до оффера">
+  <meta property="og:description" content="IT-школа внутри действующей IT-студии. 12 месяцев до первого оффера.">
+  <meta property="og:url" content="https://quillon.ru/about/">
+  <meta property="og:image" content="https://quillon.ru/og-image.png">
+  <meta property="og:locale" content="ru_RU">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="О Quillon">
+  <meta name="twitter:image" content="https://quillon.ru/og-image.png">
+
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="/v4/css/tokens.css">
+  <link rel="stylesheet" href="/v4/css/base.css">
+  <link rel="stylesheet" href="/v4/css/components.css">
+  <script src="/v4/components/quillon-ui.js" defer></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://quillon.ru/" },
+      { "@type": "ListItem", "position": 2, "name": "О нас", "item": "https://quillon.ru/about/" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "Quillon",
+    "url": "https://quillon.ru",
+    "logo": "https://quillon.ru/v4/assets/brand/logo.png",
+    "description": "IT-школа внутри действующей IT-студии. 12-месячные треки по Python, Flutter и QA.",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Казань",
+      "addressCountry": "RU"
+    }
+  }
+  </script>
+
+  <style>
+    /* ── About-specific layout ── */
+    .q-about-hero {
+      padding: var(--q-s-10) 0 var(--q-s-9);
+      border-bottom: 1px solid var(--q-line);
+    }
+    .q-about-hero__eyebrow {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-accent);
+      margin-bottom: var(--q-s-3);
+    }
+    .q-about-hero__title {
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: var(--q-fw-medium);
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      color: var(--q-text-hi);
+      margin: 0 0 var(--q-s-5);
+      max-width: 18ch;
+    }
+    .q-about-hero__title span { color: var(--q-text-low); }
+    .q-about-hero__lede {
+      font-size: clamp(18px, 1.6vw, 22px);
+      line-height: 1.5;
+      color: var(--q-text-mid);
+      max-width: 56ch;
+      margin: 0;
+    }
+
+    /* Two-col text section */
+    .q-about-cols {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+      gap: var(--q-s-9);
+    }
+    .q-about-cols__head h2 {
+      font-size: clamp(24px, 2.8vw, 36px);
+      font-weight: var(--q-fw-medium);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--q-text-hi);
+      margin: 0;
+      max-width: 14ch;
+    }
+    .q-about-cols__body p {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--q-text-mid);
+      margin: 0 0 var(--q-s-4);
+    }
+    .q-about-cols__body p strong { color: var(--q-text-hi); font-weight: var(--q-fw-medium); }
+    .q-about-cols__body p:last-child { margin-bottom: 0; }
+
+    /* Mentors grid */
+    .q-mentors {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--q-s-6);
+      margin-top: var(--q-s-7);
+    }
+    .q-mentor {
+      background: var(--q-bg-1);
+      border: 1px solid var(--q-line);
+      border-radius: var(--q-r-xl);
+      padding: var(--q-s-7);
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-3);
+      transition: border-color var(--q-dur-med) var(--q-ease), background var(--q-dur-med) var(--q-ease);
+    }
+    .q-mentor:hover { border-color: var(--q-line-hover); background: var(--q-bg-2); }
+    .q-mentor__role {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-accent);
+    }
+    .q-mentor__name {
+      font-size: 18px;
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.01em;
+      color: var(--q-text-hi);
+      margin: 0;
+    }
+    .q-mentor__title {
+      font-size: 13px;
+      color: var(--q-text-mid);
+      margin: 0;
+    }
+    .q-mentor__bio {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--q-text-mid);
+      margin: var(--q-s-2) 0 0;
+    }
+    .q-mentor__stack {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-top: auto;
+      padding-top: var(--q-s-4);
+    }
+    .q-mentor__chip {
+      font-family: var(--q-font-mono);
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: var(--q-r-pill);
+      background: var(--q-bg-2);
+      color: var(--q-text-low);
+      border: 1px solid var(--q-line);
+    }
+
+    /* Products grid */
+    .q-products-about {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      margin-top: var(--q-s-7);
+      border: 1px solid var(--q-line);
+      border-radius: var(--q-r-xl);
+      overflow: hidden;
+      background: var(--q-line);
+    }
+    .q-product-about {
+      background: var(--q-bg-0);
+      padding: var(--q-s-6);
+      transition: background var(--q-dur-fast) var(--q-ease);
+    }
+    .q-product-about:hover { background: var(--q-bg-1); }
+    .q-product-about__name {
+      font-size: 18px;
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.01em;
+      color: var(--q-text-hi);
+      margin: 0 0 var(--q-s-2);
+    }
+    .q-product-about__desc {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--q-text-mid);
+      margin: 0 0 var(--q-s-4);
+    }
+    .q-product-about__link {
+      font-family: var(--q-font-mono);
+      font-size: 11px;
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-text-low);
+      text-decoration: none;
+      transition: color var(--q-dur-fast) var(--q-ease);
+    }
+    .q-product-about__link:hover { color: var(--q-accent); }
+    .q-product-about__link::before { content: "↗ "; color: var(--q-accent); }
+
+    /* ─── Numbers / stats — editorial rail ─── */
+    .q-stats {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: var(--q-s-8);
+      margin-top: var(--q-s-7);
+      padding-top: var(--q-s-6);
+      border-top: 1px solid var(--q-line);
+    }
+
+    /* Hero-метрика */
+    .q-stat-hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: var(--q-s-6);
+      min-height: 220px;
+    }
+    .q-stat-hero__index {
+      font-family: var(--q-font-mono);
+      font-size: 11px;
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+    .q-stat-hero__value {
+      font-feature-settings: "tnum" 1, "lnum" 1;
+      font-variant-numeric: tabular-nums lining-nums;
+      font-size: clamp(96px, 14vw, 192px);
+      font-weight: var(--q-fw-medium);
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      color: var(--q-text-hi);
+      display: flex;
+      align-items: baseline;
+      gap: var(--q-s-3);
+    }
+    .q-stat-hero__unit {
+      font-family: var(--q-font-mono);
+      font-size: 12px;
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-text-mid);
+      align-self: flex-end;
+      padding-bottom: 0.6em;
+    }
+    .q-stat-hero__label {
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--q-text-mid);
+      max-width: 28ch;
+    }
+    .q-stat-hero__label strong {
+      color: var(--q-text-hi);
+      font-weight: var(--q-fw-medium);
+    }
+
+    /* Боковой rail с тремя метриками */
+    .q-stat-rail {
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid var(--q-line);
+    }
+    .q-stat-rail__row {
+      display: grid;
+      grid-template-columns: 32px minmax(0, 1fr) auto;
+      align-items: baseline;
+      gap: var(--q-s-4);
+      padding: var(--q-s-5) 0;
+      border-bottom: 1px solid var(--q-line);
+    }
+    .q-stat-rail__index {
+      font-family: var(--q-font-mono);
+      font-size: 11px;
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+    .q-stat-rail__label {
+      font-family: var(--q-font-mono);
+      font-size: 11px;
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-text-mid);
+      line-height: 1.4;
+    }
+    .q-stat-rail__value {
+      font-feature-settings: "tnum" 1, "lnum" 1;
+      font-variant-numeric: tabular-nums lining-nums;
+      font-size: clamp(40px, 5vw, 56px);
+      font-weight: var(--q-fw-medium);
+      line-height: 1;
+      letter-spacing: -0.025em;
+      color: var(--q-text-hi);
+      white-space: nowrap;
+    }
+    .q-stat-rail__value sub {
+      font-family: var(--q-font-mono);
+      font-size: 11px;
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-text-low);
+      vertical-align: baseline;
+      margin-left: 6px;
+      font-weight: var(--q-fw-regular);
+    }
+
+    /* Final CTA */
+    .q-about-cta {
+      text-align: center;
+      padding: var(--q-s-10) 0;
+      border-top: 1px solid var(--q-line);
+    }
+    .q-about-cta h2 {
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: var(--q-fw-medium);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--q-text-hi);
+      margin: 0 0 var(--q-s-3);
+    }
+    .q-about-cta p {
+      font-size: 16px;
+      color: var(--q-text-mid);
+      margin: 0 0 var(--q-s-6);
+    }
+
+    @media (max-width: 1024px) {
+      .q-mentors { grid-template-columns: 1fr 1fr; }
+      .q-products-about { grid-template-columns: 1fr 1fr; }
+      .q-stats { grid-template-columns: 1fr; gap: var(--q-s-7); }
+      .q-stat-hero { min-height: auto; }
+    }
+    @media (max-width: 720px) {
+      .q-about-cols { grid-template-columns: 1fr; gap: var(--q-s-5); }
+      .q-mentors { grid-template-columns: 1fr; }
+      .q-products-about { grid-template-columns: 1fr; }
+      .q-stat-rail__row { grid-template-columns: 28px minmax(0, 1fr); row-gap: var(--q-s-2); }
+      .q-stat-rail__value { grid-column: 2 / 3; }
+    }
+  </style>
+</head>
+<body>
+
+<quillon-header current="about"></quillon-header>
+
+<main id="main">
+
+  <!-- ─── HERO ─── -->
+  <section class="q-section">
+    <div class="q-container q-about-hero">
+      <p class="q-about-hero__eyebrow">О нас</p>
+      <h1 class="q-about-hero__title">
+        IT-образование, <span>которое доводит до оффера</span>
+      </h1>
+      <p class="q-about-hero__lede">
+        Quillon — школа внутри действующей IT-студии. Мы учим тех, кто не учился в IT, и сразу подключаем к&nbsp;реальным продуктам в&nbsp;production. За&nbsp;12&nbsp;месяцев — от&nbsp;первой строки кода до&nbsp;первого оффера.
+      </p>
+    </div>
+  </section>
+
+  <!-- ─── МАНИФЕСТ ─── -->
+  <section class="q-section">
+    <div class="q-container">
+      <div class="q-about-cols">
+        <div class="q-about-cols__head">
+          <h2>Зачем мы вообще нужны</h2>
+        </div>
+        <div class="q-about-cols__body">
+          <p>
+            <strong>Курсов в IT — сотни.</strong> Большинство из них продают мечту: «войди в IT за 3 месяца», «заработай 200&nbsp;000 на Python с нуля». Мы видели, что происходит дальше — выпускник заканчивает курс, кладёт в&nbsp;портфолио свой Telegram-бот, и&nbsp;уходит на&nbsp;hh.ru со&nbsp;средним резюме конкурировать с тысячами таких&nbsp;же.
+          </p>
+          <p>
+            <strong>Quillon устроен иначе.</strong> Мы не просто школа — мы IT-студия, в&nbsp;которой студенты участвуют в&nbsp;реальной разработке наших продуктов. Учат не «учебные тренажёры», а&nbsp;ревью пулл-реквестов от&nbsp;старших разработчиков и&nbsp;commit'ы в&nbsp;production-репозитории.
+          </p>
+          <p>
+            <strong>AI — рабочий инструмент, не магия и не угроза.</strong> Мы встраиваем AI в каждый этап обучения: от написания кода вместе с Copilot до собственного AI-тьютора Quilly, который доступен 24/7. Через год выпускник умеет и&nbsp;писать код, и&nbsp;управлять AI как инженерным инструментом.
+          </p>
+          <p>
+            <strong>До оффера, а не до сертификата.</strong> Цель программы — первый оплачиваемый оффер. Не «курс пройден», не «диплом». Если оффера нет в&nbsp;течение оговорённого срока после выпуска — программа продлевается с&nbsp;ментором.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── ЦИФРЫ ─── -->
+  <section class="q-section">
+    <div class="q-container">
+      <div class="q-about-cols">
+        <div class="q-about-cols__head">
+          <h2>Quillon в цифрах</h2>
+          <p style="font-family: var(--q-font-mono); font-size: 11px; letter-spacing: var(--q-tracking-mono); text-transform: uppercase; color: var(--q-text-low); margin-top: var(--q-s-3);">
+            § 03 — параметры программы
+          </p>
+        </div>
+        <div class="q-about-cols__body">
+          <p>Не маркетинговые «98% трудоустройства» — реальные параметры программы.</p>
+
+          <div class="q-stats">
+            <!-- Hero-метрика -->
+            <div class="q-stat-hero">
+              <div class="q-stat-hero__index">— главное</div>
+              <div class="q-stat-hero__value">
+                12<span class="q-stat-hero__unit">мес.</span>
+              </div>
+              <p class="q-stat-hero__label">
+                От первой строки кода до <strong>первого оплачиваемого оффера</strong>. Один цикл программы — один результат.
+              </p>
+            </div>
+
+            <!-- Rail -->
+            <div class="q-stat-rail">
+              <div class="q-stat-rail__row">
+                <span class="q-stat-rail__index">01</span>
+                <span class="q-stat-rail__label">направления<br>Python · Flutter · QA</span>
+                <span class="q-stat-rail__value">3</span>
+              </div>
+              <div class="q-stat-rail__row">
+                <span class="q-stat-rail__index">02</span>
+                <span class="q-stat-rail__label">до первой оплачиваемой задачи</span>
+                <span class="q-stat-rail__value">2<sub>мес.</sub></span>
+              </div>
+              <div class="q-stat-rail__row">
+                <span class="q-stat-rail__index">03</span>
+                <span class="q-stat-rail__label">собственных продуктов как полигон</span>
+                <span class="q-stat-rail__value">5</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── МЕНТОРЫ ─── -->
+  <section class="q-section">
+    <div class="q-container">
+      <div class="q-about-cols">
+        <div class="q-about-cols__head">
+          <h2>Кто учит</h2>
+        </div>
+        <div class="q-about-cols__body">
+          <p>Мы не нанимаем «преподавателей по курсу». Каждый ментор — действующий разработчик с&nbsp;production-опытом и&nbsp;собственным треком в&nbsp;индустрии.</p>
+        </div>
+      </div>
+
+      <div class="q-mentors">
+        <article class="q-mentor">
+          <div class="q-mentor__role">Главный ментор</div>
+          <h3 class="q-mentor__name">Алексей Бирюлин</h3>
+          <p class="q-mentor__title">Архитектор программы Python + ML</p>
+          <p class="q-mentor__bio">
+            5&nbsp;лет проектирования образовательных программ по&nbsp;Python, ML и&nbsp;промышленной разработке. Senior-методист в&nbsp;федеральных университетах и&nbsp;EdTech-компаниях. Провёл 4&nbsp;000+ индивидуальных занятий, программы для&nbsp;потоков 30–70 студентов.
+          </p>
+          <div class="q-mentor__stack">
+            <span class="q-mentor__chip">Python</span>
+            <span class="q-mentor__chip">PyTorch</span>
+            <span class="q-mentor__chip">scikit-learn</span>
+            <span class="q-mentor__chip">SQL</span>
+            <span class="q-mentor__chip">Flask</span>
+            <span class="q-mentor__chip">NumPy</span>
+            <span class="q-mentor__chip">NLP</span>
+          </div>
+        </article>
+
+        <article class="q-mentor">
+          <div class="q-mentor__role">Спикер · Backend & AI</div>
+          <h3 class="q-mentor__name">Александр Асадуллин</h3>
+          <p class="q-mentor__title">Senior Python · FastAPI / RAG / LLM</p>
+          <p class="q-mentor__bio">
+            Senior Python-разработчик. Inference-gateway для крупного LLM-API на&nbsp;18&nbsp;000&nbsp;RPS, p99 160&nbsp;мс. RAG-сервис на&nbsp;FastAPI&nbsp;+&nbsp;LangChain (2&nbsp;млн документов, точность 61%→84%). Мультиагентная система на 5&nbsp;000 запросов/сутки.
+          </p>
+          <div class="q-mentor__stack">
+            <span class="q-mentor__chip">FastAPI</span>
+            <span class="q-mentor__chip">asyncio</span>
+            <span class="q-mentor__chip">SQLAlchemy 2.0</span>
+            <span class="q-mentor__chip">Postgres</span>
+            <span class="q-mentor__chip">Kafka</span>
+            <span class="q-mentor__chip">LangChain</span>
+            <span class="q-mentor__chip">FAISS</span>
+          </div>
+        </article>
+
+        <article class="q-mentor">
+          <div class="q-mentor__role">Гость-спикер · QA</div>
+          <h3 class="q-mentor__name">Станислав Иванов</h3>
+          <p class="q-mentor__title">Head of QA · 12+ лет в FinTech</p>
+          <p class="q-mentor__bio">
+            12+ лет в&nbsp;QA, FinTech и&nbsp;банковский сектор. Руководил командой из&nbsp;100+ инженеров, фреймворк автотестов принят в&nbsp;40+ командах, CI/CD для&nbsp;150+ проектов. Автор курсов по&nbsp;тестированию для&nbsp;нескольких EdTech-платформ.
+          </p>
+          <div class="q-mentor__stack">
+            <span class="q-mentor__chip">Java</span>
+            <span class="q-mentor__chip">Selenium</span>
+            <span class="q-mentor__chip">JUnit</span>
+            <span class="q-mentor__chip">Jenkins</span>
+            <span class="q-mentor__chip">Docker</span>
+            <span class="q-mentor__chip">TestRail</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── ПРОДУКТЫ ─── -->
+  <section class="q-section">
+    <div class="q-container">
+      <div class="q-about-cols">
+        <div class="q-about-cols__head">
+          <h2>Что мы строим</h2>
+        </div>
+        <div class="q-about-cols__body">
+          <p>5 собственных продуктов в одной экосистеме. Студенты не пишут «учебные» приложения — они работают над&nbsp;тем, чем мы пользуемся каждый день.</p>
+        </div>
+      </div>
+
+      <div class="q-products-about">
+        <article class="q-product-about">
+          <h3 class="q-product-about__name">Quilly AI</h3>
+          <p class="q-product-about__desc">AI-тьютор для&nbsp;студентов. Объясняет код, проверяет домашки, разбирает ошибки. Доступен 24/7 в&nbsp;мобильном приложении.</p>
+          <a class="q-product-about__link" href="/#products">Подробнее</a>
+        </article>
+
+        <article class="q-product-about">
+          <h3 class="q-product-about__name">Quillon Meet</h3>
+          <p class="q-product-about__desc">Платформа видео-встреч для&nbsp;занятий и&nbsp;парного программирования. Запись, демонстрация экрана, чат с&nbsp;командой.</p>
+          <a class="q-product-about__link" href="https://meet.quillon.ru" target="_blank" rel="noopener">meet.quillon.ru</a>
+        </article>
+
+        <article class="q-product-about">
+          <h3 class="q-product-about__name">Quillon LMS</h3>
+          <p class="q-product-about__desc">Учебная платформа: программа, домашки, ревью, прогресс. Django + React, развёрнут на&nbsp;собственной инфраструктуре.</p>
+          <a class="q-product-about__link" href="https://lms.quillon.ru" target="_blank" rel="noopener">lms.quillon.ru</a>
+        </article>
+
+        <article class="q-product-about">
+          <h3 class="q-product-about__name">Quillon Jobs</h3>
+          <p class="q-product-about__desc">Внутренняя биржа фриланс-задач. Студенты со&nbsp;2-го месяца работают над&nbsp;реальными заказами от&nbsp;внешних клиентов.</p>
+          <a class="q-product-about__link" href="/#quillon_jobs">Как работает</a>
+        </article>
+
+        <article class="q-product-about">
+          <h3 class="q-product-about__name">Quillon Tech</h3>
+          <p class="q-product-about__desc">IT-студия, в&nbsp;которой студенты получают первый production-опыт. Реальные проекты для&nbsp;внешних клиентов.</p>
+          <a class="q-product-about__link" href="https://tech.quillon.ru" target="_blank" rel="noopener">tech.quillon.ru</a>
+        </article>
+
+        <article class="q-product-about">
+          <h3 class="q-product-about__name">Блог Quillon</h3>
+          <p class="q-product-about__desc">Статьи без воды о реальной разработке: путь джуна, выбор стека, что ждёт после первой работы.</p>
+          <a class="q-product-about__link" href="/blog/">Читать блог</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── ОФИЦИАЛЬНО ─── -->
+  <section class="q-section">
+    <div class="q-container">
+      <div class="q-about-cols">
+        <div class="q-about-cols__head">
+          <h2>Образование официально</h2>
+        </div>
+        <div class="q-about-cols__body">
+          <p>
+            <strong>ООО «Квиллон»</strong> · ИНН 1660308717. Юридический адрес: 420055, Республика Татарстан, г.&nbsp;Казань, Свободная&nbsp;ул., д.&nbsp;7, офис&nbsp;5.
+          </p>
+          <p>
+            Образовательная деятельность ведётся на&nbsp;основании <a href="https://islod.obrnadzor.gov.ru/view/133831" target="_blank" rel="noopener" style="color:var(--q-accent);text-decoration:underline">государственной образовательной лицензии</a>. После окончания трека выпускник получает документ установленного образца.
+          </p>
+          <p>
+            Договор-оферта, политика конфиденциальности и&nbsp;согласие на&nbsp;обработку персональных данных — доступны в&nbsp;футере сайта.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CTA ─── -->
+  <section class="q-section">
+    <div class="q-container q-about-cta">
+      <h2>Не уверен, какое направление твоё?</h2>
+      <p>Пройди тест на&nbsp;профориентацию. 5 минут, без регистрации.</p>
+      <a href="/quiz" class="q-btn q-btn--primary q-btn--lg">
+        Пройти тест
+        <span class="q-btn__icon" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<quillon-footer></quillon-footer>
+
+<!-- Яндекс.Метрика -->
+<script type="text/javascript">
+  (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+  m[i].l=1*new Date();
+  for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
+  k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+  (window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
+  ym(108311343,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/108311343" style="position:absolute;left:-9999px;" alt=""/></div></noscript>
+
+</body>
+</html>
