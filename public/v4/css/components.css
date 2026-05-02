@@ -400,9 +400,81 @@
   font-weight: var(--q-fw-medium);
   color: var(--q-text-mid);
   transition: all var(--q-dur-fast) var(--q-ease);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 .q-topbar__link:hover { color: var(--q-text-hi); background: var(--q-bg-2); }
 .q-topbar__link[aria-current="page"] { color: var(--q-text-hi); }
+
+/* ─── Dropdown (Все треки) ─── */
+.q-topbar__dropdown {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.q-topbar__dropdown-toggle {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+}
+.q-topbar__dropdown-toggle__chevron {
+  width: 10px;
+  height: 10px;
+  transition: transform var(--q-dur-fast) var(--q-ease);
+  opacity: 0.7;
+}
+.q-topbar__dropdown:hover .q-topbar__dropdown-toggle__chevron,
+.q-topbar__dropdown[data-open="true"] .q-topbar__dropdown-toggle__chevron {
+  transform: rotate(180deg);
+}
+.q-topbar__dropdown-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 280px;
+  background: var(--q-bg-2);
+  border: 1px solid var(--q-line);
+  border-radius: var(--q-r-md);
+  padding: 6px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity var(--q-dur-fast) var(--q-ease),
+              transform var(--q-dur-fast) var(--q-ease),
+              visibility var(--q-dur-fast);
+  z-index: 100;
+}
+.q-topbar__dropdown:hover .q-topbar__dropdown-menu,
+.q-topbar__dropdown:focus-within .q-topbar__dropdown-menu,
+.q-topbar__dropdown[data-open="true"] .q-topbar__dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.q-topbar__dropdown-item {
+  display: block;
+  padding: 10px 14px;
+  border-radius: var(--q-r-sm);
+  color: var(--q-text-mid);
+  font-size: var(--q-t-xs);
+  font-weight: var(--q-fw-medium);
+  text-decoration: none;
+  transition: all var(--q-dur-fast) var(--q-ease);
+}
+.q-topbar__dropdown-item:hover {
+  background: var(--q-bg-3);
+  color: var(--q-text-hi);
+}
+.q-topbar__dropdown-item__sub {
+  display: block;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--q-text-low);
+  margin-top: 2px;
+}
 
 .q-topbar__actions { display: inline-flex; align-items: center; gap: var(--q-s-2); }
 
