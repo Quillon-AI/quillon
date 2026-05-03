@@ -39,7 +39,7 @@
   <a class="qt-btn qt-btn--primary qt-btn--sm qt-topbar__cta" href="#contact">
     Связаться с нами
   </a>
-  <button class="qt-topbar__burger" type="button" aria-label="Меню">
+  <button class="qt-topbar__burger" type="button" aria-label="Меню" aria-controls="qt-drawer" aria-expanded="false">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
       <line x1="4" y1="7" x2="20" y2="7"/>
       <line x1="4" y1="12" x2="20" y2="12"/>
@@ -47,6 +47,30 @@
     </svg>
   </button>
 </header>
+
+<!-- ─── MOBILE DRAWER ───────────────────────────────────────── -->
+<aside class="qt-drawer" id="qt-drawer" hidden aria-hidden="true">
+  <header class="qt-drawer__head">
+    <a href="/" class="qt-topbar__brand">
+      <img src="/assets/logo.svg" alt="" width="28" height="28">
+      <span>Quillon</span>
+    </a>
+    <button class="qt-drawer__close" type="button" aria-label="Закрыть меню">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/>
+      </svg>
+    </button>
+  </header>
+  <nav class="qt-drawer__nav" aria-label="Мобильное меню">
+    <a class="qt-drawer__link" href="#about">О компании</a>
+    <a class="qt-drawer__link" href="#products">Продукты и сервисы</a>
+    <a class="qt-drawer__link" href="#cases">Принципы</a>
+    <a class="qt-drawer__link" href="#stack">Стек</a>
+    <a class="qt-drawer__link" href="#studio">Quillon Studio</a>
+    <a class="qt-drawer__link" href="#opensource">Open source</a>
+  </nav>
+  <a class="qt-btn qt-btn--primary qt-btn--lg qt-drawer__cta" href="#contact-cta">Связаться с нами</a>
+</aside>
 
 <!-- ─── HERO ─────────────────────────────────────────────────── -->
 <section class="qt-hero" id="hero">
@@ -95,7 +119,7 @@
       Четыре продукта в&nbsp;production
     </h2>
 
-    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;">
+    <div class="qt-grid qt-grid--2">
       <div class="qt-card">
         <p class="qt-card__eyebrow">01 · Видеоконференции</p>
         <h3 class="qt-card__title">Quillon Meet</h3>
@@ -131,7 +155,7 @@
       Пять принципов, которые определяют инженерную культуру Quillon.
     </p>
 
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+    <div class="qt-grid qt-grid--3">
       <div class="qt-quote">
         <p class="qt-quote__brand">Production-first</p>
         <p class="qt-quote__text">Каждый продукт проходит полный цикл: архитектура, код, CI/CD, мониторинг, поддержка. Мы&nbsp;отвечаем за&nbsp;решение от&nbsp;первого коммита до&nbsp;стабильной работы под нагрузкой.</p>
@@ -474,6 +498,36 @@
     });
     ro.observe(canvas);
   }
+</script>
+
+<!-- ─── Mobile drawer ───────────────────────────────────────── -->
+<script>
+  (function () {
+    const burger = document.querySelector('.qt-topbar__burger');
+    const drawer = document.getElementById('qt-drawer');
+    if (!burger || !drawer) return;
+    const closeBtn = drawer.querySelector('.qt-drawer__close');
+    const open = () => {
+      drawer.removeAttribute('hidden');
+      drawer.setAttribute('aria-hidden', 'false');
+      burger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    };
+    const close = () => {
+      drawer.setAttribute('hidden', '');
+      drawer.setAttribute('aria-hidden', 'true');
+      burger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    };
+    burger.addEventListener('click', () => {
+      drawer.hasAttribute('hidden') ? open() : close();
+    });
+    closeBtn?.addEventListener('click', close);
+    drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && !drawer.hasAttribute('hidden')) close();
+    });
+  })();
 </script>
 
 </body>
