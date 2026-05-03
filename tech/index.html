@@ -26,7 +26,8 @@
 <!-- ─── NAV PILL ─────────────────────────────────────────────── -->
 <header class="qt-topbar" role="banner">
   <a href="/" class="qt-topbar__brand" aria-label="Quillon Tech">
-    <img src="/assets/logo.svg" alt="" width="28" height="28">
+    <img class="qt-topbar__brand-dark"  src="/assets/logo.svg"       alt="" width="28" height="28">
+    <img class="qt-topbar__brand-light" src="/assets/logo-light.svg" alt="" width="28" height="28">
     <span>Quillon</span>
   </a>
   <span class="qt-topbar__sep" aria-hidden="true"></span>
@@ -527,6 +528,19 @@
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape' && !drawer.hasAttribute('hidden')) close();
     });
+  })();
+</script>
+
+<!-- ─── Topbar: класс .qt-topbar--scrolled при scroll ───────── -->
+<script>
+  (function () {
+    const topbar = document.querySelector('.qt-topbar');
+    if (!topbar) return;
+    const onScroll = () => {
+      topbar.classList.toggle('qt-topbar--scrolled', window.scrollY > 40);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
   })();
 </script>
 
