@@ -20,17 +20,25 @@
   <style>
     .q-404 {
       display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-      gap: var(--q-s-9);
-      padding-top: var(--q-s-7);
-      padding-bottom: var(--q-s-7);
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: var(--q-s-8);
+      padding-top: var(--q-s-5);
+      padding-bottom: var(--q-s-5);
       align-items: center;
     }
-    .q-404__copy { display: flex; flex-direction: column; gap: var(--q-s-5); max-width: 540px; }
+    .q-404__copy {
+      display: flex;
+      flex-direction: column;
+      gap: var(--q-s-4);
+      max-width: 540px;
+      align-items: center;
+      text-align: center;
+      margin: 0 auto;
+    }
     /* Frameless container — картинка органично запечатана в страницу */
     .q-404__art {
       position: relative;
-      aspect-ratio: 4 / 5;
+      aspect-ratio: 1 / 1;
       margin: 0;
     }
 
@@ -118,7 +126,7 @@
       color: var(--q-text-mid);
       margin: 0;
     }
-    .q-404__actions { display: flex; gap: var(--q-s-3); flex-wrap: wrap; margin-top: var(--q-s-3); }
+    .q-404__actions { display: flex; gap: var(--q-s-3); flex-wrap: wrap; justify-content: center; margin-top: var(--q-s-3); }
 
     .q-404__links {
       display: grid;
