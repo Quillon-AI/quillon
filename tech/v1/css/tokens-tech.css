@@ -1,0 +1,147 @@
+/* ═══════════════════════════════════════════════════════════════════
+ * Quillon Tech · Design Tokens v1
+ *
+ * Форк дизайн-системы Quillon под tech.quillon.ru.
+ * Палитра: navy / red accent / paper.
+ * Шрифт: Manrope (display+body), IBM Plex Mono (mono).
+ *
+ * Стратегия: dark-first hero/footer, light-first body.
+ * Все компоненты используют tokens через var() — никакого хардкода.
+ * ═══════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* ─── Surface (paper-first) ──────────────────────────────────── */
+  --qt-bg-page:    #FFFFFF;          /* base body */
+  --qt-bg-paper:   #F5F6F8;          /* page sections (off-white) */
+  --qt-bg-card:    #ECEEF1;          /* lightly tinted card surface */
+  --qt-bg-elev:    #FFFFFF;          /* elevated white card */
+
+  /* ─── Surface (deep navy) ────────────────────────────────────── */
+  --qt-bg-deep:    #0F1B3D;          /* hero / footer */
+  --qt-bg-deep-2:  #14233E;          /* section break inside deep */
+  --qt-bg-deep-3:  #1A2B4A;          /* hover на deep */
+
+  /* ─── Hairlines ──────────────────────────────────────────────── */
+  --qt-line:        rgba(20, 33, 61, 0.10);
+  --qt-line-strong: rgba(20, 33, 61, 0.18);
+  --qt-line-deep:   rgba(255, 255, 255, 0.08);  /* on dark */
+  --qt-line-deep-strong: rgba(255, 255, 255, 0.16);
+
+  /* ─── Text on light ──────────────────────────────────────────── */
+  --qt-text-hi:    #14213D;          /* deep navy headings */
+  --qt-text-mid:   #4A5170;
+  --qt-text-low:   #8B8FA3;
+  --qt-text-dim:   #B8BCC9;
+
+  /* ─── Text on deep ───────────────────────────────────────────── */
+  --qt-text-on-hi:  #FFFFFF;
+  --qt-text-on-mid: #B8C2D9;
+  --qt-text-on-low: #6B7794;
+
+  /* ─── Accent (red brand) ─────────────────────────────────────── */
+  --qt-accent:        #E63946;
+  --qt-accent-hover:  #C7303A;
+  --qt-accent-press:  #A8262E;
+  --qt-accent-soft:   #FCE9EB;
+  --qt-accent-ink:    #4A0F13;       /* text-on-accent для маленьких areas */
+
+  /* ─── Inverse accent (на deep navy) ──────────────────────────── */
+  --qt-accent-on-deep: #FF4D5A;      /* чуть ярче для contrast on navy */
+
+  /* ─── Particle palette (для 3D sphere) ───────────────────────── */
+  --qt-particle-outer:  #5689D9;
+  --qt-particle-middle: #9DD9FF;
+  --qt-particle-inner:  #E63946;
+
+  /* ─── Typography ─────────────────────────────────────────────── */
+  --qt-font-display: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+  --qt-font-body:    'Manrope', ui-sans-serif, system-ui, sans-serif;
+  --qt-font-mono:    'IBM Plex Mono', ui-monospace, "SF Mono", Menlo, monospace;
+
+  --qt-fw-light:    300;
+  --qt-fw-regular:  400;
+  --qt-fw-medium:   500;
+  --qt-fw-semibold: 600;
+  --qt-fw-bold:     700;
+  --qt-fw-extra:    800;
+
+  /* Type scale (clamp-based, fluid) */
+  --qt-t-mono:    11px;
+  --qt-t-xs:      12px;
+  --qt-t-sm:      14px;
+  --qt-t-body:    16px;
+  --qt-t-lead:    clamp(17px, 1.4vw, 19px);
+  --qt-t-h4:      clamp(18px, 1.6vw, 22px);
+  --qt-t-h3:      clamp(22px, 2vw, 28px);
+  --qt-t-h2:      clamp(28px, 3vw, 40px);
+  --qt-t-h1:      clamp(40px, 6vw, 72px);
+  --qt-t-display: clamp(56px, 8vw, 112px);
+
+  --qt-tracking-mono: 0.16em;
+  --qt-tracking-tight: -0.025em;
+  --qt-tracking-tighter: -0.04em;
+
+  /* ─── Spacing (8px grid) ─────────────────────────────────────── */
+  --qt-s-1: 4px;
+  --qt-s-2: 8px;
+  --qt-s-3: 12px;
+  --qt-s-4: 16px;
+  --qt-s-5: 24px;
+  --qt-s-6: 32px;
+  --qt-s-7: 48px;
+  --qt-s-8: 64px;
+  --qt-s-9: 80px;
+  --qt-s-10: 96px;
+  --qt-s-11: 128px;
+  --qt-s-12: 160px;
+
+  /* ─── Radii ──────────────────────────────────────────────────── */
+  --qt-r-xs: 4px;
+  --qt-r-sm: 6px;
+  --qt-r-md: 10px;
+  --qt-r-lg: 16px;
+  --qt-r-xl: 24px;
+  --qt-r-pill: 9999px;
+
+  /* ─── Elevation (light theme) ────────────────────────────────── */
+  --qt-el-1: 0 0 0 1px var(--qt-line);
+  --qt-el-2:
+    0 0 0 1px var(--qt-line),
+    0 1px 0 0 rgba(255, 255, 255, 0.6) inset,
+    0 8px 24px -12px rgba(20, 33, 61, 0.10);
+  --qt-el-3:
+    0 0 0 1px var(--qt-line-strong),
+    0 1px 0 0 rgba(255, 255, 255, 0.8) inset,
+    0 24px 48px -20px rgba(20, 33, 61, 0.16);
+
+  /* nav-pill floating shadow */
+  --qt-el-pill:
+    0 0 0 1px var(--qt-line),
+    0 8px 24px -8px rgba(20, 33, 61, 0.14),
+    0 2px 6px -2px rgba(20, 33, 61, 0.08);
+
+  /* red CTA glow (subtle) */
+  --qt-glow-accent: 0 8px 24px -10px rgba(230, 57, 70, 0.45);
+
+  /* ─── Motion ─────────────────────────────────────────────────── */
+  --qt-ease:     cubic-bezier(0.22, 1, 0.36, 1);
+  --qt-ease-io:  cubic-bezier(0.65, 0, 0.35, 1);
+  --qt-dur-fast: 140ms;
+  --qt-dur-base: 240ms;
+  --qt-dur-med:  360ms;
+  --qt-dur-slow: 560ms;
+
+  /* ─── Container ──────────────────────────────────────────────── */
+  --qt-container-max: 1280px;
+  --qt-container-pad: clamp(16px, 4vw, 48px);
+}
+
+/* Smooth theme transitions (если позже добавим toggle) */
+html, body, .qt-section, .qt-card, .qt-btn, .qt-topbar,
+input, textarea, select, button, a {
+  transition: background-color var(--qt-dur-base) var(--qt-ease),
+              border-color var(--qt-dur-base) var(--qt-ease),
+              color var(--qt-dur-base) var(--qt-ease);
+}

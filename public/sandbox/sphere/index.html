@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sphere · Quillon Sandbox</title>
+  <meta name="robots" content="noindex">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      width: 100%; height: 100%;
+      background: #0F1B3D;
+      color: #FFFFFF;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      overflow: hidden;
+    }
+    #stage {
+      position: fixed; inset: 0;
+      width: 100%; height: 100%;
+      cursor: crosshair;
+    }
+    .hud {
+      position: fixed; top: 24px; left: 24px;
+      z-index: 10; pointer-events: none;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .hud-eye {
+      font-family: ui-monospace, "JetBrains Mono", monospace;
+      font-size: 11px; letter-spacing: 0.16em;
+      text-transform: uppercase; color: rgba(255,255,255,0.5);
+    }
+    .hud-title {
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 500; letter-spacing: -0.02em; line-height: 1.05;
+      max-width: 18ch; margin: 0;
+    }
+    .hud-title b { color: #E63946; font-weight: 500; }
+    .hud-sub {
+      font-size: 14px; color: rgba(255,255,255,0.6);
+      max-width: 30ch; margin: 0;
+    }
+    .stat {
+      position: fixed; bottom: 24px; right: 24px;
+      font-family: ui-monospace, monospace;
+      font-size: 11px; color: rgba(255,255,255,0.4); z-index: 10;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="stage"></canvas>
+
+<div class="hud">
+  <p class="hud-eye">Quillon · Tech</p>
+  <h1 class="hud-title">Прагматичный <b>AI</b><br>для реального бизнеса</h1>
+  <p class="hud-sub">Galaxy: 3 nested orbits · cursor tilt</p>
+</div>
+
+<p class="stat" id="stat">— pts · — fps</p>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+
+const canvas = document.getElementById('stage');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setClearColor(0x0F1B3D, 1);
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
+camera.position.set(0, 0, 4);
+
+// ─── Sphere generation (uniform sample) ──────────────────────────
+function spherePositions(count, radius) {
+  const arr = new Float32Array(count * 3);
+  // Fibonacci spiral для равномерного распределения
+  const golden = Math.PI * (3 - Math.sqrt(5));
+  for (let i = 0; i < count; i++) {
+    const y = 1 - (i / (count - 1)) * 2;
+    const r = Math.sqrt(1 - y * y);
+    const theta = golden * i;
+    arr[i * 3]     = Math.cos(theta) * r * radius;
+    arr[i * 3 + 1] = y * radius;
+    arr[i * 3 + 2] = Math.sin(theta) * r * radius;
+  }
+  return arr;
+}
+
+function pointsLayer(count, radius, color, size) {
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(spherePositions(count, radius), 3));
+  const mat = new THREE.PointsMaterial({
+    color: new THREE.Color(color),
+    size,
+    sizeAttenuation: true,
+    transparent: true,
+    opacity: 0.9,
+    depthWrite: false,
+  });
+  return new THREE.Points(geo, mat);
+}
+
+// ─── 3 nested orbiting spheres (galaxy-style) ────────────────────
+const outer  = new THREE.Object3D(); scene.add(outer);
+const middle = new THREE.Object3D(); scene.add(middle);
+const inner  = new THREE.Object3D(); scene.add(inner);
+
+const outerPts  = pointsLayer(2200, 1.6,  '#5689D9', 0.012);
+const middlePts = pointsLayer(1500, 1.05, '#9DD9FF', 0.014);
+const innerPts  = pointsLayer( 700, 0.55, '#E63946', 0.018);
+
+outer.add(outerPts);
+middle.add(middlePts);
+inner.add(innerPts);
+
+const total = 2200 + 1500 + 700;
+
+// ─── Mouse-tilt (вся группа реагирует на курсор) ────────────────
+const galaxy = new THREE.Group();
+galaxy.add(outer); galaxy.add(middle); galaxy.add(inner);
+scene.add(galaxy);
+
+const targetTilt = { x: 0, y: 0 };
+window.addEventListener('pointermove', (e) => {
+  const nx = (e.clientX / window.innerWidth) * 2 - 1;   // -1..1
+  const ny = (e.clientY / window.innerHeight) * 2 - 1;  // -1..1
+  targetTilt.x =  ny * 0.35;
+  targetTilt.y =  nx * 0.45;
+});
+
+// ─── Resize ──────────────────────────────────────────────────────
+function onResize() {
+  const w = window.innerWidth, h = window.innerHeight;
+  renderer.setSize(w, h, false);
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+}
+window.addEventListener('resize', onResize);
+onResize();
+
+// ─── Loop ────────────────────────────────────────────────────────
+const clock = new THREE.Clock();
+const statEl = document.getElementById('stat');
+let lastFrameTime = performance.now(); let fps = 60;
+
+function animate() {
+  requestAnimationFrame(animate);
+  const t = clock.getElapsedTime();
+
+  // Independent rotation per layer (3 разных скорости/осей)
+  outer.rotation.y  =  t * 0.06;
+  outer.rotation.x  =  Math.sin(t * 0.1) * 0.15;
+
+  middle.rotation.z = -t * 0.10;
+  middle.rotation.y =  t * 0.13;
+
+  inner.rotation.x  = -t * 0.18;
+  inner.rotation.y  =  t * 0.22;
+
+  // Mouse-tilt: easing toward target
+  galaxy.rotation.x += (targetTilt.x - galaxy.rotation.x) * 0.05;
+  galaxy.rotation.y += (targetTilt.y - galaxy.rotation.y) * 0.05;
+
+  renderer.render(scene, camera);
+
+  // FPS
+  const now = performance.now();
+  const dt = now - lastFrameTime; lastFrameTime = now;
+  fps = fps * 0.92 + (1000 / dt) * 0.08;
+  statEl.textContent = `${total.toLocaleString()} pts · ${Math.round(fps)} fps`;
+}
+animate();
+</script>
+
+</body>
+</html>

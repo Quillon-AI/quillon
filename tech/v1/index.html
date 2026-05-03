@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quillon Tech — Прагматичный AI для реального бизнеса</title>
+  <meta name="description" content="Quillon Tech — IT-студия, разрабатывающая AI-решения для бизнеса: заказная разработка, тиражное и промышленное ПО, корпоративное обучение.">
+  <meta name="robots" content="noindex">
+
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+  <link rel="stylesheet" href="/v1/css/tokens-tech.css">
+  <link rel="stylesheet" href="/v1/css/base.css">
+  <link rel="stylesheet" href="/v1/css/components-tech.css">
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+    }
+  }
+  </script>
+</head>
+<body>
+
+<!-- ─── NAV PILL ─────────────────────────────────────────────── -->
+<header class="qt-topbar" role="banner">
+  <a href="/" class="qt-topbar__brand" aria-label="Quillon Tech">
+    <img src="/v1/assets/logo.svg" alt="" width="28" height="28">
+    <span>Quillon</span>
+  </a>
+  <span class="qt-topbar__sep" aria-hidden="true"></span>
+  <nav class="qt-topbar__nav" aria-label="Главная навигация">
+    <a class="qt-topbar__link" href="#about">О компании</a>
+    <a class="qt-topbar__link" href="#products">Продукты и сервисы</a>
+    <a class="qt-topbar__link" href="#cases">Примеры внедрения</a>
+    <a class="qt-topbar__link" href="#investors">Инвесторам</a>
+  </nav>
+  <a class="qt-btn qt-btn--primary qt-btn--sm qt-topbar__cta" href="#contact">
+    Связаться с нами
+  </a>
+  <button class="qt-topbar__burger" type="button" aria-label="Меню">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+      <line x1="4" y1="7" x2="20" y2="7"/>
+      <line x1="4" y1="12" x2="20" y2="12"/>
+      <line x1="4" y1="17" x2="20" y2="17"/>
+    </svg>
+  </button>
+</header>
+
+<!-- ─── HERO ─────────────────────────────────────────────────── -->
+<section class="qt-hero" id="hero">
+  <div class="qt-container">
+    <div class="qt-hero__inner">
+      <div class="qt-hero__copy">
+        <h1 class="qt-hero__title">
+          Мы строим <b>продукты</b>.<br>
+          На своём стеке.<br>
+          На&nbsp;своих серверах.
+        </h1>
+        <p class="qt-hero__sub">
+          Quillon — IT-компания из&nbsp;Казани. Проектируем и&nbsp;разрабатываем высоконагруженные сервисы, AI-платформы и&nbsp;мобильные приложения. Четыре собственных продукта, распределённая инфраструктура, инженерная команда полного цикла.
+        </p>
+        <div class="qt-hero__stats">
+          <div class="qt-hero__stat">
+            <span class="qt-hero__stat-value">4</span>
+            <span class="qt-hero__stat-label">продукта в&nbsp;production</span>
+          </div>
+          <div class="qt-hero__stat">
+            <span class="qt-hero__stat-value">Full-cycle</span>
+            <span class="qt-hero__stat-label">разработка полного цикла</span>
+          </div>
+          <div class="qt-hero__stat">
+            <span class="qt-hero__stat-value">100%</span>
+            <span class="qt-hero__stat-label">своя инфраструктура</span>
+          </div>
+        </div>
+        <div class="qt-hero__cta">
+          <a class="qt-btn qt-btn--primary qt-btn--lg" href="#products">Наши продукты</a>
+          <a class="qt-btn qt-btn--outline qt-btn--lg" href="https://quillon.ru" target="_blank" rel="noopener">К&nbsp;команде ↗</a>
+        </div>
+      </div>
+      <div class="qt-hero__sphere">
+        <canvas class="qt-hero__canvas" id="hero-galaxy"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PRODUCTS (paper) ─────────────────────────────────────── -->
+<section class="qt-section" id="products" style="background: var(--qt-bg-paper);">
+  <div class="qt-container">
+    <p class="qt-eyebrow" style="margin-bottom: 16px;">ПРОДУКТЫ</p>
+    <h2 style="font-size: var(--qt-t-h2); margin-bottom: 48px;">
+      Четыре продукта в&nbsp;production
+    </h2>
+
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;">
+      <div class="qt-card">
+        <p class="qt-card__eyebrow">01 · Видеоконференции</p>
+        <h3 class="qt-card__title">Quillon Meet</h3>
+        <p class="qt-card__body">Платформа видеоконференций с&nbsp;адаптивным стримингом, записью и&nbsp;кросс-платформенными клиентами. WebRTC · Next.js · Docker · S3 · FFmpeg.</p>
+      </div>
+      <div class="qt-card">
+        <p class="qt-card__eyebrow">02 · LMS</p>
+        <h3 class="qt-card__title">Quillon LMS</h3>
+        <p class="qt-card__body">Платформа управления обучением с&nbsp;видео-лекциями, заданиями, аналитикой прогресса и&nbsp;ролевой системой. Django 5 · DRF · Vue 3 · TypeScript.</p>
+      </div>
+      <div class="qt-card qt-card--accent">
+        <p class="qt-card__eyebrow">03 · AI</p>
+        <h3 class="qt-card__title">Quilly AI</h3>
+        <p class="qt-card__body">Корпоративный AI-ассистент с&nbsp;контекстным поиском по&nbsp;внутренней базе знаний и&nbsp;персонализацией под роль пользователя. Python · FastAPI · RAG · LLM · Vector DB.</p>
+      </div>
+      <div class="qt-card">
+        <p class="qt-card__eyebrow">04 · Автоматизация</p>
+        <h3 class="qt-card__title">Quillon Jobs</h3>
+        <p class="qt-card__body">Система автоматического подбора IT-заказов с&nbsp;фриланс-бирж под уровень участника. Python · FastAPI · Парсинг · Алгоритм подбора · PostgreSQL.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PRINCIPLES (light) ───────────────────────────────────── -->
+<section class="qt-section" id="cases" style="background: var(--qt-bg-page);">
+  <div class="qt-container">
+    <p class="qt-eyebrow" style="margin-bottom: 16px;">ПРИНЦИПЫ</p>
+    <h2 style="font-size: var(--qt-t-h2); max-width: 22ch; margin-bottom: 16px;">
+      Как мы строим
+    </h2>
+    <p style="color: var(--qt-text-mid); font-size: var(--qt-t-lead); max-width: 56ch; margin-bottom: 48px;">
+      Пять принципов, которые определяют инженерную культуру Quillon.
+    </p>
+
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+      <div class="qt-quote">
+        <p class="qt-quote__brand">Production-first</p>
+        <p class="qt-quote__text">Каждый продукт проходит полный цикл: архитектура, код, CI/CD, мониторинг, поддержка. Мы&nbsp;отвечаем за&nbsp;решение от&nbsp;первого коммита до&nbsp;стабильной работы под нагрузкой.</p>
+        <div class="qt-quote__author">
+          <span class="qt-quote__author-role">meet.quillon.ru — открой и&nbsp;проведи звонок прямо сейчас.</span>
+        </div>
+      </div>
+      <div class="qt-quote">
+        <p class="qt-quote__brand">AI-native</p>
+        <p class="qt-quote__text">ИИ — не&nbsp;дополнение к&nbsp;процессу, а&nbsp;его основа. Код-ревью с&nbsp;AI, автогенерация тестов, документация через LLM, RAG для&nbsp;поиска по&nbsp;базе знаний.</p>
+        <div class="qt-quote__author">
+          <span class="qt-quote__author-role">Quilly AI на&nbsp;RAG-пайплайне для&nbsp;поиска по&nbsp;документам компании.</span>
+        </div>
+      </div>
+      <div class="qt-quote">
+        <p class="qt-quote__brand">Own your stack</p>
+        <p class="qt-quote__text">Минимум зависимости от&nbsp;третьих сторон. Свои серверы, свой Meet, свой LMS, свой Git-хостинг, своя почта. Ни&nbsp;один внешний сервис не&nbsp;может парализовать работу компании.</p>
+        <div class="qt-quote__author">
+          <span class="qt-quote__author-role">Когда Zoom стал недоступен — переход занял 0&nbsp;дней.</span>
+        </div>
+      </div>
+      <div class="qt-quote">
+        <p class="qt-quote__brand">Ship fast, fix faster</p>
+        <p class="qt-quote__text">Короткие циклы разработки. Деплой несколько раз в&nbsp;день. Ошибки неизбежны — важна скорость их&nbsp;обнаружения и&nbsp;устранения. CI/CD на&nbsp;каждом продукте.</p>
+      </div>
+      <div class="qt-quote">
+        <p class="qt-quote__brand">Code review culture</p>
+        <p class="qt-quote__text">Каждый коммит проходит ревью. Не&nbsp;формальный approve, а&nbsp;разбор по&nbsp;существу: архитектура, производительность, читаемость, безопасность.</p>
+      </div>
+      <div class="qt-quote qt-card--accent" style="background: var(--qt-bg-deep); color: #FFF;">
+        <p class="qt-quote__brand" style="color: #FFF;">Hybrid infra</p>
+        <p class="qt-quote__text" style="color: rgba(255,255,255,0.75);">Dedicated-серверы в&nbsp;РФ для&nbsp;production + облако для&nbsp;CDN и&nbsp;масштабирования. 152-ФЗ, предсказуемая стоимость, независимость от&nbsp;провайдера.</p>
+        <div class="qt-quote__author">
+          <span class="qt-quote__author-role" style="color: rgba(255,255,255,0.55);">Серверы в&nbsp;дата-центрах РФ.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TECH STACK (paper) ─────────────────────────────────── -->
+<section class="qt-section" id="stack" style="background: var(--qt-bg-paper);">
+  <div class="qt-container">
+    <p class="qt-eyebrow" style="margin-bottom: 16px;">СТЕК</p>
+    <h2 style="font-size: var(--qt-t-h2); max-width: 22ch; margin-bottom: 16px;">
+      Стек, на&nbsp;котором мы&nbsp;строим
+    </h2>
+    <p style="color: var(--qt-text-mid); font-size: var(--qt-t-lead); max-width: 60ch; margin-bottom: 48px;">
+      Каждая технология выбрана по&nbsp;одному критерию: решает&nbsp;ли она задачу лучше альтернатив. Не&nbsp;потому что модно. Потому что работает.
+    </p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+      <div class="qt-card">
+        <p class="qt-card__eyebrow">01 / Backend</p>
+        <h3 class="qt-card__title">Python &amp; высоконагруз</h3>
+        <p class="qt-card__body">Python 3.11+ · FastAPI · Django 5 · DRF · PostgreSQL · Redis · Celery · WebSocket</p>
+      </div>
+      <div class="qt-card">
+        <p class="qt-card__eyebrow">02 / Mobile</p>
+        <h3 class="qt-card__title">Кросс-платформа</h3>
+        <p class="qt-card__body">Flutter · Dart · React Native · Firebase · REST/GraphQL · iOS + Android из&nbsp;одного кода</p>
+      </div>
+      <div class="qt-card">
+        <p class="qt-card__eyebrow">03 / AI · ML</p>
+        <h3 class="qt-card__title">RAG, LLM, агенты</h3>
+        <p class="qt-card__body">RAG-системы · Fine-Tuning LLM · ИИ-агенты · Prompt Engineering · Vector DB (Qdrant, Pinecone)</p>
+      </div>
+      <div class="qt-card">
+        <p class="qt-card__eyebrow">04 / QA</p>
+        <h3 class="qt-card__title">Автотесты &amp; ревью</h3>
+        <p class="qt-card__body">Pytest · Selenium · Playwright · Allure · Appium · Code review на&nbsp;каждом продукте</p>
+      </div>
+      <div class="qt-card">
+        <p class="qt-card__eyebrow">05 / Infra</p>
+        <h3 class="qt-card__title">Свои серверы &amp; CI/CD</h3>
+        <p class="qt-card__body">Nginx · Let&rsquo;s Encrypt · Docker Compose · GitHub Actions · S3 · Мониторинг 24/7</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── INFRASTRUCTURE (deep navy) ──────────────────────────── -->
+<section class="qt-section" id="infrastructure" style="background: var(--qt-bg-deep); color: #FFF;">
+  <div class="qt-container">
+    <p class="qt-eyebrow" style="color: var(--qt-accent-on-deep); margin-bottom: 16px;">ИНФРАСТРУКТУРА</p>
+    <h2 style="font-size: var(--qt-t-h2); max-width: 24ch; margin-bottom: 16px; color: #FFF;">
+      Всё работает на&nbsp;нашем железе
+    </h2>
+    <p style="color: rgba(255,255,255,0.7); font-size: var(--qt-t-lead); max-width: 60ch; margin-bottom: 48px;">
+      Гибридная инфраструктура: dedicated-серверы в&nbsp;российских ЦОДах для&nbsp;production + облачные решения для&nbsp;CDN. Предсказуемая стоимость, контроль данных (152-ФЗ), независимость от&nbsp;провайдера.
+    </p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; padding: 32px 0; border-top: 1px solid var(--qt-line-deep-strong); border-bottom: 1px solid var(--qt-line-deep-strong);">
+      <div>
+        <span style="font-family: var(--qt-font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--qt-accent-on-deep);">Quillon Meet</span>
+        <p style="color: rgba(255,255,255,0.7); font-size: 14px; margin-top: 8px;">ЦОД РФ · Docker · Nginx · Let&rsquo;s Encrypt</p>
+      </div>
+      <div>
+        <span style="font-family: var(--qt-font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--qt-accent-on-deep);">Quillon LMS</span>
+        <p style="color: rgba(255,255,255,0.7); font-size: 14px; margin-top: 8px;">ЦОД РФ · Django · PostgreSQL · S3</p>
+      </div>
+      <div>
+        <span style="font-family: var(--qt-font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--qt-accent-on-deep);">Git (Gitea)</span>
+        <p style="color: rgba(255,255,255,0.7); font-size: 14px; margin-top: 8px;">git.quillon.ru · собственный хостинг</p>
+      </div>
+      <div>
+        <span style="font-family: var(--qt-font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--qt-accent-on-deep);">Cloud (NextCloud)</span>
+        <p style="color: rgba(255,255,255,0.7); font-size: 14px; margin-top: 8px;">i.quillon.ru · файлы в&nbsp;РФ</p>
+      </div>
+      <div>
+        <span style="font-family: var(--qt-font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--qt-accent-on-deep);">Mail (Mailcow)</span>
+        <p style="color: rgba(255,255,255,0.7); font-size: 14px; margin-top: 8px;">Selectel · собственная почта</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── STUDIO (paper) ──────────────────────────────────────── -->
+<section class="qt-section" id="studio" style="background: var(--qt-bg-paper);">
+  <div class="qt-container">
+    <p class="qt-eyebrow" style="margin-bottom: 16px;">QUILLON STUDIO</p>
+    <h2 style="font-size: var(--qt-t-h2); max-width: 24ch; margin-bottom: 16px;">
+      Разрабатываем IT-продукты для&nbsp;бизнеса
+    </h2>
+    <p style="color: var(--qt-text-mid); font-size: var(--qt-t-lead); max-width: 60ch; margin-bottom: 48px;">
+      Не&nbsp;только внутренние продукты. Берём коммерческие проекты и&nbsp;строим решения для&nbsp;клиентов. Тот&nbsp;же стек, та&nbsp;же команда, те&nbsp;же стандарты качества.
+    </p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+      <div class="qt-card">
+        <p class="qt-card__eyebrow">Telegram</p>
+        <h3 class="qt-card__title">Боты &amp; Mini&nbsp;Apps</h3>
+        <p class="qt-card__body">Автоматизация продаж и&nbsp;клиентского сервиса. Боты с&nbsp;интеграцией платёжных систем, CRM и&nbsp;аналитикой. Python · aiogram · FastAPI · PostgreSQL.</p>
+      </div>
+      <div class="qt-card">
+        <p class="qt-card__eyebrow">AI-integrations</p>
+        <h3 class="qt-card__title">Внедрение ИИ</h3>
+        <p class="qt-card__body">Чат-боты с&nbsp;RAG, автоматическая обработка документов, копилоты для&nbsp;внутренних команд. От&nbsp;PoC до&nbsp;production.</p>
+      </div>
+      <div class="qt-card">
+        <p class="qt-card__eyebrow">Mobile</p>
+        <h3 class="qt-card__title">Flutter-приложения</h3>
+        <p class="qt-card__body">Кросс-платформенные приложения: один код &mdash; iOS и&nbsp;Android. От&nbsp;MVP до&nbsp;production. Публикация в&nbsp;магазинах.</p>
+      </div>
+      <div class="qt-card">
+        <p class="qt-card__eyebrow">Web</p>
+        <h3 class="qt-card__title">Платформы &amp; CRM</h3>
+        <p class="qt-card__body">SPA и&nbsp;full-stack платформы: админки, дашборды, CRM, LMS. Архитектура под масштаб.</p>
+      </div>
+      <div class="qt-card">
+        <p class="qt-card__eyebrow">Automation</p>
+        <h3 class="qt-card__title">Парсинг &amp; интеграции</h3>
+        <p class="qt-card__body">Сбор данных, автоматизация публикаций, интеграция сервисов через API. N8N, cron, custom-парсеры.</p>
+      </div>
+      <div class="qt-card qt-card--accent">
+        <p class="qt-card__eyebrow">→ Запрос</p>
+        <h3 class="qt-card__title">Не&nbsp;нашли свой формат?</h3>
+        <p class="qt-card__body">Опишите задачу &mdash; мы&nbsp;ответим, можно&nbsp;ли её&nbsp;решить нашим стеком. Бесплатная техническая оценка.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── OPENSOURCE (light) ──────────────────────────────────── -->
+<section class="qt-section" id="opensource" style="background: var(--qt-bg-page);">
+  <div class="qt-container">
+    <p class="qt-eyebrow" style="margin-bottom: 16px;">ДЛЯ&nbsp;РАЗРАБОТЧИКОВ</p>
+    <h2 style="font-size: var(--qt-t-h2); max-width: 24ch; margin-bottom: 16px;">
+      Открытая компания
+    </h2>
+    <p style="color: var(--qt-text-mid); font-size: var(--qt-t-lead); max-width: 60ch; margin-bottom: 48px;">
+      Quillon — открытая компания. Мы&nbsp;показываем как строим, делимся инструментами и&nbsp;приглашаем в&nbsp;команду.
+    </p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+      <div class="qt-card">
+        <p class="qt-card__eyebrow">GitHub</p>
+        <h3 class="qt-card__title">Quillon-AI</h3>
+        <p class="qt-card__body">Репозитории продуктов компании. Часть кодовой базы открыта &mdash; можно посмотреть как устроены наши продукты изнутри.</p>
+        <a href="https://github.com/Quillon-AI" target="_blank" rel="noopener" style="display: inline-block; margin-top: 16px; font-size: 14px; color: var(--qt-accent); font-weight: 600;">github.com/Quillon-AI ↗</a>
+      </div>
+      <div class="qt-card">
+        <p class="qt-card__eyebrow">Tech-blog</p>
+        <h3 class="qt-card__title">Как мы строим</h3>
+        <p class="qt-card__body">Технические разборы: архитектура продуктов, миграции, инциденты, инженерные решения. Без маркетинга.</p>
+        <a href="https://quillon.ru/blog/" target="_blank" rel="noopener" style="display: inline-block; margin-top: 16px; font-size: 14px; color: var(--qt-accent); font-weight: 600;">quillon.ru/blog ↗</a>
+      </div>
+      <div class="qt-card">
+        <p class="qt-card__eyebrow">Команда</p>
+        <h3 class="qt-card__title">Присоединиться</h3>
+        <p class="qt-card__body">Учим джунов через Quillon School и&nbsp;берём senior-инженеров в&nbsp;production-команду. Реальные продукты с&nbsp;первого дня.</p>
+        <a href="https://quillon.ru" target="_blank" rel="noopener" style="display: inline-block; margin-top: 16px; font-size: 14px; color: var(--qt-accent); font-weight: 600;">quillon.ru ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACT FORM (deep navy) ────────────────────────────── -->
+<section class="qt-section qt-contact" id="contact-cta">
+  <div class="qt-container">
+    <div class="qt-contact__inner">
+      <div class="qt-contact__copy">
+        <p class="qt-eyebrow qt-contact__eyebrow">СВЯЖИТЕСЬ С&nbsp;НАМИ</p>
+        <h2 class="qt-contact__title">
+          Расскажите о&nbsp;задаче &mdash;<br>ответим <b>за&nbsp;день</b>
+        </h2>
+        <p class="qt-contact__sub">
+          Бесплатная техническая оценка проекта. Обсудим стек, сроки, бюджет и&nbsp;риски без обязательств.
+        </p>
+        <ul class="qt-contact__channels">
+          <li><span class="qt-contact__channel-label">Email</span><a href="mailto:support@quillon.ru">support@quillon.ru</a></li>
+          <li><span class="qt-contact__channel-label">Telegram</span><a href="https://t.me/quillon" target="_blank" rel="noopener">@quillon ↗</a></li>
+          <li><span class="qt-contact__channel-label">Город</span><span>Казань, Россия</span></li>
+        </ul>
+      </div>
+
+      <form class="qt-contact__form" action="#" method="post" novalidate>
+        <div class="qt-field">
+          <label class="qt-field__label" for="cf-name">Имя</label>
+          <input class="qt-field__input" type="text" id="cf-name" name="name" placeholder="Как к&nbsp;вам обращаться" required>
+        </div>
+        <div class="qt-field">
+          <label class="qt-field__label" for="cf-contact">Email или Telegram</label>
+          <input class="qt-field__input" type="text" id="cf-contact" name="contact" placeholder="name@company.ru или @username" required>
+        </div>
+        <div class="qt-field">
+          <label class="qt-field__label" for="cf-message">Задача</label>
+          <textarea class="qt-field__input qt-field__textarea" id="cf-message" name="message" placeholder="Кратко опишите проект — что нужно сделать, сроки, бюджет, ссылка на ТЗ если есть." rows="4" required></textarea>
+        </div>
+        <button type="submit" class="qt-btn qt-btn--primary qt-btn--lg qt-contact__submit">
+          Отправить заявку
+        </button>
+        <p class="qt-contact__legal">
+          Отправляя форму, вы&nbsp;соглашаетесь с&nbsp;<a href="/v1/docs/privacy.html">политикой конфиденциальности</a>.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ───────────────────────────────────────────────── -->
+<footer class="qt-footer" id="contact">
+  <div class="qt-container">
+    <div class="qt-footer__top">
+      <div class="qt-footer__col">
+        <a href="/" class="qt-topbar__brand" style="color:#FFF; font-size: 22px; margin-bottom: 24px; display: inline-flex;">
+          <img src="/v1/assets/logo-light.svg" alt="" width="36" height="36" style="width:36px;height:36px;">
+          <span>Quillon</span>
+        </a>
+        <p style="color: var(--qt-text-on-mid); font-size: 14px; margin-bottom: 24px; max-width: 36ch;">
+          IT-компания. Продукты. Технологии. Команда. Четыре собственных продукта в&nbsp;production, своя инфраструктура.
+        </p>
+        <a class="qt-btn qt-btn--outline qt-btn--lg" href="mailto:support@quillon.ru">
+          support@quillon.ru
+        </a>
+      </div>
+      <div class="qt-footer__col">
+        <h4 class="qt-footer__col-title">Продукты</h4>
+        <ul class="qt-footer__list">
+          <li><a class="qt-footer__link" href="https://meet.quillon.ru" target="_blank" rel="noopener">Quillon Meet ↗</a></li>
+          <li><a class="qt-footer__link" href="https://lms.quillon.ru" target="_blank" rel="noopener">Quillon LMS ↗</a></li>
+          <li><a class="qt-footer__link" href="#products">Quilly AI</a></li>
+          <li><a class="qt-footer__link" href="#products">Quillon Jobs</a></li>
+        </ul>
+      </div>
+      <div class="qt-footer__col">
+        <h4 class="qt-footer__col-title">Компания</h4>
+        <ul class="qt-footer__list">
+          <li><a class="qt-footer__link" href="#about">О&nbsp;нас</a></li>
+          <li><a class="qt-footer__link" href="#cases">Принципы</a></li>
+          <li><a class="qt-footer__link" href="https://quillon.ru" target="_blank" rel="noopener">Quillon School ↗</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="qt-footer__legal">
+      © Quillon, 2026. Россия, Казань.
+    </p>
+  </div>
+</footer>
+
+<!-- ─── Galaxy init ──────────────────────────────────────────── -->
+<script type="module">
+  import { initGalaxy } from '/v1/js/galaxy-sphere.js';
+  initGalaxy({
+    canvas: document.getElementById('hero-galaxy'),
+    bgColor: 0x0F1B3D,
+  });
+</script>
+
+</body>
+</html>
