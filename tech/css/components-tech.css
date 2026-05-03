@@ -103,6 +103,8 @@
   margin-right: 12px;       /* визуальный зазор Quillon → sep */
 }
 .qt-topbar__brand img { width: 28px; height: 28px; }
+/* По умолчанию (desktop) — показываем dark-вариант, light скрыт. */
+.qt-topbar__brand-light { display: none; }
 
 .qt-topbar__sep {
   flex: 0 0 1px;
@@ -156,14 +158,15 @@
 
 @media (max-width: 900px) {
   /* Edge-to-edge transparent bar поверх hero — лого слева, бургер справа.
-     Сlight blur+hairline появляются на scroll через .qt-topbar--scrolled. */
+     Padding совпадает с .qt-container, лого выровнен по левому краю текста hero.
+     Light blur+hairline появляются на scroll через .qt-topbar--scrolled. */
   .qt-topbar {
     position: fixed;
     top: 0; left: 0;
     transform: none;
     width: 100%;
     max-width: 100%;
-    padding: 14px 16px;
+    padding: 14px var(--qt-container-pad);
     background: transparent;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
@@ -171,6 +174,8 @@
     box-shadow: none;
     justify-content: space-between;
   }
+  .qt-topbar__brand img { width: 36px; height: 36px; }
+  .qt-topbar__brand { gap: 12px; font-size: 17px; }
   .qt-topbar--scrolled {
     background: rgba(15, 27, 61, 0.72);
     backdrop-filter: blur(14px) saturate(140%);
@@ -193,8 +198,6 @@
   }
   .qt-topbar__burger:hover { background: rgba(255, 255, 255, 0.08); }
 }
-/* На desktop светлая версия лого скрыта */
-.qt-topbar__brand-light { display: none; }
 
 /* ─── MOBILE DRAWER ─────────────────────────────────────────── */
 .qt-drawer {
