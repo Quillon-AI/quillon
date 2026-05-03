@@ -218,9 +218,7 @@
 @media (max-width: 900px) {
   .qt-section { padding: var(--qt-s-9) 0; }
   .qt-hero { padding-top: 88px; padding-bottom: 56px; }
-  /* Возвращаем правый padding (на desktop sphere bleed'ит за край) */
-  .qt-hero > .qt-container { padding-right: var(--qt-container-pad); }
-  .qt-hero__sphere { margin: 0 auto; }
+  .qt-hero__sphere { margin: 0 auto; }   /* sphere по центру, без bleed */
   .qt-hero__stats {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--qt-s-4);
@@ -353,11 +351,10 @@
   padding-top: 96px;        /* отступ под floating topbar */
   padding-bottom: 64px;
 }
-/* Hero выходит за пределы общего .qt-container — sphere заполняет всё правое
-   пространство viewport, текст ограничен max-width слева. */
-.qt-hero > .qt-container {
-  max-width: none;
-  padding-right: 0;
+/* Sphere "вылезает" за правый край контейнера на desktop через negative margin —
+   контент при этом сохраняет нормальный padding со всех сторон. */
+.qt-hero__sphere {
+  margin-right: calc(-1 * var(--qt-container-pad));
 }
 .qt-hero__inner {
   display: grid;
