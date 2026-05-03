@@ -83,36 +83,24 @@
       z-index: 2;
     }
 
-    /* Frame с corner-marks */
-    .q-404__frame {
-      position: absolute; inset: 20px;
-      border: 1px solid rgba(255,255,255,0.10);
-      border-radius: 2px;
-      pointer-events: none;
-      z-index: 3;
-    }
-    .q-404__frame::before,
-    .q-404__frame::after {
-      content: '';
-      position: absolute;
-      width: 8px; height: 8px;
-      border: 1px solid rgba(255,255,255,0.25);
-    }
-    .q-404__frame::before { top: -4px; left: -4px; border-right: none; border-bottom: none; }
-    .q-404__frame::after  { bottom: -4px; right: -4px; border-left: none; border-top: none; }
-
-    /* Mono-метки */
-    .q-404__label {
-      position: absolute;
+    /* «404» editorial index above h1 — mono accent */
+    .q-404__index {
       font-family: var(--q-font-mono);
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--q-text-mid);
-      z-index: 4;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      color: var(--q-accent);
+      margin: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--q-s-2);
     }
-    .q-404__label--tl { top: 14px; left: 22px; }
-    .q-404__label--br { bottom: 14px; right: 22px; }
+    .q-404__index::before {
+      content: '';
+      display: inline-block;
+      width: 24px; height: 1px;
+      background: var(--q-accent);
+    }
 
     /* Mint signal — единственная точка фокуса */
     .q-404__signal {
@@ -211,6 +199,7 @@
   <section class="q-section">
     <div class="q-container q-404">
       <div class="q-404__copy">
+        <p class="q-404__index">404</p>
         <h1 class="q-404__title">Тут <span>пусто</span></h1>
         <p class="q-404__lede">
           Адрес с&nbsp;опечаткой, ссылка устарела, или мы&nbsp;ещё&nbsp;не написали такую страницу. Внизу — куда ещё можно сходить, чтобы не возвращаться обратно.
@@ -224,9 +213,6 @@
       <figure class="q-404__art">
         <img class="q-404__bg" src="https://8390f83d-2f6a-4d51-a160-8b08ea3fbea1.selstorage.ru/blog/covers/404-cover-v5-5211b5db.png" alt="" loading="eager" width="1024" height="1280">
         <span class="q-404__signal" aria-hidden="true"></span>
-        <div class="q-404__frame" aria-hidden="true"></div>
-        <span class="q-404__label q-404__label--tl">Q.STUDIO / NOT FOUND</span>
-        <span class="q-404__label q-404__label--br">404 · OBJECT MISSING</span>
       </figure>
     </div>
   </section>
