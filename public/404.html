@@ -46,11 +46,14 @@
       max-width: 540px;
     }
     .q-404__actions { justify-content: flex-start; }
-    /* Frameless container — картинка органично запечатана в страницу */
+    /* Frameless container — картинка органично запечатана в страницу.
+       Aspect 4/5 совпадает с пропорциями PNG → astronaut виден целиком. */
     .q-404__art {
       position: relative;
-      aspect-ratio: 1 / 1;
+      aspect-ratio: 4 / 5;
+      max-height: 80vh;
       margin: 0;
+      align-self: center;
     }
 
     /* Картинка с soft-fade в фон страницы */
@@ -152,7 +155,7 @@
       color: var(--q-text-mid);
       margin: 0;
     }
-    .q-404__actions { display: flex; gap: var(--q-s-3); flex-wrap: wrap; justify-content: center; margin-top: var(--q-s-3); }
+    .q-404__actions { display: flex; gap: var(--q-s-3); flex-wrap: wrap; justify-content: flex-start; margin-top: var(--q-s-3); }
 
     .q-404__links {
       display: grid;

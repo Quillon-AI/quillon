@@ -75,12 +75,17 @@ export function initGalaxy({
   window.addEventListener('pointermove', onPointerMove);
 
   function onResize() {
-    const w = canvas.clientWidth || window.innerWidth;
-    const h = canvas.clientHeight || window.innerHeight;
+    const w = canvas.clientWidth;
+    const h = canvas.clientHeight;
+    if (w === 0 || h === 0) return;        // защита от 0×0 init
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
   }
+  // ResizeObserver реагирует на изменение размера parent — нужно когда
+  // у canvas-контейнера aspect-ratio и/или media-query меняет ширину.
+  const resizeObserver = new ResizeObserver(onResize);
+  resizeObserver.observe(canvas);
   window.addEventListener('resize', onResize);
   onResize();
 
@@ -106,6 +111,7 @@ export function initGalaxy({
       cancelAnimationFrame(raf);
       window.removeEventListener('pointermove', onPointerMove);
       window.removeEventListener('resize', onResize);
+      resizeObserver.disconnect();
       renderer.dispose();
     }
   };

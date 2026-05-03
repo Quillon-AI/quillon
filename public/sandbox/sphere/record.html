@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Sphere Recorder</title>
+  <meta name="robots" content="noindex">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: #0F1B3D; color: #FFF;
+      font-family: ui-sans-serif, system-ui, sans-serif; min-height: 100vh; }
+    .wrap { display: grid; grid-template-columns: 1fr 280px; height: 100vh; }
+    .stage-box {
+      position: relative;
+      background: #0F1B3D;
+      display: flex; align-items: center; justify-content: center;
+    }
+    /* canvas размер = квадрат, под который будет рендериться sphere */
+    canvas { display: block; }
+    .panel {
+      padding: 24px;
+      background: #14233E;
+      border-left: 1px solid rgba(255,255,255,.08);
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .panel h1 { font-size: 14px; margin: 0 0 8px; opacity: .8; font-weight: 600; }
+    .row { display: flex; gap: 8px; align-items: center; }
+    label { font-size: 12px; opacity: .7; flex: 0 0 90px; }
+    input { flex: 1; padding: 6px 10px; background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.15); border-radius: 4px;
+      color: #FFF; font-family: ui-monospace, monospace; font-size: 12px; }
+    button {
+      padding: 10px 14px; border-radius: 6px; border: 0;
+      background: #E63946; color: #FFF; font-weight: 600;
+      cursor: pointer; font-size: 13px;
+    }
+    button:disabled { background: #555; cursor: not-allowed; }
+    .status { font-family: ui-monospace, monospace; font-size: 11px; opacity: .7;
+      padding: 8px 12px; background: rgba(0,0,0,.3); border-radius: 4px;
+      white-space: pre-wrap; line-height: 1.5; min-height: 60px; }
+    .hint { font-size: 11px; opacity: .55; line-height: 1.55;
+      padding-top: 12px; border-top: 1px solid rgba(255,255,255,.08); }
+    .hint code { background: rgba(255,255,255,.08); padding: 1px 4px; border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="stage-box">
+    <canvas id="stage" width="1024" height="1024"></canvas>
+  </div>
+
+  <div class="panel">
+    <h1>Sphere Recorder</h1>
+
+    <div class="row">
+      <label>Размер</label>
+      <input id="size" type="number" value="1024" min="256" max="2048" step="64">
+    </div>
+    <div class="row">
+      <label>Длит. (сек)</label>
+      <input id="duration" type="number" value="10" min="3" max="60" step="1">
+    </div>
+    <div class="row">
+      <label>FPS</label>
+      <input id="fps" type="number" value="60" min="24" max="60" step="1">
+    </div>
+    <div class="row">
+      <label>Bitrate</label>
+      <input id="bitrate" type="number" value="8000000" min="1000000" max="20000000" step="500000">
+    </div>
+
+    <button id="recBtn" type="button">▶ Записать .webm</button>
+
+    <div class="status" id="status">Готов. Размер canvas: 1024×1024.</div>
+
+    <div class="hint">
+      <strong>VP9 webm с alpha</strong> — поддерживает прозрачность.
+      Используется напрямую как <code>&lt;video&gt;</code> в hero.
+      Конвертация в mp4 НЕ нужна — h264 не поддерживает alpha.
+      <br><br>
+      Если нужен fallback в mp4 без alpha (сolid bg):
+      <br><code>ffmpeg -i sphere.webm \</code>
+      <br><code>  -c:v libx264 -pix_fmt yuv420p \</code>
+      <br><code>  -filter_complex "[0]split[a][b];[a]alphaextract[alpha];[b][alpha]premultiply" \</code>
+      <br><code>  -movflags +faststart -an sphere.mp4</code>
+    </div>
+  </div>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+
+const canvas   = document.getElementById('stage');
+const sizeIn   = document.getElementById('size');
+const durIn    = document.getElementById('duration');
+const fpsIn    = document.getElementById('fps');
+const brIn     = document.getElementById('bitrate');
+const recBtn   = document.getElementById('recBtn');
+const statusEl = document.getElementById('status');
+
+function setSize(px) {
+  canvas.width = canvas.height = px;
+  canvas.style.width = canvas.style.height = Math.min(px, window.innerHeight - 40) + 'px';
+}
+sizeIn.addEventListener('input', e => setSize(+e.target.value));
+setSize(+sizeIn.value);
+
+/* ─── Sphere setup ──────────────────────────────────────────
+ * Chrome MediaRecorder теряет alpha-плоскость при экспорте webm
+ * (даже с alpha:true canvas). Поэтому фон записываем = page bg
+ * #0F1B3D — видео seamless встанет в hero. */
+const renderer = new THREE.WebGLRenderer({
+  canvas, antialias: true,
+  preserveDrawingBuffer: true,
+});
+renderer.setPixelRatio(1);
+renderer.setClearColor(0x0F1B3D, 1);
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
+camera.position.set(0, 0, 4);
+
+function spherePositions(count, radius) {
+  const arr = new Float32Array(count * 3);
+  const golden = Math.PI * (3 - Math.sqrt(5));
+  for (let i = 0; i < count; i++) {
+    const y = 1 - (i / (count - 1)) * 2;
+    const r = Math.sqrt(1 - y * y);
+    const theta = golden * i;
+    arr[i*3]   = Math.cos(theta) * r * radius;
+    arr[i*3+1] = y * radius;
+    arr[i*3+2] = Math.sin(theta) * r * radius;
+  }
+  return arr;
+}
+function pointsLayer(count, radius, color, size) {
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(spherePositions(count, radius), 3));
+  const mat = new THREE.PointsMaterial({
+    color: new THREE.Color(color), size, sizeAttenuation: true,
+    transparent: true, opacity: 0.9, depthWrite: false,
+  });
+  return new THREE.Points(geo, mat);
+}
+
+const outer  = new THREE.Object3D();
+const middle = new THREE.Object3D();
+const inner  = new THREE.Object3D();
+outer.add( pointsLayer(2200, 1.6,  '#5689D9', 0.012));
+middle.add(pointsLayer(1500, 1.05, '#9DD9FF', 0.014));
+inner.add( pointsLayer( 700, 0.55, '#E63946', 0.018));
+const galaxy = new THREE.Group();
+galaxy.add(outer); galaxy.add(middle); galaxy.add(inner);
+scene.add(galaxy);
+
+function resizeRenderer() {
+  const px = +sizeIn.value;
+  renderer.setSize(px, px, false);
+  camera.aspect = 1;
+  camera.updateProjectionMatrix();
+}
+sizeIn.addEventListener('change', resizeRenderer);
+resizeRenderer();
+
+/* Анимация: используем фиксированное "виртуальное время" чтобы запись
+   была детерминирована — без зависимости от реальных fps. */
+function frame(t) {
+  outer.rotation.y  =  t * 0.06;
+  outer.rotation.x  =  Math.sin(t * 0.10) * 0.15;
+  middle.rotation.z = -t * 0.10;
+  middle.rotation.y =  t * 0.13;
+  inner.rotation.x  = -t * 0.18;
+  inner.rotation.y  =  t * 0.22;
+  renderer.render(scene, camera);
+}
+
+/* Idle preview loop пока не записываем */
+const clock = new THREE.Clock();
+let idleRaf;
+function idle() {
+  idleRaf = requestAnimationFrame(idle);
+  frame(clock.getElapsedTime());
+}
+idle();
+
+/* ─── Recording через MediaRecorder ──────────────────────────── */
+async function record() {
+  cancelAnimationFrame(idleRaf);
+  resizeRenderer();
+  recBtn.disabled = true;
+
+  const fps = +fpsIn.value;
+  const dur = +durIn.value;
+  const bitrate = +brIn.value;
+  const totalFrames = fps * dur;
+
+  // Поддержка кодеков (Chrome предпочтительно vp9, Safari — h264)
+  const types = [
+    'video/webm;codecs=vp9',
+    'video/webm;codecs=vp8',
+    'video/webm',
+  ];
+  const mimeType = types.find(t => MediaRecorder.isTypeSupported(t)) || 'video/webm';
+  statusEl.textContent = `Кодек: ${mimeType}\nРендер ${totalFrames} кадров (${fps} fps × ${dur}s)…`;
+
+  const stream = canvas.captureStream(0);   // 0 = manual; будем выкатывать кадры через requestFrame
+  const track  = stream.getVideoTracks()[0];
+  const recorder = new MediaRecorder(stream, { mimeType, videoBitsPerSecond: bitrate });
+
+  const chunks = [];
+  recorder.ondataavailable = e => e.data && chunks.push(e.data);
+
+  const finished = new Promise(resolve => recorder.onstop = resolve);
+  recorder.start();
+
+  // Рендерим каждый кадр на ВИРТУАЛЬНОМ времени t = i / fps
+  // (loop-friendly: t совпадает в начале и в конце за счёт choose длительности)
+  for (let i = 0; i <= totalFrames; i++) {
+    const t = i / fps;
+    frame(t);
+    track.requestFrame();
+    // короткая пауза чтобы recorder успел запихнуть кадр в pipeline
+    await new Promise(r => setTimeout(r, 1000 / fps / 2));
+    if (i % 30 === 0) {
+      statusEl.textContent = `Запись… ${i}/${totalFrames} (${Math.round(100*i/totalFrames)}%)`;
+    }
+  }
+
+  recorder.stop();
+  await finished;
+
+  const blob = new Blob(chunks, { type: mimeType });
+  const url  = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'sphere.webm'; a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+  statusEl.textContent = `Готово · ${(blob.size/1024/1024).toFixed(1)} MB · sphere.webm загружается.\nЗатем: ffmpeg -i sphere.webm -c:v libx264 -pix_fmt yuv420p -movflags +faststart -an sphere.mp4`;
+  recBtn.disabled = false;
+  idle();
+}
+recBtn.addEventListener('click', record);
+</script>
+
+</body>
+</html>

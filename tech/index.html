@@ -81,7 +81,7 @@
         </div>
       </div>
       <div class="qt-hero__sphere">
-        <canvas class="qt-hero__canvas" id="hero-galaxy"></canvas>
+        <canvas class="qt-hero__canvas" id="hero-galaxy" aria-hidden="true"></canvas>
       </div>
     </div>
   </div>
@@ -361,12 +361,21 @@
           <label class="qt-field__label" for="cf-message">Задача</label>
           <textarea class="qt-field__input qt-field__textarea" id="cf-message" name="message" placeholder="Кратко опишите проект — что нужно сделать, сроки, бюджет, ссылка на ТЗ если есть." rows="4" required></textarea>
         </div>
+        <label class="qt-consent">
+          <input type="checkbox" name="consent" required>
+          <span class="qt-consent__box" aria-hidden="true">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3.5 8.5 7 12 13 5"/>
+            </svg>
+          </span>
+          <span class="qt-consent__text">
+            Даю согласие на&nbsp;<a href="https://quillon.ru/v4/docs/consent-pdn.html" target="_blank" rel="noopener">обработку персональных данных</a><br>
+            и&nbsp;принимаю <a href="https://quillon.ru/v4/docs/privacy-policy.html" target="_blank" rel="noopener">политику конфиденциальности</a>.
+          </span>
+        </label>
         <button type="submit" class="qt-btn qt-btn--primary qt-btn--lg qt-contact__submit">
           Отправить заявку
         </button>
-        <p class="qt-contact__legal">
-          Отправляя форму, вы&nbsp;соглашаетесь с&nbsp;<a href="/docs/privacy.html">политикой конфиденциальности</a>.
-        </p>
       </form>
     </div>
   </div>
@@ -413,13 +422,58 @@
   </div>
 </footer>
 
-<!-- ─── Galaxy init ──────────────────────────────────────────── -->
+<!-- ─── Hero sphere init (WebGL + mp4 fallback) ─────────────── -->
 <script type="module">
   import { initGalaxy } from '/js/galaxy-sphere.js';
-  initGalaxy({
-    canvas: document.getElementById('hero-galaxy'),
-    bgColor: 0x0F1B3D,
-  });
+
+  const canvas = document.getElementById('hero-galaxy');
+
+  // Проверяем поддержку WebGL — без рендера. Защита от Chrome где WebGL disabled.
+  function webglAvailable() {
+    try {
+      const c = document.createElement('canvas');
+      return !!(window.WebGLRenderingContext &&
+        (c.getContext('webgl2') || c.getContext('webgl') || c.getContext('experimental-webgl')));
+    } catch (e) { return false; }
+  }
+
+  function fallbackToVideo() {
+    const video = document.createElement('video');
+    video.className = 'qt-hero__canvas';   // тот же CSS — заполняет parent
+    video.autoplay = true;
+    video.loop = true;
+    video.muted = true;
+    video.playsInline = true;
+    video.preload = 'auto';
+    video.setAttribute('aria-hidden', 'true');
+    video.innerHTML =
+      '<source src="/assets/sphere.webm" type="video/webm">' +
+      '<source src="/assets/sphere.mp4" type="video/mp4">';
+    canvas.replaceWith(video);
+  }
+
+  function tryInit() {
+    if (canvas.clientWidth > 0 && canvas.clientHeight > 0) {
+      try {
+        initGalaxy({ canvas, bgColor: 0x0F1B3D });
+        return true;
+      } catch (err) {
+        console.warn('[hero] WebGL/three.js failed, falling back to mp4:', err);
+        fallbackToVideo();
+        return true;   // больше не пробуем
+      }
+    }
+    return false;
+  }
+
+  if (!webglAvailable()) {
+    fallbackToVideo();
+  } else if (!tryInit()) {
+    const ro = new ResizeObserver(() => {
+      if (tryInit()) ro.disconnect();
+    });
+    ro.observe(canvas);
+  }
 </script>
 
 </body>
