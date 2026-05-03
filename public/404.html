@@ -27,39 +27,30 @@
       align-items: center;
     }
     .q-404__copy { display: flex; flex-direction: column; gap: var(--q-s-5); max-width: 540px; }
-    /* Карточка-носитель — «лист» blueprint'а */
+    /* Frameless container — картинка органично запечатана в страницу */
     .q-404__art {
       position: relative;
       aspect-ratio: 4 / 5;
-      border-radius: var(--q-r-xl);
-      overflow: hidden;
-      background:
-        radial-gradient(ellipse at 50% 40%, #14161A 0%, var(--q-bg-1) 70%, var(--q-bg-0) 100%);
-      box-shadow:
-        0 0 0 1px var(--q-line),
-        inset 0 0 0 1px rgba(255,255,255,0.02),
-        0 12px 48px -16px rgba(0,0,0,0.6);
       margin: 0;
     }
 
-    /* Картинка — текстура, не визуал */
+    /* Картинка с soft-fade в фон страницы */
     .q-404__bg {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
       object-fit: cover;
       filter:
-        grayscale(0.85)
-        saturate(0.4)
-        brightness(0.55)
-        contrast(1.15);
-      mix-blend-mode: luminosity;
-      opacity: 0.32;
-      -webkit-mask-image: radial-gradient(ellipse 85% 90% at 50% 45%, #000 30%, rgba(0,0,0,0.7) 60%, transparent 100%);
-              mask-image: radial-gradient(ellipse 85% 90% at 50% 45%, #000 30%, rgba(0,0,0,0.7) 60%, transparent 100%);
+        grayscale(0.6)
+        saturate(0.55)
+        brightness(0.7)
+        contrast(1.1);
+      opacity: 0.85;
+      -webkit-mask-image: radial-gradient(ellipse 70% 75% at 50% 50%, #000 25%, rgba(0,0,0,0.85) 50%, rgba(0,0,0,0.3) 80%, transparent 100%);
+              mask-image: radial-gradient(ellipse 70% 75% at 50% 50%, #000 25%, rgba(0,0,0,0.85) 50%, rgba(0,0,0,0.3) 80%, transparent 100%);
       z-index: 0;
     }
 
-    /* Brand-tint */
+    /* Subtle indigo tint, тоже растворяется по краям */
     .q-404__art::before {
       content: '';
       position: absolute; inset: 0;
@@ -67,20 +58,9 @@
         radial-gradient(ellipse at 30% 20%, rgba(94,106,210,0.10) 0%, transparent 50%),
         radial-gradient(ellipse at 70% 80%, rgba(94,242,161,0.04) 0%, transparent 45%);
       pointer-events: none;
+      -webkit-mask-image: radial-gradient(ellipse 70% 75% at 50% 50%, #000 25%, rgba(0,0,0,0.7) 55%, transparent 95%);
+              mask-image: radial-gradient(ellipse 70% 75% at 50% 50%, #000 25%, rgba(0,0,0,0.7) 55%, transparent 95%);
       z-index: 1;
-    }
-
-    /* Dot-grid + vignette в одном слое */
-    .q-404__art::after {
-      content: '';
-      position: absolute; inset: 0;
-      background-image:
-        radial-gradient(circle, rgba(255,255,255,0.05) 0.6px, transparent 0.6px),
-        linear-gradient(180deg, rgba(8,9,10,0.6) 0%, rgba(8,9,10,0) 25%, rgba(8,9,10,0) 70%, rgba(8,9,10,0.85) 100%),
-        radial-gradient(ellipse at center, rgba(8,9,10,0) 55%, rgba(8,9,10,0.7) 100%);
-      background-size: 20px 20px, 100% 100%, 100% 100%;
-      pointer-events: none;
-      z-index: 2;
     }
 
     /* «404» editorial index above h1 — mono accent */
