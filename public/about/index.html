@@ -23,10 +23,23 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
+  <!-- Theme bootstrap: ставим data-theme до загрузки CSS чтобы не было FOUC -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('q-theme');
+        var prefers = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', saved || prefers);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
   <link rel="stylesheet" href="/v4/css/tokens.css">
   <link rel="stylesheet" href="/v4/css/base.css">
   <link rel="stylesheet" href="/v4/css/components.css">
-  <script src="/v4/components/quillon-ui.js" defer></script>
+  <script src="/v4/components/quillon-ui.js?v=2" defer></script>
 
   <script type="application/ld+json">
   {
@@ -56,13 +69,19 @@
 
   <style>
     /* ── About-specific layout ── */
+    .q-about-hero-section { padding-top: 0 !important; padding-bottom: var(--q-s-7) !important; }
     .q-about-hero {
       display: grid;
       grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-      gap: var(--q-s-9);
-      padding-top: var(--q-s-7);
-      padding-bottom: var(--q-s-7);
+      gap: var(--q-s-8);
+      padding-top: var(--q-s-5);
+      padding-bottom: var(--q-s-3);
       align-items: center;
+    }
+    .q-about-hero__copy {
+      display: flex;
+      flex-direction: column;
+      max-width: 620px;
     }
     .q-about-hero__eyebrow {
       font-family: var(--q-font-mono);
@@ -79,21 +98,19 @@
       letter-spacing: -0.025em;
       color: var(--q-text-hi);
       margin: 0 0 var(--q-s-5);
-      max-width: 18ch;
     }
     .q-about-hero__title span { color: var(--q-text-low); }
     .q-about-hero__lede {
-      font-size: clamp(18px, 1.6vw, 22px);
-      line-height: 1.5;
+      font-size: clamp(17px, 1.4vw, 19px);
+      line-height: 1.55;
       color: var(--q-text-mid);
-      max-width: 56ch;
       margin: 0;
     }
-    /* Frameless container — картинка плавно растворяется в фон */
+    /* Frameless container — картинка плавно растворяется в фон со всех сторон */
     .q-about-hero__art {
       position: relative;
       margin: 0;
-      aspect-ratio: 1 / 1;
+      aspect-ratio: 4 / 5;
     }
     .q-about-hero__bg {
       position: absolute; inset: 0;
@@ -105,9 +122,26 @@
         brightness(0.7)
         contrast(1.1);
       opacity: 0.85;
-      -webkit-mask-image: radial-gradient(ellipse 70% 75% at 50% 50%, #000 25%, rgba(0,0,0,0.85) 50%, rgba(0,0,0,0.3) 80%, transparent 100%);
-              mask-image: radial-gradient(ellipse 70% 75% at 50% 50%, #000 25%, rgba(0,0,0,0.85) 50%, rgba(0,0,0,0.3) 80%, transparent 100%);
+      -webkit-mask-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='gh' x1='0' x2='1'%3E%3Cstop offset='0' stop-color='white' stop-opacity='0'/%3E%3Cstop offset='0.15' stop-color='white' stop-opacity='1'/%3E%3Cstop offset='0.85' stop-color='white' stop-opacity='1'/%3E%3Cstop offset='1' stop-color='white' stop-opacity='0'/%3E%3C/linearGradient%3E%3ClinearGradient id='gv' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='white' stop-opacity='0'/%3E%3Cstop offset='0.15' stop-color='white' stop-opacity='1'/%3E%3Cstop offset='0.85' stop-color='white' stop-opacity='1'/%3E%3Cstop offset='1' stop-color='white' stop-opacity='0'/%3E%3C/linearGradient%3E%3Cmask id='mh'%3E%3Crect width='100' height='100' fill='url(%23gh)'/%3E%3C/mask%3E%3Cmask id='mv'%3E%3Crect width='100' height='100' fill='url(%23gv)'/%3E%3C/mask%3E%3C/defs%3E%3Cg mask='url(%23mh)'%3E%3Crect width='100' height='100' fill='white' mask='url(%23mv)'/%3E%3C/g%3E%3C/svg%3E");
+              mask-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='gh' x1='0' x2='1'%3E%3Cstop offset='0' stop-color='white' stop-opacity='0'/%3E%3Cstop offset='0.15' stop-color='white' stop-opacity='1'/%3E%3Cstop offset='0.85' stop-color='white' stop-opacity='1'/%3E%3Cstop offset='1' stop-color='white' stop-opacity='0'/%3E%3C/linearGradient%3E%3ClinearGradient id='gv' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='white' stop-opacity='0'/%3E%3Cstop offset='0.15' stop-color='white' stop-opacity='1'/%3E%3Cstop offset='0.85' stop-color='white' stop-opacity='1'/%3E%3Cstop offset='1' stop-color='white' stop-opacity='0'/%3E%3C/linearGradient%3E%3Cmask id='mh'%3E%3Crect width='100' height='100' fill='url(%23gh)'/%3E%3C/mask%3E%3Cmask id='mv'%3E%3Crect width='100' height='100' fill='url(%23gv)'/%3E%3C/mask%3E%3C/defs%3E%3Cg mask='url(%23mh)'%3E%3Crect width='100' height='100' fill='white' mask='url(%23mv)'/%3E%3C/g%3E%3C/svg%3E");
+      -webkit-mask-size: 100% 100%;
+              mask-size: 100% 100%;
+      -webkit-mask-repeat: no-repeat;
+              mask-repeat: no-repeat;
       z-index: 0;
+    }
+    /* Light theme: paper-frame — картинка fade'ит в светлую палитру,
+       поверх — лёгкий indigo/mint overlay в светлых тонах */
+    /* Light theme: картинка плавно растворяется в светлый фон страницы (без рамки) */
+    :root[data-theme="light"] .q-about-hero__bg {
+      filter: grayscale(0.35) saturate(0.75) brightness(0.95) contrast(1.0);
+      opacity: 0.92;
+      mix-blend-mode: normal;
+    }
+    :root[data-theme="light"] .q-about-hero__art::before {
+      background:
+        radial-gradient(ellipse at 30% 20%, rgba(94,106,210,0.10) 0%, transparent 55%),
+        radial-gradient(ellipse at 70% 80%, rgba(94,242,161,0.05) 0%, transparent 50%);
     }
     .q-about-hero__art::before {
       content: '';
@@ -116,8 +150,8 @@
         radial-gradient(ellipse at 30% 20%, rgba(94,106,210,0.10) 0%, transparent 50%),
         radial-gradient(ellipse at 70% 80%, rgba(94,242,161,0.04) 0%, transparent 45%);
       pointer-events: none;
-      -webkit-mask-image: radial-gradient(ellipse 70% 75% at 50% 50%, #000 25%, rgba(0,0,0,0.7) 55%, transparent 95%);
-              mask-image: radial-gradient(ellipse 70% 75% at 50% 50%, #000 25%, rgba(0,0,0,0.7) 55%, transparent 95%);
+      -webkit-mask-image: radial-gradient(ellipse 75% 80% at 50% 50%, #000 20%, rgba(0,0,0,0.7) 55%, transparent 95%);
+              mask-image: radial-gradient(ellipse 75% 80% at 50% 50%, #000 20%, rgba(0,0,0,0.7) 55%, transparent 95%);
       z-index: 1;
     }
     .q-about-hero__signal {
@@ -441,12 +475,12 @@
 <main id="main">
 
   <!-- ─── HERO ─── -->
-  <section class="q-section">
+  <section class="q-section q-about-hero-section">
     <div class="q-container q-about-hero">
       <div class="q-about-hero__copy">
         <p class="q-about-hero__eyebrow">О нас</p>
         <h1 class="q-about-hero__title">
-          IT-образование,&nbsp;<span>которое доводит до оффера</span>
+          IT&#8209;образование, <span>которое&nbsp;доводит до&nbsp;оффера</span>
         </h1>
         <p class="q-about-hero__lede">
           Quillon — школа внутри действующей IT-студии. Мы учим тех, кто не учился в IT, и сразу подключаем к&nbsp;реальным продуктам в&nbsp;production. За&nbsp;12&nbsp;месяцев — от&nbsp;первой строки кода до&nbsp;первого оффера.
@@ -464,7 +498,7 @@
     <div class="q-container">
       <div class="q-about-cols">
         <div class="q-about-cols__head">
-          <h2>Зачем мы вообще нужны</h2>
+          <h2>Зачем мы делаем Quillon</h2>
         </div>
         <div class="q-about-cols__body">
           <p>

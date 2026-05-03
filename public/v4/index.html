@@ -5472,89 +5472,11 @@
       max-width: 420px;
       width: calc(100% - var(--q-s-5) * 2);
       padding: var(--q-s-5) var(--q-s-6);
-      background: rgba(15, 17, 22, 0.92);
+      background: color-mix(in srgb, var(--q-bg-1) 92%, transparent);
       border: 1px solid var(--q-line-strong);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
-      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
-      z-index: 9999;
-      display: none;
-      flex-direction: column;
-      gap: var(--q-s-4);
-      animation: q-cookie-in var(--q-dur-base) var(--q-ease) both;
-    }
-    .q-cookie.is-visible { display: flex; }
-    @keyframes q-cookie-in {
-      from { opacity: 0; transform: translateY(12px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .q-cookie__title {
-      font-family: var(--q-font-mono);
-      font-size: var(--q-t-mono);
-      letter-spacing: var(--q-tracking-mono);
-      text-transform: uppercase;
-      color: var(--q-accent-hover);
-      margin: 0;
-      font-weight: var(--q-fw-medium);
-    }
-    .q-cookie__text {
-      font-size: var(--q-t-small);
-      line-height: 1.55;
-      color: var(--q-text-mid);
-      margin: 0;
-    }
-    .q-cookie__text a {
-      color: var(--q-text-hi);
-      text-decoration: none;
-      border-bottom: 1px solid var(--q-line);
-      transition: color var(--q-dur-fast) var(--q-ease),
-                  border-color var(--q-dur-fast) var(--q-ease);
-    }
-    .q-cookie__text a:hover {
-      color: var(--q-accent-hover);
-      border-bottom-color: var(--q-accent);
-    }
-    .q-cookie__row {
-      display: flex;
-      gap: var(--q-s-3);
-      align-items: center;
-    }
-    .q-cookie__btn {
-      flex: 1;
-    }
-    .q-cookie__dismiss {
-      background: transparent;
-      border: 0;
-      padding: var(--q-s-2) var(--q-s-3);
-      font-family: var(--q-font-mono);
-      font-size: var(--q-t-mono);
-      letter-spacing: var(--q-tracking-mono);
-      text-transform: uppercase;
-      color: var(--q-text-low);
-      cursor: pointer;
-      transition: color var(--q-dur-fast) var(--q-ease);
-    }
-    .q-cookie__dismiss:hover { color: var(--q-text-mid); }
-    @media (max-width: 600px) {
-      .q-cookie { left: var(--q-s-3); right: var(--q-s-3); bottom: var(--q-s-3); width: auto; max-width: none; }
-    }
-  
-    /* ═══════════════════════════════════════════════════════════════
-     * COOKIE CONSENT BANNER (fixed bottom-left, dismissible)
-     *   Управляется JS: показывается если в localStorage нет q-cookie-ok.
-     * ═══════════════════════════════════════════════════════════════ */
-    .q-cookie {
-      position: fixed;
-      left: var(--q-s-5);
-      bottom: var(--q-s-5);
-      max-width: 420px;
-      width: calc(100% - var(--q-s-5) * 2);
-      padding: var(--q-s-5) var(--q-s-6);
-      background: rgba(15, 17, 22, 0.92);
-      border: 1px solid var(--q-line-strong);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+      box-shadow: var(--q-el-3, 0 12px 48px rgba(0, 0, 0, 0.4));
       z-index: 9999;
       display: none;
       flex-direction: column;
@@ -5740,7 +5662,7 @@
   ]
 }
 </script>
-<script src="/v4/components/quillon-ui.js" defer></script>
+<script src="/v4/components/quillon-ui.js?v=2" defer></script>
 </head>
 <body>
 
@@ -8008,18 +7930,7 @@
     })();
   </script>
 
-  <!-- ═══ Theme toggle (light ↔ dark) ═══ -->
-  <script>
-    (function () {
-      var btn = document.querySelector('[data-q-theme-toggle]');
-      if (!btn) return;
-      btn.addEventListener('click', function () {
-        var next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', next);
-        try { localStorage.setItem('q-theme', next); } catch (e) {}
-      });
-    })();
-  </script>
+  <!-- Theme toggle handler теперь живёт внутри <quillon-header> -->
 
   <!-- ═══ Smooth-scroll для якорей (топбар, CTA, любые href="#…") ═══ -->
   <script>

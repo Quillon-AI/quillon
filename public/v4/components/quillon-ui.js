@@ -86,6 +86,15 @@
           </nav>
 
           <div class="q-topbar__actions">
+            <button type="button" class="q-theme-toggle" data-q-theme-toggle aria-label="Переключить тему">
+              <svg class="q-theme-toggle__moon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M14 9.5A6 6 0 1 1 6.5 2a4.5 4.5 0 0 0 7.5 7.5z"/>
+              </svg>
+              <svg class="q-theme-toggle__sun" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="8" cy="8" r="3.2"/>
+                <path d="M8 1.5v1.6M8 12.9v1.6M2.6 2.6l1.1 1.1M12.3 12.3l1.1 1.1M1.5 8h1.6M12.9 8h1.6M2.6 13.4l1.1-1.1M12.3 3.7l1.1-1.1"/>
+              </svg>
+            </button>
             <a class="q-btn q-btn--link q-topbar__login" href="/login/">Войти</a>
             <a class="q-btn q-btn--primary q-btn--sm" href="/quiz">Пройти тест</a>
             <button class="q-topbar__burger" type="button" aria-label="Меню" aria-expanded="false" aria-controls="q-drawer">
@@ -144,6 +153,14 @@
       // Close on Escape
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && !drawer.hasAttribute('hidden')) closeDrawer();
+      });
+
+      // Theme toggle
+      const themeBtn = this.querySelector('[data-q-theme-toggle]');
+      themeBtn?.addEventListener('click', () => {
+        const cur = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', cur);
+        try { localStorage.setItem('q-theme', cur); } catch {}
       });
     }
   }

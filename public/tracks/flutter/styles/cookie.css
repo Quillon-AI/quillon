@@ -5,9 +5,9 @@
       position: fixed; left: var(--q-s-5); bottom: var(--q-s-5);
       max-width: 420px; width: calc(100% - var(--q-s-5) * 2);
       padding: var(--q-s-5) var(--q-s-6);
-      background: rgba(15,17,22,.92); border: 1px solid var(--q-line-strong);
+      background: color-mix(in srgb, var(--q-bg-1) 92%, transparent); border: 1px solid var(--q-line-strong);
       backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-      box-shadow: 0 12px 48px rgba(0,0,0,.4);
+      box-shadow: var(--q-el-3, 0 12px 48px rgba(0,0,0,.4));
       z-index: 9999; display: none; flex-direction: column; gap: var(--q-s-4);
       animation: q-cookie-in var(--q-dur-base) var(--q-ease) both;
     }
