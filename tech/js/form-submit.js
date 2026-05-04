@@ -148,10 +148,15 @@
       pick(data, 'topic') ||
       NAME ||
       'без имени';
-    const TITLE = `${location.hostname} · ${formLabel} · ${titleSubj}`;
+    // [host/path] видно сразу на канбане, можно фильтровать «поиск по сделкам».
+    const TITLE = `[${location.host}${location.pathname}] ${formLabel} · ${titleSubj}`;
 
     /* ─── COMMENTS: всё, что не уехало в отдельные поля ────── */
     const lines = [];
+    // Маркеры для быстрой визуальной идентификации в карточке Bitrix
+    lines.push(`★ ${location.host}${location.pathname}`);
+    lines.push(`★ Форма: [${formName}] · ${formLabel}`);
+    lines.push('');
     lines.push(`Форма: ${formName} (${location.pathname})`);
     if (productLabel)           lines.push(`Продукт:   ${productLabel}`);
     if (typeLabel)              lines.push(`Тип:       ${typeLabel}`);
