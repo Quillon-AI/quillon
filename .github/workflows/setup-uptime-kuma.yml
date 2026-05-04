@@ -1,0 +1,144 @@
+name: Setup Uptime Kuma
+
+# Manual workflow для развёртывания Uptime Kuma на сервере.
+# Сначала diagnose (read-only), смотрим лог. Если ок — install.
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Что сделать"
+        required: true
+        default: "diagnose"
+        type: choice
+        options:
+          - diagnose
+          - install
+      letsencrypt_email:
+        description: "Email для Let's Encrypt (получит уведомления об expiry)"
+        required: false
+        default: "support@quillon.ru"
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.QUILLON_DEPLOY_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.QUILLON_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Diagnose
+        run: |
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
+            ${{ secrets.QUILLON_USER }}@${{ secrets.QUILLON_HOST }} bash <<'REMOTE'
+          set +e
+          echo "================ Docker / Compose ================"
+          docker --version 2>/dev/null || echo "❌ docker NOT installed"
+          docker compose version 2>/dev/null || echo "❌ docker compose plugin NOT installed"
+          echo ""
+          echo "================ Port 3001 ================"
+          PORT_USED=$(ss -tlnp 2>/dev/null | grep ':3001 ' | head -1)
+          if [ -z "$PORT_USED" ]; then
+            echo "✓ port 3001 свободен"
+          else
+            echo "❌ port 3001 ЗАНЯТ: $PORT_USED"
+          fi
+          echo ""
+          echo "================ /opt/uptime-kuma ================"
+          if [ -d /opt/uptime-kuma ]; then
+            ls -la /opt/uptime-kuma/
+            echo "(директория уже существует — установка дополнит)"
+          else
+            echo "(директория ещё не создана — норм)"
+          fi
+          echo ""
+          echo "================ DNS status.quillon.ru ================"
+          getent hosts status.quillon.ru 2>/dev/null && echo "✓ DNS resolves" || echo "❌ DNS NOT resolving (подождать или проверить запись)"
+          echo ""
+          echo "================ certbot ================"
+          which certbot && certbot --version 2>&1 || echo "❌ certbot NOT installed"
+          echo ""
+          echo "================ существующий nginx-конфиг ================"
+          ls /etc/nginx/sites-enabled/ | grep -i 'status\.quillon' || echo "(нет — норм)"
+          if [ -d /etc/letsencrypt/live/status.quillon.ru ]; then
+            echo "❌ cert УЖЕ существует — установка не должна его трогать"
+          else
+            echo "✓ cert ещё не получен"
+          fi
+          echo ""
+          echo "================ nginx -t ================"
+          sudo nginx -t 2>&1
+          echo ""
+          echo "================ \$USER на сервере ================"
+          whoami
+          groups
+          echo "sudo NOPASSWD?"
+          sudo -n true 2>&1 | head -3
+          REMOTE
+
+      - name: Install
+        if: ${{ inputs.mode == 'install' }}
+        env:
+          USER_AT_HOST: ${{ secrets.QUILLON_USER }}@${{ secrets.QUILLON_HOST }}
+          LE_EMAIL: ${{ inputs.letsencrypt_email }}
+        run: |
+          SSH="ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no $USER_AT_HOST"
+          SCP="scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no"
+
+          echo "═══ 1) /opt/uptime-kuma + docker-compose.yml ═══"
+          $SSH "sudo mkdir -p /opt/uptime-kuma && sudo chown ${{ secrets.QUILLON_USER }}:${{ secrets.QUILLON_USER }} /opt/uptime-kuma"
+          $SCP ./uptime-kuma/docker-compose.yml $USER_AT_HOST:/opt/uptime-kuma/docker-compose.yml
+
+          echo "═══ 2) docker compose up -d ═══"
+          $SSH "cd /opt/uptime-kuma && docker compose up -d"
+          echo "ждём 30 сек на старт..."
+          sleep 30
+          $SSH "cd /opt/uptime-kuma && docker compose ps"
+          $SSH "ss -tlnp 2>/dev/null | grep ':3001 ' || (echo 'KUMA не слушает на 3001!' && exit 1)"
+          echo "проверка HTTP отклика на 127.0.0.1:3001:"
+          $SSH "curl -sf http://127.0.0.1:3001/ -o /dev/null -w 'HTTP %{http_code}\n' || echo 'не отвечает (ещё стартует?)'"
+
+          echo "═══ 3) bootstrap nginx-конфиг (HTTP-only, для ACME) ═══"
+          $SSH 'sudo tee /etc/nginx/sites-available/status.quillon.ru > /dev/null' <<'NGINX'
+          server {
+              listen 80;
+              listen [::]:80;
+              server_name status.quillon.ru;
+
+              access_log /var/log/nginx/status.quillon.ru.access.log;
+              error_log  /var/log/nginx/status.quillon.ru.error.log;
+
+              location / {
+                  proxy_pass http://127.0.0.1:3001;
+                  proxy_http_version 1.1;
+                  proxy_set_header Upgrade $http_upgrade;
+                  proxy_set_header Connection "upgrade";
+                  proxy_set_header Host $host;
+                  proxy_set_header X-Real-IP $remote_addr;
+                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                  proxy_set_header X-Forwarded-Proto $scheme;
+                  proxy_buffering off;
+                  proxy_read_timeout 86400;
+              }
+          }
+          NGINX
+          $SSH 'sudo ln -sfn ../sites-available/status.quillon.ru /etc/nginx/sites-enabled/status.quillon.ru'
+          $SSH 'sudo nginx -t'
+          $SSH 'sudo systemctl reload nginx'
+
+          echo "═══ 4) HTTP-проверка через nginx (до SSL) ═══"
+          curl -sI -H "Host: status.quillon.ru" http://${{ secrets.QUILLON_HOST }}/ | head -3 || true
+
+          echo "═══ 5) certbot --nginx (получит cert + сам обновит конфиг на HTTPS) ═══"
+          $SSH "sudo certbot --nginx -d status.quillon.ru -n --agree-tos --redirect --no-eff-email -m $LE_EMAIL"
+
+          echo "═══ 6) финальный smoke test ═══"
+          $SSH 'sudo nginx -t'
+          curl -sI https://status.quillon.ru/ | head -5
+          echo ""
+          echo "✅ Uptime Kuma развёрнут. Открой https://status.quillon.ru и создай админ-аккаунт."
