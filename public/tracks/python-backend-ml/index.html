@@ -203,6 +203,7 @@
   <link rel="stylesheet" href="styles/footer.css?v=2">
   <link rel="stylesheet" href="styles/cookie.css?v=2">
 <script src="/v4/components/quillon-ui.js?v=2" defer></script>
+<script src="/v4/js/form-submit.js" defer></script>
 </head>
 <body>
 
@@ -302,7 +303,7 @@
         </div>
 
         <!-- FORM -->
-        <form class="q-track-hero__form" data-q-lead-form action="#" method="post">
+        <form class="q-track-hero__form" data-q-form="track-python-hero" data-q-success="Заявка отправлена" data-q-success-sub="Свяжемся в течение 24 часов в будни." novalidate>
 
           <h3 class="q-track-hero__form__title">Открой демо-урок · бесплатно</h3>
           <p class="q-track-hero__form__sub">
@@ -1986,7 +1987,7 @@ jobs:
           </ul>
         </aside>
 
-        <form class="q-cf-form" id="cf-track-form" action="#" method="post" novalidate>
+        <form class="q-cf-form" id="cf-track-form" data-q-form="track-python-main" data-q-success="Заявка принята" data-q-success-sub="Свяжемся с тобой по телефону или email в течение 24 часов в будни." novalidate>
 
           <div class="q-cf-field">
             <label class="q-cf-label" for="cf-name">

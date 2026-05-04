@@ -356,22 +356,48 @@
   function attachPhoneMask(input) {
     if (input.dataset.qPhoneMasked) return;
     input.dataset.qPhoneMasked = '1';
+
+    function getDigits() {
+      return input.value.replace(/\D/g, '');
+    }
+
     input.addEventListener('focus', () => {
       if (!input.value.trim()) input.value = '+7 ';
     });
-    input.addEventListener('input', () => {
+
+    // keydown: Backspace/Delete работают по ЦИФРАМ, а не по символам формата.
+    // Иначе backspace удаляет ')' → input-handler восстанавливает её → не стирается.
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Backspace') {
+        // Если есть selection — даём браузеру обработать самому
+        if (input.selectionStart !== input.selectionEnd) return;
+        e.preventDefault();
+        const digits = getDigits().slice(0, -1);
+        input.value = digits.length > 1 ? formatRussianPhone(digits) : '';
+      } else if (e.key === 'Delete') {
+        if (input.selectionStart !== input.selectionEnd) return;
+        // Delete forward — простой кейс: пересчитать без последней цифры
+        e.preventDefault();
+        const digits = getDigits().slice(0, -1);
+        input.value = digits.length > 1 ? formatRussianPhone(digits) : '';
+      }
+    });
+
+    input.addEventListener('input', (e) => {
+      // Игнорируем deleteContentBackward — keydown уже обработал
+      if (e.inputType && e.inputType.startsWith('delete')) return;
       input.value = formatRussianPhone(input.value);
     });
+
     input.addEventListener('blur', () => {
-      const digits = input.value.replace(/\D/g, '');
-      // Если только префикс «7» — очистить
+      const digits = getDigits();
       if (digits.length <= 1) input.value = '';
     });
+
     input.addEventListener('paste', (e) => {
       e.preventDefault();
       const pasted = (e.clipboardData || window.clipboardData).getData('text');
       input.value = formatRussianPhone(pasted);
-      input.dispatchEvent(new Event('input'));
     });
   }
 
