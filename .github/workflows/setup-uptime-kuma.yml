@@ -41,13 +41,29 @@ jobs:
           docker --version 2>/dev/null || echo "❌ docker NOT installed"
           docker compose version 2>/dev/null || echo "❌ docker compose plugin NOT installed"
           echo ""
-          echo "================ Port 3001 ================"
+          echo "================ Port 3001 + Docker контейнеры ================"
           PORT_USED=$(ss -tlnp 2>/dev/null | grep ':3001 ' | head -1)
           if [ -z "$PORT_USED" ]; then
             echo "✓ port 3001 свободен"
           else
-            echo "❌ port 3001 ЗАНЯТ: $PORT_USED"
+            echo "⚠  port 3001 занят: $PORT_USED"
           fi
+          echo ""
+          echo "--- docker ps --format ---"
+          docker ps --format 'table {{.Names}}\t{{.Image}}\t{{.Ports}}\t{{.Status}}' 2>/dev/null
+          echo ""
+          echo "--- docker ports ---"
+          for c in $(docker ps -q 2>/dev/null); do
+            name=$(docker inspect --format '{{.Name}}' "$c" | sed 's|^/||')
+            image=$(docker inspect --format '{{.Config.Image}}' "$c")
+            ports=$(docker port "$c" 2>/dev/null | tr '\n' ' ')
+            echo "$name (image: $image) → $ports"
+          done
+          echo ""
+          echo "--- свободные порты в диапазоне 3010-3050 ---"
+          for p in 3010 3011 3020 3030 3040 3050 3081 8081 8181; do
+            ss -tlnp 2>/dev/null | grep -q ":$p " || echo "  ✓ $p свободен"
+          done
           echo ""
           echo "================ /opt/uptime-kuma ================"
           if [ -d /opt/uptime-kuma ]; then
