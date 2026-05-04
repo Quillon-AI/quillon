@@ -50,17 +50,69 @@ jobs:
             ${{ secrets.QUILLON_USER }}@${{ secrets.QUILLON_HOST }} \
             "chown -R www-data:www-data /var/www/quillon.ru /var/www/tech.quillon.ru"
 
-      - name: Deploy nginx-seo.conf + reload nginx
+      - name: Diagnose nginx server blocks
         run: |
-          # Кладём конфиг в /etc/nginx/snippets/ — nginx должен включать его
-          # из server-блоков директивой `include /etc/nginx/snippets/quillon-seo.conf;`
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
+            ${{ secrets.QUILLON_USER }}@${{ secrets.QUILLON_HOST }} bash <<'REMOTE'
+            echo "=== sites-enabled ==="
+            ls -la /etc/nginx/sites-enabled/
+            echo ""
+            echo "=== файлы со server_name quillon.ru / tech.quillon.ru ==="
+            sudo grep -lE 'server_name[[:space:]]+(www\.)?(tech\.)?quillon\.ru' /etc/nginx/sites-enabled/* 2>/dev/null || true
+            echo ""
+            echo "=== уже подключён quillon-seo? ==="
+            sudo grep -l 'quillon-seo.conf' /etc/nginx/sites-enabled/* 2>/dev/null || echo "NOT INCLUDED ANYWHERE"
+          REMOTE
+
+      - name: Deploy nginx-seo.conf + auto-include + reload nginx
+        run: |
+          # 1) скопировать snippet
           scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
             ./nginx-seo.conf \
             ${{ secrets.QUILLON_USER }}@${{ secrets.QUILLON_HOST }}:/tmp/quillon-seo.conf
 
+          # 2) на сервере: положить в snippets, авто-добавить include в нужные
+          #    server-блоки (если ещё нет), nginx -t, reload
           ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
-            ${{ secrets.QUILLON_USER }}@${{ secrets.QUILLON_HOST }} \
-            'sudo install -m 644 /tmp/quillon-seo.conf /etc/nginx/snippets/quillon-seo.conf && sudo nginx -t && sudo systemctl reload nginx && echo "✅ nginx reloaded"'
+            ${{ secrets.QUILLON_USER }}@${{ secrets.QUILLON_HOST }} bash <<'REMOTE'
+            set -e
+            sudo install -m 644 /tmp/quillon-seo.conf /etc/nginx/snippets/quillon-seo.conf
+
+            # Авто-добавление include в server-блоки quillon.ru / tech.quillon.ru
+            # ПРИМАРНЫЙ: тот, который нашёлся последним в sites-enabled/
+            # (без conflict warnings — основной)
+            for domain in quillon.ru tech.quillon.ru; do
+              # Найти первый file с server_name $domain (без www.)
+              file=$(sudo grep -lE "server_name[[:space:]]+($domain|www\\.$domain)" /etc/nginx/sites-enabled/* 2>/dev/null | head -1)
+              if [ -z "$file" ]; then
+                echo "⚠️  $domain: server-блок не найден"
+                continue
+              fi
+              if sudo grep -q 'quillon-seo.conf' "$file"; then
+                echo "✓ $domain ($file): include уже есть"
+              else
+                # Вставляем include после первого 'server_name' в файле
+                # Использую python для надёжности
+                sudo python3 - "$file" <<'PYEOF'
+          import sys, re
+          path = sys.argv[1]
+          with open(path) as f: c = f.read()
+          # Вставить после первого server_name
+          new = re.sub(
+              r'(server_name[^\n]+\n)',
+              r'\1    include /etc/nginx/snippets/quillon-seo.conf;\n',
+              c, count=1
+          )
+          with open(path, 'w') as f: f.write(new)
+          PYEOF
+                echo "✚ $domain ($file): include добавлен"
+              fi
+            done
+
+            sudo nginx -t
+            sudo systemctl reload nginx
+            echo "✅ nginx reloaded"
+          REMOTE
 
       - name: Smoke test
         run: |
