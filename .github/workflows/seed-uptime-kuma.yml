@@ -1,0 +1,135 @@
+name: Seed Uptime Kuma Monitors
+
+# Заполнение Uptime Kuma мониторами через прямой SQL в SQLite,
+# без использования пользовательского пароля (через сервер и docker exec).
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "schema (только посмотреть) или seed (записать мониторы)"
+        required: true
+        default: "schema"
+        type: choice
+        options:
+          - schema
+          - seed
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.QUILLON_DEPLOY_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.QUILLON_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Inspect Kuma DB schema
+        if: ${{ inputs.mode == 'schema' }}
+        run: |
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
+            ${{ secrets.QUILLON_USER }}@${{ secrets.QUILLON_HOST }} bash <<'REMOTE'
+          set -e
+          echo "=== таблицы Kuma ==="
+          docker exec uptime-kuma sqlite3 /app/data/kuma.db ".tables"
+          echo ""
+          echo "=== schema.monitor ==="
+          docker exec uptime-kuma sqlite3 /app/data/kuma.db ".schema monitor"
+          echo ""
+          echo "=== schema.notification ==="
+          docker exec uptime-kuma sqlite3 /app/data/kuma.db ".schema notification"
+          echo ""
+          echo "=== schema.user (только id+username, без секретов) ==="
+          docker exec uptime-kuma sqlite3 /app/data/kuma.db "SELECT id, username, active FROM user;"
+          echo ""
+          echo "=== уже существующие мониторы ==="
+          docker exec uptime-kuma sqlite3 -header -column /app/data/kuma.db "SELECT id, name, type, url, active FROM monitor;"
+          echo ""
+          echo "=== schema.heartbeat ==="
+          docker exec uptime-kuma sqlite3 /app/data/kuma.db ".schema heartbeat" | head -20
+          echo ""
+          echo "=== индексы ==="
+          docker exec uptime-kuma sqlite3 /app/data/kuma.db "SELECT name, tbl_name FROM sqlite_master WHERE type='index' AND tbl_name='monitor';"
+          REMOTE
+
+      - name: Seed monitors
+        if: ${{ inputs.mode == 'seed' }}
+        run: |
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
+            ${{ secrets.QUILLON_USER }}@${{ secrets.QUILLON_HOST }} bash <<'REMOTE'
+          set -e
+
+          # Сначала бэкап БД
+          docker exec uptime-kuma sh -c 'cp /app/data/kuma.db /app/data/kuma.db.bak.$(date +%s)'
+          echo "✓ backup created"
+          docker exec uptime-kuma ls -la /app/data/ | grep -E 'kuma\.db'
+
+          # Получить user_id (для created_by/owner если нужен)
+          USER_ID=$(docker exec uptime-kuma sqlite3 /app/data/kuma.db "SELECT id FROM user LIMIT 1;")
+          echo "owner user_id = $USER_ID"
+
+          # Вставка мониторов. Используем INSERT OR IGNORE по уникальному name
+          # чтобы повторные запуски не дублировали.
+          docker exec uptime-kuma sqlite3 /app/data/kuma.db <<'SQL'
+          -- Проверим — есть ли уникальность по имени
+          -- (если нет, делаем through SELECT existence)
+
+          INSERT INTO monitor (name, type, interval, retry_interval, maxretries, url, accepted_statuscodes_json, active, weight, method, body, headers, timeout, max_redirects, ignore_tls, upside_down, packet_size, port, hostname, keyword, expiry_notification, push_token, http_body_encoding)
+          SELECT 'Quillon · main',         'http',    60, 60, 2, 'https://quillon.ru/',                                            '["200-299"]', 1, 2000, 'GET', NULL, NULL, 48, 10, 0, 0, 56, NULL, NULL, NULL, 1, NULL, NULL
+          WHERE NOT EXISTS (SELECT 1 FROM monitor WHERE name='Quillon · main');
+
+          INSERT INTO monitor (name, type, interval, retry_interval, maxretries, url, accepted_statuscodes_json, active, weight, method, timeout, max_redirects, ignore_tls, upside_down, expiry_notification)
+          SELECT 'Quillon · support',      'http',   300, 60, 2, 'https://quillon.ru/support/',                                    '["200-299"]', 1, 2000, 'GET', 48, 10, 0, 0, 1
+          WHERE NOT EXISTS (SELECT 1 FROM monitor WHERE name='Quillon · support');
+
+          INSERT INTO monitor (name, type, interval, retry_interval, maxretries, url, accepted_statuscodes_json, active, weight, method, timeout, max_redirects, ignore_tls, upside_down, expiry_notification)
+          SELECT 'Quillon · blog',         'http',   300, 60, 2, 'https://quillon.ru/blog/',                                       '["200-299"]', 1, 2000, 'GET', 48, 10, 0, 0, 1
+          WHERE NOT EXISTS (SELECT 1 FROM monitor WHERE name='Quillon · blog');
+
+          INSERT INTO monitor (name, type, interval, retry_interval, maxretries, url, accepted_statuscodes_json, active, weight, method, timeout, max_redirects, ignore_tls, upside_down, expiry_notification)
+          SELECT 'Quillon · tracks/python','http',   300, 60, 2, 'https://quillon.ru/tracks/python-backend-ml/',                   '["200-299"]', 1, 2000, 'GET', 48, 10, 0, 0, 1
+          WHERE NOT EXISTS (SELECT 1 FROM monitor WHERE name='Quillon · tracks/python');
+
+          INSERT INTO monitor (name, type, interval, retry_interval, maxretries, url, accepted_statuscodes_json, active, weight, method, timeout, max_redirects, ignore_tls, upside_down, expiry_notification)
+          SELECT 'Tech · main',            'http',    60, 60, 2, 'https://tech.quillon.ru/',                                       '["200-299"]', 1, 2000, 'GET', 48, 10, 0, 0, 1
+          WHERE NOT EXISTS (SELECT 1 FROM monitor WHERE name='Tech · main');
+
+          INSERT INTO monitor (name, type, interval, retry_interval, maxretries, url, accepted_statuscodes_json, active, weight, method, timeout, max_redirects, ignore_tls, upside_down, expiry_notification)
+          SELECT 'Tech · career',          'http',   300, 60, 2, 'https://tech.quillon.ru/career/',                                '["200-299"]', 1, 2000, 'GET', 48, 10, 0, 0, 1
+          WHERE NOT EXISTS (SELECT 1 FROM monitor WHERE name='Tech · career');
+
+          INSERT INTO monitor (name, type, interval, retry_interval, maxretries, url, accepted_statuscodes_json, active, weight, method, timeout, max_redirects, ignore_tls, upside_down, expiry_notification)
+          SELECT 'Tech · cases',           'http',   300, 60, 2, 'https://tech.quillon.ru/cases/',                                 '["200-299"]', 1, 2000, 'GET', 48, 10, 0, 0, 1
+          WHERE NOT EXISTS (SELECT 1 FROM monitor WHERE name='Tech · cases');
+
+          INSERT INTO monitor (name, type, interval, retry_interval, maxretries, url, accepted_statuscodes_json, active, weight, method, timeout, max_redirects, ignore_tls, upside_down, expiry_notification)
+          SELECT 'Quillon Meet',           'http',    60, 60, 2, 'https://meet.quillon.ru/',                                       '["200-299","301","302"]', 1, 2000, 'GET', 48, 10, 0, 0, 1
+          WHERE NOT EXISTS (SELECT 1 FROM monitor WHERE name='Quillon Meet');
+
+          -- Bitrix endpoint — используем тип keyword чтобы убедиться что API живой
+          INSERT INTO monitor (name, type, interval, retry_interval, maxretries, url, keyword, accepted_statuscodes_json, active, weight, method, timeout, max_redirects, ignore_tls, upside_down, expiry_notification)
+          SELECT 'Bitrix24 webhook',       'keyword', 600, 120, 2, 'https://b24-o95wtq.bitrix24.ru/rest/1/6d5yns93ulwkr79s/crm.lead.fields.json', 'TITLE', '["200-299"]', 1, 1000, 'GET', 48, 10, 0, 0, 1
+          WHERE NOT EXISTS (SELECT 1 FROM monitor WHERE name='Bitrix24 webhook');
+
+          SELECT 'Total monitors:' AS info, COUNT(*) AS n FROM monitor;
+          SQL
+
+          echo ""
+          echo "=== итог ==="
+          docker exec uptime-kuma sqlite3 -header -column /app/data/kuma.db "SELECT id, name, type, url, interval, active FROM monitor ORDER BY id;"
+
+          echo ""
+          echo "=== restart Kuma чтобы подхватить ==="
+          cd /opt/uptime-kuma
+          docker compose restart
+          sleep 15
+          docker compose ps
+          REMOTE
+
+          echo ""
+          echo "=== final smoke test ==="
+          curl -sI https://status.quillon.ru/ | head -3
