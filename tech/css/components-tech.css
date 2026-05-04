@@ -645,6 +645,96 @@
   .qt-steps { grid-template-columns: 1fr; }
 }
 
+/* ─── ABOUT PAGE ───────────────────────────────────────────── */
+
+/* Manifesto: расширенный текстовый блок (читабельный column) */
+.qt-about-text {
+  max-width: 760px;
+  display: flex; flex-direction: column;
+  gap: var(--qt-s-5);
+}
+.qt-about-text p {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--qt-text-mid);
+}
+.qt-about-text p strong {
+  color: var(--qt-text-hi);
+  font-weight: var(--qt-fw-semibold);
+}
+
+/* Vertical timeline (история) — переиспользует .qt-step но column layout */
+.qt-steps--vertical {
+  grid-template-columns: 1fr;
+  gap: var(--qt-s-7);
+  position: relative;
+  max-width: 760px;
+}
+.qt-steps--vertical::before {
+  content: '';
+  position: absolute;
+  left: 28px; top: 0; bottom: 0; right: auto;
+  width: 1px; height: auto;
+  background: var(--qt-line-deep);
+}
+.qt-steps--vertical .qt-step {
+  flex-direction: row;
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: var(--qt-s-5);
+  padding-right: 0;
+  align-items: start;
+}
+.qt-steps--vertical .qt-step__num {
+  grid-row: span 2;
+  font-size: 12px;
+}
+.qt-steps--vertical .qt-step__title {
+  margin-top: var(--qt-s-2);
+}
+
+/* Metrics block (4-col big numbers) */
+.qt-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--qt-s-5);
+}
+.qt-metric {
+  padding: var(--qt-s-6) var(--qt-s-5);
+  background: var(--qt-bg-elev);
+  border-radius: var(--qt-r-lg);
+  box-shadow: var(--qt-el-2);
+}
+.qt-metric__value {
+  font-size: clamp(40px, 4vw, 56px);
+  font-weight: var(--qt-fw-semibold);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--qt-accent);
+  margin-bottom: var(--qt-s-3);
+}
+.qt-metric__label {
+  font-size: 15px;
+  font-weight: var(--qt-fw-semibold);
+  color: var(--qt-text-hi);
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+.qt-metric__caption {
+  font-family: var(--qt-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--qt-text-low);
+}
+
+@media (max-width: 900px) {
+  .qt-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 500px) {
+  .qt-metrics { grid-template-columns: 1fr; }
+}
+
 /* ─── CONTACT FORM (deep navy, consistent с hero/footer) ───── */
 .qt-contact {
   background: var(--qt-bg-deep);
