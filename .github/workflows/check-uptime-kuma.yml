@@ -1,0 +1,29 @@
+name: Check Uptime Kuma Monitors
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.QUILLON_DEPLOY_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.QUILLON_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Check monitors
+        run: |
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
+            ${{ secrets.QUILLON_USER }}@${{ secrets.QUILLON_HOST }} bash <<'REMOTE'
+          echo "=== count ==="
+          docker exec uptime-kuma sqlite3 /app/data/kuma.db "SELECT COUNT(*) FROM monitor;"
+          echo ""
+          echo "=== monitors ==="
+          docker exec uptime-kuma sqlite3 -header -column /app/data/kuma.db "SELECT id, name, type, url, interval, active FROM monitor ORDER BY id;"
+          echo ""
+          echo "=== last heartbeats per monitor ==="
+          docker exec uptime-kuma sqlite3 -header -column /app/data/kuma.db "SELECT m.name, h.status, h.msg, h.ping, datetime(h.time) as time FROM monitor m LEFT JOIN heartbeat h ON h.id = (SELECT id FROM heartbeat WHERE monitor_id = m.id ORDER BY time DESC LIMIT 1) ORDER BY m.id;"
+          REMOTE
