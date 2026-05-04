@@ -497,6 +497,10 @@
             data-q-success="Обращение принято"
             data-q-success-sub="Мы получили вашу заявку. Ответим на указанный email или Telegram в течение 24 часов в будни."
             novalidate>
+        <div class="q-honeypot" aria-hidden="true">
+          <label>Сайт компании (не заполнять)</label>
+          <input type="text" name="website" tabindex="-1" autocomplete="off">
+        </div>
         <div class="q-support-form__row">
           <div class="q-support-field">
             <label class="q-support-field__label" for="sf-product">Продукт</label>

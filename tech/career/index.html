@@ -514,6 +514,11 @@
       </div>
 
       <form class="qt-contact__form" data-q-form="career" data-q-success="Отклик отправлен" data-q-success-sub="Спасибо! Мы посмотрим ваш профиль и вернёмся в течение дня — назначим тех-собес или скажем, что не совпадаем сейчас." novalidate>
+
+        <div class="q-honeypot" aria-hidden="true">
+          <label>Сайт компании (не заполнять)</label>
+          <input type="text" name="website" tabindex="-1" autocomplete="off">
+        </div>
         <div class="qt-field">
           <label class="qt-field__label" for="cf-name">Имя</label>
           <input class="qt-field__input" type="text" id="cf-name" name="name" placeholder="Как к&nbsp;вам обращаться" required>

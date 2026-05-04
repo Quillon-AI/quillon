@@ -927,6 +927,16 @@
 .q-topbar[data-accent="mint"] .q-btn--primary { background: #5EF2A1; color: #04070C; }
 .q-topbar[data-accent="mint"] .q-btn--primary:hover { background: #7DFFB3; }
 
+/* ─── Honeypot (anti-bot, off-screen, hidden from a11y) ────────── */
+.q-honeypot {
+  position: absolute !important;
+  left: -9999px !important;
+  top: auto !important;
+  width: 1px !important; height: 1px !important;
+  overflow: hidden !important;
+  pointer-events: none;
+}
+
 /* ─── Form success / error states (universal) ──────────────────── */
 .q-form-success {
   display: flex; flex-direction: column; align-items: center;

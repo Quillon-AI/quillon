@@ -346,6 +346,11 @@
       </div>
 
       <form class="qt-contact__form" data-q-form="contact-about" data-q-success="Заявка отправлена" data-q-success-sub="Мы получили ваше сообщение. Ответим на email или Telegram в течение дня." novalidate>
+
+        <div class="q-honeypot" aria-hidden="true">
+          <label>Сайт компании (не заполнять)</label>
+          <input type="text" name="website" tabindex="-1" autocomplete="off">
+        </div>
         <div class="qt-field">
           <label class="qt-field__label" for="cf-name">Имя</label>
           <input class="qt-field__input" type="text" id="cf-name" name="name" placeholder="Как к&nbsp;вам обращаться" required>
