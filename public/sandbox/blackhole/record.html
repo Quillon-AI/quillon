@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Blackhole Recorder</title>
+  <meta name="robots" content="noindex">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: #0F1B3D; color: #FFF;
+      font-family: ui-sans-serif, system-ui, sans-serif; min-height: 100vh; }
+    .wrap { display: grid; grid-template-columns: 1fr 280px; height: 100vh; }
+    .stage-box {
+      position: relative;
+      background: #0F1B3D;
+      display: flex; align-items: center; justify-content: center;
+    }
+    canvas { display: block; }
+    .panel {
+      padding: 24px;
+      background: #14233E;
+      border-left: 1px solid rgba(255,255,255,.08);
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .panel h1 { font-size: 14px; margin: 0 0 8px; opacity: .8; font-weight: 600; }
+    .row { display: flex; gap: 8px; align-items: center; }
+    label { font-size: 12px; opacity: .7; flex: 0 0 90px; }
+    input { flex: 1; padding: 6px 10px; background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.15); border-radius: 4px;
+      color: #FFF; font-family: ui-monospace, monospace; font-size: 12px; }
+    button { padding: 10px 14px; border-radius: 6px; border: 0;
+      background: #E63946; color: #FFF; font-weight: 600; cursor: pointer; font-size: 13px; }
+    button:disabled { background: #555; cursor: not-allowed; }
+    .status { font-family: ui-monospace, monospace; font-size: 11px; opacity: .7;
+      padding: 8px 12px; background: rgba(0,0,0,.3); border-radius: 4px;
+      white-space: pre-wrap; line-height: 1.5; min-height: 60px; }
+  </style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="stage-box"><canvas id="stage" width="1280" height="720"></canvas></div>
+  <div class="panel">
+    <h1>Blackhole Recorder</h1>
+    <div class="row"><label>Размер</label><input id="w" type="number" value="1280" min="640" max="1920" step="64"><input id="h" type="number" value="720" min="360" max="1080" step="64"></div>
+    <div class="row"><label>Длит.&nbsp;(сек)</label><input id="duration" type="number" value="14" min="3" max="60" step="1"></div>
+    <div class="row"><label>FPS</label><input id="fps" type="number" value="30" min="24" max="60" step="1"></div>
+    <button id="recBtn" type="button">▶ Записать .webm</button>
+    <div class="status" id="status">Готов.</div>
+  </div>
+</div>
+
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+
+const canvas   = document.getElementById('stage');
+const wIn      = document.getElementById('w');
+const hIn      = document.getElementById('h');
+const durIn    = document.getElementById('duration');
+const fpsIn    = document.getElementById('fps');
+const recBtn   = document.getElementById('recBtn');
+const statusEl = document.getElementById('status');
+
+function setSize() {
+  canvas.width  = +wIn.value;
+  canvas.height = +hIn.value;
+  const aspectFit = Math.min((window.innerWidth - 320) / canvas.width, (window.innerHeight - 40) / canvas.height);
+  canvas.style.width  = (canvas.width  * aspectFit) + 'px';
+  canvas.style.height = (canvas.height * aspectFit) + 'px';
+}
+[wIn, hIn].forEach(i => i.addEventListener('input', setSize));
+setSize();
+
+/* ─── Inline blackhole engine (deterministic frame function) ── */
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1);
+renderer.setClearColor(0x0F1B3D, 1);
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(60, canvas.width / canvas.height, 0.1, 100);
+camera.position.set(0, 0, 5.2);
+
+const COUNT = 9000;
+const innerR = 0.18, outerR = 4.5;
+const positions = new Float32Array(COUNT * 3);
+const data      = new Float32Array(COUNT * 3);
+const colors    = new Float32Array(COUNT * 3);
+const cOuter = new THREE.Color('#5689D9');
+const cEdge  = new THREE.Color('#E63946');
+const cNear  = new THREE.Color('#FF6B6B');
+
+function spawn(i) {
+  const r = innerR + Math.random() * (outerR - innerR);
+  const theta = Math.random() * Math.PI * 2;
+  const yJit = (Math.random() - 0.5) * 0.18 * Math.exp(-(r - innerR) * 1.2);
+  data[i*3] = r; data[i*3+1] = theta; data[i*3+2] = yJit;
+  const t = Math.min(1, (r - innerR) / (outerR - innerR));
+  const col = t < 0.25 ? cNear.clone().lerp(cEdge, t/0.25) : cEdge.clone().lerp(cOuter, (t-0.25)/0.75);
+  colors[i*3] = col.r; colors[i*3+1] = col.g; colors[i*3+2] = col.b;
+}
+for (let i = 0; i < COUNT; i++) spawn(i);
+
+const geo = new THREE.BufferGeometry();
+geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+geo.setAttribute('color',    new THREE.BufferAttribute(colors, 3));
+const mat = new THREE.PointsMaterial({ size: 0.018, sizeAttenuation: true, vertexColors: true,
+  transparent: true, opacity: 0.95, depthWrite: false, blending: THREE.AdditiveBlending });
+const points = new THREE.Points(geo, mat);
+
+const glowMat = new THREE.ShaderMaterial({
+  transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+  uniforms: { uColor: { value: new THREE.Color('#E63946') } },
+  vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+  fragmentShader: `uniform vec3 uColor; varying vec2 vUv; void main() { vec2 c = vUv - 0.5; float d = length(c) * 2.0; float a = pow(1.0 - d, 2.5); gl_FragColor = vec4(uColor, a * 0.55); }`,
+});
+const glow = new THREE.Mesh(new THREE.PlaneGeometry(innerR * 6, innerR * 6), glowMat);
+
+const group = new THREE.Group();
+group.add(points); group.add(glow);
+scene.add(group);
+group.rotation.x = -Math.PI * 0.18;
+
+function frame(t, dt) {
+  for (let i = 0; i < COUNT; i++) {
+    let r = data[i*3];
+    let theta = data[i*3+1];
+    theta += 0.6 * dt / Math.sqrt(Math.max(r, 0.05));
+    r -= 0.18 * dt * (1.0 / Math.max(r, 0.2));
+    if (r < innerR) { spawn(i); continue; }
+    data[i*3] = r; data[i*3+1] = theta;
+    const y = data[i*3+2];
+    positions[i*3]   = Math.cos(theta) * r;
+    positions[i*3+1] = y;
+    positions[i*3+2] = Math.sin(theta) * r;
+  }
+  geo.attributes.position.needsUpdate = true;
+  geo.attributes.color.needsUpdate = true;
+  renderer.render(scene, camera);
+}
+
+/* ─── Idle preview ─── */
+let idleRaf;
+const clock = new THREE.Clock();
+function idle() {
+  idleRaf = requestAnimationFrame(idle);
+  frame(clock.getElapsedTime(), Math.min(clock.getDelta() || 0.016, 0.05));
+}
+idle();
+
+function resizeRenderer() {
+  renderer.setSize(canvas.width, canvas.height, false);
+  camera.aspect = canvas.width / canvas.height;
+  camera.updateProjectionMatrix();
+}
+[wIn, hIn].forEach(i => i.addEventListener('change', resizeRenderer));
+resizeRenderer();
+
+/* ─── Recording ─── */
+async function record() {
+  cancelAnimationFrame(idleRaf);
+  resizeRenderer();
+  recBtn.disabled = true;
+
+  const fps = +fpsIn.value;
+  const dur = +durIn.value;
+  const totalFrames = fps * dur;
+  const dt = 1 / fps;
+
+  // Reset particles to clean spawn distribution
+  for (let i = 0; i < COUNT; i++) spawn(i);
+
+  const types = ['video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm'];
+  const mimeType = types.find(t => MediaRecorder.isTypeSupported(t)) || 'video/webm';
+  statusEl.textContent = `Кодек: ${mimeType}\nРендер ${totalFrames} кадров…`;
+
+  const stream = canvas.captureStream(0);
+  const track = stream.getVideoTracks()[0];
+  const recorder = new MediaRecorder(stream, { mimeType, videoBitsPerSecond: 6_000_000 });
+  const chunks = [];
+  recorder.ondataavailable = e => e.data && chunks.push(e.data);
+  const finished = new Promise(res => recorder.onstop = res);
+  recorder.start();
+
+  let virtualT = 0;
+  for (let i = 0; i <= totalFrames; i++) {
+    frame(virtualT, dt);
+    virtualT += dt;
+    track.requestFrame();
+    await new Promise(r => setTimeout(r, 1000 / fps / 2));
+    if (i % 30 === 0) statusEl.textContent = `Запись… ${i}/${totalFrames} (${Math.round(100*i/totalFrames)}%)`;
+  }
+
+  recorder.stop();
+  await finished;
+  const blob = new Blob(chunks, { type: mimeType });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'blackhole.webm'; a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+  statusEl.textContent = `Готово · ${(blob.size/1024/1024).toFixed(1)} MB`;
+  recBtn.disabled = false;
+  for (let i = 0; i < COUNT; i++) spawn(i);
+  idle();
+}
+recBtn.addEventListener('click', record);
+</script>
+
+</body>
+</html>

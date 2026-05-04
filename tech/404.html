@@ -1,56 +1,217 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="dark">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0F1B3D">
+
   <title>404 — страница не найдена · Quillon Tech</title>
-  <meta name="description" content="Такой страницы на tech.quillon.ru нет. Вернёмся на главную — там всё про наши продукты и B2B-разработку.">
+  <meta name="description" content="Такой страницы нет на tech.quillon.ru. Адрес с опечаткой, ссылка устарела или мы её ещё не написали.">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#080B14">
 
-  <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
-  <link rel="apple-touch-icon" href="/favicon-192.png">
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js">
 
-  <link rel="stylesheet" href="/404/404.css">
+  <link rel="stylesheet" href="/css/tokens-tech.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components-tech.css">
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+    }
+  }
+  </script>
+
+  <style>
+    body { background: var(--qt-bg-deep); color: var(--qt-text-on-hi); }
+
+    .qt-404 {
+      position: relative;
+      min-height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .qt-404__canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      display: block;
+      z-index: 0;
+    }
+    .qt-404__content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 880px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 var(--qt-container-pad);
+    }
+    .qt-404__index {
+      font-family: var(--qt-font-mono);
+      font-size: 13px;
+      font-weight: var(--qt-fw-semibold);
+      letter-spacing: 0.24em;
+      color: var(--qt-accent-on-deep);
+      text-transform: uppercase;
+      margin: 0 0 var(--qt-s-4);
+    }
+    .qt-404__title {
+      font-family: var(--qt-font-display);
+      font-size: clamp(40px, 6.5vw, 88px);
+      font-weight: var(--qt-fw-medium);
+      letter-spacing: -0.035em;
+      line-height: 1.05;
+      color: #FFFFFF;
+      margin: 0 0 var(--qt-s-5);
+    }
+    .qt-404__title b {
+      font-weight: var(--qt-fw-bold);
+      color: var(--qt-accent-on-deep);
+    }
+    .qt-404__lede {
+      font-size: clamp(15px, 1.4vw, 18px);
+      color: rgba(255,255,255,0.65);
+      line-height: 1.55;
+      max-width: 44ch;
+      margin: 0 auto var(--qt-s-7);
+    }
+    .qt-404__actions {
+      display: flex; gap: var(--qt-s-3);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    /* Vignette overlay чтобы текст читался поверх частиц */
+    .qt-404::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(15,27,61,0.45) 0%, transparent 80%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Минимальный header — только лого + кнопка домой */
+    .qt-404-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 20px var(--qt-container-pad);
+      display: flex; align-items: center; justify-content: space-between;
+      z-index: 50;
+    }
+    .qt-404-bar__brand {
+      display: inline-flex; align-items: center; gap: 12px;
+      color: #FFFFFF; text-decoration: none;
+      font-weight: var(--qt-fw-bold); font-size: 16px;
+    }
+    .qt-404-bar__brand img { width: 28px; height: 28px; }
+    .qt-404-bar__home {
+      color: rgba(255,255,255,0.7);
+      font-size: 14px;
+      font-weight: var(--qt-fw-medium);
+      text-decoration: none;
+      transition: color var(--qt-dur-fast) var(--qt-ease);
+    }
+    .qt-404-bar__home:hover { color: #FFFFFF; }
+
+    /* ─── Mobile ─── */
+    @media (max-width: 600px) {
+      .qt-404-bar { padding: 14px 16px; }
+      .qt-404-bar__brand { font-size: 14px; }
+      .qt-404-bar__home { font-size: 13px; }
+      .qt-404__title { font-size: clamp(36px, 11vw, 56px); }
+      .qt-404__lede { font-size: 14px; }
+      .qt-404__actions { flex-direction: column; width: 100%; max-width: 320px; margin: 0 auto; }
+      .qt-404__actions .qt-btn { width: 100%; justify-content: center; }
+    }
+  </style>
 </head>
 <body>
 
-<canvas data-particles></canvas>
-<div class="e404-glow"></div>
+<header class="qt-404-bar" role="banner">
+  <a href="/" class="qt-404-bar__brand" aria-label="Quillon — главная">
+    <img src="/assets/logo-light.svg" alt="" width="28" height="28">
+    <span>Quillon</span>
+  </a>
+  <a href="/" class="qt-404-bar__home">← На&nbsp;главную</a>
+</header>
 
-<main class="e404-wrap">
-  <div class="e404-tag">
-    <span class="dot"></span>error · 404 · not found
-  </div>
+<main id="main">
+  <section class="qt-404">
+    <canvas class="qt-404__canvas" id="hero-blackhole" aria-hidden="true"></canvas>
 
-  <h1 class="e404-code"><span class="text-gradient">404</span></h1>
-
-  <h2 class="e404-title">Этот путь никуда не ведёт</h2>
-
-  <p class="e404-sub">
-    Ссылка устарела или мы ещё не успели собрать эту страницу.<br>
-    Вернёмся на главную — там все наши продукты, услуги и контакты.
-  </p>
-
-  <div class="e404-actions">
-    <a href="/"><button class="btn-primary">← На главную</button></a>
-    <a href="/#products"><button class="btn-secondary">Наши продукты →</button></a>
-  </div>
-
-  <div class="e404-links">
-    <a href="/">tech.quillon.ru</a>
-    <span>·</span>
-    <a href="https://quillon.ru">quillon.ru</a>
-    <span>·</span>
-    <a href="mailto:support@quillon.ru">support@quillon.ru</a>
-  </div>
+    <div class="qt-404__content">
+      <p class="qt-404__index">— ERROR · 404 —</p>
+      <h1 class="qt-404__title">Страница за&nbsp;<b>горизонтом</b></h1>
+      <p class="qt-404__lede">
+        Адрес с&nbsp;опечаткой, ссылка устарела или мы&nbsp;ещё не&nbsp;написали такую страницу. В&nbsp;любом случае — она не&nbsp;вернётся.
+      </p>
+      <div class="qt-404__actions">
+        <a class="qt-btn qt-btn--primary qt-btn--lg" href="/">На главную</a>
+        <a class="qt-btn qt-btn--outline qt-btn--lg" href="/career/">Карьера</a>
+      </div>
+    </div>
+  </section>
 </main>
 
-<script src="/404/particles.js" defer></script>
+<script type="module">
+  const canvas = document.getElementById('hero-blackhole');
+
+  function webglAvailable() {
+    try {
+      const c = document.createElement('canvas');
+      return !!(window.WebGLRenderingContext &&
+        (c.getContext('webgl2') || c.getContext('webgl') || c.getContext('experimental-webgl')));
+    } catch (e) { return false; }
+  }
+
+  function fallbackToVideo() {
+    const video = document.createElement('video');
+    video.className = 'qt-404__canvas';
+    video.autoplay = true; video.loop = true; video.muted = true; video.playsInline = true;
+    video.preload = 'auto'; video.setAttribute('aria-hidden', 'true');
+    video.style.objectFit = 'cover';
+    video.innerHTML =
+      '<source src="/assets/blackhole.webm" type="video/webm">' +
+      '<source src="/assets/blackhole.mp4" type="video/mp4">';
+    canvas.replaceWith(video);
+  }
+
+  function tryInit() {
+    if (canvas.clientWidth > 0 && canvas.clientHeight > 0) {
+      import('/js/blackhole.js').then(({ initBlackHole }) => {
+        try {
+          initBlackHole({ canvas, bgColor: 0x0F1B3D });
+        } catch (err) {
+          console.warn('[404] Blackhole failed, fallback video:', err);
+          fallbackToVideo();
+        }
+      });
+      return true;
+    }
+    return false;
+  }
+
+  if (!webglAvailable()) {
+    fallbackToVideo();
+  } else if (!tryInit()) {
+    const ro = new ResizeObserver(() => {
+      if (tryInit()) ro.disconnect();
+    });
+    ro.observe(canvas);
+  }
+</script>
+
 </body>
 </html>
