@@ -39,7 +39,7 @@ curl -O https://raw.githubusercontent.com/Quillon-AI/quillon/main/uptime-kuma/do
 docker compose up -d
 
 # Проверить что слушает
-ss -tlnp | grep 3001    # должен быть 127.0.0.1:3001
+ss -tlnp | grep 3011    # должен быть 127.0.0.1:3011 (3001 занят quillon-meet-web)
 docker compose logs --tail 20
 ```
 

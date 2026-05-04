@@ -115,9 +115,9 @@ jobs:
           echo "ждём 30 сек на старт..."
           sleep 30
           $SSH "cd /opt/uptime-kuma && docker compose ps"
-          $SSH "ss -tlnp 2>/dev/null | grep ':3001 ' || (echo 'KUMA не слушает на 3001!' && exit 1)"
-          echo "проверка HTTP отклика на 127.0.0.1:3001:"
-          $SSH "curl -sf http://127.0.0.1:3001/ -o /dev/null -w 'HTTP %{http_code}\n' || echo 'не отвечает (ещё стартует?)'"
+          $SSH "ss -tlnp 2>/dev/null | grep ':3011 ' || (echo 'KUMA не слушает на 3011!' && exit 1)"
+          echo "проверка HTTP отклика на 127.0.0.1:3011:"
+          $SSH "curl -sf http://127.0.0.1:3011/ -o /dev/null -w 'HTTP %{http_code}\n' || echo 'не отвечает (ещё стартует?)'"
 
           echo "═══ 3) bootstrap nginx-конфиг (HTTP-only, для ACME) ═══"
           $SSH 'sudo tee /etc/nginx/sites-available/status.quillon.ru > /dev/null' <<'NGINX'
@@ -130,7 +130,7 @@ jobs:
               error_log  /var/log/nginx/status.quillon.ru.error.log;
 
               location / {
-                  proxy_pass http://127.0.0.1:3001;
+                  proxy_pass http://127.0.0.1:3011;
                   proxy_http_version 1.1;
                   proxy_set_header Upgrade $http_upgrade;
                   proxy_set_header Connection "upgrade";

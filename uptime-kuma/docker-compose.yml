@@ -15,8 +15,10 @@ services:
     container_name: uptime-kuma
     restart: unless-stopped
     ports:
-      # Слушаем ТОЛЬКО на localhost — наружу не торчим, доступ только через nginx
-      - "127.0.0.1:3001:3001"
+      # Слушаем ТОЛЬКО на localhost — наружу не торчим, доступ только через nginx.
+      # Порт 3001 на хосте уже занят quillon-meet-web → используем 3011.
+      # Внутри контейнера Kuma всё равно слушает 3001.
+      - "127.0.0.1:3011:3001"
     volumes:
       # Persist data (мониторы, конфиги, история, пользователи)
       - ./data:/app/data
