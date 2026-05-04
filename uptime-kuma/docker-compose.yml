@@ -1,0 +1,33 @@
+# Uptime Kuma — мониторинг доступности всех сервисов Quillon
+# Доступ через https://status.quillon.ru (за nginx reverse-proxy)
+#
+# Развёртывание:
+#   ssh quillon-server
+#   cd /opt/uptime-kuma
+#   docker compose up -d
+#
+# Обновление:
+#   docker compose pull && docker compose up -d
+
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    restart: unless-stopped
+    ports:
+      # Слушаем ТОЛЬКО на localhost — наружу не торчим, доступ только через nginx
+      - "127.0.0.1:3001:3001"
+    volumes:
+      # Persist data (мониторы, конфиги, история, пользователи)
+      - ./data:/app/data
+    healthcheck:
+      test: ["CMD", "node", "extra/healthcheck.js"]
+      interval: 60s
+      timeout: 30s
+      retries: 5
+      start_period: 60s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

@@ -1,0 +1,58 @@
+# nginx server-блок для status.quillon.ru
+# Положить в /etc/nginx/sites-available/status.quillon.ru
+# и symlink:  ln -s ../sites-available/status.quillon.ru /etc/nginx/sites-enabled/
+#
+# WebSocket-аппгрейд обязателен — Uptime Kuma использует Socket.IO для
+# realtime обновления карточек мониторов.
+
+# HTTP → HTTPS redirect
+server {
+    listen 80;
+    listen [::]:80;
+    server_name status.quillon.ru;
+    return 301 https://$host$request_uri;
+}
+
+# HTTPS frontend
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name status.quillon.ru;
+
+    # Сертификат (выпустить через certbot, см. README)
+    ssl_certificate     /etc/letsencrypt/live/status.quillon.ru/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/status.quillon.ru/privkey.pem;
+
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers on;
+
+    # Базовая безопасность (без CSP — Uptime Kuma имеет свой UI и динамический JS,
+    # CSP с 'self' может ломать UI). HSTS — ОК.
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+
+    # Логи — отдельные, чтобы не мешались с основными
+    access_log /var/log/nginx/status.quillon.ru.access.log;
+    error_log  /var/log/nginx/status.quillon.ru.error.log;
+
+    location / {
+        proxy_pass http://127.0.0.1:3001;
+        proxy_http_version 1.1;
+
+        # WebSocket upgrade для Socket.IO
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+
+        proxy_set_header Host              $host;
+        proxy_set_header X-Real-IP         $remote_addr;
+        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # Для real-time updates — отключаем буферизацию
+        proxy_buffering off;
+        proxy_read_timeout 86400;
+    }
+}
