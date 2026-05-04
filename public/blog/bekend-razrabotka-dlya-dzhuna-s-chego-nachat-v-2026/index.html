@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Бэкенд-разработка для джуна: с чего начать в 2026 — Quillon</title>
+  <meta name="description" content="Какой язык выбрать, что учить после основ и как джуну зайти в бэкенд в 2026 — без курсов-пустышек и розовых обещаний про 300к.">
+  <meta name="keywords" content="бэкенд, backend-разработчик, Python, Node.js, Django, джун, с чего начать backend разработку в 2026, какой язык выбрать для бэкенда новичку, сколько зарабатывает junior backend разработчик, что должен знать джун бэкендер">
+  <link rel="canonical" href="https://quillon.ru/blog/bekend-razrabotka-dlya-dzhuna-s-chego-nachat-v-2026/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Бэкенд-разработка для джуна: с чего начать в 2026">
+  <meta property="og:description" content="Какой язык выбрать, что учить после основ и как джуну зайти в бэкенд в 2026 — без курсов-пустышек и розовых обещаний про 300к.">
+  <meta property="og:url" content="https://quillon.ru/blog/bekend-razrabotka-dlya-dzhuna-s-chego-nachat-v-2026/">
+  <meta property="og:image" content="https://8390f83d-2f6a-4d51-a160-8b08ea3fbea1.selstorage.ru/blog/covers/bekend-razrabotka-dlya-dzhuna-s-chego-nachat-v-2026-c5c456e2.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Quillon">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="article:published_time" content="Sat May 02 2026 16:40:48 GMT+0300 (Moscow Standard Time)">
+  <meta property="article:modified_time" content="Sat May 02 2026 16:40:48 GMT+0300 (Moscow Standard Time)">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Бэкенд-разработка для джуна: с чего начать в 2026">
+  <meta name="twitter:description" content="Какой язык выбрать, что учить после основ и как джуну зайти в бэкенд в 2026 — без курсов-пустышек и розовых обещаний про 300к.">
+  <meta name="twitter:image" content="https://8390f83d-2f6a-4d51-a160-8b08ea3fbea1.selstorage.ru/blog/covers/bekend-razrabotka-dlya-dzhuna-s-chego-nachat-v-2026-c5c456e2.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+  <!-- Quillon design system -->
+
+  <!-- Theme bootstrap: ставим data-theme до загрузки CSS чтобы не было FOUC -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('q-theme');
+        var prefers = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', saved || prefers);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
+
+  <link rel="stylesheet" href="/v4/css/tokens.css">
+  <link rel="stylesheet" href="/v4/css/base.css">
+  <link rel="stylesheet" href="/v4/css/components.css">
+  <script src="/v4/components/quillon-ui.js?v=2" defer></script>
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="Блог Quillon" href="/blog/rss.xml">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+{
+  "url": "https://quillon.ru/blog/undefined",
+  "@type": "Article",
+  "image": "https://quillon.ru/blog/og-default.png",
+  "author": {
+    "url": "https://quillon.ru",
+    "name": "Quillon",
+    "@type": "Organization"
+  },
+  "@context": "https://schema.org",
+  "headline": "Бэкенд-разработка для джуна: с чего начать в 2026",
+  "keywords": "",
+  "publisher": {
+    "logo": {
+      "url": "https://quillon.ru/favicon/apple-touch-icon.png",
+      "@type": "ImageObject"
+    },
+    "name": "Quillon",
+    "@type": "Organization"
+  },
+  "description": "Какой язык выбрать, что учить после основ и как джуну зайти в бэкенд в 2026 — без курсов-пустышек и розовых обещаний про 300к."
+}
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://quillon.ru/" },
+      { "@type": "ListItem", "position": 2, "name": "Блог", "item": "https://quillon.ru/blog/" },
+      { "@type": "ListItem", "position": 3, "name": "Бэкенд-разработка для джуна: с чего начать в 2026", "item": "https://quillon.ru/blog/bekend-razrabotka-dlya-dzhuna-s-chego-nachat-v-2026/" }
+    ]
+  }
+  </script>
+
+  <style>
+    /* Article-specific layout, on top of Quillon design system */
+    .q-blog-article {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 var(--q-s-6);
+    }
+    .q-blog-article__meta {
+      padding: 48px 0 24px;
+      border-bottom: 1px solid var(--q-line);
+      margin-bottom: 40px;
+    }
+    .q-blog-article__crumbs {
+      font-size: 12px;
+      color: var(--q-text-low);
+      font-family: var(--q-font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 20px;
+    }
+    .q-blog-article__crumbs a { color: var(--q-text-low); text-decoration: none; }
+    .q-blog-article__crumbs a:hover { color: var(--q-accent); }
+    .q-blog-article__crumbs span { margin: 0 6px; }
+
+    .q-blog-article__title {
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      color: var(--q-text-hi);
+      margin-bottom: 16px;
+    }
+    .q-blog-article__desc {
+      font-size: 18px;
+      color: var(--q-text-mid);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+    .q-blog-article__date {
+      font-size: 12px;
+      font-family: var(--q-font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--q-text-low);
+    }
+
+    .q-blog-cover {
+      margin: 32px 0 40px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--q-line);
+      aspect-ratio: 1.78;
+      background: var(--q-bg-2);
+    }
+    .q-blog-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .q-blog-content { padding-bottom: 80px; color: var(--q-text-mid); font-size: 16px; line-height: 1.7; }
+    .q-blog-content h2 {
+      font-size: clamp(20px, 2.5vw, 28px);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.02em;
+      margin: 48px 0 16px;
+      color: var(--q-text-hi);
+    }
+    .q-blog-content h3 {
+      font-size: 18px;
+      font-weight: var(--q-fw-medium);
+      margin: 32px 0 12px;
+      color: var(--q-text-hi);
+    }
+    .q-blog-content p { margin-bottom: 20px; }
+    .q-blog-content ul, .q-blog-content ol { padding-left: 24px; margin-bottom: 20px; }
+    .q-blog-content li { margin-bottom: 8px; }
+    .q-blog-content strong { color: var(--q-text-hi); font-weight: var(--q-fw-medium); }
+    .q-blog-content a {
+      color: #5EF2A1;
+      text-decoration: underline;
+      text-decoration-color: rgba(94,242,161,.3);
+    }
+    .q-blog-content a:hover { text-decoration-color: #5EF2A1; }
+    .q-blog-content blockquote {
+      border-left: 2px solid #5EF2A1;
+      padding: 12px 20px;
+      margin: 24px 0;
+      background: var(--q-bg-2);
+      border-radius: 0 8px 8px 0;
+      color: var(--q-text-mid);
+      font-style: italic;
+    }
+    .q-blog-content pre {
+      background: var(--q-bg-3);
+      border: 1px solid var(--q-line);
+      border-radius: 10px;
+      padding: 20px;
+      overflow-x: auto;
+      margin: 24px 0;
+      font-family: var(--q-font-mono);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .q-blog-content code {
+      font-family: var(--q-font-mono);
+      font-size: 13px;
+      background: var(--q-bg-2);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #5EF2A1;
+    }
+    .q-blog-content pre code { background: none; padding: 0; color: var(--q-text-hi); }
+    .q-blog-content hr { border: none; border-top: 1px solid var(--q-line); margin: 40px 0; }
+
+    .q-blog-cta {
+      background: var(--q-bg-2);
+      border: 1px solid var(--q-line);
+      border-top: 2px solid #5EF2A1;
+      border-radius: 14px;
+      padding: 32px;
+      margin: 48px 0;
+      text-align: center;
+    }
+    .q-blog-cta h3 { color: var(--q-text-hi); font-size: 20px; margin-bottom: 12px; }
+    .q-blog-cta p { color: var(--q-text-mid); margin-bottom: 20px; }
+    .q-blog-cta__btn {
+      display: inline-block;
+      background: #5EF2A1;
+      color: #04070C;
+      font-weight: var(--q-fw-semibold);
+      font-size: 15px;
+      padding: 12px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background var(--q-dur-fast) var(--q-ease);
+    }
+    .q-blog-cta__btn:hover { background: #7DFFB3; }
+
+    /* highlight.js token colors */
+    .hljs-keyword { color: #5EF2A1; }
+    .hljs-string { color: #F5B544; }
+    .hljs-number { color: #F06B8E; }
+    .hljs-comment { color: var(--q-text-low); font-style: italic; }
+    .hljs-built_in, .hljs-name { color: #9BCBFF; }
+
+    @media (max-width: 640px) {
+      .q-blog-article { padding: 0 16px; }
+      .q-blog-cta { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<quillon-header accent="mint" current="blog"></quillon-header>
+
+<main id="main" class="q-blog-article">
+  <div class="q-blog-article__meta">
+    <nav class="q-blog-article__crumbs" aria-label="Хлебные крошки">
+      <a href="/">Главная</a><span>→</span>
+      <a href="/blog/">Блог</a><span>→</span>
+      <span>Бэкенд-разработка для джуна: с чего начать в 2026</span>
+    </nav>
+    <h1 class="q-blog-article__title">Бэкенд-разработка для джуна: с чего начать в 2026</h1>
+    <p class="q-blog-article__desc">Какой язык выбрать, что учить после основ и как джуну зайти в бэкенд в 2026 — без курсов-пустышек и розовых обещаний про 300к.</p>
+    <time class="q-blog-article__date" datetime="Sat May 02 2026 16:40:48 GMT+0300 (Moscow Standard Time)">2 мая 2026 г.</time>
+  </div>
+
+  <figure class="q-blog-cover"><img src="https://8390f83d-2f6a-4d51-a160-8b08ea3fbea1.selstorage.ru/blog/covers/bekend-razrabotka-dlya-dzhuna-s-chego-nachat-v-2026-c5c456e2.png" alt="Бэкенд-разработка для джуна: с чего начать в 2026" loading="eager"></figure>
+
+  <article class="q-blog-content">
+    <h1>Бэкенд-разработка для джуна: с чего начать в 2026</h1>
+<p>Курсы обещают «стать backend-разработчиком за три месяца» и зарплату 300к. По правде — всё немного иначе. Вот честный разбор без воды: что учить, с чего начать и как не потерять год на красивые, но бесполезные видео.</p>
+<hr>
+<h2>Что вообще делает бэкендер (и почему это не «программист сайтов»)</h2>
+<p>Фронтенд рисует кнопку «Оформить заказ». Бэкенд решает всё, что происходит после клика: проверяет наличие товара на складе, авторизует платёж, отправляет письмо, пишет в базу данных, логирует ошибку если что-то пошло не так. Это и есть бэкенд — бизнес-логика, данные, безопасность, производительность.</p>
+<p>Реальные задачи джуна на первой работе выглядят не как «написать соцсеть с нуля». Скорее так: починить ручку API, которая возвращает 500 на конкретный запрос; добавить поле в таблицу и не сломать существующие данные; разобраться, почему один SQL-запрос выполняется 4 секунды вместо 200 миллисекунд. Звучит прозаично, но именно на таких задачах растёшь быстрее всего.</p>
+<p>Кстати, в 2026 границы между бэкендом, full-stack и DevOps заметно стёрлись. В небольших продуктовых компаниях backend-разработчик сам пишет docker-compose, сам разворачивает сервис, сам смотрит логи на сервере. В Яндексе или Авито строже — там есть выделенные Platform и SRE команды. Но даже там от джуна ждут понимания процесса целиком, а не «я только код пишу».</p>
+<p>Full-stack — это «умею обе стороны на среднем уровне», не «умею всё». DevOps — отдельная профессия с другой базой знаний. Путать их на собесе не стоит.</p>
+<hr>
+<h2>Какой язык выбрать для бэкенда новичку: честный разбор без хайпа</h2>
+<p>С чего начать backend разработку в 2026, если выбор языков пугает? Честный ответ: по умолчанию Python.</p>
+<p>Python с Django или FastAPI — самый низкий порог входа из всех серьёзных бэкенд-вариантов. На hh.ru прямо сейчас больше 4000 открытых вакансий, где Python стоит первым в требованиях для джунов. Минус — конкуренция жёсткая: все новички идут туда же, выделиться сложнее.</p>
+<p>Node.js с TypeScript — хороший выбор, если уже работал с JavaScript на фронте. Переход в бэкенд занимает недели, а не месяцы: синтаксис знаком, async/await уже в голове. Вакансий меньше, конкуренция тоже ниже.</p>
+<p>Go и Java платят больше — джуны на Go в Москве стартуют от 120к. Но берут реже и планка входа выше: на собесе ждут понимания типов, многопоточности, архитектуры. Без крепкой базы идти туда рано.</p>
+<p>PHP не умер. Bitrix и 1С-интеграции кормят огромный кусок рынка — особенно e-commerce и корпоратив. Идти туда осознанно можно, спрос стабильный.</p>
+<p>Ну и главное правило: один язык хорошо — лучше, чем пять по верхам.</p>
+<hr>
+<h2>Базовый минимум: что нужно знать ДО первого собеса</h2>
+<p>Что должен знать джун бэкендер, чтобы его вообще пригласили на интервью? Четыре вещи — без них даже не стоит откликаться.</p>
+<p>Первое — язык на уровне «могу написать CRUD без гугла». Не пять языков поверхностно, не «читал про Go, смотрел видео про Rust». Один, зато уверенно.</p>
+<p>Второе — SQL и PostgreSQL. Это самый частый провал на собесах: человек уверенно пишет на Python, но не может объяснить JOIN. Без SQL тебя не позовут даже на первичный скрининг. PostgreSQL — стандарт для джунов в 2026.</p>
+<p>Третье — HTTP и REST. Статус-коды (и почему 401 не то же самое, что 403), как устроен запрос-ответ, что идёт в headers, что в body. Это спрашивают все — от стартапа из трёх человек до Т-Банка.</p>
+<p>Четвёртое — Git. Не на уровне «делаю commit и push». Merge, rebase, как разрулить конфликт, что такое feature-ветка. Когда начинал, я убил неделю на то, чтобы разобраться с rebase — лучше потерять её сейчас, чем на тестовом задании от нормальной компании.</p>
+<hr>
+<h2>Что должен знать джун бэкендер сверх базы в 2026</h2>
+<p>Пройдёшь базу — хорошо. Но в 2026 новичок с только базой конкурирует с сотней таких же. Вот что реально добавляет очков.</p>
+<p>Docker и docker-compose. Поднять локально проект из пяти сервисов — уже не задача сеньора, это минимальный стандарт. В Авито или Сбере дадут репозиторий с docker-compose.yml и скажут: «Разворачивай». Не уметь — значит тормозить команду с первого дня.</p>
+<p>Очереди: Redis, RabbitMQ, Kafka. Не нужно уметь администрировать с нуля, но понимать зачем они нужны — обязательно. Почти каждый продакшен-проект использует очереди для асинхронных задач: отправка уведомлений, обработка платежей, фоновые задания.</p>
+<p>Тесты. Unit и интеграционные — без этого код в прод не пускают в нормальных командах. Нужно уметь написать тест на свою функцию и понимать, что такое мок. 100% покрытия никто не требует с первого дня.</p>
+<p>Linux в терминале. SSH, просмотр логов через tail и grep, базовые права доступа. Забегая вперёд: именно умение самостоятельно читать логи и находить ошибку в проде часто отделяет бэкендера, которого берут повторно, от того, которого нет.</p>
+<hr>
+<h2>Пет-проект, который реально засчитают (а не клон туду-листа)</h2>
+<p>Туду-лист, приложение погоды, калькулятор. Рекрутер закрывает резюме на втором клике — это не преувеличение.</p>
+<p>Что работает в 2026 — проект с реальной задачей. Телеграм-бот, которым ты сам пользуешься каждый день. Парсер с базой данных, который собирает нужную тебе информацию. Мини-сервис для друзей или коллег. Неважно насколько маленький — важно, что он решает настоящую проблему, а не повторяет туториал.</p>
+<p>Обязательный минимум на гитхабе: нормальный README с описанием и инструкцией по запуску, хотя бы базовые тесты, докер, деплой на бесплатный хостинг. Railway и Render оба работают бесплатно. Ссылка на работающий проект в резюме весит больше, чем три строчки с курсами.</p>
+<p>Помню в 2024 видел резюме с восемью туториальными проектами и ни одним собственным — это красный флаг, не плюс. Один глубокий проект бьёт пять поверхностных: глубина — это когда ты добавил авторизацию, написал тесты, столкнулся с проблемой производительности и решил её. Вот о чём интересно разговаривать на собесе.</p>
+<hr>
+<h2>Сколько зарабатывает junior backend разработчик и куда смотреть на старте</h2>
+<p>Реальная вилка джуна в Москве и Питере на 2026 — 80–150к рублей. Не 300к из рекламы курсов, не 50к с испытательного срока в аутсорсе из девяностых. По данным hh.ru, медиана для джунов-бэкендеров в Москве — около 100–110к.</p>
+<p>В регионах и на удалёнке — от 60к, потолок ниже, но и стоимость жизни другая.</p>
+<p>Стажировки в Яндексе, Авито, Т-Банке, Сбере дают 50–70к на старте, но буст в резюме огромный. После полугода в Авито ты уже не «джун без коммерческого опыта» — ты человек с опытом работы в Авито. На следующем собесе это по-настоящему работает.</p>
+<p>Аутсорс учит быстро переключаться между проектами и стеками. Продуктовые компании дают глубину в одном направлении и часто платят больше. Где быстрее вырастешь — зависит от конкретной команды.</p>
+<p>Короче, первая работа важнее первой зарплаты. Через 12–18 месяцев нормального роста джун переходит на мидла с вилкой 180–250к. Это реальный сценарий, а не маркетинг.</p>
+<hr>
+<h2>Как искать первую работу, когда «нужен опыт от года»</h2>
+<p>Это требование стоит почти везде — и почти нигде не соблюдается строго. «Нужен опыт от года» означает «хотим не полного нуля». Если есть нормальный пет-проект — ты уже не ноль.</p>
+<p>Резюме джуна — одна страница. Вместо строчки «опыта нет» — пет-проекты с ссылками на гитхаб и деплой. Стек первым, проекты сразу после, курсы в самый низ.</p>
+<p>Откликаться только через hh.ru — медленно. Телеграм-каналы вакансий, Хабр Карьера, реферальные программы в тех же Авито и Озоне — через реферал от действующего сотрудника можно попасть на просмотр резюме быстрее, чем через общую очередь.</p>
+<p>К техническому собесу лит-код не нужен. Нужны SQL-задачи, вопросы по HTTP и REST, умение рассказать об архитектуре своего пет-проекта — что выбрал, почему, что бы сделал иначе.</p>
+<p>Сколько откликов нужно до первого оффера без коммерческого опыта — реальная цифра 50–100. Не 10 и не 20. Это нормально, а не признак того, что ты недостаточно хорош.</p>
+<hr>
+<h2>С чего начать прямо сегодня: план на ближайшие 6 месяцев</h2>
+<p>Месяцы 1–2: один язык (Python или Node.js) плюс основы SQL. Никаких метаний между Python и Go уже на первой неделе. Один язык, каждый день практика — не видео, а написание кода руками.</p>
+<p>Месяцы 3–4: фреймворк (Django, FastAPI или Express), Docker, первый пет-проект на гитхабе. Не туториал — свой проект, пусть маленький. Задеплоить его на бесплатный хостинг — обязательно.</p>
+<p>Месяцы 5–6: тесты, второй проект сложнее первого, активное собеседование — даже если кажется «ещё не готов». Первые пять собесов — обучение на реальных вопросах, не попытки получить оффер.</p>
+<p>Что не делать: проходить десятый курс «с нуля» вместо того, чтобы писать код. Смотреть видео про бэкенд — это не то же самое, что писать бэкенд. Знание без практики в оффер не конвертируется — ни в 2024, ни в 2026.</p>
+<hr>
+<h2>Частые вопросы</h2>
+<p><strong>Можно ли вкатиться в бэкенд после 30 без технического образования?</strong></p>
+<p>Да, и таких в индустрии большинство. Возраст и диплом смотрят редко — смотрят на код на гитхабе и как ты решаешь задачи на собесе. Дольше учиться придётся только если совсем нулевой бэкграунд в логике.</p>
+<p><strong>Стоит ли учить ИИ и нейросети вместо классического бэкенда в 2026?</strong></p>
+<p>ML/AI — отдельная специализация с другим порогом входа: математика, статистика. Если цель — быстро получить работу, классический бэкенд даёт больше вакансий для джуна. Интегрировать LLM в свой сервис ты научишься уже на первой работе.</p>
+<p><strong>Сколько часов в день нужно учиться, чтобы найти работу за полгода?</strong></p>
+<p>Минимум 2–3 часа в будни и по 5–6 в выходные, если совмещаешь с работой. С нуля до оффера за 3 месяца — маркетинговый миф курсов; реальный срок 6–12 месяцев плотной практики.</p>
+<p><strong>Нужен ли английский джуну-бэкендеру?</strong></p>
+<p>Для российских компаний — на уровне чтения документации, этого хватит. Для международных вакансий и удалёнки на западные рынки — B1+ обязателен. Без английского отсекается процентов 40 интересных позиций.</p>
+<p><strong>Что делать, если уже полгода учу, но боюсь идти на собесы?</strong></p>
+<p>Идти. Первые 5–10 собесов — это не «попытки получить работу», а бесплатное обучение на реальных вопросах. Готовым ты не станешь никогда — это нормальное состояние, в котором живут даже сеньоры.</p>
+<hr>
+<p>Не уверен, какое направление твоё — Python, QA, Flutter? Пройди тест на профориентацию: quillon.ru/quiz</p>
+
+  </article>
+
+  <div class="q-blog-cta">
+    <h3>Хочешь войти в IT за 12 месяцев?</h3>
+    <p>Выбери трек — Python, Flutter или QA — и начни с бесплатного вводного урока</p>
+    <a href="/#products" class="q-blog-cta__btn">Выбрать трек</a>
+  </div>
+</main>
+
+<quillon-footer accent="mint"></quillon-footer>
+
+<!-- Яндекс.Метрика -->
+<script type="text/javascript">
+  (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+  m[i].l=1*new Date();
+  for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
+  k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+  (window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
+  ym(108311343,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/108311343" style="position:absolute;left:-9999px;" alt=""/></div></noscript>
+
+</body>
+</html>

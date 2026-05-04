@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QA или Python-разработчик: что выбрать новичку без опыта — Quillon</title>
+  <meta name="description" content="Сравниваем тестировщика и Python-разработчика по входу, зарплате и нагрузке. Помогаем понять, какая профессия подойдёт именно вам.">
+  <meta name="keywords" content="qa или python разработчик, что выбрать новичку в it, тестировщик или программист, профессия с нуля в it, python для начинающих">
+  <link rel="canonical" href="https://quillon.ru/blog/qa-ili-python-razrabotchik-chto-vybrat-novichku-bez-opyta/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="QA или Python-разработчик: что выбрать новичку без опыта">
+  <meta property="og:description" content="Сравниваем тестировщика и Python-разработчика по входу, зарплате и нагрузке. Помогаем понять, какая профессия подойдёт именно вам.">
+  <meta property="og:url" content="https://quillon.ru/blog/qa-ili-python-razrabotchik-chto-vybrat-novichku-bez-opyta/">
+  <meta property="og:image" content="https://8390f83d-2f6a-4d51-a160-8b08ea3fbea1.selstorage.ru/blog/covers/qa-ili-python-razrabotchik-chto-vybrat-novichku-bez-opyta-2cbd51a1.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Quillon">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="article:published_time" content="Sat May 02 2026 16:46:06 GMT+0300 (Moscow Standard Time)">
+  <meta property="article:modified_time" content="Sat May 02 2026 16:46:06 GMT+0300 (Moscow Standard Time)">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="QA или Python-разработчик: что выбрать новичку без опыта">
+  <meta name="twitter:description" content="Сравниваем тестировщика и Python-разработчика по входу, зарплате и нагрузке. Помогаем понять, какая профессия подойдёт именно вам.">
+  <meta name="twitter:image" content="https://8390f83d-2f6a-4d51-a160-8b08ea3fbea1.selstorage.ru/blog/covers/qa-ili-python-razrabotchik-chto-vybrat-novichku-bez-opyta-2cbd51a1.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+  <!-- Quillon design system -->
+
+  <!-- Theme bootstrap: ставим data-theme до загрузки CSS чтобы не было FOUC -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('q-theme');
+        var prefers = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', saved || prefers);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
+
+  <link rel="stylesheet" href="/v4/css/tokens.css">
+  <link rel="stylesheet" href="/v4/css/base.css">
+  <link rel="stylesheet" href="/v4/css/components.css">
+  <script src="/v4/components/quillon-ui.js?v=2" defer></script>
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="Блог Quillon" href="/blog/rss.xml">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+{
+  "url": "https://quillon.ru/blog/undefined",
+  "@type": "Article",
+  "image": "https://quillon.ru/blog/og-default.png",
+  "author": {
+    "url": "https://quillon.ru",
+    "name": "Quillon",
+    "@type": "Organization"
+  },
+  "@context": "https://schema.org",
+  "headline": "QA или Python-разработчик: что выбрать новичку без опыта",
+  "keywords": "qa или python разработчик, что выбрать новичку в it, тестировщик или программист, профессия с нуля в it, python для начинающих",
+  "publisher": {
+    "logo": {
+      "url": "https://quillon.ru/favicon/apple-touch-icon.png",
+      "@type": "ImageObject"
+    },
+    "name": "Quillon",
+    "@type": "Organization"
+  },
+  "description": "Сравниваем тестировщика и Python-разработчика по входу, зарплате и нагрузке. Помогаем понять, какая профессия подойдёт именно вам."
+}
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://quillon.ru/" },
+      { "@type": "ListItem", "position": 2, "name": "Блог", "item": "https://quillon.ru/blog/" },
+      { "@type": "ListItem", "position": 3, "name": "QA или Python-разработчик: что выбрать новичку без опыта", "item": "https://quillon.ru/blog/qa-ili-python-razrabotchik-chto-vybrat-novichku-bez-opyta/" }
+    ]
+  }
+  </script>
+
+  <style>
+    /* Article-specific layout, on top of Quillon design system */
+    .q-blog-article {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 var(--q-s-6);
+    }
+    .q-blog-article__meta {
+      padding: 48px 0 24px;
+      border-bottom: 1px solid var(--q-line);
+      margin-bottom: 40px;
+    }
+    .q-blog-article__crumbs {
+      font-size: 12px;
+      color: var(--q-text-low);
+      font-family: var(--q-font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 20px;
+    }
+    .q-blog-article__crumbs a { color: var(--q-text-low); text-decoration: none; }
+    .q-blog-article__crumbs a:hover { color: var(--q-accent); }
+    .q-blog-article__crumbs span { margin: 0 6px; }
+
+    .q-blog-article__title {
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      color: var(--q-text-hi);
+      margin-bottom: 16px;
+    }
+    .q-blog-article__desc {
+      font-size: 18px;
+      color: var(--q-text-mid);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+    .q-blog-article__date {
+      font-size: 12px;
+      font-family: var(--q-font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--q-text-low);
+    }
+
+    .q-blog-cover {
+      margin: 32px 0 40px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--q-line);
+      aspect-ratio: 1.78;
+      background: var(--q-bg-2);
+    }
+    .q-blog-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .q-blog-content { padding-bottom: 80px; color: var(--q-text-mid); font-size: 16px; line-height: 1.7; }
+    .q-blog-content h2 {
+      font-size: clamp(20px, 2.5vw, 28px);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.02em;
+      margin: 48px 0 16px;
+      color: var(--q-text-hi);
+    }
+    .q-blog-content h3 {
+      font-size: 18px;
+      font-weight: var(--q-fw-medium);
+      margin: 32px 0 12px;
+      color: var(--q-text-hi);
+    }
+    .q-blog-content p { margin-bottom: 20px; }
+    .q-blog-content ul, .q-blog-content ol { padding-left: 24px; margin-bottom: 20px; }
+    .q-blog-content li { margin-bottom: 8px; }
+    .q-blog-content strong { color: var(--q-text-hi); font-weight: var(--q-fw-medium); }
+    .q-blog-content a {
+      color: #5EF2A1;
+      text-decoration: underline;
+      text-decoration-color: rgba(94,242,161,.3);
+    }
+    .q-blog-content a:hover { text-decoration-color: #5EF2A1; }
+    .q-blog-content blockquote {
+      border-left: 2px solid #5EF2A1;
+      padding: 12px 20px;
+      margin: 24px 0;
+      background: var(--q-bg-2);
+      border-radius: 0 8px 8px 0;
+      color: var(--q-text-mid);
+      font-style: italic;
+    }
+    .q-blog-content pre {
+      background: var(--q-bg-3);
+      border: 1px solid var(--q-line);
+      border-radius: 10px;
+      padding: 20px;
+      overflow-x: auto;
+      margin: 24px 0;
+      font-family: var(--q-font-mono);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .q-blog-content code {
+      font-family: var(--q-font-mono);
+      font-size: 13px;
+      background: var(--q-bg-2);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #5EF2A1;
+    }
+    .q-blog-content pre code { background: none; padding: 0; color: var(--q-text-hi); }
+    .q-blog-content hr { border: none; border-top: 1px solid var(--q-line); margin: 40px 0; }
+
+    .q-blog-cta {
+      background: var(--q-bg-2);
+      border: 1px solid var(--q-line);
+      border-top: 2px solid #5EF2A1;
+      border-radius: 14px;
+      padding: 32px;
+      margin: 48px 0;
+      text-align: center;
+    }
+    .q-blog-cta h3 { color: var(--q-text-hi); font-size: 20px; margin-bottom: 12px; }
+    .q-blog-cta p { color: var(--q-text-mid); margin-bottom: 20px; }
+    .q-blog-cta__btn {
+      display: inline-block;
+      background: #5EF2A1;
+      color: #04070C;
+      font-weight: var(--q-fw-semibold);
+      font-size: 15px;
+      padding: 12px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background var(--q-dur-fast) var(--q-ease);
+    }
+    .q-blog-cta__btn:hover { background: #7DFFB3; }
+
+    /* highlight.js token colors */
+    .hljs-keyword { color: #5EF2A1; }
+    .hljs-string { color: #F5B544; }
+    .hljs-number { color: #F06B8E; }
+    .hljs-comment { color: var(--q-text-low); font-style: italic; }
+    .hljs-built_in, .hljs-name { color: #9BCBFF; }
+
+    @media (max-width: 640px) {
+      .q-blog-article { padding: 0 16px; }
+      .q-blog-cta { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<quillon-header accent="mint" current="blog"></quillon-header>
+
+<main id="main" class="q-blog-article">
+  <div class="q-blog-article__meta">
+    <nav class="q-blog-article__crumbs" aria-label="Хлебные крошки">
+      <a href="/">Главная</a><span>→</span>
+      <a href="/blog/">Блог</a><span>→</span>
+      <span>QA или Python-разработчик: что выбрать новичку без опыта</span>
+    </nav>
+    <h1 class="q-blog-article__title">QA или Python-разработчик: что выбрать новичку без опыта</h1>
+    <p class="q-blog-article__desc">Сравниваем тестировщика и Python-разработчика по входу, зарплате и нагрузке. Помогаем понять, какая профессия подойдёт именно вам.</p>
+    <time class="q-blog-article__date" datetime="Sat May 02 2026 16:46:06 GMT+0300 (Moscow Standard Time)">2 мая 2026 г.</time>
+  </div>
+
+  <figure class="q-blog-cover"><img src="https://8390f83d-2f6a-4d51-a160-8b08ea3fbea1.selstorage.ru/blog/covers/qa-ili-python-razrabotchik-chto-vybrat-novichku-bez-opyta-2cbd51a1.png" alt="QA или Python-разработчик: что выбрать новичку без опыта" loading="eager"></figure>
+
+  <article class="q-blog-content">
+    <h1>QA или Python-разработчик: что выбрать новичку без опыта</h1>
+<p>За последний год ко мне написало человек сорок с одним и тем же вопросом: «qa или python разработчик — куда идти, если мне 32, я бухгалтер, у меня двое детей и подушка на восемь месяцев». Половина из них через месяц пропадала, треть выбирала Python и зависала на первой работе год, остальные шли в QA и через полгода уже сидели на офере.</p>
+<p>Так что давай разберём по-честному, без курсовой воды.</p>
+<h2>Почему вообще стоит выбор именно между этими двумя</h2>
+<p>Когда человек без техбэкграунда заходит в IT, у него на старте лежат пять вариантов: фронтенд, аналитика, дизайн, QA и Python. Почти всегда он отваливается до первых трёх за несколько недель.</p>
+<p>Фронтенд отпугивает HTML, CSS и JavaScript одновременно: три языка, три экосистемы, тонна нюансов с браузерами. Аналитика требует SQL плюс статистику плюс умение работать с бизнесом — это уже три параллельных навыка, которые надо качать сразу. Дизайн — отдельная вселенная с насмотренностью, которую за полгода не накопишь.</p>
+<p>Остаются QA и Python. Обе профессии не требуют диплома: Авито, Озон и Яндекс берут джунов из автошкол, банков и фитнес-клубов, если человек прошёл собес. Я сам видел в команде QA бывшего повара и логиста с РЖД. Никого не волнует, что ты делал до этого.</p>
+<p>Разница в складе ума. QA — это про внимание к мелочам и спор по фактам. Python — про упорство и способность сидеть три часа над одним багом, не сходя с ума. Если ты не понимаешь, к какому из этих типов ближе, ты застрянешь в выборе на полгода. И это нормально, многие застревают.</p>
+<p>Дилемма «qa или python разработчик» возникает у людей одного типа: им нужен предсказуемый вход в индустрию без художественной подготовки и без диплома МФТИ. Обе профессии этому соответствуют. Дальше всё упирается в детали.</p>
+<h2>Что на самом деле делает тестировщик (а не как в вакансиях)</h2>
+<p>День QA-инженера выглядит примерно так. Утром стендап минут на пятнадцать, дальше разбор задач из Jira, потом проверка фичи, которую разработчик закатил вчера ночью. Находишь баг, заводишь тикет с шагами воспроизведения, скриншотами и логами. Потом приходит разраб и говорит «у меня не воспроизводится». Идёшь к нему, показываешь, доказываешь.</p>
+<p>Вот это «доказываешь» — половина работы тестировщика. Тебе нужно не просто кликнуть и увидеть ошибку. Тебе нужно объяснить разработчику, что его код сломан, и сделать это так, чтобы он не послал тебя.</p>
+<p>Ручное тестирование против автоматизации — частая дилемма. Новичку идти в ручное нормально, не слушай тех, кто говорит «сразу учи Selenium». В ручном QA ты быстрее видишь продукт целиком, понимаешь логику пользователя, ловишь баги, которые автотест в принципе не поймает. Через год-полтора, если хочется денег, переходишь в автоматизацию, и там уже Python или Java.</p>
+<p>Что бесит реально. Рутина: один и тот же чек-лист по 50 раз перед релизом. Споры с разрабами, которые искренне считают, что «это не баг, это фича». Релизы по ночам и в выходные, потому что прод трогают, когда нагрузка минимальная. Если ты думаешь, что тестировщик — это «нажимать кнопочки», ты не доживёшь до второго месяца. Кстати, защита бага перед сениор-разрабом, у которого 10 лет опыта, а у тебя 3 месяца — отдельный жанр стресса.</p>
+<h2>Что делает Python-разработчик и почему это не всегда «писать код»</h2>
+<p>Python — язык-зонтик. Под ним прячется минимум четыре разные специальности, которые между собой пересекаются процентов на двадцать.</p>
+<p>Бэкенд на Django или FastAPI: пишешь API, лезешь в базу, разбираешься с очередями вроде RabbitMQ. Скрипты и автоматизация: парсеры, интеграции, обработка данных без интерфейса. Дата-инжиниринг: пайплайны на Airflow, оркестрация, выгрузки. ML — это вообще отдельная вселенная с numpy, pandas, PyTorch. Когда вакансия говорит «Python-разработчик», уточняй стек, иначе попадёшь не туда.</p>
+<p>Сколько времени уходит на код. По моим наблюдениям, у мидла на чистое программирование тратится примерно 30-40% рабочего времени. Остальное — чтение чужого кода (это процентов 25, серьёзно), созвоны, ревью пулреквестов, переписки в Slack, разбирательства с продактом. У джуна цифры ещё хуже: первые три месяца ты в основном читаешь, а не пишешь.</p>
+<p>Почему джуну на Python сложнее найти первую работу. Рынок переполнен. На hh.ru на одну вакансию Python Junior в Москве откликается, по моим прикидкам, 200-400 человек. На QA Manual Junior — 80-150. Разница ощутима. Плюс у работодателя нет дешёвого способа проверить, что ты пишешь нормальный код, поэтому смотрят строже: алгоритмы, тестовые на 8 часов, секции на собесах. На QA достаточно показать, что у тебя голова работает.</p>
+<h2>Сколько учиться до первой зарплаты: честные сроки</h2>
+<p>Курсы обещают «зарплата через 3 месяца». В реальности 3 месяца — это срок, за который человек, занимающийся по 4 часа в день без пропусков, может закончить программу курса. От «закончил курс» до «вышел на работу» — ещё 2-4 месяца отклика на вакансии, тестовых, провальных собесов, доучивания того, что курс не дал.</p>
+<p>QA с нуля до офера: в среднем 4-7 месяцев при занятости 2-3 часа в день. Это если ты учишь теорию тестирования по Куликову, разбираешь чек-листы, лезешь в Postman, SQL и Jira. Параллельно делаешь pet-проекты: тестируешь реальное приложение из стора, заводишь баги в открытый репозиторий, ведёшь баг-репорты в Notion для портфолио.</p>
+<p>Python с нуля до джуниора: 9-14 месяцев, и это если не сдаёшься на ООП. Помню, я в 2023 году убил полтора месяца на разницу между classmethod и staticmethod. Не на саму разницу — на понимание, зачем они вообще нужны. После ООП идёт асинхронность, потом базы, потом Docker, потом Linux на уровне «не пугаюсь bash». Каждый из этих шагов отнимает по месяцу, и это нормально.</p>
+<p>Курсы говорят «3 месяца» по простой причине: маркетингу нужна цифра, которая помещается в баннер. У них есть несколько кейсов выпускников, которые правда устроились за 3 месяца — потому что у них был техбэкграунд, или они учились по 8 часов в день, или повезло. Эти кейсы идут в рекламу. Остальные 80% выпускников добираются до офера за 9-12 месяцев, и про них в маркетинговых материалах не пишут.</p>
+<h2>Зарплаты в 2026: где старт выше, а где быстрее растёт потолок</h2>
+<p>По данным hh.ru на апрель 2026, медианная вилка джуна QA Manual в Москве — 80-130 тысяч рублей на руки, в регионах процентов на 30 ниже. Junior Python в Москве: 90-150 тысяч, тоже на руки. Старт сопоставимый, разрыв небольшой.</p>
+<p>Дальше начинается интересное. QA-автоматизатор с двумя годами опыта в Авито или Тинькофф спокойно получает 250-320 тысяч. Python-мидл в тех же компаниях — 280-380 тысяч. Разница процентов 15-20, не в разы.</p>
+<p>Через 5 лет картина меняется. Senior Python в финтехе или ML — это 450-700 тысяч, иногда больше с бонусами. Senior QA Automation — 350-500. Python потолок выше, и это логично: разработчик создаёт продукт, тестировщик его проверяет, бизнес исторически платит больше первым.</p>
+<p>Только вот деньги через 5 лет — это не главный аргумент, когда тебе сейчас надо платить за квартиру. Если на старте у тебя выбор между «QA через 5 месяцев» и «Python через 12», и оба дают 100к в первый год, разница в полугода прокорма — это минус 600 тысяч рублей. Эту разницу Python-разраб догонит лет через 4-5. Не раньше.</p>
+<h2>Кому какая профессия зайдёт по характеру</h2>
+<p>QA подходит людям, которые в обычной жизни замечают несостыковки. Опечатку в меню ресторана, кривой шрифт на билборде, странную логику в банковском приложении. Если ты тот самый человек, который читает договор аренды до конца и спорит с менеджером по поводу пятого пункта — тебя ждут в тестировании.</p>
+<p>Ещё важна способность аргументировать. QA постоянно спорит с разработчиками. «Это баг» — «нет, не баг» — «вот по требованию пункт 3.2.1, должно быть так-то». Без этого навыка тебя задавят, и ты будешь молча закрывать тикеты, которые надо было защищать.</p>
+<p>Python заходит другим. Это люди, которые могут засесть на пять часов над одной задачей и не заметить, что за окном стемнело. Кайф приходит от момента, когда ты три дня не понимал, почему запрос валится, и вдруг — щёлк, заработало. Если ты ждёшь немедленной обратной связи и злишься, когда что-то не получается за 20 минут, тебе будет тяжело.</p>
+<p>Чек-лист из пяти вопросов:</p>
+<ol>
+<li>Когда ты последний раз спорил с кем-то по поводу формулировки в документе? Если недавно — QA.</li>
+<li>Тебе кайфово копаться в одной задаче часами или ты быстро устаёшь? Часами — Python.</li>
+<li>Ты замечаешь баги в приложениях, которыми пользуешься? Да — QA.</li>
+<li>Ты можешь долго не получать дофамин от результата? Да — Python.</li>
+<li>Ты любишь, когда работа разнообразная, или предпочитаешь глубокое погружение? Разнообразная — QA.</li>
+</ol>
+<p>Если четыре из пяти склоняются в одну сторону, у тебя есть ответ. Если три на два — иди туда, где деньги нужны быстрее.</p>
+<h2>Можно ли начать с QA и потом перейти в Python</h2>
+<p>Можно, и это популярный путь. Реальная траектория выглядит так: ручной QA полгода-год, потом автоматизация на Python в той же команде, потом — если повезёт и захочется — переход в бэкенд-разработку.</p>
+<p>Плюс пути очевиден. Ты приходишь в Python с пониманием, как ломается код, как работают тесты, как устроен релизный процесс. У тебя есть продуктовый контекст: ты знаешь, чего хочет бизнес, потому что год писал тест-кейсы по его требованиям. В команде ты быстрее войдёшь в задачи, чем джун с курсов, который не знает, что такое стейджинг.</p>
+<p>Минус — потерянное время. Если твоя цель с самого начала была «писать код», то полтора-два года в QA ты не накапливал опыт разработчика. Зарплата автоматизатора через 2 года ниже зарплаты бэкендера с тем же стажем процентов на 15-25.</p>
+<p>Когда переход реально работает. Если ты в QA-автоматизации уже пишешь не просто Selenium-тесты, а лезешь в API, разбираешь логи бэкенда, чинишь CI/CD. Тогда переход в разработку — это не смена профессии, а расширение зоны ответственности.</p>
+<p>Когда не работает. Если ты застрял в ручном QA на три года, не трогаешь код вообще, а только пишешь чек-листы — переход будет такой же тяжёлый, как с нуля. Опыт работы с продуктом плюсик даст, но базу программирования всё равно учить заново. Я знаю людей, которые так и просидели в ручном тестировании семь лет, периодически порываясь «вот сейчас наконец перейду в разработку». Не перешли.</p>
+<h2>Так что выбрать прямо сейчас</h2>
+<p>Если деньги нужны в ближайшие полгода — QA, без вариантов. Не потому что Python хуже, а потому что путь короче и предсказуемее. Меньше отказов на собесах, меньше требований к алгоритмам, меньше конкуренции на джуновские позиции.</p>
+<p>Если у тебя есть финансовая подушка на год и хочется именно «писать код» — Python. Только честно посчитай, на сколько хватит денег. Если на 6 месяцев, это риск: средний срок до офера 9-12. Если на 12-14 — нормально, успеешь.</p>
+<p>Что делать на этой неделе, если выбрал QA. Заведи аккаунт на Stepik, найди бесплатный курс по основам тестирования (например, у Software-Testing.ru). Параллельно скачай книгу Святослава Куликова «Тестирование программного обеспечения». Этого хватит на первые две недели.</p>
+<p>Что делать на этой неделе, если выбрал Python. Поставь PyCharm Community и Python 3.12. Открой бесплатный курс на Stepik «Поколение Python: курс для начинающих» и пройди первые три модуля. Параллельно зарегистрируйся на Codewars, начни решать задачки уровня 8 kyu — это базовая практика синтаксиса.</p>
+<p>Если честно, главное — не зависай в стадии «выбираю». Я видел десятки людей, которые полгода читают форумы, сравнивают курсы, смотрят ютуб «qa или python разработчик отзывы 2026», и в итоге не делают ничего. Решение принять важнее, чем принять идеально правильное решение. Через месяц практики ты поймёшь больше про себя и про профессию, чем за полгода чтения чужих мнений.</p>
+<h2>FAQ</h2>
+<p><strong>Берут ли в QA и Python после 35-40 лет без опыта?</strong></p>
+<p>Берут, но в QA заметно охотнее: там ценят усидчивость и опыт работы с людьми. В Python возраст не мешает, но конкуренция с молодыми джунами жёстче — спасает только сильное портфолио из 3-4 реальных проектов на гитхабе.</p>
+<p><strong>Что будет с QA, когда тестирование заберёт ИИ?</strong></p>
+<p>Ручных монотонных кейсов станет меньше уже сейчас, но QA-инженер как роль остаётся. Кто-то должен ставить задачи ИИ, валидировать его отчёты и отвечать за качество перед бизнесом. Уязвимы джуны, которые умеют только кликать по чек-листу. Те, кто разбирается в продукте и автоматизации, спят спокойно.</p>
+<p><strong>Нужна ли математика для Python-разработчика?</strong></p>
+<p>Для веб-бэкенда и автоматизации хватит школьной арифметики. Математика реально нужна, только если идёшь в ML, дата-сайенс или геймдев. Если планируешь Django или FastAPI, забудь про матан, ты не вспомнишь его за 5 лет работы ни разу.</p>
+<p><strong>Можно ли совмещать обучение QA или Python с основной работой?</strong></p>
+<p>QA — да, спокойно: 2 часа вечером и выходные дают результат за полгода. Python в таком режиме тоже реально, но готовься, что путь до офера растянется минимум до года, а скорее до полутора. Если сил после работы не остаётся, выбирай QA.</p>
+<p><strong>Что выбрать, если хочется работать на зарубежные компании удалённо?</strong></p>
+<p>Python даёт больше шансов: рынок шире, английский требуется на чтение и переписку. QA на зарубеж берут реже и в основном автоматизаторов с 2+ годами опыта. Если зарубежка — главная цель, иди в Python и сразу подтягивай английский до B2.</p>
+<hr>
+<p>Не уверен, какое направление твоё — Python, QA, может Flutter? У нас короткий тест на профориентацию: пройди и поймёшь, к чему душа лежит. 5 минут, без регистрации: quillon.ru/quiz</p>
+
+  </article>
+
+  <div class="q-blog-cta">
+    <h3>Хочешь войти в IT за 12 месяцев?</h3>
+    <p>Выбери трек — Python, Flutter или QA — и начни с бесплатного вводного урока</p>
+    <a href="/#products" class="q-blog-cta__btn">Выбрать трек</a>
+  </div>
+</main>
+
+<quillon-footer accent="mint"></quillon-footer>
+
+<!-- Яндекс.Метрика -->
+<script type="text/javascript">
+  (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+  m[i].l=1*new Date();
+  for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
+  k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+  (window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
+  ym(108311343,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/108311343" style="position:absolute;left:-9999px;" alt=""/></div></noscript>
+
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Блог Quillon — обучение Python, ML, Flutter, QA</title>
+  <meta name="description" content="Статьи об IT-образовании, карьере разработчика и машинном обучении. Практические советы для тех, кто хочет войти в IT.">
+  <link rel="canonical" href="https://quillon.ru/blog/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Блог Quillon — обучение Python, ML, Flutter, QA">
+  <meta property="og:description" content="Статьи об IT-образовании и карьере разработчика">
+  <meta property="og:url" content="https://quillon.ru/blog/">
+  <meta property="og:image" content="https://quillon.ru/blog/og-default.png">
+  <meta property="og:locale" content="ru_RU">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Блог Quillon">
+  <meta name="twitter:image" content="https://quillon.ru/blog/og-default.png">
+
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="alternate" type="application/rss+xml" title="Блог Quillon" href="/blog/rss.xml">
+
+  <!-- Quillon design system -->
+
+  <!-- Theme bootstrap: ставим data-theme до загрузки CSS чтобы не было FOUC -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('q-theme');
+        var prefers = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', saved || prefers);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
+
+  <link rel="stylesheet" href="/v4/css/tokens.css">
+  <link rel="stylesheet" href="/v4/css/base.css">
+  <link rel="stylesheet" href="/v4/css/components.css">
+  <script src="/v4/components/quillon-ui.js?v=2" defer></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://quillon.ru/" },
+      { "@type": "ListItem", "position": 2, "name": "Блог", "item": "https://quillon.ru/blog/" }
+    ]
+  }
+  </script>
+
+  <style>
+    .q-blog-listing { max-width: 1040px; margin: 0 auto; padding: 0 var(--q-s-6); }
+
+    .q-blog-listing__hero {
+      padding: 16px 0 14px;
+      border-bottom: 1px solid var(--q-line);
+    }
+    .q-blog-listing__eyebrow {
+      font-family: var(--q-font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #5EF2A1;
+      margin-bottom: 4px;
+    }
+    .q-blog-listing__title {
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+      color: var(--q-text-hi);
+      margin-top: -2px;
+    }
+    .q-blog-listing__title span { color: var(--q-text-low); }
+    .q-blog-listing__count {
+      margin-top: 12px;
+      font-size: 14px;
+      color: var(--q-text-low);
+      font-family: var(--q-font-mono);
+    }
+
+    .q-blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1px;
+      border: 1px solid var(--q-line);
+      margin: 24px 0 48px;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .blog-card { background: var(--q-bg-1); transition: background var(--q-dur-fast) var(--q-ease); }
+    .blog-card:hover { background: var(--q-bg-2); }
+    .blog-card a { display: block; padding: 28px; text-decoration: none; color: inherit; height: 100%; }
+    .blog-card img { width: 100%; height: 160px; object-fit: cover; border-radius: 6px; margin-bottom: 16px; }
+    .blog-card h2 { font-size: 17px; font-weight: var(--q-fw-medium); letter-spacing: -0.01em; color: var(--q-text-hi); margin-bottom: 8px; line-height: 1.3; }
+    .blog-card p { font-size: 14px; color: var(--q-text-low); line-height: 1.5; margin-bottom: 16px; }
+    .blog-card time { font-family: var(--q-font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--q-text-low); }
+
+    .q-blog-empty { padding: 80px 0; text-align: center; color: var(--q-text-low); }
+    .q-blog-empty p { font-size: 16px; }
+
+    @media (max-width: 640px) { .q-blog-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<quillon-header accent="mint" current="blog"></quillon-header>
+
+<main id="main" class="q-blog-listing">
+  <div class="q-blog-listing__hero">
+    <p class="q-blog-listing__eyebrow">Блог Quillon</p>
+    <h1 class="q-blog-listing__title">IT-образование <span>без&nbsp;воды</span></h1>
+    <p class="q-blog-listing__count">5 статей</p>
+  </div>
+
+  <div class="q-blog-grid">
+    <article class="blog-card">
+  <a href="/blog/flutter-v-2026-stoit-li-uchit-ili-poezd-uzhe-ushyol/">
+    <img src="https://8390f83d-2f6a-4d51-a160-8b08ea3fbea1.selstorage.ru/blog/covers/flutter-v-2026-stoit-li-uchit-ili-poezd-uzhe-ushyol-0bb811a7.png" alt="Flutter в 2026: стоит ли учить или поезд уже ушёл" loading="lazy">
+    <h2>Flutter в 2026: стоит ли учить или поезд уже ушёл</h2>
+    <p>Разбираем без хайпа: жив ли Flutter после ухода Google-команды, кто на нём пишет в 2026 и реально ли найти работу новичку.</p>
+    <time datetime="Sat May 02 2026 16:46:17 GMT+0300 (Moscow Standard Time)">2 мая 2026 г.</time>
+  </a>
+</article>
+<article class="blog-card">
+  <a href="/blog/qa-ili-python-razrabotchik-chto-vybrat-novichku-bez-opyta/">
+    <img src="https://8390f83d-2f6a-4d51-a160-8b08ea3fbea1.selstorage.ru/blog/covers/qa-ili-python-razrabotchik-chto-vybrat-novichku-bez-opyta-2cbd51a1.png" alt="QA или Python-разработчик: что выбрать новичку без опыта" loading="lazy">
+    <h2>QA или Python-разработчик: что выбрать новичку без опыта</h2>
+    <p>Сравниваем тестировщика и Python-разработчика по входу, зарплате и нагрузке. Помогаем понять, какая профессия подойдёт именно вам.</p>
+    <time datetime="Sat May 02 2026 16:46:06 GMT+0300 (Moscow Standard Time)">2 мая 2026 г.</time>
+  </a>
+</article>
+<article class="blog-card">
+  <a href="/blog/kak-vojti-v-it-posle-35-realnyj-put-bez-skazok/">
+    <img src="https://8390f83d-2f6a-4d51-a160-8b08ea3fbea1.selstorage.ru/blog/covers/kak-vojti-v-it-posle-35-realnyj-put-bez-skazok-bf5ba9a8.png" alt="Как войти в IT после 35: реальный путь без сказок" loading="lazy">
+    <h2>Как войти в IT после 35: реальный путь без сказок</h2>
+    <p>Без историй про «зарплату 300к через 3 месяца». Что реально работает, сколько это занимает и где взрослым проще зайти.</p>
+    <time datetime="Sat May 02 2026 16:45:55 GMT+0300 (Moscow Standard Time)">2 мая 2026 г.</time>
+  </a>
+</article>
+<article class="blog-card">
+  <a href="/blog/stoit-li-uchit-python-v-2026-chestnyj-razbor/">
+    <img src="https://8390f83d-2f6a-4d51-a160-8b08ea3fbea1.selstorage.ru/blog/covers/stoit-li-uchit-python-v-2026-chestnyj-razbor-cd5e48b9.png" alt="Стоит ли учить Python в 2026: честный разбор" loading="lazy">
+    <h2>Стоит ли учить Python в 2026: честный разбор</h2>
+    <p>Python в 2026: реально ли войти в IT через него, кому он подойдёт, сколько платят джунам и чем это отличается от обещаний из рекламы курсов.</p>
+    <time datetime="Sat May 02 2026 16:45:46 GMT+0300 (Moscow Standard Time)">2 мая 2026 г.</time>
+  </a>
+</article>
+<article class="blog-card">
+  <a href="/blog/bekend-razrabotka-dlya-dzhuna-s-chego-nachat-v-2026/">
+    <img src="https://8390f83d-2f6a-4d51-a160-8b08ea3fbea1.selstorage.ru/blog/covers/bekend-razrabotka-dlya-dzhuna-s-chego-nachat-v-2026-c5c456e2.png" alt="Бэкенд-разработка для джуна: с чего начать в 2026" loading="lazy">
+    <h2>Бэкенд-разработка для джуна: с чего начать в 2026</h2>
+    <p>Какой язык выбрать, что учить после основ и как джуну зайти в бэкенд в 2026 — без курсов-пустышек и розовых обещаний про 300к.</p>
+    <time datetime="Sat May 02 2026 16:40:48 GMT+0300 (Moscow Standard Time)">2 мая 2026 г.</time>
+  </a>
+</article>
+  </div>
+
+  <div id="empty" style="display:none" class="q-blog-empty">
+    <p>Статьи скоро появятся</p>
+  </div>
+</main>
+
+<quillon-footer accent="mint"></quillon-footer>
+
+<script>
+  if (!document.querySelector('.blog-card')) {
+    document.querySelector('.q-blog-grid').style.display = 'none';
+    document.getElementById('empty').style.display = 'block';
+  }
+</script>
+
+<!-- Яндекс.Метрика -->
+<script type="text/javascript">
+  (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+  m[i].l=1*new Date();
+  for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
+  k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+  (window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
+  ym(108311343,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/108311343" style="position:absolute;left:-9999px;" alt=""/></div></noscript>
+
+</body>
+</html>

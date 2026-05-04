@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flutter в 2026: стоит ли учить или поезд уже ушёл — Quillon</title>
+  <meta name="description" content="Разбираем без хайпа: жив ли Flutter после ухода Google-команды, кто на нём пишет в 2026 и реально ли найти работу новичку.">
+  <meta name="keywords" content="flutter в 2026, стоит ли учить flutter, flutter или react native, flutter работа, flutter с нуля">
+  <link rel="canonical" href="https://quillon.ru/blog/flutter-v-2026-stoit-li-uchit-ili-poezd-uzhe-ushyol/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Flutter в 2026: стоит ли учить или поезд уже ушёл">
+  <meta property="og:description" content="Разбираем без хайпа: жив ли Flutter после ухода Google-команды, кто на нём пишет в 2026 и реально ли найти работу новичку.">
+  <meta property="og:url" content="https://quillon.ru/blog/flutter-v-2026-stoit-li-uchit-ili-poezd-uzhe-ushyol/">
+  <meta property="og:image" content="https://8390f83d-2f6a-4d51-a160-8b08ea3fbea1.selstorage.ru/blog/covers/flutter-v-2026-stoit-li-uchit-ili-poezd-uzhe-ushyol-0bb811a7.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Quillon">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="article:published_time" content="Sat May 02 2026 16:46:17 GMT+0300 (Moscow Standard Time)">
+  <meta property="article:modified_time" content="Sat May 02 2026 16:46:17 GMT+0300 (Moscow Standard Time)">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Flutter в 2026: стоит ли учить или поезд уже ушёл">
+  <meta name="twitter:description" content="Разбираем без хайпа: жив ли Flutter после ухода Google-команды, кто на нём пишет в 2026 и реально ли найти работу новичку.">
+  <meta name="twitter:image" content="https://8390f83d-2f6a-4d51-a160-8b08ea3fbea1.selstorage.ru/blog/covers/flutter-v-2026-stoit-li-uchit-ili-poezd-uzhe-ushyol-0bb811a7.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+  <!-- Quillon design system -->
+
+  <!-- Theme bootstrap: ставим data-theme до загрузки CSS чтобы не было FOUC -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('q-theme');
+        var prefers = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', saved || prefers);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
+
+  <link rel="stylesheet" href="/v4/css/tokens.css">
+  <link rel="stylesheet" href="/v4/css/base.css">
+  <link rel="stylesheet" href="/v4/css/components.css">
+  <script src="/v4/components/quillon-ui.js?v=2" defer></script>
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="Блог Quillon" href="/blog/rss.xml">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+{
+  "url": "https://quillon.ru/blog/undefined",
+  "@type": "Article",
+  "image": "https://quillon.ru/blog/og-default.png",
+  "author": {
+    "url": "https://quillon.ru",
+    "name": "Quillon",
+    "@type": "Organization"
+  },
+  "@context": "https://schema.org",
+  "headline": "Flutter в 2026: стоит ли учить или поезд уже ушёл",
+  "keywords": "flutter в 2026, стоит ли учить flutter, flutter или react native, flutter работа, flutter с нуля",
+  "publisher": {
+    "logo": {
+      "url": "https://quillon.ru/favicon/apple-touch-icon.png",
+      "@type": "ImageObject"
+    },
+    "name": "Quillon",
+    "@type": "Organization"
+  },
+  "description": "Разбираем без хайпа: жив ли Flutter после ухода Google-команды, кто на нём пишет в 2026 и реально ли найти работу новичку."
+}
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://quillon.ru/" },
+      { "@type": "ListItem", "position": 2, "name": "Блог", "item": "https://quillon.ru/blog/" },
+      { "@type": "ListItem", "position": 3, "name": "Flutter в 2026: стоит ли учить или поезд уже ушёл", "item": "https://quillon.ru/blog/flutter-v-2026-stoit-li-uchit-ili-poezd-uzhe-ushyol/" }
+    ]
+  }
+  </script>
+
+  <style>
+    /* Article-specific layout, on top of Quillon design system */
+    .q-blog-article {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 var(--q-s-6);
+    }
+    .q-blog-article__meta {
+      padding: 48px 0 24px;
+      border-bottom: 1px solid var(--q-line);
+      margin-bottom: 40px;
+    }
+    .q-blog-article__crumbs {
+      font-size: 12px;
+      color: var(--q-text-low);
+      font-family: var(--q-font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 20px;
+    }
+    .q-blog-article__crumbs a { color: var(--q-text-low); text-decoration: none; }
+    .q-blog-article__crumbs a:hover { color: var(--q-accent); }
+    .q-blog-article__crumbs span { margin: 0 6px; }
+
+    .q-blog-article__title {
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      color: var(--q-text-hi);
+      margin-bottom: 16px;
+    }
+    .q-blog-article__desc {
+      font-size: 18px;
+      color: var(--q-text-mid);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+    .q-blog-article__date {
+      font-size: 12px;
+      font-family: var(--q-font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--q-text-low);
+    }
+
+    .q-blog-cover {
+      margin: 32px 0 40px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--q-line);
+      aspect-ratio: 1.78;
+      background: var(--q-bg-2);
+    }
+    .q-blog-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .q-blog-content { padding-bottom: 80px; color: var(--q-text-mid); font-size: 16px; line-height: 1.7; }
+    .q-blog-content h2 {
+      font-size: clamp(20px, 2.5vw, 28px);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.02em;
+      margin: 48px 0 16px;
+      color: var(--q-text-hi);
+    }
+    .q-blog-content h3 {
+      font-size: 18px;
+      font-weight: var(--q-fw-medium);
+      margin: 32px 0 12px;
+      color: var(--q-text-hi);
+    }
+    .q-blog-content p { margin-bottom: 20px; }
+    .q-blog-content ul, .q-blog-content ol { padding-left: 24px; margin-bottom: 20px; }
+    .q-blog-content li { margin-bottom: 8px; }
+    .q-blog-content strong { color: var(--q-text-hi); font-weight: var(--q-fw-medium); }
+    .q-blog-content a {
+      color: #5EF2A1;
+      text-decoration: underline;
+      text-decoration-color: rgba(94,242,161,.3);
+    }
+    .q-blog-content a:hover { text-decoration-color: #5EF2A1; }
+    .q-blog-content blockquote {
+      border-left: 2px solid #5EF2A1;
+      padding: 12px 20px;
+      margin: 24px 0;
+      background: var(--q-bg-2);
+      border-radius: 0 8px 8px 0;
+      color: var(--q-text-mid);
+      font-style: italic;
+    }
+    .q-blog-content pre {
+      background: var(--q-bg-3);
+      border: 1px solid var(--q-line);
+      border-radius: 10px;
+      padding: 20px;
+      overflow-x: auto;
+      margin: 24px 0;
+      font-family: var(--q-font-mono);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .q-blog-content code {
+      font-family: var(--q-font-mono);
+      font-size: 13px;
+      background: var(--q-bg-2);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #5EF2A1;
+    }
+    .q-blog-content pre code { background: none; padding: 0; color: var(--q-text-hi); }
+    .q-blog-content hr { border: none; border-top: 1px solid var(--q-line); margin: 40px 0; }
+
+    .q-blog-cta {
+      background: var(--q-bg-2);
+      border: 1px solid var(--q-line);
+      border-top: 2px solid #5EF2A1;
+      border-radius: 14px;
+      padding: 32px;
+      margin: 48px 0;
+      text-align: center;
+    }
+    .q-blog-cta h3 { color: var(--q-text-hi); font-size: 20px; margin-bottom: 12px; }
+    .q-blog-cta p { color: var(--q-text-mid); margin-bottom: 20px; }
+    .q-blog-cta__btn {
+      display: inline-block;
+      background: #5EF2A1;
+      color: #04070C;
+      font-weight: var(--q-fw-semibold);
+      font-size: 15px;
+      padding: 12px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background var(--q-dur-fast) var(--q-ease);
+    }
+    .q-blog-cta__btn:hover { background: #7DFFB3; }
+
+    /* highlight.js token colors */
+    .hljs-keyword { color: #5EF2A1; }
+    .hljs-string { color: #F5B544; }
+    .hljs-number { color: #F06B8E; }
+    .hljs-comment { color: var(--q-text-low); font-style: italic; }
+    .hljs-built_in, .hljs-name { color: #9BCBFF; }
+
+    @media (max-width: 640px) {
+      .q-blog-article { padding: 0 16px; }
+      .q-blog-cta { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<quillon-header accent="mint" current="blog"></quillon-header>
+
+<main id="main" class="q-blog-article">
+  <div class="q-blog-article__meta">
+    <nav class="q-blog-article__crumbs" aria-label="Хлебные крошки">
+      <a href="/">Главная</a><span>→</span>
+      <a href="/blog/">Блог</a><span>→</span>
+      <span>Flutter в 2026: стоит ли учить или поезд уже ушёл</span>
+    </nav>
+    <h1 class="q-blog-article__title">Flutter в 2026: стоит ли учить или поезд уже ушёл</h1>
+    <p class="q-blog-article__desc">Разбираем без хайпа: жив ли Flutter после ухода Google-команды, кто на нём пишет в 2026 и реально ли найти работу новичку.</p>
+    <time class="q-blog-article__date" datetime="Sat May 02 2026 16:46:17 GMT+0300 (Moscow Standard Time)">2 мая 2026 г.</time>
+  </div>
+
+  <figure class="q-blog-cover"><img src="https://8390f83d-2f6a-4d51-a160-8b08ea3fbea1.selstorage.ru/blog/covers/flutter-v-2026-stoit-li-uchit-ili-poezd-uzhe-ushyol-0bb811a7.png" alt="Flutter в 2026: стоит ли учить или поезд уже ушёл" loading="eager"></figure>
+
+  <article class="q-blog-content">
+    <h1>Flutter в 2026: стоит ли учить или поезд уже ушёл</h1>
+<p>Помню, в мае 2024-го твиттер хоронил Flutter каждый второй день. Google уволил часть команды, кто-то писал «всё, фреймворк труп», у меня в личке знакомый джун спрашивал — а стоит ли вообще доучивать или переключаться на Kotlin, пока не поздно.</p>
+<p>Прошло два года. Flutter жив, причём живее многих. Давай разберём, что реально с ним происходит, кто на нём пишет за деньги и стоит ли тебе сейчас, в 2026-м, ставить SDK и открывать DartPad.</p>
+<h2>Что вообще происходит с Flutter в 2026</h2>
+<p>Короче, история с увольнениями была. В январе 2024 Google действительно сократил часть команды Flutter и Dart — это факт. Но в твиттере раздули из этого похороны, хотя по факту команда осталась, релизы шли по графику, а коммитов в репозитории меньше не стало. Я тогда сам полез смотреть статистику на GitHub — активность упала процентов на 15, потом восстановилась к лету.</p>
+<p>Главное событие — форк Flock. Когда стало ясно, что Google не приоритезирует часть фич, сообщество запустило свой форк, который мерджит то, что застряло в апстриме. Не альтернатива, а ускоритель — большинство разработчиков по-прежнему сидят на ванильном Flutter, но Flock доказал, что у фреймворка есть жизнь без зависимости от мудрости Mountain View.</p>
+<p>По релизам. Impeller — новый рендер-движок — теперь по умолчанию и на Android, и на iOS. Это убрало старую боль с jank-ом на первом запуске экрана. Поддержка десктопа (Windows, macOS, Linux) официально стабильна, веб — рабочий, но с оговорками: для лендингов не годится, для внутренних админок норм. WebAssembly-таргет дотянули до прода, и это реально меняет картину для крупных приложений.</p>
+<p>К слову, про десктоп. У меня pet-проект — таск-трекер, я его собрал под все три платформы из одного кода за выходные. Два года назад это было приключение с костылями. Сейчас просто <code>flutter build windows</code> и оно работает. Не идеально, но работает.</p>
+<p>Так что flutter в 2026 — это не «умирающая технология», а зрелый фреймворк с живым комьюнити. Не модный больше, как в 2020-2022, но стабильный. Это разные вещи.</p>
+<h2>Кто реально пишет на Flutter (и платит за это деньги)</h2>
+<p>Давай по конкретике. Альфа-Банк — мобильное приложение для бизнеса частично переписано на Flutter ещё в 2022, и они с него не съехали. Яндекс Go использует Flutter для части интерфейсов курьерского приложения. BMW сделала своё My BMW на Flutter — кейс, который Google гоняет на каждой презентации, и который, в отличие от многих презентационных кейсов, реально живёт в проде. Toyota пошла дальше и встраивает Flutter Embedded в инфоразвлекательные системы автомобилей.</p>
+<p>Из российских — Авито использует Flutter для отдельных модулей, Озон тестировал, ВТБ, Тинькофф (нынешний Т-Банк) — на нём собрана часть внутренних инструментов. Госуслуги пробовали, но там, насколько я знаю, отказались в пользу нативки из-за специфических требований к биометрии.</p>
+<p>Почему стартапы выбирают Flutter — это математика. Если у тебя двое мобильщиков и нужно к концу квартала запустить iOS и Android, ты не можешь нанять отдельного Kotlin-разработчика и отдельного Swift-разработчика. Ты берёшь Flutter, и эти двое выкатывают обе платформы. Скорость разработки в малых командах — главный аргумент, и он не сломался даже с уходом Google-команды.</p>
+<p>Где Flutter не приживается — тоже честно. Финтех с серьёзной нативной обвязкой, где нужен low-level доступ к Secure Enclave и SE-чипам, обычно остаётся на Kotlin/Swift. AR и VR — там Flutter просто не игрок, ARKit и ARCore требуют нативного слоя. Игры — Unity и Unreal, разговор окончен. И ещё — приложения с тяжёлой работой с камерой и обработкой видео в реалтайме часто упираются в method channels и теряют преимущество единого кода.</p>
+<p>Если ты собрался писать конкурента TikTok — Flutter не твой выбор. Если CRM, доставка, банкинг, маркетплейс, агрегатор — твой.</p>
+<h2>Flutter vs React Native: честное сравнение без религии</h2>
+<p>Если честно, обе технологии работают. Холивары между лагерями — пустая трата времени. Но различия есть, и они влияют на твой выбор.</p>
+<p>Dart против JS — первое, обо что ты споткнёшься. Dart как язык в 2026 году приятнее, чем многим кажется. Null safety, sound type system, нормальный async/await, паттерн-матчинг с записями. После TypeScript переход почти безболезненный, после чистого JS — местами заставит задуматься. Что бесит на второй неделе: вербозность вложенных виджетов. Эта классическая лесенка из <code>Container(child: Padding(child: Column(children: [...])))</code> — реальная боль. Лечится практикой и хелперами, но первое впечатление портит.</p>
+<p>Производительность. Flutter рендерит через свой движок (Skia, теперь Impeller), не через нативные компоненты. Это значит — никаких мостов, никакого преобразования JS-объектов в нативные view. На сложных списках с анимациями разница чувствуется, особенно на средних Android-устройствах. На простых формах разницы ноль, не верь бенчмаркам, которые показывают +300% — там измеряют синтетику.</p>
+<p>Экосистема пакетов — здесь RN иногда выигрывает. У React Native за плечами весь NPM, и для нишевых задач (вроде специфичных SDK банковских платежей или редких аналитических систем) на JS бывает готовое решение, а на Dart — придётся писать обёртку через method channels. Для большинства задач pub.dev покрывает всё: от Firebase до Stripe, от карт до камеры.</p>
+<p>Hot reload работает в обеих, но в Flutter он быстрее и стабильнее — это не маркетинг, это после полугода работы становится очевидно.</p>
+<p>Вот что я скажу. Если у тебя в команде уже есть React-разработчики — берите RN, синергия окупит мелкие минусы. Если стартуете с нуля и команда мобильная — Flutter даст лучший long-term result, особенно на сложных кастомных интерфейсах.</p>
+<h2>Сколько платят Flutter-разработчику и куда смотреть</h2>
+<p>Цифры на конец апреля 2026, hh.ru и Хабр Карьера, Москва и удалёнка по РФ.</p>
+<p>Джун Flutter — 80–140k рублей. Вилка широкая, потому что под джуном понимают разное: кто-то берёт после буткемпа, кто-то требует год коммерческого опыта. Реально на 80k берут стажёров с пет-проектами, на 140k — джунов после года в продукте. Мидл — 200–320k, медиана где-то 250k. Сеньор — от 350k и до бесконечности, особенно если есть опыт с архитектурой больших приложений и кросс-платформа реально кросс- (iOS+Android+web).</p>
+<p>Удалёнка на зарубежных биржах — это другая история. На Toptal и Arc у Flutter-сеньора ставка 50–80 долларов в час. На Upwork ниже, 30–50, но там и порог входа низкий. Если ты в РФ и можешь работать на иностранную компанию — Flutter-разработчик это позволяет, потому что задачи изолированные и удалёнка органична.</p>
+<p>Вакансий в абсолюте меньше, чем нативных. На hh.ru на момент написания — порядка 600 активных Flutter-вакансий против 2400 Android и 1800 iOS. Кажется, это плохо, но смотри. Конкуренция за каждую Flutter-вакансию слабее, потому что Flutter-специалистов на рынке тоже меньше. Соотношение откликов на вакансию для Flutter-джуна — раза в полтора лучше, чем для Android-джуна. Я это вижу по своим знакомым из найма.</p>
+<p>Где новичку реально пробиться. Аутсорс-студии (EPAM, Andersen, региональные «диджитал-агентства») берут джунов охотнее всего — у них поток проектов. Продуктовые компании — сложнее, требуют больше опыта, но платят выше и интереснее. Фриланс — рабочий вариант, но не для первого года: без портфолио и отзывов конкурировать тяжело.</p>
+<h2>Что нужно знать кроме самого Flutter</h2>
+<p>Dart. Не нужно знать его на уровне «я могу писать компилятор». Нужен синтаксис, классы, миксины, extension methods, Future/Stream, isolates на базовом уровне (понимать, что это и зачем), null safety. Этого хватает для собеседования на джуна. Сеньорные штуки вроде кастомных code generation и ffi — это потом, в процессе.</p>
+<p>Государственный минимум по нативке. Это пункт, который джуны игнорируют, и зря. Тебе не нужно уметь писать на Kotlin, но ты должен:</p>
+<ul>
+<li>понимать структуру AndroidManifest.xml и зачем там пермишены</li>
+<li>знать, что такое iOS provisioning profile и почему сборка падает при смене сертификата</li>
+<li>настраивать push-уведомления через FCM (это реально часто спрашивают)</li>
+<li>понимать, как работает deep linking на обеих платформах</li>
+<li>уметь читать stack trace из нативного слоя, когда падает не Dart-код</li>
+</ul>
+<p>Это не «выучить две новые экосистемы». Это два-три выходных, потраченных на чтение документации Apple и Android. Но без этого первая публикация в стор превратится в ад.</p>
+<p>Стейт-менеджмент. Holy war темы. Bloc — самый промышленный, его требуют в большинстве вакансий, но он многословный и кажется избыточным на простых экранах. Riverpod — модный, элегантный, growing fast, многие новые проекты на нём. Provider — старичок, до сих пор в проде, но новые проекты на нём редко стартуют. GetX — не учи, не трать время, в нормальных командах его не любят.</p>
+<p>Я бы советовал так: сначала Provider две недели, чтобы понять идею. Потом сразу Bloc, потому что его спрашивают на собеседованиях и он научит тебя думать об архитектуре. Riverpod — третьим, в свободное время на пет-проекте.</p>
+<p>Плюс HTTP, Dio для работы с API, Hive или Isar для локального хранилища, get_it для DI. Это база, без которой реальное приложение не соберёшь.</p>
+<h2>Реальный план: как дойти до первой работы за 6 месяцев</h2>
+<p>Я этот план составил из того, что вижу у ребят, которые реально устраиваются. Не теоретический.</p>
+<p><strong>Месяцы 1–2.</strong> Dart и UI без бэкенда. Первые две недели — синтаксис Dart на DartPad, без Flutter вообще. Классы, асинхронность, коллекции. Потом ставишь Flutter, изучаешь виджеты, layout-систему, навигацию. Цель за два месяца — собрать 2–3 экрана из реальных приложений. Не todo-list (его все собирают, рекрутеры не смотрят). Возьми экра�� профиля из Авито, экран ленты из Яндекс Маркета, экран чата из Телеграма. Скопируй визуально. Это научит работать с реальной сложностью верстки и даст материал для портфолио.</p>
+<p><strong>Месяцы 3–4.</strong> Бэкенд-интеграция и архитектура. Подключаешь REST API (бери открытые — pokeapi, themoviedb, спортивные API). Учишь Dio, обработку ошибок, JSON-парсинг через freezed и json_serializable. Авторизация через JWT, рефреш токенов. Локальное хранилище — Hive минимум. Делаешь один большой пет-проект: habit-tracker, читалка статей, учёт расходов — что-то с CRUD-операциями и нормальным состоянием. Сюда же — стейт-менеджмент, Bloc или Riverpod на выбор.</p>
+<p><strong>Месяцы 5–6.</strong> Production-готовность и поиск работы. Push-уведомления через Firebase. Платежи (можно тестовый Stripe или ЮKassa в песочнице). Аналитика — Firebase Analytics или Amplitude. Публикация в Google Play — реально публикуй, даже если приложение простое. Это даёт тебе строчку в резюме и опыт прохождения модерации, которая, кстати, отдельный квест.</p>
+<p>Параллельно с пятого месяца — резюме, GitHub чистишь, README в проектах пишешь нормальные. Первые отклики. Не жди, что возьмут с первого собеседования — нормально получить десять отказов до первого оффера. Это не про тебя плохо, это рынок.</p>
+<h2>Подводные камни, о которых не говорят на ютубе</h2>
+<p>Ютубовские туториалы показывают тебе, как собрать счётчик с двумя кнопками. Не показывают, что:</p>
+<p>Apple ломает сборку. Регулярно. Я не шучу — каждые полгода выходит новый Xcode, и каждый второй из них ломает что-нибудь в pod-зависимостях, в провижининге или в build settings. И ты узнаёшь об этом за день до релиза, когда CI начинает красным сигналить. Лечится только опытом и подпиской на iOS-разделы Stack Overflow.</p>
+<p>Размер APK. Голый Hello World на Flutter — около 7 МБ. Реальное приложение со всеми зависимостями — 30–50 МБ. Это много, и часть пользователей в регионах с дорогим мобильным интернетом не качают приложения такого размера. Лечится app bundles, разделением по ABI, tree-shaking, но требует возни.</p>
+<p>Холодный старт. На бюджетных Android (Redmi 9, Realme C-серия) приложение запускается заметно дольше нативного. Impeller помог, но проблема не ушла. Если твоя ЦА — низкий ценовой сегмент, тестируй на реальных устройствах, не в эмуляторе.</p>
+<p>Шрифты на старых Android. Иногда кастомные шрифты криво рендерятся на Android 7–8. Outline становится мутным, кириллица дёргается. Решение — fallback на системные шрифты, проверка на парке устройств.</p>
+<p>И отдельная боль — найм. HR часто не отличает Flutter от Android. Пишешь в резюме «Flutter-разработчик», получаешь тестовое на Kotlin со словами «ну вы же мобильный». Я лично знаю человека, который три раза за неделю получал такие письма. Лечится прямым уточнением в сопроводительном — да, я Flutter, нет, я не пишу на Kotlin продакшн-код.</p>
+<p>Горячее решение проблемы — фильтровать вакансии по тегу Flutter и сразу отсеивать те, где в требованиях смешанный стек.</p>
+<h2>Так стоит ли начинать с Flutter в 2026</h2>
+<p>Кому подходит. Тебе, если хочешь быстро видеть результат своей работы. Flutter даёт самый короткий путь от «я ничего не умею» до «у меня в сторе лежит приложение, которое работает». Подходит, если планируешь работать соло, в маленькой команде или в продуктовом стартапе. Подходит, если интересен фронтенд, но мобильный.</p>
+<p>Кому не подходит. Если ты метишь конкретно в FAANG на нативку — иди в Kotlin или Swift, Flutter-вакансий в больших корпорациях единицы. Если планируешь через год переключиться на геймдев — не трать время, иди сразу в Unity или Unreal с C++. Если тебя манит бэкенд и системное программирование — Flutter тут вообще не при чём, бери Go или Rust.</p>
+<p>Что делать сегодня, прямо сейчас, если решил пробовать. Открой dart.dev и пройди первые три раздела туториала — это полтора часа. Поставь Flutter SDK через официальную инструкцию (бывает, ломается на Windows из-за PATH, читай внимательно). Запусти <code>flutter create</code> и <code>flutter run</code>. Увидь, как на твоём телефоне открывается стартовое приложение. Дальше — посмотри Flutter Layout Cheat Sheet и собери экран входа: лого, два инпута, кнопка. До конца сегодняшнего дня. Это займёт часа три, если ты вообще никогда не программировал, и час, если у тебя есть бэкграунд.</p>
+<p>Дальше уже структурно — по плану выше или по любому курсу, который тебе зайдёт.</p>
+<p>Flutter в 2026 — рабочий инструмент с реальным рынком труда. Не золотая жила и не модная новинка, но зрелая технология, на которой реально найти работу за полгода с нуля, если не сачковать.</p>
+<h2>Частые вопросы</h2>
+<p><strong>Flutter умирает после ухода команды из Google?</strong></p>
+<p>Нет. Google сократил часть команды в 2024, но фреймворк продолжает развиваться, релизы выходят, а сообщество запустило форк Flock как страховку. В проде у Альфа-Банка, Яндекса, BMW и сотен других компаний Flutter никуда не делся.</p>
+<p><strong>Можно ли с Flutter попасть в Google или другие FAANG?</strong></p>
+<p>Технически да, но Flutter-вакансий в FAANG почти нет. Если цель — большие зарубежные корпорации, разумнее идти в нативный Android (Kotlin) или iOS (Swift). Flutter-разработчики чаще устраиваются в продуктовые стартапы, аутсорс-студии и среднего размера компании.</p>
+<p><strong>Сколько времени нужно, чтобы выучить Flutter с нуля до джуна?</strong></p>
+<p>При 2–3 часах в день — около 5–7 месяцев до уровня, на котором берут на стажировку или джуна. Без программистского бэкграунда добавь ещё 1–2 месяца на Dart и базовые алгоритмы.</p>
+<p><strong>Что лучше учить первым — Dart или сразу Flutter?</strong></p>
+<p>Dart на минимальном уровне (синтаксис, классы, async/await) — за 1–2 недели, дальше сразу Flutter. Углубляться в Dart отдельно бессмысленно, всё доучивается в процессе работы с фреймворком.</p>
+<p><strong>Нужен ли Mac, чтобы учить Flutter?</strong></p>
+<p>Для обучения и сборки под Android — нет, хватит любого ноута с 16 ГБ RAM. Mac понадобится только когда дойдёшь до публикации в App Store, и это уже после трудоустройства, где тебе либо выдадут рабочий, либо ты возьмёшь в аренду через облачные сервисы вроде MacInCloud.</p>
+<hr>
+<p>Не уверен, твоё ли это направление — Flutter, Python, QA, что-то ещё? Пройди тест на профориентацию, разберись, куда тебе действительно идти. Пять минут, без регистрации: quillon.ru/quiz</p>
+
+  </article>
+
+  <div class="q-blog-cta">
+    <h3>Хочешь войти в IT за 12 месяцев?</h3>
+    <p>Выбери трек — Python, Flutter или QA — и начни с бесплатного вводного урока</p>
+    <a href="/#products" class="q-blog-cta__btn">Выбрать трек</a>
+  </div>
+</main>
+
+<quillon-footer accent="mint"></quillon-footer>
+
+<!-- Яндекс.Метрика -->
+<script type="text/javascript">
+  (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+  m[i].l=1*new Date();
+  for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
+  k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+  (window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
+  ym(108311343,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/108311343" style="position:absolute;left:-9999px;" alt=""/></div></noscript>
+
+</body>
+</html>

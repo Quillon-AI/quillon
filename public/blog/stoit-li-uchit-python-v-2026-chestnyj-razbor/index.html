@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Стоит ли учить Python в 2026: честный разбор — Quillon</title>
+  <meta name="description" content="Python в 2026: реально ли войти в IT через него, кому он подойдёт, сколько платят джунам и чем это отличается от обещаний из рекламы курсов.">
+  <meta name="keywords" content="python 2026, учить python с нуля, python для начинающих, работа python джуниор, python или javascript">
+  <link rel="canonical" href="https://quillon.ru/blog/stoit-li-uchit-python-v-2026-chestnyj-razbor/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Стоит ли учить Python в 2026: честный разбор">
+  <meta property="og:description" content="Python в 2026: реально ли войти в IT через него, кому он подойдёт, сколько платят джунам и чем это отличается от обещаний из рекламы курсов.">
+  <meta property="og:url" content="https://quillon.ru/blog/stoit-li-uchit-python-v-2026-chestnyj-razbor/">
+  <meta property="og:image" content="https://8390f83d-2f6a-4d51-a160-8b08ea3fbea1.selstorage.ru/blog/covers/stoit-li-uchit-python-v-2026-chestnyj-razbor-cd5e48b9.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Quillon">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="article:published_time" content="Sat May 02 2026 16:45:46 GMT+0300 (Moscow Standard Time)">
+  <meta property="article:modified_time" content="Sat May 02 2026 16:45:46 GMT+0300 (Moscow Standard Time)">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Стоит ли учить Python в 2026: честный разбор">
+  <meta name="twitter:description" content="Python в 2026: реально ли войти в IT через него, кому он подойдёт, сколько платят джунам и чем это отличается от обещаний из рекламы курсов.">
+  <meta name="twitter:image" content="https://8390f83d-2f6a-4d51-a160-8b08ea3fbea1.selstorage.ru/blog/covers/stoit-li-uchit-python-v-2026-chestnyj-razbor-cd5e48b9.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+  <!-- Quillon design system -->
+
+  <!-- Theme bootstrap: ставим data-theme до загрузки CSS чтобы не было FOUC -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('q-theme');
+        var prefers = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', saved || prefers);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
+
+  <link rel="stylesheet" href="/v4/css/tokens.css">
+  <link rel="stylesheet" href="/v4/css/base.css">
+  <link rel="stylesheet" href="/v4/css/components.css">
+  <script src="/v4/components/quillon-ui.js?v=2" defer></script>
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="Блог Quillon" href="/blog/rss.xml">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+{
+  "url": "https://quillon.ru/blog/undefined",
+  "@type": "Article",
+  "image": "https://quillon.ru/blog/og-default.png",
+  "author": {
+    "url": "https://quillon.ru",
+    "name": "Quillon",
+    "@type": "Organization"
+  },
+  "@context": "https://schema.org",
+  "headline": "Стоит ли учить Python в 2026: честный разбор",
+  "keywords": "python 2026, учить python с нуля, python для начинающих, работа python джуниор, python или javascript",
+  "publisher": {
+    "logo": {
+      "url": "https://quillon.ru/favicon/apple-touch-icon.png",
+      "@type": "ImageObject"
+    },
+    "name": "Quillon",
+    "@type": "Organization"
+  },
+  "description": "Python в 2026: реально ли войти в IT через него, кому он подойдёт, сколько платят джунам и чем это отличается от обещаний из рекламы курсов."
+}
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://quillon.ru/" },
+      { "@type": "ListItem", "position": 2, "name": "Блог", "item": "https://quillon.ru/blog/" },
+      { "@type": "ListItem", "position": 3, "name": "Стоит ли учить Python в 2026: честный разбор", "item": "https://quillon.ru/blog/stoit-li-uchit-python-v-2026-chestnyj-razbor/" }
+    ]
+  }
+  </script>
+
+  <style>
+    /* Article-specific layout, on top of Quillon design system */
+    .q-blog-article {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 var(--q-s-6);
+    }
+    .q-blog-article__meta {
+      padding: 48px 0 24px;
+      border-bottom: 1px solid var(--q-line);
+      margin-bottom: 40px;
+    }
+    .q-blog-article__crumbs {
+      font-size: 12px;
+      color: var(--q-text-low);
+      font-family: var(--q-font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 20px;
+    }
+    .q-blog-article__crumbs a { color: var(--q-text-low); text-decoration: none; }
+    .q-blog-article__crumbs a:hover { color: var(--q-accent); }
+    .q-blog-article__crumbs span { margin: 0 6px; }
+
+    .q-blog-article__title {
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      color: var(--q-text-hi);
+      margin-bottom: 16px;
+    }
+    .q-blog-article__desc {
+      font-size: 18px;
+      color: var(--q-text-mid);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+    .q-blog-article__date {
+      font-size: 12px;
+      font-family: var(--q-font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--q-text-low);
+    }
+
+    .q-blog-cover {
+      margin: 32px 0 40px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--q-line);
+      aspect-ratio: 1.78;
+      background: var(--q-bg-2);
+    }
+    .q-blog-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .q-blog-content { padding-bottom: 80px; color: var(--q-text-mid); font-size: 16px; line-height: 1.7; }
+    .q-blog-content h2 {
+      font-size: clamp(20px, 2.5vw, 28px);
+      font-weight: var(--q-fw-medium);
+      letter-spacing: -0.02em;
+      margin: 48px 0 16px;
+      color: var(--q-text-hi);
+    }
+    .q-blog-content h3 {
+      font-size: 18px;
+      font-weight: var(--q-fw-medium);
+      margin: 32px 0 12px;
+      color: var(--q-text-hi);
+    }
+    .q-blog-content p { margin-bottom: 20px; }
+    .q-blog-content ul, .q-blog-content ol { padding-left: 24px; margin-bottom: 20px; }
+    .q-blog-content li { margin-bottom: 8px; }
+    .q-blog-content strong { color: var(--q-text-hi); font-weight: var(--q-fw-medium); }
+    .q-blog-content a {
+      color: #5EF2A1;
+      text-decoration: underline;
+      text-decoration-color: rgba(94,242,161,.3);
+    }
+    .q-blog-content a:hover { text-decoration-color: #5EF2A1; }
+    .q-blog-content blockquote {
+      border-left: 2px solid #5EF2A1;
+      padding: 12px 20px;
+      margin: 24px 0;
+      background: var(--q-bg-2);
+      border-radius: 0 8px 8px 0;
+      color: var(--q-text-mid);
+      font-style: italic;
+    }
+    .q-blog-content pre {
+      background: var(--q-bg-3);
+      border: 1px solid var(--q-line);
+      border-radius: 10px;
+      padding: 20px;
+      overflow-x: auto;
+      margin: 24px 0;
+      font-family: var(--q-font-mono);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .q-blog-content code {
+      font-family: var(--q-font-mono);
+      font-size: 13px;
+      background: var(--q-bg-2);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #5EF2A1;
+    }
+    .q-blog-content pre code { background: none; padding: 0; color: var(--q-text-hi); }
+    .q-blog-content hr { border: none; border-top: 1px solid var(--q-line); margin: 40px 0; }
+
+    .q-blog-cta {
+      background: var(--q-bg-2);
+      border: 1px solid var(--q-line);
+      border-top: 2px solid #5EF2A1;
+      border-radius: 14px;
+      padding: 32px;
+      margin: 48px 0;
+      text-align: center;
+    }
+    .q-blog-cta h3 { color: var(--q-text-hi); font-size: 20px; margin-bottom: 12px; }
+    .q-blog-cta p { color: var(--q-text-mid); margin-bottom: 20px; }
+    .q-blog-cta__btn {
+      display: inline-block;
+      background: #5EF2A1;
+      color: #04070C;
+      font-weight: var(--q-fw-semibold);
+      font-size: 15px;
+      padding: 12px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background var(--q-dur-fast) var(--q-ease);
+    }
+    .q-blog-cta__btn:hover { background: #7DFFB3; }
+
+    /* highlight.js token colors */
+    .hljs-keyword { color: #5EF2A1; }
+    .hljs-string { color: #F5B544; }
+    .hljs-number { color: #F06B8E; }
+    .hljs-comment { color: var(--q-text-low); font-style: italic; }
+    .hljs-built_in, .hljs-name { color: #9BCBFF; }
+
+    @media (max-width: 640px) {
+      .q-blog-article { padding: 0 16px; }
+      .q-blog-cta { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<quillon-header accent="mint" current="blog"></quillon-header>
+
+<main id="main" class="q-blog-article">
+  <div class="q-blog-article__meta">
+    <nav class="q-blog-article__crumbs" aria-label="Хлебные крошки">
+      <a href="/">Главная</a><span>→</span>
+      <a href="/blog/">Блог</a><span>→</span>
+      <span>Стоит ли учить Python в 2026: честный разбор</span>
+    </nav>
+    <h1 class="q-blog-article__title">Стоит ли учить Python в 2026: честный разбор</h1>
+    <p class="q-blog-article__desc">Python в 2026: реально ли войти в IT через него, кому он подойдёт, сколько платят джунам и чем это отличается от обещаний из рекламы курсов.</p>
+    <time class="q-blog-article__date" datetime="Sat May 02 2026 16:45:46 GMT+0300 (Moscow Standard Time)">2 мая 2026 г.</time>
+  </div>
+
+  <figure class="q-blog-cover"><img src="https://8390f83d-2f6a-4d51-a160-8b08ea3fbea1.selstorage.ru/blog/covers/stoit-li-uchit-python-v-2026-chestnyj-razbor-cd5e48b9.png" alt="Стоит ли учить Python в 2026: честный разбор" loading="eager"></figure>
+
+  <article class="q-blog-content">
+    <h1>Стоит ли учить Python в 2026: честный разбор</h1>
+<p>Помню, в 2019 я зашёл на hh.ru, открыл вакансии Python-джунов и закрыл вкладку через минуту. Требований больше, чем строк в моём первом скрипте. Прошло шесть лет, и каждый второй знакомый, который думает «а не свернуть ли мне в IT», спрашивает именно про Python.</p>
+<p>Вопрос не праздный. Курсов — сотни. Обещаний — тысячи. А вот честных ответов, что реально с Python 2026 происходит на рынке, почти нет. Давай разбираться без рекламной воды.</p>
+<h2>Почему вокруг Python столько шума именно сейчас</h2>
+<p>Если коротко: AI вытащил Python наверх и пока не отпускает. По рейтингу TIOBE за апрель 2026 он держит первое место уже третий год подряд. IEEE Spectrum в своём ежегодном топе языков ставит его туда же. Это не маркетинг от Гвидо — это реальные индексы цитирования и поисковых запросов.</p>
+<p>Дальше интереснее. Когда смотришь вакансии в data science, ML, computer vision — там почти всегда стоит Python. Не Java, не C++, не R. По моим наблюдениям на hh.ru в 2026, около 85% вакансий в ML-направлении требуют именно его как основной. Tensorflow, PyTorch, scikit-learn, Hugging Face — вся экосистема LLM написана либо на Python, либо имеет Python-обёртку как первый класс.</p>
+<p>И вот тут штука, которую не любят упоминать в рекламе курсов. Порог входа в Python остался низким именно благодаря синтаксису. Когда я первый раз показал племяннице (15 лет, ноль опыта) разницу между Python и Java на одной и той же задаче, она сказала: «А почему все не пишут так, как Python?» Хороший вопрос, на который у Java-разработчиков обычно нет короткого ответа.</p>
+<p>Синтаксис почти как псевдокод. <code>for item in items</code> вместо <code>for (int i = 0; i &lt; items.length; i++)</code>. Отсутствие фигурных скобок. Динамическая типизация. Всё это позволяет за две недели начать писать что-то рабочее, а не просто выводить «Hello, World» и плакать над компилятором.</p>
+<p>Кстати, именно поэтому ChatGPT и Claude генерируют код на Python чище, чем на любом другом языке — обучающей выборки больше всего, а синтаксис прощает мелкие ошибки. Это, к слову, ещё одна причина бума.</p>
+<h2>Где Python реально работает, а где его уже не берут</h2>
+<p>Давай по местам, где Python — выбор по умолчанию. Бэкенд: Django, FastAPI, Flask. Озон, например, частично на Python (наряду с Go), Авито использует его в ML-сервисах, Яндекс — в куче внутренних инструментов и в Алисе. Дата-аналитика: pandas, NumPy, Polars — индустриальный стандарт. ML и AI — об этом уже сказали. DevOps-скрипты, парсеры, автоматизация рутины — Python тут как родной.</p>
+<p>Где его не берут или берут без энтузиазма. Мобильная разработка — забудь. Серьёзный iOS пишут на Swift, Android — на Kotlin. Есть Kivy и BeeWare на Python, но это нишевые штуки для энтузиастов, в продакшене у крупняка их почти нет.</p>
+<p>Фронтенд — тоже мимо. Браузер понимает JavaScript, и точка. Есть Brython и Pyodide (Python в браузере через WebAssembly), но это эксперименты и инструменты для конкретных задач типа Jupyter в вебе. На вакансию фронтенд-разработчика с Python тебя не возьмут.</p>
+<p>Геймдев на Python — это, ну, Roblox-уровень. Можно сделать что-то простое на Pygame, есть Panda3D, но AAA-студии работают на C++ (Unreal Engine) и C# (Unity). Если мечтаешь делать игры — это вообще другой стек, не питонячий.</p>
+<p>Системное программирование, драйверы, embedded на жёстких ресурсах — тоже не сюда. Там Rust, C, иногда Go. Python для контроллера на 64 КБ памяти не подходит ни в каком виде, кроме MicroPython, и это совсем другая история.</p>
+<p>Так что Python 2026 — это про данные, бэкенд, AI и автоматизацию. Не пытайся натянуть его на задачу, для которой есть язык получше. Это, кстати, одна из причин, почему джуны буксуют — они учат Python, но потом хотят делать игры или мобилки. Не сходится.</p>
+<h2>А что с зарплатами и вакансиями для джунов</h2>
+<p>Цифры на апрель 2026, я смотрел сам на hh.ru. Джуниор Python в Москве — диапазон 80–140 тысяч рублей, медиана где-то 110. В Питере чуть ниже, тысяч на 10–20. В регионах (Казань, Новосибирск, Екатеринбург) — от 60 до 100. Удалёнка по РФ — обычно 90–130 для джуна, но реальных удалённых вакансий для нулей мало, чаще требуют опыт от полугода в офисе или гибриде.</p>
+<p>Мидл — 200–300 тысяч в Москве, сеньор от 350 и до неприличных цифр в финтехе и больших корпорациях. Тинькофф, Сбер, Яндекс на сениорские позиции с ML-уклоном легко выкатывают 500+, но туда без 5 лет опыта не зайдёшь.</p>
+<p>Теперь про то, что вакансий джунов меньше, чем мидлов. Это правда, но это касается вообще всего IT, не только Python. Рынок везде сместился к опытным. Просто потому, что джуна нужно учить, а мидл сразу даёт результат. Если кто-то говорит, что «в Java/Go/JS вакансий джунов больше» — попроси показать выборку. По моим наблюдениям, разница в пределах 10–15%, не в разы.</p>
+<p>Что реально влияет на трудоустройство. Связка Python + SQL + один веб-фреймворк (Django или FastAPI) закрывает порядка 70% входных вакансий. Добавь к этому Git, базовое понимание Linux и Docker — и ты закрываешь уже 85%. Не нужно учить пять фреймворков. Нужно знать один хорошо и иметь два-три пет-проекта на нём.</p>
+<p>Если идёшь в ML — будет сложнее. Туда без понимания математики, классических алгоритмов и опыта с pandas/sklearn особо не зайти. Зарплаты выше, но и порог другой. Джун-датасаентист в 2026 — это часто человек с профильным образованием или серьёзной самоподготовкой год-полтора.</p>
+<h2>Заменит ли ChatGPT программистов на Python</h2>
+<p>Короткий ответ: нет. Длинный ответ: нет, но профессия меняется быстрее, чем когда-либо.</p>
+<p>Давай конкретно. GitHub Copilot и Cursor пишут шаблонный код на Python отлично. Эндпоинт на FastAPI с валидацией через Pydantic? Секунда. SQL-запрос с джойнами? Секунда. Парсер CSV с обработкой ошибок? Секунда. Я в своих pet-проектах и рабочих задачах примерно 30–40% кода теперь не пишу руками — пишет Copilot, я правлю.</p>
+<p>Но вот что AI делает плохо. Он не понимает бизнес-контекст. Он не знает, что в вашей компании есть легаси-сервис, который ломается на запросах больше 100 элементов, поэтому пагинация должна быть. Он не понимает, почему здесь нужна транзакция, а здесь — нет. Он не выберет архитектуру для нового микросервиса с учётом нагрузки и команды. Он не сядет с продактом и не объяснит, почему его «простая фича» — это полтора месяца переписывания.</p>
+<p>Парадокс в том, что бум LLM не сократил спрос на Python-разработчиков, а увеличил его. Все компании внезапно захотели интегрировать GPT, делать RAG-системы, файнтюнить модели, строить векторные базы. А кто это делает? Python-разработчики. Кто пишет AI-агентов? Python-разработчики. Авито, Озон, Тинькофф в 2025–2026 нанимали Python+ML людей пачками именно под AI-направления.</p>
+<p>Меняется не профессия, а инструмент. Джун без AI-навыков сейчас уже отстаёт от того, кто умеет пользоваться Copilot, понимает, как промптить, знает, чем отличается RAG от файнтюнинга. Если ты учишь Python в 2026 без знакомства с AI-инструментами — ты учишь его как в 2018. Не делай так.</p>
+<h2>Python или JavaScript — что выбрать новичку без опыта</h2>
+<p>Главный вопрос всех новичков. Отвечу как есть.</p>
+<p>JavaScript — если хочешь быстро видеть результат и тебя цепляет визуальная часть. Сделал кнопку — она работает в браузере через минуту. Это сильный мотиватор. Фронтенд-вакансий джунов исторически больше, чем Python-джунов, примерно процентов на 20 по моим наблюдениям. Войти проще, особенно через React или Vue. Но конкуренция тоже выше — фронт учат вообще все.</p>
+<p>Python — если интересны данные, AI, автоматизация, бэкенд. Менее зрелищно на старте: ты пишешь скрипт, он выводит цифры в консоль, никакой графики. Зато потом — pandas, ML, автоматизация рабочих задач, скрипты, которые экономят часы. Тут больше «инженерного» удовлетворения, меньше «вау» с порога.</p>
+<p>По деньгам на старте они сопоставимы. Джун-фронт в Москве — те же 80–140, плюс-минус 10. Через 2–3 года разница появляется в зависимости от ниши. Python-разработчик в ML/AI обгоняет фронтендера. Фронтендер, который дорос до фуллстека или ушёл в архитектуру SPA, тоже не бедствует. Сениоры в обоих стеках получают сопоставимо, дальше всё зависит от компании и доменa.</p>
+<p>Если честно — выбирай по тому, что тебя триггерит. Не по «где платят больше через 5 лет». Через 5 лет ты либо выгоришь, потому что не нравится, либо вырастешь в любом стеке. Я в 2020-м чуть не пошёл в JS, потому что «там же фронт, там же красиво». Хорошо, что не пошёл — мне нравится копаться в данных, а не в CSS-флексах. Но это лично моё.</p>
+<h2>Сколько на самом деле учить, чтобы выйти на работу</h2>
+<p>Вот тут я буду занудой, потому что слишком много людей покупают курсы «за 3 месяца в IT» и потом удивляются.</p>
+<p>Базовый синтаксис Python — переменные, циклы, функции, классы, базовая работа с файлами и стандартной библиотекой — 1–2 месяца при 2 часах в день. Это если не отвлекаться и реально решать задачи, а не смотреть курс на 2x скорости в фоне.</p>
+<p>После этого начинается настоящее обучение. Базы данных и SQL — месяц. Веб-фреймворк (Django или FastAPI) до уровня «могу сам сделать API с авторизацией» — 1–2 месяца. Git, Docker, Linux до рабочего минимума — ещё месяц. Понимание HTTP, REST, асинхронности — постепенно, в процессе.</p>
+<p>Параллельно — пет-проекты. Не туториалы, а свои. Telegram-бот для чего-то твоего. Парсер сайта, который тебе нужен. Маленький веб-сервис. Без этого джуном не возьмут, как ни старайся.</p>
+<p>Итого до уровня джуна с портфолио — 8–12 месяцев системной работы. Это не «3 месяца в IT». Это год жизни, в котором ты после работы садишься и ковыряешь код. Иногда хочется бросить. Это нормально, кстати. Если ты бросал и возвращался — ты в правильной траек��ории, а не в неудачниках.</p>
+<p>Цифра «за 3 месяца» из рекламы — это либо маркетинг, либо очень узкая ниша (типа автоматизации тестирования с готовыми шаблонами), либо человек уже с опытом разработки на другом языке. Для нуля до Python-джуна за 3 месяца — это сказки. Не верь.</p>
+<p>И ещё. Учить можно бесплатно. Stepik, документация Python, бесплатные плейлисты на YouTube, GitHub-репозитории с примерами — всё есть. Платный курс даёт структуру и иногда обратную связь от ментора. Это удобно. Но не обязательно. Я знаю человека, который вышел джуном в Python, потратив на обучение 0 рублей и около 10 месяцев.</p>
+<h2>Кому Python точно не подойдёт</h2>
+<p>Будем честны: Python — не универсальная отвёртка.</p>
+<p>Если ты хочешь делать игры — Python тебе не подходит. Серьёзно. Pygame — это для забавы и обучения, не для карьеры. Хочешь в геймдев — учи C# (Unity) или C++ (Unreal). Python там нужен максимум как скриптовый язык внутри пайплайнов, и это не то, ради чего туда идут.</p>
+<p>Если ты хочешь делать мобильные приложения — то же самое. Свифт для iOS, Котлин для Android, или Flutter (Dart) и React Native (JS) для кросс-платформы. Python тут вообще не игрок.</p>
+<p>Если ты любишь скорость, низкоуровневый контроль, хочешь оптимизировать каждый байт — Rust или Go. Python медленный по своей природе. Можно ускорять через C-расширения, Cython, PyPy, но если для тебя «10 миллисекунд против 1 миллисекунды» — это важно, ты не на том корабле. Python — про скорость разработки, а не выполнения.</p>
+<p>Если ты хочешь в системное программирование, ядро ОС, драйверы, embedded на ограниченных ресурсах — это C, C++, Rust. Python там просто не запустится в большинстве случаев.</p>
+<p>Ну и самое главное. Если ты ждёшь быстрых денег без вложений времени — никакой язык тебе не поможет. Не Python, не JS, не Go. IT в 2026 — это рынок с нормальной конкуренцией, не золотая лихорадка 2018. За полгода-год ты можешь дойти до джуна, если правда вкладываешься. За месяц — не можешь. Никто не может.</p>
+<p>Кстати, есть категория людей, которым Python подходит идеально, но они об этом не догадываются: тестировщики, аналитики, маркетологи, бухгалтеры, эйчары. Не для смены профессии, а для автоматизации своей. Скрипт, который вытаскивает данные из 50 файлов и собирает отчёт — экономит часы каждую неделю. Я видел эйчаров, которые автоматизировали скоринг резюме на Python и получили повышение, не уходя в разработку.</p>
+<h2>Так стоит ли начинать в 2026</h2>
+<p>Если интересны данные, AI или бэкенд — да, более удачного входа в IT, чем Python 2026, сейчас не придумать. Экосистема зрелая, документация обширная, AI-помощники хорошо его знают, вакансий стабильно много, рост в ML/AI направлении продолжается. Это не хайп — это устоявшийся тренд на годы.</p>
+<p>С чего начать прямо сегодня. Установи Python 3.12 или новее с python.org. Поставь VS Code с расширением Python — этого хватит надолго. Зарегистрируйся на Stepik, найди бесплатный курс «Поколение Python: курс для начинающих» от Тимура Гуева — это, наверное, лучший русскоязычный старт. Параллельно — Codewars или LeetCode на самом простом уровне, по 2–3 задачи в день.</p>
+<p>Через месяц станет понятно. Если ты ловишь себя на том, что вечером открываешь редактор и решаешь задачи, потому что зацепило — твоё. Если каждое занятие как через силу, синтаксис не запоминается, задачи бесят — возможно, тебе не Python нужен, а другое направление в IT (тестирование, аналитика, дизайн). И это нормально, лучше понять за месяц бесплатных уроков, чем за полгода и кредит на 200 тысяч.</p>
+<p>Главный совет от меня. Не покупай курс первым делом. Сначала пощупай язык бесплатно. Если зашло — потом решай, нужен ли курс для структуры или ты потянешь сам. Большинство тянет сам, если есть мотивация. Курс — это не магия, это просто плейлист уроков с домашкой и иногда ментором.</p>
+<p>И ещё одно. Не сравнивай себя с теми, кто в 20 лет уже сениор. У тебя другая стартовая. Сравнивай себя с собой месяц назад. Если месяц назад ты не знал, что такое функция, а сейчас пишешь свой Telegram-бот — ты молодец, остальное приложится.</p>
+<h2>Частые вопросы</h2>
+<p><strong>Не поздно ли учить Python в 35–40 лет?</strong>
+Нет. Возрастной потолок — миф из соцсетей. На рынке полно разработчиков, пришедших из других профессий после 30 — бывшие учителя, инженеры, экономисты, военные. Работодателю важен код в портфолио и адекватность на собесе, а не год рождения в резюме. Я лично знаю Python-разработчика, который вышел джуном в 42 после 15 лет в логистике. Сейчас — мидл в финтехе.</p>
+<p><strong>Можно ли выучить Python бесплатно или нужен платный курс?</strong>
+Можно. Stepik, официальная документация Python, YouTube-каналы (selfedu, Sergey Balakirev), pet-проекты — закрывают весь путь до джуна. Платный курс даёт структуру, дедлайны и обратную связь от ментора — кому-то это нужно для дисциплины. Но это не обязательное условие. Половина джунов, которых я видел, пришли через бесплатные ресурсы.</p>
+<p><strong>Какой ноутбук нужен, чтобы учить Python?</strong>
+Любой, на котором запускается VS Code и браузер. 8 ГБ оперативки достаточно с запасом. Старый ThinkPad с барахолки за 15 тысяч подойдёт. Для ML потом может понадобиться видеокарта или облако (Colab, Kaggle, Yandex DataSphere), но не на старте. Первые полгода ты не упрёшься в железо, обещаю.</p>
+<p><strong>Нужна ли математика для Python?</strong>
+Для бэкенда, веб-разработки, автоматизации — школьного уровня хватает с головой. Для ML и data science — да, нужны статистика, линейная алгебра, основы матана, но их учат параллельно с кодом, а не до. Если в школе математика была кошмаром — не страшно, в 30 лет она воспринимается совсем иначе. Возвращайся к ней по мере необходимости.</p>
+<p><strong>Python 2 ещё где-то используется?</strong>
+Практически нет. Официальная поддержка закончилась в 2020 году. Старые проекты на Python 2 ещё встречаются в легаси, но их активно мигрируют. Изучай сразу Python 3.12 или новее — все актуальные библиотеки, фреймворки и вакансии давно на нём. Учить Python 2 в 2026 — это как учить Windows XP вместо Windows 11.</p>
+<hr>
+<p>Не уверен, твой это путь — Python, QA, Flutter или вообще что-то другое? Пройди наш тест на профориентацию. 5 минут, без регистрации, на выходе — внятный ответ, куда копать: quillon.ru/quiz</p>
+
+  </article>
+
+  <div class="q-blog-cta">
+    <h3>Хочешь войти в IT за 12 месяцев?</h3>
+    <p>Выбери трек — Python, Flutter или QA — и начни с бесплатного вводного урока</p>
+    <a href="/#products" class="q-blog-cta__btn">Выбрать трек</a>
+  </div>
+</main>
+
+<quillon-footer accent="mint"></quillon-footer>
+
+<!-- Яндекс.Метрика -->
+<script type="text/javascript">
+  (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+  m[i].l=1*new Date();
+  for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
+  k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+  (window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
+  ym(108311343,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/108311343" style="position:absolute;left:-9999px;" alt=""/></div></noscript>
+
+</body>
+</html>

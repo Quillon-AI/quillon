@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Блог Quillon — обучение Python, ML, Flutter, QA</title>
+    <link>https://quillon.ru/blog/</link>
+    <description>Статьи об IT-образовании, карьере в разработке и машинном обучении</description>
+    <language>ru</language>
+    <lastBuildDate>Sat, 02 May 2026 13:46:17 GMT</lastBuildDate>
+    <atom:link href="https://quillon.ru/blog/rss.xml" rel="self" type="application/rss+xml"/>
+    
+  <item>
+    <title>Flutter в 2026: стоит ли учить или поезд уже ушёл</title>
+    <link>https://quillon.ru/blog/flutter-v-2026-stoit-li-uchit-ili-poezd-uzhe-ushyol/</link>
+    <guid isPermaLink="true">https://quillon.ru/blog/flutter-v-2026-stoit-li-uchit-ili-poezd-uzhe-ushyol/</guid>
+    <description>Разбираем без хайпа: жив ли Flutter после ухода Google-команды, кто на нём пишет в 2026 и реально ли найти работу новичку.</description>
+    <pubDate>Sat, 02 May 2026 13:46:17 GMT</pubDate>
+    <enclosure url="https://8390f83d-2f6a-4d51-a160-8b08ea3fbea1.selstorage.ru/blog/covers/flutter-v-2026-stoit-li-uchit-ili-poezd-uzhe-ushyol-0bb811a7.png" type="image/png" length="0"/>
+  </item>
+  <item>
+    <title>QA или Python-разработчик: что выбрать новичку без опыта</title>
+    <link>https://quillon.ru/blog/qa-ili-python-razrabotchik-chto-vybrat-novichku-bez-opyta/</link>
+    <guid isPermaLink="true">https://quillon.ru/blog/qa-ili-python-razrabotchik-chto-vybrat-novichku-bez-opyta/</guid>
+    <description>Сравниваем тестировщика и Python-разработчика по входу, зарплате и нагрузке. Помогаем понять, какая профессия подойдёт именно вам.</description>
+    <pubDate>Sat, 02 May 2026 13:46:06 GMT</pubDate>
+    <enclosure url="https://8390f83d-2f6a-4d51-a160-8b08ea3fbea1.selstorage.ru/blog/covers/qa-ili-python-razrabotchik-chto-vybrat-novichku-bez-opyta-2cbd51a1.png" type="image/png" length="0"/>
+  </item>
+  <item>
+    <title>Как войти в IT после 35: реальный путь без сказок</title>
+    <link>https://quillon.ru/blog/kak-vojti-v-it-posle-35-realnyj-put-bez-skazok/</link>
+    <guid isPermaLink="true">https://quillon.ru/blog/kak-vojti-v-it-posle-35-realnyj-put-bez-skazok/</guid>
+    <description>Без историй про «зарплату 300к через 3 месяца». Что реально работает, сколько это занимает и где взрослым проще зайти.</description>
+    <pubDate>Sat, 02 May 2026 13:45:55 GMT</pubDate>
+    <enclosure url="https://8390f83d-2f6a-4d51-a160-8b08ea3fbea1.selstorage.ru/blog/covers/kak-vojti-v-it-posle-35-realnyj-put-bez-skazok-bf5ba9a8.png" type="image/png" length="0"/>
+  </item>
+  <item>
+    <title>Стоит ли учить Python в 2026: честный разбор</title>
+    <link>https://quillon.ru/blog/stoit-li-uchit-python-v-2026-chestnyj-razbor/</link>
+    <guid isPermaLink="true">https://quillon.ru/blog/stoit-li-uchit-python-v-2026-chestnyj-razbor/</guid>
+    <description>Python в 2026: реально ли войти в IT через него, кому он подойдёт, сколько платят джунам и чем это отличается от обещаний из рекламы курсов.</description>
+    <pubDate>Sat, 02 May 2026 13:45:46 GMT</pubDate>
+    <enclosure url="https://8390f83d-2f6a-4d51-a160-8b08ea3fbea1.selstorage.ru/blog/covers/stoit-li-uchit-python-v-2026-chestnyj-razbor-cd5e48b9.png" type="image/png" length="0"/>
+  </item>
+  <item>
+    <title>Бэкенд-разработка для джуна: с чего начать в 2026</title>
+    <link>https://quillon.ru/blog/bekend-razrabotka-dlya-dzhuna-s-chego-nachat-v-2026/</link>
+    <guid isPermaLink="true">https://quillon.ru/blog/bekend-razrabotka-dlya-dzhuna-s-chego-nachat-v-2026/</guid>
+    <description>Какой язык выбрать, что учить после основ и как джуну зайти в бэкенд в 2026 — без курсов-пустышек и розовых обещаний про 300к.</description>
+    <pubDate>Sat, 02 May 2026 13:40:48 GMT</pubDate>
+    <enclosure url="https://8390f83d-2f6a-4d51-a160-8b08ea3fbea1.selstorage.ru/blog/covers/bekend-razrabotka-dlya-dzhuna-s-chego-nachat-v-2026-c5c456e2.png" type="image/png" length="0"/>
+  </item>
+  </channel>
+</rss>
