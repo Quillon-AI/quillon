@@ -5663,6 +5663,7 @@
 }
 </script>
 <script src="/v4/components/quillon-ui.js?v=2" defer></script>
+<script src="/v4/js/form-submit.js" defer></script>
 </head>
 <body>
 
@@ -7582,7 +7583,11 @@
         </aside>
 
         <!-- ─── FORM: 3 fields + submit ─── -->
-        <form class="q-cf-form" action="#" method="post" novalidate>
+        <form class="q-cf-form"
+              data-q-form="contact-main"
+              data-q-success="Заявка принята"
+              data-q-success-sub="Свяжемся с тобой по телефону или email в течение 24 часов в будни."
+              novalidate>
 
           <div class="q-cf-field">
             <label class="q-cf-label" for="cf-name">

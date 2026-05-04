@@ -337,15 +337,84 @@
     }
   }
 
+  /* ─── Phone mask: +7 (___) ___-__-__ ──────────────────────── */
+  function formatRussianPhone(raw) {
+    let d = String(raw || '').replace(/\D/g, '');
+    if (!d) return '';
+    if (d.startsWith('8')) d = '7' + d.slice(1);
+    if (!d.startsWith('7')) d = '7' + d;
+    d = d.slice(0, 11);
+    let out = '+7';
+    if (d.length > 1) out += ' (' + d.slice(1, 4);
+    if (d.length >= 4) out += ')';
+    if (d.length > 4) out += ' ' + d.slice(4, 7);
+    if (d.length > 7) out += '-' + d.slice(7, 9);
+    if (d.length > 9) out += '-' + d.slice(9, 11);
+    return out;
+  }
+
+  function attachPhoneMask(input) {
+    if (input.dataset.qPhoneMasked) return;
+    input.dataset.qPhoneMasked = '1';
+    input.addEventListener('focus', () => {
+      if (!input.value.trim()) input.value = '+7 ';
+    });
+    input.addEventListener('input', () => {
+      input.value = formatRussianPhone(input.value);
+    });
+    input.addEventListener('blur', () => {
+      const digits = input.value.replace(/\D/g, '');
+      // Если только префикс «7» — очистить
+      if (digits.length <= 1) input.value = '';
+    });
+    input.addEventListener('paste', (e) => {
+      e.preventDefault();
+      const pasted = (e.clipboardData || window.clipboardData).getData('text');
+      input.value = formatRussianPhone(pasted);
+      input.dispatchEvent(new Event('input'));
+    });
+  }
+
+  /* ─── Validation: required checkboxes (consent) ─────────── */
+  function validateForm(form) {
+    // Сначала стандартная HTML5-валидация (required, pattern, type=email)
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return false;
+    }
+    // Дополнительно — required-чекбоксы (browser native checkValidity их обычно ловит,
+    // но при novalidate на форме ломается; подстрахуемся вручную)
+    const reqChecks = form.querySelectorAll('input[type="checkbox"][required]');
+    for (const cb of reqChecks) {
+      if (!cb.checked) {
+        cb.focus();
+        // Найти ближайший .q-cf-consent или label и подсветить
+        const wrapper = cb.closest('label, .q-cf-consent, .q-consent') || cb;
+        wrapper.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        renderError(form, 'Чтобы отправить заявку, отметь обязательные согласия.');
+        return false;
+      }
+    }
+    // Phone — если type=tel и required — должно быть минимум 11 цифр
+    const phone = form.querySelector('input[type="tel"][required], input[name="phone"][required]');
+    if (phone && phone.value.replace(/\D/g, '').length < 11) {
+      phone.focus();
+      renderError(form, 'Укажи телефон в формате +7 (XXX) XXX-XX-XX.');
+      return false;
+    }
+    return true;
+  }
+
   function bind(form) {
     if (form.dataset.qBound) return;
     form.dataset.qBound = '1';
+
+    // Phone-mask для tel-полей внутри этой формы
+    form.querySelectorAll('input[type="tel"], input[name="phone"], input[name="tel"]').forEach(attachPhoneMask);
+
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-      }
+      if (!validateForm(form)) return;
       submit(form);
     });
   }
