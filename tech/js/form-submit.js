@@ -365,28 +365,28 @@
       if (!input.value.trim()) input.value = '+7 ';
     });
 
+    function setEndOfInput() {
+      const len = input.value.length;
+      try { input.setSelectionRange(len, len); } catch (_) {}
+    }
+
     // keydown: Backspace/Delete работают по ЦИФРАМ, а не по символам формата.
     // Иначе backspace удаляет ')' → input-handler восстанавливает её → не стирается.
     input.addEventListener('keydown', (e) => {
-      if (e.key === 'Backspace') {
-        // Если есть selection — даём браузеру обработать самому
-        if (input.selectionStart !== input.selectionEnd) return;
+      if (e.key === 'Backspace' || e.key === 'Delete') {
+        if (input.selectionStart !== input.selectionEnd) return; // selection — браузер сам
         e.preventDefault();
         const digits = getDigits().slice(0, -1);
         input.value = digits.length > 1 ? formatRussianPhone(digits) : '';
-      } else if (e.key === 'Delete') {
-        if (input.selectionStart !== input.selectionEnd) return;
-        // Delete forward — простой кейс: пересчитать без последней цифры
-        e.preventDefault();
-        const digits = getDigits().slice(0, -1);
-        input.value = digits.length > 1 ? formatRussianPhone(digits) : '';
+        setEndOfInput();
       }
     });
 
     input.addEventListener('input', (e) => {
-      // Игнорируем deleteContentBackward — keydown уже обработал
+      // Игнорируем delete* — keydown уже обработал
       if (e.inputType && e.inputType.startsWith('delete')) return;
       input.value = formatRussianPhone(input.value);
+      setEndOfInput();
     });
 
     input.addEventListener('blur', () => {
