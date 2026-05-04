@@ -462,6 +462,7 @@
   max-height: 90vh;
   aspect-ratio: 1 / 1;
   margin-left: auto;
+  margin-top: -8%;     /* поднять sphere ближе к центру hero */
 }
 .qt-hero__canvas {
   position: absolute; inset: 0;
