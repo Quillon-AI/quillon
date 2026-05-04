@@ -1,2 +1,9 @@
 User-agent: *
-Disallow: /
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_legacy/
+Disallow: /*?*
+
+Sitemap: https://tech.quillon.ru/sitemap.xml
+Host: tech.quillon.ru

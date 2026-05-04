@@ -3,11 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quillon Tech — Прагматичный AI для реального бизнеса</title>
-  <meta name="description" content="Quillon Tech — IT-студия, разрабатывающая AI-решения для бизнеса: заказная разработка, тиражное и промышленное ПО, корпоративное обучение.">
-  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0F1B3D">
 
+  <title>Quillon Tech — IT-компания из Казани: AI, FastAPI, mobile</title>
+  <meta name="description" content="Разрабатываем высоконагруженные сервисы, AI-платформы и mobile на собственном стеке. 4 продукта в production, своя инфраструктура в РФ. Бесплатная техническая оценка — ответ за день.">
+  <meta name="keywords" content="IT-компания Казань, заказная разработка ПО, AI для бизнеса, RAG-системы, FastAPI, Django, Flutter, корпоративный AI-ассистент, Quillon Meet, Quillon LMS">
+
+  <link rel="canonical" href="https://tech.quillon.ru/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="Quillon Tech">
+  <meta property="og:title" content="Quillon Tech — IT-компания из Казани">
+  <meta property="og:description" content="Разрабатываем AI-платформы, высоконагруженные сервисы и mobile-приложения. 4 продукта в production, своя инфраструктура.">
+  <meta property="og:url" content="https://tech.quillon.ru/">
+  <meta property="og:image" content="https://tech.quillon.ru/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Quillon Tech — IT-компания из Казани">
+  <meta name="twitter:description" content="Разрабатываем AI-платформы и mobile на собственном стеке.">
+  <meta name="twitter:image" content="https://tech.quillon.ru/og-image.png">
+
+  <!-- Favicons -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+  <!-- Performance hints -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js">
 
   <link rel="stylesheet" href="/css/tokens-tech.css">
   <link rel="stylesheet" href="/css/base.css">
@@ -20,24 +51,69 @@
     }
   }
   </script>
+
+  <!-- Schema.org · Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Quillon",
+    "alternateName": "Quillon Tech",
+    "url": "https://tech.quillon.ru",
+    "logo": "https://tech.quillon.ru/assets/logo.svg",
+    "description": "IT-компания из Казани. Разработка AI-платформ, высоконагруженных сервисов и mobile-приложений на собственном стеке.",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Казань",
+      "addressRegion": "Республика Татарстан",
+      "addressCountry": "RU"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "sales",
+      "email": "support@quillon.ru",
+      "availableLanguage": ["ru"]
+    },
+    "sameAs": [
+      "https://t.me/quillon",
+      "https://github.com/Quillon-AI",
+      "https://quillon.ru"
+    ]
+  }
+  </script>
+
+  <!-- Schema.org · WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "url": "https://tech.quillon.ru",
+    "name": "Quillon Tech",
+    "inLanguage": "ru-RU",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Quillon"
+    }
+  }
+  </script>
 </head>
 <body>
 
 <!-- ─── NAV PILL ─────────────────────────────────────────────── -->
 <header class="qt-topbar" role="banner">
-  <a href="/" class="qt-topbar__brand" aria-label="Quillon Tech">
+  <a href="/" class="qt-topbar__brand" aria-label="Quillon — главная">
     <img class="qt-topbar__brand-dark"  src="/assets/logo.svg"       alt="" width="28" height="28">
     <img class="qt-topbar__brand-light" src="/assets/logo-light.svg" alt="" width="28" height="28">
     <span>Quillon</span>
   </a>
   <span class="qt-topbar__sep" aria-hidden="true"></span>
   <nav class="qt-topbar__nav" aria-label="Главная навигация">
-    <a class="qt-topbar__link" href="#about">О компании</a>
+    <a class="qt-topbar__link" href="/about/">О компании</a>
     <a class="qt-topbar__link" href="#products">Продукты и сервисы</a>
     <a class="qt-topbar__link" href="#cases">Примеры внедрения</a>
-    <a class="qt-topbar__link" href="#investors">Инвесторам</a>
+    <a class="qt-topbar__link" href="/career/">Карьера</a>
   </nav>
-  <a class="qt-btn qt-btn--primary qt-btn--sm qt-topbar__cta" href="#contact">
+  <a class="qt-btn qt-btn--primary qt-btn--sm qt-topbar__cta" href="#contact-cta">
     Связаться с нами
   </a>
   <button class="qt-topbar__burger" type="button" aria-label="Меню" aria-controls="qt-drawer" aria-expanded="false">
@@ -63,15 +139,18 @@
     </button>
   </header>
   <nav class="qt-drawer__nav" aria-label="Мобильное меню">
-    <a class="qt-drawer__link" href="#about">О компании</a>
+    <a class="qt-drawer__link" href="/about/">О компании</a>
     <a class="qt-drawer__link" href="#products">Продукты и сервисы</a>
     <a class="qt-drawer__link" href="#cases">Принципы</a>
     <a class="qt-drawer__link" href="#stack">Стек</a>
     <a class="qt-drawer__link" href="#studio">Quillon Studio</a>
     <a class="qt-drawer__link" href="#opensource">Open source</a>
+    <a class="qt-drawer__link" href="/career/">Карьера</a>
   </nav>
   <a class="qt-btn qt-btn--primary qt-btn--lg qt-drawer__cta" href="#contact-cta">Связаться с нами</a>
 </aside>
+
+<main id="main">
 
 <!-- ─── HERO ─────────────────────────────────────────────────── -->
 <section class="qt-hero" id="hero">
@@ -79,6 +158,7 @@
     <div class="qt-hero__inner">
       <div class="qt-hero__copy">
         <h1 class="qt-hero__title">
+          <span class="qt-sr-only">Quillon — IT-компания из&nbsp;Казани, разрабатывающая AI-платформы, высоконагруженные сервисы и&nbsp;mobile на&nbsp;собственном стеке.</span>
           Мы строим <b>продукты</b>.<br>
           На своём стеке.<br>
           На&nbsp;своих серверах.
@@ -102,7 +182,7 @@
         </div>
         <div class="qt-hero__cta">
           <a class="qt-btn qt-btn--primary qt-btn--lg" href="#products">Наши продукты</a>
-          <a class="qt-btn qt-btn--outline qt-btn--lg" href="https://quillon.ru" target="_blank" rel="noopener">К&nbsp;команде ↗</a>
+          <a class="qt-btn qt-btn--outline qt-btn--lg" href="https://quillon.ru" target="_blank" rel="noopener noreferrer">К&nbsp;команде ↗</a>
         </div>
       </div>
       <div class="qt-hero__sphere">
@@ -336,19 +416,19 @@
         <p class="qt-card__eyebrow">GitHub</p>
         <h3 class="qt-card__title">Quillon-AI</h3>
         <p class="qt-card__body">Репозитории продуктов компании. Часть кодовой базы открыта &mdash; можно посмотреть как устроены наши продукты изнутри.</p>
-        <a href="https://github.com/Quillon-AI" target="_blank" rel="noopener" style="display: inline-block; margin-top: 16px; font-size: 14px; color: var(--qt-accent); font-weight: 600;">github.com/Quillon-AI ↗</a>
+        <a href="https://github.com/Quillon-AI" target="_blank" rel="noopener noreferrer" style="display: inline-block; margin-top: 16px; font-size: 14px; color: var(--qt-accent); font-weight: 600;">github.com/Quillon-AI ↗</a>
       </div>
       <div class="qt-card">
         <p class="qt-card__eyebrow">Tech-blog</p>
         <h3 class="qt-card__title">Как мы строим</h3>
         <p class="qt-card__body">Технические разборы: архитектура продуктов, миграции, инциденты, инженерные решения. Без маркетинга.</p>
-        <a href="https://quillon.ru/blog/" target="_blank" rel="noopener" style="display: inline-block; margin-top: 16px; font-size: 14px; color: var(--qt-accent); font-weight: 600;">quillon.ru/blog ↗</a>
+        <a href="https://quillon.ru/blog/" target="_blank" rel="noopener noreferrer" style="display: inline-block; margin-top: 16px; font-size: 14px; color: var(--qt-accent); font-weight: 600;">quillon.ru/blog ↗</a>
       </div>
       <div class="qt-card">
         <p class="qt-card__eyebrow">Команда</p>
         <h3 class="qt-card__title">Присоединиться</h3>
-        <p class="qt-card__body">Учим джунов через Quillon School и&nbsp;берём senior-инженеров в&nbsp;production-команду. Реальные продукты с&nbsp;первого дня.</p>
-        <a href="https://quillon.ru" target="_blank" rel="noopener" style="display: inline-block; margin-top: 16px; font-size: 14px; color: var(--qt-accent); font-weight: 600;">quillon.ru ↗</a>
+        <p class="qt-card__body">Берём senior-инженеров в&nbsp;production-команду. Python, AI/ML, mobile, инфраструктура. Реальные продукты с&nbsp;первого дня.</p>
+        <a href="/career/" style="display: inline-block; margin-top: 16px; font-size: 14px; color: var(--qt-accent); font-weight: 600;">Открытые позиции →</a>
       </div>
     </div>
   </div>
@@ -368,7 +448,7 @@
         </p>
         <ul class="qt-contact__channels">
           <li><span class="qt-contact__channel-label">Email</span><a href="mailto:support@quillon.ru">support@quillon.ru</a></li>
-          <li><span class="qt-contact__channel-label">Telegram</span><a href="https://t.me/quillon" target="_blank" rel="noopener">@quillon ↗</a></li>
+          <li><span class="qt-contact__channel-label">Telegram</span><a href="https://t.me/quillon" target="_blank" rel="noopener noreferrer">@quillon ↗</a></li>
           <li><span class="qt-contact__channel-label">Город</span><span>Казань, Россия</span></li>
         </ul>
       </div>
@@ -394,8 +474,8 @@
             </svg>
           </span>
           <span class="qt-consent__text">
-            Даю согласие на&nbsp;<a href="https://quillon.ru/v4/docs/consent-pdn.html" target="_blank" rel="noopener">обработку персональных данных</a><br>
-            и&nbsp;принимаю <a href="https://quillon.ru/v4/docs/privacy-policy.html" target="_blank" rel="noopener">политику конфиденциальности</a>.
+            Даю согласие на&nbsp;<a href="https://quillon.ru/v4/docs/consent-pdn.html" target="_blank" rel="noopener noreferrer">обработку персональных данных</a><br>
+            и&nbsp;принимаю <a href="https://quillon.ru/v4/docs/privacy-policy.html" target="_blank" rel="noopener noreferrer">политику конфиденциальности</a>.
           </span>
         </label>
         <button type="submit" class="qt-btn qt-btn--primary qt-btn--lg qt-contact__submit">
@@ -406,8 +486,10 @@
   </div>
 </section>
 
+</main>
+
 <!-- ─── FOOTER ───────────────────────────────────────────────── -->
-<footer class="qt-footer" id="contact">
+<footer class="qt-footer" id="footer">
   <div class="qt-container">
     <div class="qt-footer__top">
       <div class="qt-footer__col">
@@ -425,8 +507,8 @@
       <div class="qt-footer__col">
         <h4 class="qt-footer__col-title">Продукты</h4>
         <ul class="qt-footer__list">
-          <li><a class="qt-footer__link" href="https://meet.quillon.ru" target="_blank" rel="noopener">Quillon Meet ↗</a></li>
-          <li><a class="qt-footer__link" href="https://lms.quillon.ru" target="_blank" rel="noopener">Quillon LMS ↗</a></li>
+          <li><a class="qt-footer__link" href="https://meet.quillon.ru" target="_blank" rel="noopener noreferrer">Quillon Meet ↗</a></li>
+          <li><a class="qt-footer__link" href="https://lms.quillon.ru" target="_blank" rel="noopener noreferrer">Quillon LMS ↗</a></li>
           <li><a class="qt-footer__link" href="#products">Quilly AI</a></li>
           <li><a class="qt-footer__link" href="#products">Quillon Jobs</a></li>
         </ul>
@@ -434,9 +516,9 @@
       <div class="qt-footer__col">
         <h4 class="qt-footer__col-title">Компания</h4>
         <ul class="qt-footer__list">
-          <li><a class="qt-footer__link" href="#about">О&nbsp;нас</a></li>
+          <li><a class="qt-footer__link" href="/about/">О&nbsp;нас</a></li>
           <li><a class="qt-footer__link" href="#cases">Принципы</a></li>
-          <li><a class="qt-footer__link" href="https://quillon.ru" target="_blank" rel="noopener">Quillon School ↗</a></li>
+          <li><a class="qt-footer__link" href="https://quillon.ru" target="_blank" rel="noopener noreferrer">Quillon School ↗</a></li>
         </ul>
       </div>
     </div>
