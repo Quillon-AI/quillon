@@ -58,78 +58,35 @@ jobs:
 
       - name: Seed monitors
         if: ${{ inputs.mode == 'seed' }}
+        env:
+          USER_AT_HOST: ${{ secrets.QUILLON_USER }}@${{ secrets.QUILLON_HOST }}
         run: |
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
-            ${{ secrets.QUILLON_USER }}@${{ secrets.QUILLON_HOST }} bash <<'REMOTE'
-          set -e
+          SSH="ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no $USER_AT_HOST"
+          SCP="scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no"
 
-          # Сначала бэкап БД
-          docker exec uptime-kuma sh -c 'cp /app/data/kuma.db /app/data/kuma.db.bak.$(date +%s)'
+          # 0. Бэкап БД
+          $SSH "docker exec uptime-kuma sh -c 'cp /app/data/kuma.db /app/data/kuma.db.bak.\$(date +%s)'"
           echo "✓ backup created"
-          docker exec uptime-kuma ls -la /app/data/ | grep -E 'kuma\.db'
 
-          # Получить user_id (для created_by/owner если нужен)
-          USER_ID=$(docker exec uptime-kuma sqlite3 /app/data/kuma.db "SELECT id FROM user LIMIT 1;")
-          echo "owner user_id = $USER_ID"
+          # 1. Скопировать SQL-файл на сервер, потом в контейнер
+          $SCP ./uptime-kuma/seed-monitors.sql $USER_AT_HOST:/tmp/seed-monitors.sql
+          $SSH "docker cp /tmp/seed-monitors.sql uptime-kuma:/tmp/seed-monitors.sql"
 
-          # Вставка мониторов. Используем INSERT OR IGNORE по уникальному name
-          # чтобы повторные запуски не дублировали.
-          docker exec uptime-kuma sqlite3 /app/data/kuma.db <<'SQL'
-          -- Проверим — есть ли уникальность по имени
-          -- (если нет, делаем through SELECT existence)
-
-          INSERT INTO monitor (name, type, interval, retry_interval, maxretries, url, accepted_statuscodes_json, active, weight, method, body, headers, timeout, max_redirects, ignore_tls, upside_down, packet_size, port, hostname, keyword, expiry_notification, push_token, http_body_encoding)
-          SELECT 'Quillon · main',         'http',    60, 60, 2, 'https://quillon.ru/',                                            '["200-299"]', 1, 2000, 'GET', NULL, NULL, 48, 10, 0, 0, 56, NULL, NULL, NULL, 1, NULL, NULL
-          WHERE NOT EXISTS (SELECT 1 FROM monitor WHERE name='Quillon · main');
-
-          INSERT INTO monitor (name, type, interval, retry_interval, maxretries, url, accepted_statuscodes_json, active, weight, method, timeout, max_redirects, ignore_tls, upside_down, expiry_notification)
-          SELECT 'Quillon · support',      'http',   300, 60, 2, 'https://quillon.ru/support/',                                    '["200-299"]', 1, 2000, 'GET', 48, 10, 0, 0, 1
-          WHERE NOT EXISTS (SELECT 1 FROM monitor WHERE name='Quillon · support');
-
-          INSERT INTO monitor (name, type, interval, retry_interval, maxretries, url, accepted_statuscodes_json, active, weight, method, timeout, max_redirects, ignore_tls, upside_down, expiry_notification)
-          SELECT 'Quillon · blog',         'http',   300, 60, 2, 'https://quillon.ru/blog/',                                       '["200-299"]', 1, 2000, 'GET', 48, 10, 0, 0, 1
-          WHERE NOT EXISTS (SELECT 1 FROM monitor WHERE name='Quillon · blog');
-
-          INSERT INTO monitor (name, type, interval, retry_interval, maxretries, url, accepted_statuscodes_json, active, weight, method, timeout, max_redirects, ignore_tls, upside_down, expiry_notification)
-          SELECT 'Quillon · tracks/python','http',   300, 60, 2, 'https://quillon.ru/tracks/python-backend-ml/',                   '["200-299"]', 1, 2000, 'GET', 48, 10, 0, 0, 1
-          WHERE NOT EXISTS (SELECT 1 FROM monitor WHERE name='Quillon · tracks/python');
-
-          INSERT INTO monitor (name, type, interval, retry_interval, maxretries, url, accepted_statuscodes_json, active, weight, method, timeout, max_redirects, ignore_tls, upside_down, expiry_notification)
-          SELECT 'Tech · main',            'http',    60, 60, 2, 'https://tech.quillon.ru/',                                       '["200-299"]', 1, 2000, 'GET', 48, 10, 0, 0, 1
-          WHERE NOT EXISTS (SELECT 1 FROM monitor WHERE name='Tech · main');
-
-          INSERT INTO monitor (name, type, interval, retry_interval, maxretries, url, accepted_statuscodes_json, active, weight, method, timeout, max_redirects, ignore_tls, upside_down, expiry_notification)
-          SELECT 'Tech · career',          'http',   300, 60, 2, 'https://tech.quillon.ru/career/',                                '["200-299"]', 1, 2000, 'GET', 48, 10, 0, 0, 1
-          WHERE NOT EXISTS (SELECT 1 FROM monitor WHERE name='Tech · career');
-
-          INSERT INTO monitor (name, type, interval, retry_interval, maxretries, url, accepted_statuscodes_json, active, weight, method, timeout, max_redirects, ignore_tls, upside_down, expiry_notification)
-          SELECT 'Tech · cases',           'http',   300, 60, 2, 'https://tech.quillon.ru/cases/',                                 '["200-299"]', 1, 2000, 'GET', 48, 10, 0, 0, 1
-          WHERE NOT EXISTS (SELECT 1 FROM monitor WHERE name='Tech · cases');
-
-          INSERT INTO monitor (name, type, interval, retry_interval, maxretries, url, accepted_statuscodes_json, active, weight, method, timeout, max_redirects, ignore_tls, upside_down, expiry_notification)
-          SELECT 'Quillon Meet',           'http',    60, 60, 2, 'https://meet.quillon.ru/',                                       '["200-299","301","302"]', 1, 2000, 'GET', 48, 10, 0, 0, 1
-          WHERE NOT EXISTS (SELECT 1 FROM monitor WHERE name='Quillon Meet');
-
-          -- Bitrix endpoint — используем тип keyword чтобы убедиться что API живой
-          INSERT INTO monitor (name, type, interval, retry_interval, maxretries, url, keyword, accepted_statuscodes_json, active, weight, method, timeout, max_redirects, ignore_tls, upside_down, expiry_notification)
-          SELECT 'Bitrix24 webhook',       'keyword', 600, 120, 2, 'https://b24-o95wtq.bitrix24.ru/rest/1/6d5yns93ulwkr79s/crm.lead.fields.json', 'TITLE', '["200-299"]', 1, 1000, 'GET', 48, 10, 0, 0, 1
-          WHERE NOT EXISTS (SELECT 1 FROM monitor WHERE name='Bitrix24 webhook');
-
-          SELECT 'Total monitors:' AS info, COUNT(*) AS n FROM monitor;
-          SQL
+          # 2. Выполнить SQL-файл через sqlite3 < file (надёжно, без heredoc-issues)
+          echo "═══ выполняем SQL ═══"
+          $SSH "docker exec uptime-kuma sh -c 'sqlite3 /app/data/kuma.db < /tmp/seed-monitors.sql'"
 
           echo ""
-          echo "=== итог ==="
-          docker exec uptime-kuma sqlite3 -header -column /app/data/kuma.db "SELECT id, name, type, url, interval, active FROM monitor ORDER BY id;"
+          echo "═══ проверка после INSERT ═══"
+          $SSH "docker exec uptime-kuma sqlite3 /app/data/kuma.db 'SELECT COUNT(*) FROM monitor;'"
+          $SSH "docker exec uptime-kuma sqlite3 -header -column /app/data/kuma.db 'SELECT id, name, type, interval, active FROM monitor ORDER BY id;'"
 
           echo ""
-          echo "=== restart Kuma чтобы подхватить ==="
-          cd /opt/uptime-kuma
-          docker compose restart
+          echo "═══ restart Kuma чтобы подхватить ═══"
+          $SSH "cd /opt/uptime-kuma && docker compose restart"
           sleep 15
-          docker compose ps
-          REMOTE
+          $SSH "docker compose -f /opt/uptime-kuma/docker-compose.yml ps"
 
           echo ""
-          echo "=== final smoke test ==="
+          echo "═══ smoke test ═══"
           curl -sI https://status.quillon.ru/ | head -3
