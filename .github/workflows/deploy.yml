@@ -50,9 +50,23 @@ jobs:
             ${{ secrets.QUILLON_USER }}@${{ secrets.QUILLON_HOST }} \
             "chown -R www-data:www-data /var/www/quillon.ru /var/www/tech.quillon.ru"
 
+      - name: Deploy nginx-seo.conf + reload nginx
+        run: |
+          # Кладём конфиг в /etc/nginx/snippets/ — nginx должен включать его
+          # из server-блоков директивой `include /etc/nginx/snippets/quillon-seo.conf;`
+          scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
+            ./nginx-seo.conf \
+            ${{ secrets.QUILLON_USER }}@${{ secrets.QUILLON_HOST }}:/tmp/quillon-seo.conf
+
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
+            ${{ secrets.QUILLON_USER }}@${{ secrets.QUILLON_HOST }} \
+            'sudo install -m 644 /tmp/quillon-seo.conf /etc/nginx/snippets/quillon-seo.conf && sudo nginx -t && sudo systemctl reload nginx && echo "✅ nginx reloaded"'
+
       - name: Smoke test
         run: |
           echo "--- quillon.ru ---"
-          curl -sI https://quillon.ru/ | head -3
+          curl -sI https://quillon.ru/ | head -8
           echo "--- tech.quillon.ru ---"
-          curl -sI https://tech.quillon.ru/ | head -3
+          curl -sI https://tech.quillon.ru/ | head -8
+          echo "--- security headers ---"
+          curl -sI https://tech.quillon.ru/ | grep -iE 'strict-transport|content-security|permissions-policy' || echo "headers not yet applied"
