@@ -1,0 +1,41 @@
+name: Fix Kuma Monitor Owner
+
+on:
+  workflow_dispatch:
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.QUILLON_DEPLOY_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.QUILLON_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Set user_id=1 on all monitors
+        run: |
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
+            ${{ secrets.QUILLON_USER }}@${{ secrets.QUILLON_HOST }} bash <<'REMOTE'
+          set -e
+          echo "=== before ==="
+          docker exec uptime-kuma sqlite3 -header -column /app/data/kuma.db \
+            "SELECT id, name, user_id FROM monitor ORDER BY id;"
+
+          echo ""
+          echo "=== UPDATE user_id=1 для всех мониторов где user_id IS NULL ==="
+          docker exec uptime-kuma sqlite3 /app/data/kuma.db \
+            "UPDATE monitor SET user_id = 1 WHERE user_id IS NULL; SELECT changes();"
+
+          echo ""
+          echo "=== after ==="
+          docker exec uptime-kuma sqlite3 -header -column /app/data/kuma.db \
+            "SELECT id, name, user_id, active FROM monitor ORDER BY id;"
+
+          echo ""
+          echo "=== restart Kuma чтобы UI подхватил ==="
+          cd /opt/uptime-kuma && docker compose restart
+          sleep 15
+          docker compose ps
+          REMOTE
