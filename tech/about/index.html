@@ -37,6 +37,7 @@
   <link rel="stylesheet" href="/css/tokens-tech.css">
   <link rel="stylesheet" href="/css/base.css">
   <link rel="stylesheet" href="/css/components-tech.css">
+  <script src="/js/form-submit.js" defer></script>
 
   <script type="application/ld+json">
   {
@@ -106,7 +107,7 @@
   <nav class="qt-topbar__nav" aria-label="Главная навигация">
     <a class="qt-topbar__link" href="/about/">О компании</a>
     <a class="qt-topbar__link" href="/#products">Продукты и сервисы</a>
-    <a class="qt-topbar__link" href="/#cases">Примеры внедрения</a>
+    <a class="qt-topbar__link" href="/cases/">Примеры внедрения</a>
     <a class="qt-topbar__link" href="/career/">Карьера</a>
   </nav>
   <a class="qt-btn qt-btn--primary qt-btn--sm qt-topbar__cta" href="#about-cta">
@@ -136,7 +137,7 @@
   <nav class="qt-drawer__nav" aria-label="Мобильное меню">
     <a class="qt-drawer__link" href="/about/">О компании</a>
     <a class="qt-drawer__link" href="/#products">Продукты и сервисы</a>
-    <a class="qt-drawer__link" href="/#cases">Принципы</a>
+    <a class="qt-drawer__link" href="/cases/">Принципы</a>
     <a class="qt-drawer__link" href="/#stack">Стек</a>
     <a class="qt-drawer__link" href="/#studio">Quillon Studio</a>
     <a class="qt-drawer__link" href="/career/">Карьера</a>
@@ -344,7 +345,7 @@
         </ul>
       </div>
 
-      <form class="qt-contact__form" action="#" method="post" novalidate>
+      <form class="qt-contact__form" data-q-form="contact-about" data-q-success="Заявка отправлена" data-q-success-sub="Мы получили ваше сообщение. Ответим на email или Telegram в течение дня." novalidate>
         <div class="qt-field">
           <label class="qt-field__label" for="cf-name">Имя</label>
           <input class="qt-field__input" type="text" id="cf-name" name="name" placeholder="Как к&nbsp;вам обращаться" required>

@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Поддержка пользователей · Quillon</title>
+  <meta name="description" content="Техническая поддержка приложений Quillon: Meet, LMS, Quilly AI, Jobs. Контакты, FAQ, форма обращения. Ответ за 24 часа.">
+  <link rel="canonical" href="https://quillon.ru/support/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Поддержка · Quillon">
+  <meta property="og:description" content="Техническая поддержка приложений Quillon: Meet, LMS, Quilly AI, Jobs. Контакты, FAQ, форма обращения.">
+  <meta property="og:url" content="https://quillon.ru/support/">
+  <meta property="og:image" content="https://quillon.ru/og-image.png">
+  <meta property="og:locale" content="ru_RU">
+
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+  <!-- Theme bootstrap (FOUC prevention) -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('q-theme');
+        var prefers = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', saved || prefers);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="/v4/css/tokens.css">
+  <link rel="stylesheet" href="/v4/css/base.css">
+  <link rel="stylesheet" href="/v4/css/components.css">
+  <script src="/v4/components/quillon-ui.js?v=2" defer></script>
+  <script src="/v4/js/form-submit.js" defer></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://quillon.ru/" },
+      { "@type": "ListItem", "position": 2, "name": "Поддержка", "item": "https://quillon.ru/support/" }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Как быстро вы отвечаете на обращения?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Стандартный SLA — 24 часа в будние дни. Критичные инциденты (продакшн упал, безопасность) — ответ в течение 2 часов через Telegram." }
+      },
+      {
+        "@type": "Question",
+        "name": "Какие продукты поддерживаете?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Quillon Meet (видеоконференции), Quillon LMS (платформа обучения), Quilly AI (корпоративный AI-ассистент), Quillon Jobs (подбор IT-задач)." }
+      },
+      {
+        "@type": "Question",
+        "name": "Как сообщить о баге?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Через форму на этой странице или email support@quillon.ru. В описании укажите: продукт, шаги воспроизведения, что произошло, что ожидалось, версия браузера/ОС." }
+      },
+      {
+        "@type": "Question",
+        "name": "Можно ли запросить новую функцию?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Да. Опишите задачу через форму с пометкой «Feature request». Каждый запрос рассматривается, мы возвращаемся с решением (включить в roadmap / реализовать опционально / отказ с обоснованием)." }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    /* Support-specific layout, использует общий q-design system */
+    .q-support-hero {
+      padding-top: var(--q-s-7);
+      padding-bottom: var(--q-s-5);
+    }
+    .q-support-hero__eyebrow {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-accent);
+      margin-bottom: var(--q-s-3);
+    }
+    .q-support-hero__title {
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: var(--q-fw-medium);
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      color: var(--q-text-hi);
+      margin: 0 0 var(--q-s-5);
+      max-width: 22ch;
+    }
+    .q-support-hero__lede {
+      font-size: var(--q-t-lead);
+      color: var(--q-text-mid);
+      max-width: 56ch;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* Channels grid (3 cards: email / telegram / SLA) */
+    .q-support-channels {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--q-s-4);
+      margin-top: var(--q-s-7);
+    }
+    @media (max-width: 800px) {
+      .q-support-channels { grid-template-columns: 1fr; }
+    }
+    .q-support-channel {
+      padding: var(--q-s-5);
+      background: var(--q-bg-1);
+      border: 1px solid var(--q-line);
+      border-radius: var(--q-r-md);
+      display: flex; flex-direction: column; gap: var(--q-s-2);
+    }
+    .q-support-channel__label {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-text-low);
+    }
+    .q-support-channel__value {
+      font-size: var(--q-t-h4);
+      font-weight: var(--q-fw-semibold);
+      color: var(--q-text-hi);
+    }
+    .q-support-channel__value a { color: var(--q-text-hi); text-decoration: none; border-bottom: 1px solid var(--q-line-strong); }
+    .q-support-channel__value a:hover { color: var(--q-accent); border-bottom-color: var(--q-accent); }
+    .q-support-channel__caption {
+      font-size: 13px;
+      color: var(--q-text-mid);
+      line-height: 1.5;
+    }
+
+    /* Products grid */
+    .q-support-products {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--q-s-4);
+    }
+    @media (max-width: 800px) {
+      .q-support-products { grid-template-columns: 1fr; }
+    }
+    .q-support-product {
+      padding: var(--q-s-5);
+      background: var(--q-bg-1);
+      border: 1px solid var(--q-line);
+      border-radius: var(--q-r-md);
+    }
+    .q-support-product__name {
+      font-size: var(--q-t-h4);
+      font-weight: var(--q-fw-semibold);
+      color: var(--q-text-hi);
+      margin: 0 0 var(--q-s-2);
+    }
+    .q-support-product__url {
+      font-family: var(--q-font-mono);
+      font-size: var(--q-t-mono);
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-accent);
+      display: block;
+      margin-bottom: var(--q-s-3);
+      text-decoration: none;
+    }
+    .q-support-product__url:hover { color: var(--q-text-hi); }
+    .q-support-product__desc {
+      font-size: 14px;
+      color: var(--q-text-mid);
+      line-height: 1.55;
+    }
+    .q-support-product__topics {
+      list-style: none; margin: var(--q-s-4) 0 0; padding: 0;
+      display: flex; flex-direction: column; gap: 6px;
+      padding-top: var(--q-s-3);
+      border-top: 1px solid var(--q-line);
+    }
+    .q-support-product__topics li {
+      font-size: 13px;
+      color: var(--q-text-mid);
+    }
+    .q-support-product__topics li::before {
+      content: "·"; color: var(--q-accent); font-weight: 700; margin-right: 6px;
+    }
+
+    /* FAQ */
+    .q-support-faq {
+      max-width: 880px;
+      border-top: 1px solid var(--q-line-strong);
+    }
+    .q-support-faq details {
+      border-bottom: 1px solid var(--q-line-strong);
+    }
+    .q-support-faq summary {
+      list-style: none;
+      cursor: pointer;
+      padding: var(--q-s-5) 0;
+      font-size: var(--q-t-h4);
+      font-weight: var(--q-fw-semibold);
+      letter-spacing: -0.02em;
+      color: var(--q-text-hi);
+      display: flex; align-items: center; justify-content: space-between;
+      gap: var(--q-s-4);
+      transition: color var(--q-dur-fast) var(--q-ease);
+    }
+    .q-support-faq summary::-webkit-details-marker { display: none; }
+    .q-support-faq summary::after {
+      content: '+';
+      font-family: var(--q-font-mono);
+      font-size: 28px;
+      color: var(--q-accent);
+      line-height: 1;
+      transition: transform var(--q-dur-base) var(--q-ease);
+    }
+    .q-support-faq details[open] summary::after { transform: rotate(45deg); }
+    .q-support-faq summary:hover { color: var(--q-accent); }
+    .q-support-faq__answer {
+      padding: 0 0 var(--q-s-5) 0;
+      max-width: 720px;
+    }
+    .q-support-faq__answer p {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--q-text-mid);
+      margin: 0 0 var(--q-s-3);
+    }
+    .q-support-faq__answer p:last-child { margin-bottom: 0; }
+
+    /* Form */
+    .q-support-form {
+      max-width: 720px;
+      display: flex; flex-direction: column;
+      gap: var(--q-s-5);
+      padding: var(--q-s-6);
+      background: var(--q-bg-1);
+      border: 1px solid var(--q-line);
+      border-radius: var(--q-r-lg);
+    }
+    .q-support-form__row {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: var(--q-s-4);
+    }
+    @media (max-width: 600px) {
+      .q-support-form__row { grid-template-columns: 1fr; }
+    }
+    .q-support-field {
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .q-support-field__label {
+      font-family: var(--q-font-mono);
+      font-size: 11px;
+      letter-spacing: var(--q-tracking-mono);
+      text-transform: uppercase;
+      color: var(--q-text-low);
+      font-weight: var(--q-fw-medium);
+    }
+    .q-support-field__input,
+    .q-support-field__select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      width: 100%;
+      padding: 12px 14px;
+      background: var(--q-bg-0);
+      border: 1px solid var(--q-line-strong);
+      border-radius: var(--q-r-sm);
+      color: var(--q-text-hi);
+      font-family: var(--q-font-body);
+      font-size: 15px;
+      line-height: 1.4;
+      transition: border-color var(--q-dur-fast) var(--q-ease),
+                  background-color var(--q-dur-fast) var(--q-ease);
+    }
+    .q-support-field__input::placeholder { color: var(--q-text-low); }
+    .q-support-field__input:hover,
+    .q-support-field__select:hover {
+      border-color: var(--q-line-hover);
+    }
+    .q-support-field__input:focus,
+    .q-support-field__select:focus {
+      outline: none;
+      border-color: var(--q-accent);
+      background: var(--q-bg-2);
+    }
+    .q-support-field__textarea {
+      resize: vertical;
+      min-height: 140px;
+      font-family: var(--q-font-body);
+    }
+
+    /* Custom select arrow (chevron) */
+    .q-support-field__select {
+      padding-right: 40px;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%238B8FA3' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='3 6 8 11 13 6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-size: 14px;
+    }
+    .q-support-field__select:focus {
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%235E6AD2' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='3 6 8 11 13 6'/%3E%3C/svg%3E");
+    }
+    .q-support-field__select option {
+      background: var(--q-bg-1);
+      color: var(--q-text-hi);
+      padding: 8px;
+    }
+
+    .q-support-field__hint {
+      font-size: 12px;
+      color: var(--q-text-low);
+      line-height: 1.55;
+    }
+    .q-support-field__hint a {
+      color: var(--q-accent);
+      border-bottom: 1px solid color-mix(in srgb, var(--q-accent) 40%, transparent);
+    }
+    .q-support-field__hint a:hover { border-bottom-color: var(--q-accent); }
+  </style>
+</head>
+<body>
+
+<quillon-header accent="mint"></quillon-header>
+
+<main id="main">
+
+  <!-- ─── HERO ─── -->
+  <section class="q-section q-support-hero">
+    <div class="q-container">
+      <p class="q-support-hero__eyebrow">— ПОДДЕРЖКА —</p>
+      <h1 class="q-support-hero__title">Помощь по&nbsp;продуктам Quillon</h1>
+      <p class="q-support-hero__lede">
+        Quillon Meet, LMS, Quilly&nbsp;AI и&nbsp;Jobs — мы&nbsp;отвечаем за&nbsp;их&nbsp;стабильность 24/7. Если что-то не&nbsp;работает или нужна помощь — есть три способа достучаться.
+      </p>
+
+      <div class="q-support-channels">
+        <div class="q-support-channel">
+          <span class="q-support-channel__label">Email</span>
+          <span class="q-support-channel__value"><a href="mailto:support@quillon.ru">support@quillon.ru</a></span>
+          <p class="q-support-channel__caption">Подробные обращения, баг-репорты с&nbsp;деталями. Ответ — в&nbsp;течение 24&nbsp;часов в&nbsp;будни.</p>
+        </div>
+        <div class="q-support-channel">
+          <span class="q-support-channel__label">Telegram</span>
+          <span class="q-support-channel__value"><a href="https://t.me/quillon" target="_blank" rel="noopener noreferrer">@quillon ↗</a></span>
+          <p class="q-support-channel__caption">Срочные вопросы и&nbsp;инциденты. Критика production — ответ в&nbsp;течение 2&nbsp;часов.</p>
+        </div>
+        <div class="q-support-channel">
+          <span class="q-support-channel__label">SLA</span>
+          <span class="q-support-channel__value">24&nbsp;часа</span>
+          <p class="q-support-channel__caption">Стандартное время ответа на&nbsp;обращение. P0-инциденты — 2&nbsp;часа через&nbsp;Telegram.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PRODUCTS ─── -->
+  <section class="q-section">
+    <div class="q-container">
+      <div class="q-section-head" style="margin-bottom: var(--q-s-7);">
+        <p class="q-section-head__num">— ПРОДУКТЫ —</p>
+        <h2 class="q-section-head__title">Что поддерживаем</h2>
+        <p class="q-section-head__sub">
+          Каждый продукт — собственной разработки. Мы&nbsp;знаем кодовую базу и&nbsp;инфраструктуру изнутри, поэтому диагностируем быстро.
+        </p>
+      </div>
+
+      <div class="q-support-products">
+        <div class="q-support-product">
+          <h3 class="q-support-product__name">Quillon Meet</h3>
+          <a class="q-support-product__url" href="https://meet.quillon.ru" target="_blank" rel="noopener noreferrer">MEET.QUILLON.RU ↗</a>
+          <p class="q-support-product__desc">Видеоконференции с&nbsp;записью, демонстрацией экрана и&nbsp;кросс-платформенными клиентами (Web, Desktop, Mobile).</p>
+          <ul class="q-support-product__topics">
+            <li>Не&nbsp;работает камера / микрофон</li>
+            <li>Проблемы с&nbsp;качеством связи или подключением</li>
+            <li>Запись встречи и&nbsp;скачивание</li>
+            <li>Установка Desktop / Mobile-клиентов</li>
+          </ul>
+        </div>
+
+        <div class="q-support-product">
+          <h3 class="q-support-product__name">Quillon LMS</h3>
+          <a class="q-support-product__url" href="https://lms.quillon.ru" target="_blank" rel="noopener noreferrer">LMS.QUILLON.RU ↗</a>
+          <p class="q-support-product__desc">Платформа обучения с&nbsp;видео-лекциями, заданиями, аналитикой прогресса и&nbsp;ролевой системой.</p>
+          <ul class="q-support-product__topics">
+            <li>Восстановление доступа к&nbsp;аккаунту</li>
+            <li>Не&nbsp;открывается урок или задание</li>
+            <li>Загрузка домашних работ</li>
+            <li>Ошибки в&nbsp;прогрессе или сертификатах</li>
+          </ul>
+        </div>
+
+        <div class="q-support-product">
+          <h3 class="q-support-product__name">Quilly AI</h3>
+          <a class="q-support-product__url" href="https://quillon.ru#products">КОРПОРАТИВНЫЙ ASSISTANT</a>
+          <p class="q-support-product__desc">RAG-ассистент с&nbsp;поиском по&nbsp;базе знаний и&nbsp;цитированием источников. Встроен в&nbsp;LMS, доступен через&nbsp;API.</p>
+          <ul class="q-support-product__topics">
+            <li>Подключение базы знаний / документов</li>
+            <li>Качество ответов и&nbsp;цитирование</li>
+            <li>API-интеграция, лимиты, токены</li>
+            <li>Настройка ролей и&nbsp;персонализации</li>
+          </ul>
+        </div>
+
+        <div class="q-support-product">
+          <h3 class="q-support-product__name">Quillon Jobs</h3>
+          <a class="q-support-product__url" href="https://quillon.ru#products">АВТОПОДБОР IT-ЗАКАЗОВ</a>
+          <p class="q-support-product__desc">Парсер фриланс-бирж с&nbsp;автоматическим подбором задач под уровень и&nbsp;стек участника.</p>
+          <ul class="q-support-product__topics">
+            <li>Не&nbsp;приходят уведомления о&nbsp;задачах</li>
+            <li>Настройка фильтров и&nbsp;стека</li>
+            <li>Жалоба на&nbsp;качество подбора</li>
+            <li>Telegram-бот не&nbsp;отвечает</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FAQ ─── -->
+  <section class="q-section">
+    <div class="q-container">
+      <div class="q-section-head" style="margin-bottom: var(--q-s-7);">
+        <p class="q-section-head__num">— FAQ —</p>
+        <h2 class="q-section-head__title">Частые вопросы</h2>
+      </div>
+
+      <div class="q-support-faq">
+        <details>
+          <summary>Как быстро вы&nbsp;отвечаете на&nbsp;обращения?</summary>
+          <div class="q-support-faq__answer">
+            <p>Стандартный SLA&nbsp;— <strong>24&nbsp;часа</strong> в&nbsp;будние дни (понедельник–пятница, 10:00–19:00 МСК).</p>
+            <p>Критичные инциденты&nbsp;— падение продакшена, проблемы с&nbsp;оплатами, проблемы безопасности&nbsp;— ответ в&nbsp;течение <strong>2&nbsp;часов</strong> через Telegram <a href="https://t.me/quillon" target="_blank" rel="noopener noreferrer">@quillon</a>.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Какие данные нужны для&nbsp;баг-репорта?</summary>
+          <div class="q-support-faq__answer">
+            <p>Чтобы быстро воспроизвести проблему, опишите:</p>
+            <p>1. Какой продукт (Meet&nbsp;/ LMS&nbsp;/ Quilly&nbsp;AI&nbsp;/ Jobs).<br>
+               2. Шаги воспроизведения (что нажали, в&nbsp;какой последовательности).<br>
+               3. Что произошло и&nbsp;что ожидалось.<br>
+               4. Версия браузера и&nbsp;ОС (или модель устройства для&nbsp;mobile).<br>
+               5. Скриншот или видео по&nbsp;возможности.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Можно ли&nbsp;запросить новую функцию?</summary>
+          <div class="q-support-faq__answer">
+            <p>Да. Отправьте описание задачи через форму ниже с&nbsp;пометкой «Feature request».</p>
+            <p>Каждый запрос рассматривается&nbsp;— мы&nbsp;возвращаемся с&nbsp;решением: включить в&nbsp;roadmap, реализовать опционально или отказать с&nbsp;обоснованием.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Я&nbsp;корпоративный клиент&nbsp;— есть приоритет?</summary>
+          <div class="q-support-faq__answer">
+            <p>Да. Корпоративным клиентам и&nbsp;партнёрам выделяем dedicated-канал в&nbsp;Telegram, SLA до&nbsp;1&nbsp;часа в&nbsp;рабочее время и&nbsp;дежурного инженера на&nbsp;время критичных деплоев.</p>
+            <p>Условия обсуждаются индивидуально. Напишите на&nbsp;<a href="mailto:support@quillon.ru">support@quillon.ru</a> с&nbsp;темой «Enterprise SLA».</p>
+          </div>
+        </details>
+        <details>
+          <summary>Где посмотреть статус сервисов?</summary>
+          <div class="q-support-faq__answer">
+            <p>Сейчас публичный status-page в&nbsp;разработке. До&nbsp;его&nbsp;запуска статус инцидентов и&nbsp;плановых работ публикуем в&nbsp;Telegram-канале <a href="https://t.me/quillon" target="_blank" rel="noopener noreferrer">@quillon</a>.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CONTACT FORM ─── -->
+  <section class="q-section">
+    <div class="q-container">
+      <div class="q-section-head" style="margin-bottom: var(--q-s-7);">
+        <p class="q-section-head__num">— НАПИСАТЬ В&nbsp;ПОДДЕРЖКУ —</p>
+        <h2 class="q-section-head__title">Опишите проблему</h2>
+        <p class="q-section-head__sub">
+          Заполните форму, постарайтесь приложить максимум деталей. Ответим на&nbsp;email или Telegram, который укажете.
+        </p>
+      </div>
+
+      <form class="q-support-form"
+            data-q-form="support"
+            data-q-success="Обращение принято"
+            data-q-success-sub="Мы получили вашу заявку. Ответим на указанный email или Telegram в течение 24 часов в будни."
+            novalidate>
+        <div class="q-support-form__row">
+          <div class="q-support-field">
+            <label class="q-support-field__label" for="sf-product">Продукт</label>
+            <select class="q-support-field__select" id="sf-product" name="product" required>
+              <option value="">Выберите продукт</option>
+              <option value="meet">Quillon Meet</option>
+              <option value="lms">Quillon LMS</option>
+              <option value="quilly">Quilly AI</option>
+              <option value="jobs">Quillon Jobs</option>
+              <option value="other">Другое / общий вопрос</option>
+            </select>
+          </div>
+          <div class="q-support-field">
+            <label class="q-support-field__label" for="sf-type">Тип обращения</label>
+            <select class="q-support-field__select" id="sf-type" name="type" required>
+              <option value="">Выберите тип</option>
+              <option value="bug">Bug-report (баг)</option>
+              <option value="account">Доступ к&nbsp;аккаунту</option>
+              <option value="feature">Feature request</option>
+              <option value="billing">Оплата / подписка</option>
+              <option value="enterprise">Корпоративный SLA</option>
+              <option value="other">Другое</option>
+            </select>
+          </div>
+        </div>
+        <div class="q-support-form__row">
+          <div class="q-support-field">
+            <label class="q-support-field__label" for="sf-name">Имя</label>
+            <input class="q-support-field__input" type="text" id="sf-name" name="name" placeholder="Как к&nbsp;вам обращаться" required>
+          </div>
+          <div class="q-support-field">
+            <label class="q-support-field__label" for="sf-contact">Email или Telegram</label>
+            <input class="q-support-field__input" type="text" id="sf-contact" name="contact" placeholder="name@example.com или @username" required>
+          </div>
+        </div>
+        <div class="q-support-field">
+          <label class="q-support-field__label" for="sf-message">Описание</label>
+          <textarea class="q-support-field__input q-support-field__textarea" id="sf-message" name="message" placeholder="Что произошло? Шаги воспроизведения, что ожидалось, версия браузера/ОС. Чем больше деталей — тем быстрее найдём." rows="6" required></textarea>
+          <span class="q-support-field__hint">Скриншоты или видео можно прислать отдельно на&nbsp;<a href="mailto:support@quillon.ru" style="color: var(--q-accent);">support@quillon.ru</a> с&nbsp;тем&nbsp;же ID-обращения.</span>
+        </div>
+        <button type="submit" class="q-btn q-btn--primary q-btn--lg" style="align-self: flex-start;">
+          Отправить обращение
+        </button>
+        <p style="font-size: 12px; color: var(--q-text-low); line-height: 1.55;">
+          Отправляя форму, вы&nbsp;соглашаетесь с&nbsp;<a href="/v4/docs/privacy-policy.html" style="color: var(--q-text-mid);">политикой конфиденциальности</a>.
+        </p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<quillon-footer></quillon-footer>
+
+</body>
+</html>
