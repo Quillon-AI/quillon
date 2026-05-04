@@ -645,6 +645,56 @@
   .qt-steps { grid-template-columns: 1fr; }
 }
 
+/* ─── FAQ accordion ────────────────────────────────────────── */
+.qt-faq {
+  display: flex; flex-direction: column;
+  max-width: 880px;
+  border-top: 1px solid var(--qt-line-strong);
+}
+.qt-faq__item {
+  border-bottom: 1px solid var(--qt-line-strong);
+}
+.qt-faq__q {
+  list-style: none;
+  cursor: pointer;
+  padding: var(--qt-s-5) 0;
+  font-size: var(--qt-t-h4);
+  font-weight: var(--qt-fw-semibold);
+  letter-spacing: var(--qt-tracking-tight);
+  color: var(--qt-text-hi);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--qt-s-4);
+  transition: color var(--qt-dur-fast) var(--qt-ease);
+}
+.qt-faq__q::-webkit-details-marker { display: none; }
+.qt-faq__q::after {
+  content: '+';
+  font-family: var(--qt-font-mono);
+  font-size: 28px;
+  font-weight: var(--qt-fw-regular);
+  color: var(--qt-accent);
+  line-height: 1;
+  flex-shrink: 0;
+  transition: transform var(--qt-dur-base) var(--qt-ease);
+}
+.qt-faq__item[open] .qt-faq__q::after { transform: rotate(45deg); }
+.qt-faq__q:hover { color: var(--qt-accent); }
+.qt-faq__a {
+  padding: 0 0 var(--qt-s-5) 0;
+  max-width: 720px;
+}
+.qt-faq__a p {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--qt-text-mid);
+  margin: 0;
+}
+.qt-faq__a a {
+  color: var(--qt-accent);
+  border-bottom: 1px solid color-mix(in srgb, var(--qt-accent) 35%, transparent);
+}
+.qt-faq__a a:hover { border-bottom-color: var(--qt-accent); }
+
 /* ─── ABOUT PAGE ───────────────────────────────────────────── */
 
 /* Manifesto: расширенный текстовый блок (читабельный column) */

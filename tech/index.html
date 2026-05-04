@@ -53,15 +53,18 @@
   }
   </script>
 
-  <!-- Schema.org · Organization -->
+  <!-- Schema.org · Organization (с @id для cross-page linking) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": "https://tech.quillon.ru/#organization",
     "name": "Quillon",
     "alternateName": "Quillon Tech",
     "url": "https://tech.quillon.ru",
     "logo": "https://tech.quillon.ru/assets/logo.svg",
+    "foundingDate": "2024",
+    "foundingLocation": "Казань, Россия",
     "description": "IT-компания из Казани. Разработка AI-платформ, высоконагруженных сервисов и mobile-приложений на собственном стеке.",
     "address": {
       "@type": "PostalAddress",
@@ -69,17 +72,69 @@
       "addressRegion": "Республика Татарстан",
       "addressCountry": "RU"
     },
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "contactType": "sales",
-      "email": "support@quillon.ru",
-      "availableLanguage": ["ru"]
-    },
+    "contactPoint": [
+      { "@type": "ContactPoint", "contactType": "sales", "email": "support@quillon.ru", "availableLanguage": ["ru"] },
+      { "@type": "ContactPoint", "contactType": "human resources", "email": "hr@quillon.ru", "availableLanguage": ["ru"] }
+    ],
     "sameAs": [
       "https://t.me/quillon",
       "https://github.com/Quillon-AI",
       "https://quillon.ru"
     ]
+  }
+  </script>
+
+  <!-- Schema.org · SoftwareApplication × 4 (продукты Quillon) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Quillon Meet",
+    "applicationCategory": "CommunicationApplication",
+    "operatingSystem": "Web, iOS, Android, Windows, macOS, Linux",
+    "url": "https://meet.quillon.ru",
+    "description": "Платформа видеоконференций с адаптивным стримингом, записью и кросс-платформенными клиентами. WebRTC, Next.js, Docker, S3, FFmpeg.",
+    "publisher": { "@id": "https://tech.quillon.ru/#organization" },
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "RUB" }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Quillon LMS",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "Web",
+    "url": "https://lms.quillon.ru",
+    "description": "Платформа управления обучением с видео-лекциями, заданиями, аналитикой прогресса и ролевой системой. Django 5, DRF, Vue 3, TypeScript.",
+    "publisher": { "@id": "https://tech.quillon.ru/#organization" }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Quilly AI",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web, API",
+    "url": "https://tech.quillon.ru/#products",
+    "description": "Корпоративный AI-ассистент с RAG-поиском по внутренней базе знаний и персонализацией под роль пользователя. Python, FastAPI, RAG, LLM API, Vector DB.",
+    "publisher": { "@id": "https://tech.quillon.ru/#organization" }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Quillon Jobs",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "url": "https://tech.quillon.ru/#products",
+    "description": "Система автоматического подбора IT-заказов с фриланс-бирж под уровень участника. Python, FastAPI, парсинг, алгоритм подбора, PostgreSQL.",
+    "publisher": { "@id": "https://tech.quillon.ru/#organization" }
   }
   </script>
 
@@ -91,10 +146,65 @@
     "url": "https://tech.quillon.ru",
     "name": "Quillon Tech",
     "inLanguage": "ru-RU",
-    "publisher": {
-      "@type": "Organization",
-      "name": "Quillon"
-    }
+    "publisher": { "@id": "https://tech.quillon.ru/#organization" }
+  }
+  </script>
+
+  <!-- Schema.org · FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Сколько стоит разработка проекта?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Зависит от стека и сложности. Telegram-бот с интеграцией платежей — от 200 000 ₽, MVP мобильного приложения на Flutter — от 800 000 ₽, AI-интеграция с RAG — от 500 000 ₽. Бесплатная техническая оценка после первого созвона."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Какой стек используете?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Backend: Python, FastAPI, Django, PostgreSQL, Redis. Mobile: Flutter. AI: RAG, LLM API (OpenAI, Anthropic), Vector DB (Pinecone, Qdrant). Infrastructure: Docker, Nginx, GitHub Actions, dedicated-серверы в РФ."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Как начать сотрудничество?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Заполните форму на сайте или напишите в Telegram @quillon. Опишите задачу, желательные сроки и бюджет. Ответим за день и договоримся о 30-минутном созвоне для оценки."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Можно ли увидеть код в production?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Да. Часть кода в open-source на github.com/Quillon-AI: репозитории Quillon Meet (web, desktop, mobile) и backend-инструменты. По NDA можем показать архитектуру коммерческих проектов."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Берёте проекты под ключ или работаете по часам?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Оба варианта. Под ключ — фиксированный scope и цена. T&M — для долгосрочной поддержки. Часто гибрид: фикс на первый этап, T&M на поддержку."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Подписываете NDA?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Да. Стандартный шаблон NDA отправляем в первый день общения. Если у вас свой шаблон — подстраиваемся."
+        }
+      }
+    ]
   }
   </script>
 </head>
@@ -436,6 +546,55 @@
 </section>
 
 <!-- ─── CONTACT FORM (deep navy) ────────────────────────────── -->
+<!-- ─── FAQ (paper) ────────────────────────────────────────── -->
+<section class="qt-section" id="faq" style="background: var(--qt-bg-paper);">
+  <div class="qt-container">
+    <p class="qt-eyebrow" style="margin-bottom: 16px;">FAQ</p>
+    <h2 style="font-size: var(--qt-t-h2); max-width: 22ch; margin-bottom: 48px;">
+      Частые вопросы
+    </h2>
+
+    <div class="qt-faq">
+      <details class="qt-faq__item">
+        <summary class="qt-faq__q">Сколько стоит разработка проекта?</summary>
+        <div class="qt-faq__a">
+          <p>Зависит от&nbsp;стека и&nbsp;сложности. Telegram-бот с&nbsp;интеграцией платежей — от&nbsp;200&nbsp;000&nbsp;₽, MVP мобильного приложения на&nbsp;Flutter — от&nbsp;800&nbsp;000&nbsp;₽, AI-интеграция с&nbsp;RAG — от&nbsp;500&nbsp;000&nbsp;₽. Бесплатная техническая оценка после первого созвона: разбираем ТЗ, прикидываем стек, даём диапазон бюджета и&nbsp;сроки.</p>
+        </div>
+      </details>
+      <details class="qt-faq__item">
+        <summary class="qt-faq__q">Какой стек используете?</summary>
+        <div class="qt-faq__a">
+          <p>Backend: Python 3.11+, FastAPI, Django&nbsp;5, PostgreSQL, Redis, Celery. Mobile: Flutter, Dart. AI: RAG, LLM API (OpenAI, Anthropic, локальные), Vector DB (Pinecone, Qdrant). Infrastructure: Docker, Nginx, GitHub Actions, S3, dedicated-серверы в&nbsp;РФ. Frontend: Vue&nbsp;3, TypeScript, Vite. Полный стек&nbsp;— на&nbsp;<a href="/#stack">главной странице</a>.</p>
+        </div>
+      </details>
+      <details class="qt-faq__item">
+        <summary class="qt-faq__q">Как начать сотрудничество?</summary>
+        <div class="qt-faq__a">
+          <p>Заполните форму ниже или напишите в&nbsp;Telegram&nbsp;<a href="https://t.me/quillon" target="_blank" rel="noopener noreferrer">@quillon</a>. Опишите задачу&nbsp;— что нужно сделать, желательные сроки, бюджетный коридор, ссылка на&nbsp;ТЗ если есть. Ответим за&nbsp;день, договоримся о&nbsp;30-минутном созвоне для&nbsp;оценки.</p>
+        </div>
+      </details>
+      <details class="qt-faq__item">
+        <summary class="qt-faq__q">Можно ли увидеть код в&nbsp;production?</summary>
+        <div class="qt-faq__a">
+          <p>Да. Часть кода&nbsp;— в&nbsp;open-source: <a href="https://github.com/Quillon-AI" target="_blank" rel="noopener noreferrer">github.com/Quillon-AI</a>. Доступны репозитории Quillon Meet (web, desktop, mobile), отдельные backend-инструменты. По&nbsp;запросу можем показать архитектурные решения коммерческих проектов под NDA.</p>
+        </div>
+      </details>
+      <details class="qt-faq__item">
+        <summary class="qt-faq__q">Берёте проекты под ключ или работаете по&nbsp;часам?</summary>
+        <div class="qt-faq__a">
+          <p>Оба варианта. Под ключ&nbsp;— фиксированный scope, фиксированная цена, риски на&nbsp;нашей стороне. По&nbsp;часам&nbsp;— time&amp;material для&nbsp;продуктов с&nbsp;долгосрочной поддержкой или scope, который сложно зафиксировать заранее. По&nbsp;факту чаще всего гибрид&nbsp;— фикс на&nbsp;первый этап, T&amp;M на&nbsp;поддержку.</p>
+        </div>
+      </details>
+      <details class="qt-faq__item">
+        <summary class="qt-faq__q">Подписываете NDA?</summary>
+        <div class="qt-faq__a">
+          <p>Да. Стандартный шаблон NDA отправляем в&nbsp;первый день общения, можем подписать перед получением материалов. Если у&nbsp;вас свой шаблон&nbsp;— подстраиваемся.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
 <section class="qt-section qt-contact" id="contact-cta">
   <div class="qt-container">
     <div class="qt-contact__inner">
