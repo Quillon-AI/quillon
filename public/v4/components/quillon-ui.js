@@ -26,7 +26,7 @@
     { id: 'tracks',   label: 'Все треки', dropdown: true },
     { id: 'blog',     label: 'Блог',      href: '/blog/' },
     { id: 'tech',     label: 'Tech',      href: 'https://tech.quillon.ru', external: true },
-    { id: 'projects', label: 'Проекты',   href: '/#products' },
+    { id: 'projects', label: 'Проекты',   href: '/projects/' },
     { id: 'about',    label: 'О нас',     href: '/about/' },
   ];
 

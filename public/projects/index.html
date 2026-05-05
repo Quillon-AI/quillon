@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Проекты Quillon — на чём ты учишься в реальности</title>
+  <meta name="description" content="Pulse-стартап, OpenSource-вклады, продукты Quillon (Meet, Chat, LMS, Quilly AI, Jobs) и фриланс-биржа. Студенты пишут код, который идёт в production — не тренировочные задачки.">
+  <link rel="canonical" href="https://quillon.ru/projects/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Проекты Quillon — портфель продуктов и каналов выхода">
+  <meta property="og:description" content="6 продуктов в production, 4 канала, через которые студент попадает в реальную работу.">
+  <meta property="og:url" content="https://quillon.ru/projects/">
+  <meta property="og:image" content="https://quillon.ru/og-image.png">
+  <meta property="og:locale" content="ru_RU">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Проекты Quillon">
+  <meta name="twitter:image" content="https://quillon.ru/og-image.png">
+
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('q-theme');
+        var prefers = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', saved || prefers);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="/v4/css/tokens.css">
+  <link rel="stylesheet" href="/v4/css/base.css">
+  <link rel="stylesheet" href="/v4/css/components.css">
+  <link rel="stylesheet" href="/projects/styles.css">
+  <script src="/v4/components/quillon-ui.js?v=2" defer></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://quillon.ru/" },
+      { "@type": "ListItem", "position": 2, "name": "Проекты", "item": "https://quillon.ru/projects/" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Продукты Quillon",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Quillon Meet", "url": "https://meet.quillon.ru" },
+      { "@type": "ListItem", "position": 2, "name": "Quillon Chat", "url": "https://chat.quillon.ru" },
+      { "@type": "ListItem", "position": 3, "name": "Quillon LMS",  "url": "https://lms.quillon.ru" },
+      { "@type": "ListItem", "position": 4, "name": "Quilly AI" },
+      { "@type": "ListItem", "position": 5, "name": "Quillon Jobs" },
+      { "@type": "ListItem", "position": 6, "name": "Pulse Studio" }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+<quillon-header current="projects"></quillon-header>
+
+<main class="q-main">
+
+  <!-- ═══ HERO ═══════════════════════════════════════════════════ -->
+  <section class="q-section q-pjhero">
+    <div class="q-container">
+      <div class="q-pjhero__eyebrow">Проекты · портфель Quillon</div>
+      <h1 class="q-pjhero__title">Реальные&nbsp;продукты, <em>не учебные задачи.</em></h1>
+      <p class="q-pjhero__lede">
+        Quillon — это не курс с тренировочными «todo-app» и «pet-projects». Студенты пишут код, который идёт в&nbsp;production: на&nbsp;шести наших собственных продуктах, в&nbsp;коммерческих заказах через&nbsp;биржу и&nbsp;в&nbsp;вкладах в&nbsp;OpenSource. Здесь — карта всех каналов, через&nbsp;которые ты попадаешь в&nbsp;реальную работу.
+      </p>
+
+      <div class="q-pjhero__metrics">
+        <div class="q-pjhero__metric">
+          <div class="q-pjhero__metric__num"><em>6</em></div>
+          <div class="q-pjhero__metric__label">Продуктов<br>в production</div>
+        </div>
+        <div class="q-pjhero__metric">
+          <div class="q-pjhero__metric__num">4</div>
+          <div class="q-pjhero__metric__label">Канала выхода<br>в реальную работу</div>
+        </div>
+        <div class="q-pjhero__metric">
+          <div class="q-pjhero__metric__num">M02</div>
+          <div class="q-pjhero__metric__label">Первая production-<br>задача (нед.&nbsp;5)</div>
+        </div>
+        <div class="q-pjhero__metric">
+          <div class="q-pjhero__metric__num">12&nbsp;мес</div>
+          <div class="q-pjhero__metric__label">Pulse-проект<br>от&nbsp;идеи до&nbsp;выручки</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ ANCHOR NAV ═════════════════════════════════════════════ -->
+  <nav class="q-pjnav" aria-label="Каналы и тиры проектов">
+    <div class="q-container">
+      <div class="q-pjnav__inner">
+        <a class="q-pjnav__link" href="#pulse"><em>01</em> Pulse · твой стартап</a>
+        <a class="q-pjnav__link" href="#opensource"><em>02</em> OpenSource</a>
+        <a class="q-pjnav__link" href="#products"><em>03</em> Продукты Quillon</a>
+        <a class="q-pjnav__link" href="#jobs"><em>04</em> Quillon Jobs</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══ TIER 01 · PULSE ════════════════════════════════════════ -->
+  <section class="q-section" id="pulse">
+    <div class="q-container">
+      <header class="q-tier__head">
+        <div class="q-tier__head__num"><em>01</em> · ТВОЙ СТАРТАП</div>
+        <h2 class="q-tier__head__title">Pulse — личный продукт на&nbsp;12&nbsp;месяцев</h2>
+        <p class="q-tier__head__sub">
+          С первой недели ты ведёшь свой проект. Не «pet», не&nbsp;для&nbsp;портфолио — настоящий продукт с&nbsp;идеей, пользователями и&nbsp;планом монетизации. К&nbsp;LAUNCH (нед.&nbsp;48) лучшие проекты получают грант до&nbsp;500&nbsp;000&nbsp;₽.
+        </p>
+      </header>
+
+      <div class="q-pjpulse__rail">
+        <div class="q-pjpulse__step">
+          <div class="q-pjpulse__step__num">M01–M02</div>
+          <h3 class="q-pjpulse__step__title">Идея и&nbsp;CustDev</h3>
+          <p class="q-pjpulse__step__desc">Формулируешь проблему, проводишь 10+ интервью, собираешь landing с&nbsp;wait-list. Цель — 30&nbsp;валидаций до&nbsp;первой строки кода.</p>
+        </div>
+        <div class="q-pjpulse__step">
+          <div class="q-pjpulse__step__num">M03–M06</div>
+          <h3 class="q-pjpulse__step__title">MVP в&nbsp;production</h3>
+          <p class="q-pjpulse__step__desc">Деплой первой версии на&nbsp;Quillon-инфре (Docker, nginx, PostgreSQL, Sentry). Ментор делает code-review каждой PR, как в&nbsp;настоящей команде.</p>
+        </div>
+        <div class="q-pjpulse__step">
+          <div class="q-pjpulse__step__num">M07–M10</div>
+          <h3 class="q-pjpulse__step__title">Первые пользователи</h3>
+          <p class="q-pjpulse__step__desc">Метрики, A/B-тесты, retention. Маркетолог Quillon помогает с&nbsp;воронкой и&nbsp;первым платным каналом. Цель — 100+ MAU.</p>
+        </div>
+        <div class="q-pjpulse__step">
+          <div class="q-pjpulse__step__num">M11–M12</div>
+          <h3 class="q-pjpulse__step__title">LAUNCH · Demo&nbsp;Day</h3>
+          <p class="q-pjpulse__step__desc">Питч перед инвесторами, выпускниками и&nbsp;командой Quillon. Лучшим проектам — грант до&nbsp;500&nbsp;000&nbsp;₽ и&nbsp;инкубация в&nbsp;Quillon Tech.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TIER 02 · OPEN SOURCE ══════════════════════════════════ -->
+  <section class="q-section" id="opensource">
+    <div class="q-container">
+      <header class="q-tier__head">
+        <div class="q-tier__head__num"><em>02</em> · OPEN SOURCE</div>
+        <h2 class="q-tier__head__title">Командные PR-сессии в&nbsp;большие проекты</h2>
+        <p class="q-tier__head__sub">
+          Раз в&nbsp;месяц команда выбирает open-source проект из&nbsp;стека твоего трека. Ментор ведёт код-сессию, ты&nbsp;разбираешь архитектуру и&nbsp;шлёшь свой первый PR. Заметят — попадает в&nbsp;твой GitHub-профиль.
+        </p>
+      </header>
+
+      <div class="q-pjos">
+        <div class="q-pjos__cell">
+          <h3 class="q-pjos__cell__name">FastAPI · Pydantic</h3>
+          <p class="q-pjos__cell__desc">Backend-стек Python-трека. Изучаем internals, фиксим issues с&nbsp;label «good&nbsp;first&nbsp;issue», добавляем недостающие тесты в&nbsp;starlette.</p>
+          <div class="q-pjos__cell__meta">для python · backend + ml</div>
+        </div>
+        <div class="q-pjos__cell">
+          <h3 class="q-pjos__cell__name">Flutter · Dart packages</h3>
+          <p class="q-pjos__cell__desc">Контрибьютим в&nbsp;популярные плагины (camera, firebase_auth, go_router). Реальные баги, которые видят миллионы пользователей.</p>
+          <div class="q-pjos__cell__meta">для flutter</div>
+        </div>
+        <div class="q-pjos__cell">
+          <h3 class="q-pjos__cell__name">Playwright · pytest</h3>
+          <p class="q-pjos__cell__desc">Автотест-фреймворки, на&nbsp;которые ссылаются почти все QA-инженеры. Вклад в&nbsp;документацию или&nbsp;edge-case баги — отличный пункт в&nbsp;резюме.</p>
+          <div class="q-pjos__cell__meta">для qa</div>
+        </div>
+        <div class="q-pjos__cell">
+          <h3 class="q-pjos__cell__name">scikit-learn · XGBoost</h3>
+          <p class="q-pjos__cell__desc">ML-аддон Python-трека. Учимся читать чужой numerics-код, ускоряем алгоритмы, добавляем недостающие метрики.</p>
+          <div class="q-pjos__cell__meta">для ml-аддона</div>
+        </div>
+        <div class="q-pjos__cell">
+          <h3 class="q-pjos__cell__name">Django · DRF</h3>
+          <p class="q-pjos__cell__desc">Один из&nbsp;стеков, на&nbsp;котором стоит Quillon LMS. Прокачиваешь backend-инструмент, на&nbsp;котором сидят 50%&nbsp;Python-вакансий.</p>
+          <div class="q-pjos__cell__meta">для python · backend</div>
+        </div>
+        <div class="q-pjos__cell">
+          <h3 class="q-pjos__cell__name">Сами Quillon</h3>
+          <p class="q-pjos__cell__desc">Часть наших инструментов открыта в&nbsp;<a href="https://github.com/quillon" target="_blank" rel="noopener" style="color:var(--q-accent);text-decoration:underline">github.com/quillon</a>. PR&nbsp;туда — самый короткий путь до&nbsp;офера в&nbsp;команду.</p>
+          <div class="q-pjos__cell__meta">для всех треков</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TIER 03 · QUILLON PRODUCTS ═════════════════════════════ -->
+  <section class="q-section" id="products">
+    <div class="q-container">
+      <header class="q-tier__head">
+        <div class="q-tier__head__num"><em>03</em> · ПРОДУКТЫ СТУДИИ</div>
+        <h2 class="q-tier__head__title">Шесть продуктов, на&nbsp;которых работает вся&nbsp;экосистема</h2>
+        <p class="q-tier__head__sub">
+          Это не «у&nbsp;нас в&nbsp;роадмапе». Это то, чем мы&nbsp;пользуемся каждый день — и&nbsp;то, куда сильные студенты попадают на&nbsp;стажировку с&nbsp;M03. Реальный код, real-time баги, ревью от&nbsp;Senior-инженеров.
+        </p>
+      </header>
+
+      <!-- ── HERO PRODUCT · MEET ── -->
+      <div class="q-pjmeet">
+        <div class="q-pjmeet__top">
+          <div class="q-pjmeet__top__copy">
+            <div class="q-pjmeet__top__num">PRODUCT&nbsp;<em>·&nbsp;01</em></div>
+            <h3 class="q-pjmeet__top__name">
+              <a href="https://meet.quillon.ru" target="_blank" rel="noopener">Quillon Meet ↗</a>
+            </h3>
+            <p class="q-pjmeet__top__desc">
+              Видеозвонки прямо в&nbsp;браузере. Без регистрации, без&nbsp;скачиваний. Используется для&nbsp;всех созвонов команды, парного программирования и&nbsp;ревью с&nbsp;ментором. Студенты Flutter-трека делают мобильную версию, Python — медиасервер и&nbsp;запись.
+            </p>
+            <div class="q-pjmeet__top__chips">
+              <span class="q-pjmeet__chip">WebRTC</span>
+              <span class="q-pjmeet__chip">FastAPI</span>
+              <span class="q-pjmeet__chip">React</span>
+              <span class="q-pjmeet__chip">Flutter</span>
+              <span class="q-pjmeet__chip">Redis</span>
+              <span class="q-pjmeet__chip">PostgreSQL</span>
+            </div>
+          </div>
+          <div class="q-pjmeet__top__facts">
+            <div class="q-pjmeet__fact">
+              <div class="q-pjmeet__fact__label">Стек</div>
+              <div class="q-pjmeet__fact__value">FastAPI · WebRTC · React + Flutter</div>
+            </div>
+            <div class="q-pjmeet__fact">
+              <div class="q-pjmeet__fact__label">Подключение</div>
+              <div class="q-pjmeet__fact__value">с <b>M03</b>, по&nbsp;апруву ментора</div>
+            </div>
+            <div class="q-pjmeet__fact">
+              <div class="q-pjmeet__fact__label">Что делают</div>
+              <div class="q-pjmeet__fact__value">медиасервер, запись, мобильный клиент, e2e-тесты</div>
+            </div>
+            <div class="q-pjmeet__fact">
+              <div class="q-pjmeet__fact__label">Прод</div>
+              <div class="q-pjmeet__fact__value">meet.quillon.ru — открытый, без&nbsp;аккаунта</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- desktop hero shot -->
+        <figure class="q-pjmeet__shot">
+          <span class="q-pjmeet__shot__corner">DESKTOP · ВСТРЕЧА</span>
+          <picture>
+            <source srcset="/v4/assets/projects/meet/desktop/04-chat-final.webp" type="image/webp">
+            <img src="/v4/assets/projects/meet/desktop/04-chat-final.png" alt="Quillon Meet — командный звонок с чатом" loading="lazy" width="1440" height="900">
+          </picture>
+        </figure>
+
+        <!-- mobile carousel -->
+        <div class="q-pjmeet__mobile__head">
+          <span class="q-pjmeet__mobile__head__title">iOS&nbsp;/ Android · 5 экранов</span>
+          <span class="q-pjmeet__mobile__head__meta">1290 × 2796</span>
+        </div>
+        <div class="q-pjmeet__mobile">
+
+          <figure class="q-pjmeet__phone">
+            <div class="q-pjmeet__phone__frame">
+              <picture>
+                <source srcset="/v4/assets/projects/meet/mobile/01-welcome-final.webp" type="image/webp">
+                <img src="/v4/assets/projects/meet/mobile/01-welcome-final.png" alt="Meet · Вход" loading="lazy">
+              </picture>
+            </div>
+            <figcaption class="q-pjmeet__phone__cap"><em>01</em><span>Вход</span></figcaption>
+          </figure>
+
+          <figure class="q-pjmeet__phone">
+            <div class="q-pjmeet__phone__frame">
+              <picture>
+                <source srcset="/v4/assets/projects/meet/mobile/02-prejoin-final.webp" type="image/webp">
+                <img src="/v4/assets/projects/meet/mobile/02-prejoin-final.png" alt="Meet · Настройки" loading="lazy">
+              </picture>
+            </div>
+            <figcaption class="q-pjmeet__phone__cap"><em>02</em><span>Настройки</span></figcaption>
+          </figure>
+
+          <figure class="q-pjmeet__phone">
+            <div class="q-pjmeet__phone__frame">
+              <picture>
+                <source srcset="/v4/assets/projects/meet/mobile/03-group-final.webp" type="image/webp">
+                <img src="/v4/assets/projects/meet/mobile/03-group-final.png" alt="Meet · Встреча" loading="lazy">
+              </picture>
+            </div>
+            <figcaption class="q-pjmeet__phone__cap"><em>03</em><span>Встреча</span></figcaption>
+          </figure>
+
+          <figure class="q-pjmeet__phone">
+            <div class="q-pjmeet__phone__frame">
+              <picture>
+                <source srcset="/v4/assets/projects/meet/mobile/04-chat-final.webp" type="image/webp">
+                <img src="/v4/assets/projects/meet/mobile/04-chat-final.png" alt="Meet · Чат" loading="lazy">
+              </picture>
+            </div>
+            <figcaption class="q-pjmeet__phone__cap"><em>04</em><span>Чат</span></figcaption>
+          </figure>
+
+          <figure class="q-pjmeet__phone">
+            <div class="q-pjmeet__phone__frame">
+              <picture>
+                <source srcset="/v4/assets/projects/meet/mobile/05-recordings-final.webp" type="image/webp">
+                <img src="/v4/assets/projects/meet/mobile/05-recordings-final.png" alt="Meet · Запись" loading="lazy">
+              </picture>
+            </div>
+            <figcaption class="q-pjmeet__phone__cap"><em>05</em><span>Запись</span></figcaption>
+          </figure>
+
+        </div>
+      </div>
+
+      <!-- ── REMAINING PRODUCTS GRID ── -->
+      <div class="q-pjproducts">
+
+        <a class="q-pjcard" href="https://chat.quillon.ru" target="_blank" rel="noopener">
+          <div class="q-pjcard__num">PRODUCT&nbsp;<em>·&nbsp;02</em></div>
+          <h3 class="q-pjcard__name">Quillon Chat</h3>
+          <p class="q-pjcard__desc">Корпоративный мессенджер: каналы команд, треды, интеграции с&nbsp;LMS, Jobs и&nbsp;Meet. Здесь идёт вся коммуникация студентов и&nbsp;менторов.</p>
+          <div class="q-pjcard__chips">
+            <span class="q-pjcard__chip">Mattermost</span>
+            <span class="q-pjcard__chip">Go</span>
+            <span class="q-pjcard__chip">React</span>
+            <span class="q-pjcard__chip">PostgreSQL</span>
+          </div>
+          <div class="q-pjcard__foot">
+            <span class="q-pjcard__foot__role">Студенты: <b>интеграции, боты, плагины</b></span>
+            <span class="q-pjcard__foot__link">chat.quillon.ru&nbsp;↗</span>
+          </div>
+        </a>
+
+        <a class="q-pjcard" href="https://lms.quillon.ru" target="_blank" rel="noopener">
+          <div class="q-pjcard__num">PRODUCT&nbsp;<em>·&nbsp;03</em></div>
+          <h3 class="q-pjcard__name">Quilly LMS</h3>
+          <p class="q-pjcard__desc">Учебная платформа: программа, домашки, авто-ревью, прогресс. На&nbsp;ней ты&nbsp;учишься — её&nbsp;же ты&nbsp;и&nbsp;дописываешь, ускоряешь и&nbsp;тестируешь.</p>
+          <div class="q-pjcard__chips">
+            <span class="q-pjcard__chip">Django</span>
+            <span class="q-pjcard__chip">DRF</span>
+            <span class="q-pjcard__chip">React</span>
+            <span class="q-pjcard__chip">Celery</span>
+            <span class="q-pjcard__chip">Redis</span>
+          </div>
+          <div class="q-pjcard__foot">
+            <span class="q-pjcard__foot__role">Студенты: <b>конструктор уроков, AI-проверка</b></span>
+            <span class="q-pjcard__foot__link">lms.quillon.ru&nbsp;↗</span>
+          </div>
+        </a>
+
+        <a class="q-pjcard" href="/about/#products" aria-disabled="true">
+          <div class="q-pjcard__num">PRODUCT&nbsp;<em>·&nbsp;04</em></div>
+          <h3 class="q-pjcard__name">Quilly AI</h3>
+          <p class="q-pjcard__desc">AI-тьютор: объясняет код, проверяет домашки, ведёт диалог по&nbsp;конспекту. RAG поверх программы Quillon, доступ из&nbsp;LMS и&nbsp;мобильного приложения.</p>
+          <div class="q-pjcard__chips">
+            <span class="q-pjcard__chip">FastAPI</span>
+            <span class="q-pjcard__chip">LangChain</span>
+            <span class="q-pjcard__chip">FAISS</span>
+            <span class="q-pjcard__chip">OpenAI</span>
+            <span class="q-pjcard__chip">Flutter</span>
+          </div>
+          <div class="q-pjcard__foot">
+            <span class="q-pjcard__foot__role">Студенты: <b>RAG-pipeline, fine-tune, мобильный UI</b></span>
+            <span class="q-pjcard__foot__link">скриншоты&nbsp;скоро</span>
+          </div>
+        </a>
+
+        <a class="q-pjcard" href="#jobs">
+          <div class="q-pjcard__num">PRODUCT&nbsp;<em>·&nbsp;05</em></div>
+          <h3 class="q-pjcard__name">Quillon Jobs</h3>
+          <p class="q-pjcard__desc">Внутренняя биржа фриланс-задач от&nbsp;внешних клиентов. С&nbsp;M02 ты&nbsp;берёшь оплачиваемые тикеты под&nbsp;ревью ментора — и&nbsp;к&nbsp;концу года уже видел 5–10 разных продакш-баз.</p>
+          <div class="q-pjcard__chips">
+            <span class="q-pjcard__chip">Django</span>
+            <span class="q-pjcard__chip">React</span>
+            <span class="q-pjcard__chip">PostgreSQL</span>
+            <span class="q-pjcard__chip">Stripe&nbsp;/&nbsp;ЮKassa</span>
+          </div>
+          <div class="q-pjcard__foot">
+            <span class="q-pjcard__foot__role">Студенты: <b>backend, моделирование сделок</b></span>
+            <span class="q-pjcard__foot__link">подробнее&nbsp;↓</span>
+          </div>
+        </a>
+
+        <a class="q-pjcard" href="/about/#products" aria-disabled="true">
+          <div class="q-pjcard__num">PRODUCT&nbsp;<em>·&nbsp;06</em></div>
+          <h3 class="q-pjcard__name">Pulse Studio</h3>
+          <p class="q-pjcard__desc">Внутренний пайплайн ведения Pulse-проектов: от&nbsp;CustDev-borda до&nbsp;Demo&nbsp;Day. Используется менторами и&nbsp;студентами; разрабатывается силами самих студентов после M06.</p>
+          <div class="q-pjcard__chips">
+            <span class="q-pjcard__chip">Next.js</span>
+            <span class="q-pjcard__chip">Postgres</span>
+            <span class="q-pjcard__chip">tRPC</span>
+            <span class="q-pjcard__chip">Tailwind</span>
+          </div>
+          <div class="q-pjcard__foot">
+            <span class="q-pjcard__foot__role">Студенты: <b>фронт, аналитика, метрики</b></span>
+            <span class="q-pjcard__foot__link">скриншоты&nbsp;скоро</span>
+          </div>
+        </a>
+
+        <a class="q-pjcard" href="https://tech.quillon.ru" target="_blank" rel="noopener">
+          <div class="q-pjcard__num">CHANNEL&nbsp;<em>·&nbsp;EXT</em></div>
+          <h3 class="q-pjcard__name">Quillon Tech&nbsp;↗</h3>
+          <p class="q-pjcard__desc">IT-студия для&nbsp;внешних клиентов. С&nbsp;M06 сильные студенты переходят сюда на&nbsp;стажировку — и&nbsp;дальше получают первый production-офер ещё&nbsp;до&nbsp;окончания трека.</p>
+          <div class="q-pjcard__chips">
+            <span class="q-pjcard__chip">FastAPI</span>
+            <span class="q-pjcard__chip">Django</span>
+            <span class="q-pjcard__chip">Flutter</span>
+            <span class="q-pjcard__chip">React</span>
+          </div>
+          <div class="q-pjcard__foot">
+            <span class="q-pjcard__foot__role">Студенты: <b>стажировка → офер</b></span>
+            <span class="q-pjcard__foot__link">tech.quillon.ru&nbsp;↗</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TIER 04 · JOBS ═════════════════════════════════════════ -->
+  <section class="q-section" id="jobs">
+    <div class="q-container">
+      <header class="q-tier__head">
+        <div class="q-tier__head__num"><em>04</em> · ОПЛАЧИВАЕМАЯ РАБОТА</div>
+        <h2 class="q-tier__head__title">Quillon Jobs — биржа реальных заказов</h2>
+        <p class="q-tier__head__sub">
+          С нед.&nbsp;5 (M02) ты&nbsp;можешь брать оплачиваемые задачи от&nbsp;внешних клиентов. Каждая задача проходит ревью ментора и&nbsp;closes-реальный тикет в&nbsp;продакшн-системе. К&nbsp;концу года в&nbsp;твоём резюме — не&nbsp;«учебные проекты», а&nbsp;5–10 production-задач от&nbsp;разных компаний.
+        </p>
+      </header>
+
+      <div class="q-pjjobs__grid">
+        <ol class="q-pjjobs__steps">
+          <li class="q-pjjobs__step">
+            <div class="q-pjjobs__step__num">01</div>
+            <div class="q-pjjobs__step__body">
+              <h3 class="q-pjjobs__step__title">Получаешь доступ</h3>
+              <p class="q-pjjobs__step__desc">Ментор включает тебя в&nbsp;Jobs после первой production-задачи на&nbsp;Pulse. Без&nbsp;«сертификации» и&nbsp;ассессментов — нужно показать, что код проходит ревью.</p>
+            </div>
+            <div class="q-pjjobs__step__when">M02 · нед.&nbsp;5</div>
+          </li>
+
+          <li class="q-pjjobs__step">
+            <div class="q-pjjobs__step__num">02</div>
+            <div class="q-pjjobs__step__body">
+              <h3 class="q-pjjobs__step__title">Берёшь тикет под&nbsp;себя</h3>
+              <p class="q-pjjobs__step__desc">В&nbsp;ленте — реальные задачи от&nbsp;Quillon&nbsp;Tech и&nbsp;партнёров. Каждый тикет помечен сложностью, стеком и&nbsp;ставкой. Можно фильтровать под&nbsp;свой трек.</p>
+            </div>
+            <div class="q-pjjobs__step__when">постоянно</div>
+          </li>
+
+          <li class="q-pjjobs__step">
+            <div class="q-pjjobs__step__num">03</div>
+            <div class="q-pjjobs__step__body">
+              <h3 class="q-pjjobs__step__title">Делаешь под&nbsp;ревью</h3>
+              <p class="q-pjjobs__step__desc">Ментор — твой первый ревьюер, тимлид клиента — второй. PR не&nbsp;мерджится, пока обе стороны не&nbsp;скажут «ок». Это и&nbsp;есть production-стандарт.</p>
+            </div>
+            <div class="q-pjjobs__step__when">2–14 дней</div>
+          </li>
+
+          <li class="q-pjjobs__step">
+            <div class="q-pjjobs__step__num">04</div>
+            <div class="q-pjjobs__step__body">
+              <h3 class="q-pjjobs__step__title">Получаешь оплату</h3>
+              <p class="q-pjjobs__step__desc">Деньги падают на&nbsp;карту через ИП/самозанятость или&nbsp;на&nbsp;баланс Quillon Jobs (можно тратить на&nbsp;продление трека). 70&nbsp;%&nbsp;ставки — тебе, 30&nbsp;%&nbsp;— на&nbsp;инфру и&nbsp;ревью.</p>
+            </div>
+            <div class="q-pjjobs__step__when">в&nbsp;течение 7 дней</div>
+          </li>
+        </ol>
+
+        <aside class="q-pjjobs__aside">
+          <div class="q-pjjobs__aside__num"><em>04</em>&nbsp;· ВАЖНО</div>
+          <h3 class="q-pjjobs__aside__h">Что отличает Jobs от&nbsp;обычного фриланса</h3>
+          <ul class="q-pjjobs__aside__list">
+            <li><b>Ментор — твой щит.</b> Не&nbsp;справляешься&nbsp;— он&nbsp;вмешается и&nbsp;объяснит, до&nbsp;того как&nbsp;ты&nbsp;опозоришься перед клиентом.</li>
+            <li><b>Все клиенты — проверенные.</b> Не&nbsp;«kwork с&nbsp;ТЗ&nbsp;на&nbsp;коленке». Это студия Quillon Tech и&nbsp;её&nbsp;партнёры, у&nbsp;которых нормальные брифы.</li>
+            <li><b>Резюме&nbsp;собирается само.</b> Каждая закрытая задача — пункт в&nbsp;CV с&nbsp;контекстом «реальный клиент, такой-то стек, такая-то метрика».</li>
+            <li><b>Без поиска и&nbsp;демпинга.</b> Все ставки — по&nbsp;единой сетке: Junior 600–1200&nbsp;₽/час, Middle 1500–3000&nbsp;₽/час.</li>
+          </ul>
+          <a href="/tracks/" class="q-btn q-btn--primary">Выбрать трек&nbsp;→</a>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CTA ════════════════════════════════════════════════════ -->
+  <section class="q-section">
+    <div class="q-container q-pjcta">
+      <h2>Если ты&nbsp;здесь, чтобы&nbsp;строить, а&nbsp;не&nbsp;«пройти курс»&nbsp;—</h2>
+      <p>выбери направление и&nbsp;начни с&nbsp;первой production-задачи на&nbsp;нед.&nbsp;5. Без курсорной мыши по&nbsp;«учебной todo-app».</p>
+      <a class="q-btn q-btn--primary q-btn--lg" href="/tracks/">Все треки <span class="q-btn__icon">→</span></a>
+    </div>
+  </section>
+
+</main>
+
+<quillon-footer></quillon-footer>
+
+<!-- Яндекс.Метрика -->
+<script type="text/javascript">
+  (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+  m[i].l=1*new Date();
+  for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
+  k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+  (window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
+  ym(108311343,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/108311343" style="position:absolute;left:-9999px;" alt=""/></div></noscript>
+
+</body>
+</html>
