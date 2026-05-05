@@ -155,8 +155,11 @@
     /* ── speaker grid ─────────────────────────────────────────────── */
     .q-mentors__grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: var(--q-s-5);
+    }
+    @media (max-width: 1100px) {
+      .q-mentors__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     .q-mentors__card {
